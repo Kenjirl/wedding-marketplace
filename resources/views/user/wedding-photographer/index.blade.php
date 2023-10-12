@@ -1,13 +1,22 @@
-@extends('main')
+@extends('user.dashboard-layout')
 
 @section('title')
-    <title>WP | Wedding Marketplace</title>
+    <title>Dashboard | Wedding Marketplace</title>
 @endsection
 
-@section('body')
-    <h2>Home Wedding Photographer</h2>
-    <form action="{{ route('keluar') }}" method="post">
-        @csrf
-        <button type="submit">Keluar</button>
-    </form>
+@section('sidebar')
+    <a class="w-full bg-slate-50 p-2 rounded"
+        href="#">
+        <i class="fa-solid fa-house"></i>
+        Dashboard
+    </a>
+    <a class="w-full bg-slate-50 p-2 rounded"
+        href="#">
+        <i class="fa-solid fa-house"></i>
+        Portofolio
+    </a>
+@endsection
+
+@section('content')
+    <span>Wedding Photograper</span>
 @endsection

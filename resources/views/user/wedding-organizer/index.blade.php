@@ -1,13 +1,28 @@
-@extends('main')
+@extends('user.dashboard-layout')
 
 @section('title')
-    <title>WO | Wedding Marketplace</title>
+    <title>Dashboard | Wedding Marketplace</title>
 @endsection
 
-@section('body')
-    <h2>Home Wedding Organizer</h2>
-    <form action="{{ route('keluar') }}" method="post">
-        @csrf
-        <button type="submit">Keluar</button>
-    </form>
+@section('sidebar')
+    <a class="w-full bg-slate-50 p-2 rounded"
+        href="#">
+        <i class="fa-solid fa-house"></i>
+        Dashboard
+    </a>
+    <a class="w-full bg-slate-50 p-2 rounded"
+        href="#">
+        <i class="fa-solid fa-house"></i>
+        Asd
+    </a>
+@endsection
+
+@section('content')
+    <div>
+        <h2>Heading</h2>
+    </div>
+
+    <div>
+        <span>Wedding Organizer</span>
+    </div>
 @endsection

@@ -10,37 +10,53 @@ Route::get('/', function () {
     return redirect('/masuk');
 });
 
-Route::middleware(['guest'])->group(function() {
-    Route::get ('/masuk',                    [UserController::class, 'ke_masuk'])            ->name('ke_masuk');
-    Route::post('/masuk',                    [UserController::class, 'masuk'])               ->name('masuk');
+Route::controller(UserController::class)->group(function() {
 
-    Route::get ('/daftar',                   [UserController::class, 'ke_daftar'])           ->name('ke_daftar');
-    Route::post('/daftar',                   [UserController::class, 'daftar'])              ->name('daftar');
-    Route::get ('/verifikasi',               [UserController::class, 'verifikasi'])          ->name('verifikasi');
+    Route::middleware(['guest'])->group(function() {
+        Route::get ('/masuk',                    'ke_masuk')            ->name('ke_masuk');
+        Route::post('/masuk',                    'masuk')               ->name('masuk');
 
-    Route::get ('/lupa-password',            [UserController::class, 'ke_lupa_password'])    ->name('ke_lupa_password');
-    Route::post('/lupa-password',            [UserController::class, 'lupa_password'])       ->name('lupa_password');
-    Route::get ('/verifikasi-ubah-password', [UserController::class, 'ke_ubah_password'])    ->name('ke_ubah_password');
-    Route::post('/ubah-password',            [UserController::class, 'ubah_password'])       ->name('ubah_password');
+        Route::get ('/daftar',                   'ke_daftar')           ->name('ke_daftar');
+        Route::post('/daftar',                   'daftar')              ->name('daftar');
+        Route::get ('/verifikasi',               'verifikasi')          ->name('verifikasi');
 
-    Route::get('/auth/google',               [UserController::class, 'redirectToGoogle'])    ->name('google_login');
-    Route::get('/auth/google/callback',      [UserController::class, 'handleGoogleCallback'])->name('google_callback');
+        Route::get ('/lupa-password',            'ke_lupa_password')    ->name('ke_lupa_password');
+        Route::post('/lupa-password',            'lupa_password')       ->name('lupa_password');
+        Route::get ('/verifikasi-ubah-password', 'ke_ubah_password')    ->name('ke_ubah_password');
+        Route::post('/ubah-password',            'ubah_password')       ->name('ubah_password');
+
+        Route::get('/auth/google',               'redirectToGoogle')    ->name('google_login');
+        Route::get('/auth/google/callback',      'handleGoogleCallback')->name('google_callback');
+    });
+
+    Route::middleware(['auth'])->group(function() {
+        Route::get ('/pilih-peran', 'ke_pilih_peran')->name('ke_pilih_peran');
+        Route::post('/pilih-peran', 'pilih_peran')   ->name('pilih_peran');
+        Route::post('/keluar',      'keluar')        ->name('keluar');
+    });
+
 });
 
-Route::middleware(['auth'])->group(function() {
-    Route::get ('/pilih-peran', [UserController::class, 'ke_pilih_peran'])->name('ke_pilih_peran');
-    Route::post('/pilih-peran', [UserController::class, 'pilih_peran'])   ->name('pilih_peran');
-    Route::post('/keluar',      [UserController::class, 'keluar'])        ->name('keluar');
+Route::name('wedding-couple.')
+    ->prefix('wedding-couple')
+    ->middleware('wedding-couple')
+    ->controller(WeddingCoupleController::class)->group(function() {
+
+    Route::get('/', 'index')->name('index');
 });
 
-Route::prefix('wedding-couple')->name('wedding-couple.')->middleware('wedding-couple')->group(function() {
-    Route::get('/', [WeddingCoupleController::class, 'index'])->name('index');
+Route::name('wedding-organizer.')
+    ->prefix('wedding-organizer')
+    ->middleware('wedding-organizer')
+    ->controller(WeddingOrganizerController::class)->group(function() {
+
+    Route::get('/', 'index')->name('index');
 });
 
-Route::prefix('wedding-organizer')->name('wedding-organizer.')->middleware('wedding-organizer')->group(function() {
-    Route::get('/', [WeddingOrganizerController::class, 'index'])->name('index');
-});
+Route::name('wedding-photographer.')
+    ->prefix('wedding-photographer')
+    ->middleware('wedding-photographer')
+    ->controller(WeddingPhotographerController::class)->group(function() {
 
-Route::prefix('wedding-photographer')->name('wedding-photographer.')->middleware('wedding-photographer')->group(function() {
-    Route::get('/', [WeddingPhotographerController::class, 'index'])->name('index');
+    Route::get('/', 'index')->name('index');
 });

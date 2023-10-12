@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at'	=> now(),
             'password'	=> Hash::make('password'),
             'verification_code' => sha1(time()),
+            'role' => 'super-admin',
         ]);
     }
 }

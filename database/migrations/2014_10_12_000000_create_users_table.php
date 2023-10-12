@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['wedding-couple','wedding-organizer','wedding-photographer'])->nullable();
+            $table->enum('role', ['wedding-couple','wedding-organizer','wedding-photographer', 'admin', 'super-admin'])->nullable();
             $table->string('verification_code')->nullable();
             $table->string('google_id')->nullable();
             $table->rememberToken();

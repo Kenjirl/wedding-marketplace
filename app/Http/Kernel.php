@@ -66,5 +66,7 @@ class Kernel extends HttpKernel
         'wedding-couple' => \App\Http\Middleware\isWeddingCouple::class,
         'wedding-organizer' => \App\Http\Middleware\isWeddingOrganizer::class,
         'wedding-photographer' => \App\Http\Middleware\isWeddingPhotographer::class,
+        'admin' => \App\Http\Middleware\isAdmin::class,
+        'super-admin' => \App\Http\Middleware\isSuperAdmin::class,
     ];
 }
