@@ -14,5 +14,6 @@ class WOBooking extends Model
         'wedding_organizer_id',
         'status',
         'bukti_bayar',
+        'tanggal',
     ];
 }

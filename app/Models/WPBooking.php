@@ -14,5 +14,6 @@ class WPBooking extends Model
         'wedding_photographer_id',
         'status',
         'bukti_bayar',
+        'tanggal',
     ];
 }

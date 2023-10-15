@@ -19,5 +19,6 @@ class WeddingOrganizer extends Model
         'long',
         'basis_operasi',
         'kota_operasi',
+        'foto_profil',
     ];
 }

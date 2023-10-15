@@ -20,10 +20,11 @@ return new class extends Migration
             $table->string('nama_perusahaan');
             $table->string('no_telp');
             $table->string('alamat');
-            $table->string('lat');
-            $table->string('long');
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             $table->enum('basis_operasi', ['Hanya di Dalam Kota', 'Bisa ke Luar Kota']);
             $table->string('kota_operasi');
+            $table->string('foto_profil')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

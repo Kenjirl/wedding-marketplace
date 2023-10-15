@@ -17,6 +17,7 @@ module.exports = {
                 'varela': ['"Varela Round"', 'cursive'],
                 'great-vibes': ['"Great Vibes"', 'cursive'],
                 'sacramento': ['"Sacramento"', 'cursive'],
+                'quicksand': ['"Quicksand"', 'cursive'],
             },
         },
     },

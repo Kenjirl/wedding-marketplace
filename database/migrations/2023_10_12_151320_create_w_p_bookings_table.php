@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('wedding_photographer_id');
             $table->enum('status', ['diproses', 'ditolak', 'diterima', 'selesai']);
             $table->string('bukti_bayar');
+            $table->date('tanggal');
             $table->timestamps();
 
             $table->foreign('wedding_couple_id')->references('id')->on('wedding_couples')->onUpdate('cascade')->onDelete('cascade');

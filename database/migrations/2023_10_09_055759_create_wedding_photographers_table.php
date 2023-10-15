@@ -20,9 +20,10 @@ return new class extends Migration
             $table->string('no_telp');
             $table->enum('gender', ['Pria', 'Wanita'])->nullable();
             $table->enum('basis_operasi', ['Hanya di Dalam Kota', 'Bisa ke Luar Kota']);
-            $table->string('kota_operasi');
-            $table->enum('status', ['Pribadi', 'Organisasi']);
+            $table->string('kota_operasi')->nullable();
+            $table->enum('status', ['Individu', 'Organisasi']);
             $table->string('alamat')->nullable();
+            $table->string('foto_profil')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

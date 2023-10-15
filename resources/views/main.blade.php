@@ -28,6 +28,9 @@
     {{-- FONT AWESOME ICON --}}
     <script src="https://kit.fontawesome.com/5b8fa639bb.js" crossorigin="anonymous"></script>
 
+    {{-- ANIMATE CSS --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
     @yield('title')
 
     {{-- GOOGLE FONT --}}
@@ -35,7 +38,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
 <body>
     @yield('body')

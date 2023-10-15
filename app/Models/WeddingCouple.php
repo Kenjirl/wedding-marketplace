@@ -14,5 +14,6 @@ class WeddingCouple extends Model
         'nama',
         'no_telp',
         'gender',
+        'foto_profil',
     ];
 }
