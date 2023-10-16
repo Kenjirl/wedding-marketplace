@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WeddingCouple extends Model
 {
@@ -16,4 +17,8 @@ class WeddingCouple extends Model
         'gender',
         'foto_profil',
     ];
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

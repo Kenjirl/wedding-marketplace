@@ -20,6 +20,5 @@ class WeddingGuest extends Model
         'alasan',
         'jumlah',
         'pesan',
-        'deleted',
     ];
 }

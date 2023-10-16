@@ -10,8 +10,8 @@ class WOBooking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'wedding_couple_id',
-        'wedding_organizer_id',
+        'wedding_invitation_id',
+        'w_o_plan_id',
         'status',
         'bukti_bayar',
         'tanggal',

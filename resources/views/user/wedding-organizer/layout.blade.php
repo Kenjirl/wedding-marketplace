@@ -5,7 +5,7 @@
 @endsection
 
 @section('menu')
-    @include('user.wedding-photographer.menu')
+    @include('user.wedding-organizer.menu')
 @endsection
 
 @section('h1')
@@ -14,12 +14,12 @@
 
 @section('profil')
     <a class="w-full p-2 bg-white hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-        href="{{ route('wedding-photographer.ke_profil') }}">
+        href="{{ route('wedding-organizer.ke_profil') }}">
         <i class="fa-regular fa-user"></i>
         Profil
     </a>
 @endsection
 
 @section('content')
-    <span>Wedding Photograper</span>
+    <span>Wedding Organizer</span>
 @endsection

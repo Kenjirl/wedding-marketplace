@@ -14,7 +14,5 @@ class WPPortofolio extends Model
         'judul',
         'tanggal',
         'lokasi',
-        'lat',
-        'long',
     ];
 }

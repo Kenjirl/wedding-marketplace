@@ -14,7 +14,5 @@ class WOPortofolio extends Model
         'judul',
         'tanggal',
         'lokasi',
-        'lat',
-        'long',
     ];
 }

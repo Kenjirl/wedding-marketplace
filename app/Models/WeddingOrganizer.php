@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WeddingOrganizer extends Model
 {
@@ -15,10 +16,12 @@ class WeddingOrganizer extends Model
         'nama_perusahaan',
         'no_telp',
         'alamat',
-        'lat',
-        'long',
         'basis_operasi',
         'kota_operasi',
         'foto_profil',
     ];
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

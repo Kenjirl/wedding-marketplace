@@ -10,8 +10,8 @@ class WPBooking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'wedding_couple_id',
-        'wedding_photographer_id',
+        'wedding_invitation_id',
+        'w_p_plan_id',
         'status',
         'bukti_bayar',
         'tanggal',

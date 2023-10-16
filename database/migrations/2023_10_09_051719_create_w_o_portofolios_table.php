@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('judul');
             $table->date('tanggal');
             $table->string('lokasi');
-            $table->string('lat')->nullable();
-            $table->string('long')->nullable();
             $table->timestamps();
 
             $table->foreign('wedding_organizer_id')->references('id')->on('wedding_organizers')->onUpdate('cascade')->onDelete('cascade');

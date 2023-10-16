@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeddingCouple\WCController;
+use App\Http\Controllers\WeddingCouple\WCProfilController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
+use App\Http\Controllers\WeddingOrganizer\WOProfilController;
 use App\Http\Controllers\WeddingPhotographer\WPController;
 use App\Http\Controllers\WeddingPhotographer\WPProfilController;
 use Illuminate\Support\Facades\Route;
@@ -40,19 +42,39 @@ Route::controller(UserController::class)->group(function() {
 
 Route::name('wedding-couple.')
     ->prefix('wedding-couple')
-    ->middleware('wedding-couple')
-    ->controller(WCController::class)->group(function() {
+    ->middleware('wedding-couple')->group(function() {
 
-    Route::get('/', 'index')->name('index');
+    Route::controller(WCController::class)->group(function() {
+        Route::get('/', 'index')->name('index');
+    });
+
+    Route::prefix('/profil')
+        ->controller(WCProfilController::class)->group(function() {
+        Route::get ('/',              'ke_profil')       ->name('ke_profil');
+        Route::get ('/ubah-profil',   'ke_ubah_profil')  ->name('ke_ubah_profil');
+        Route::post('/ubah-profil',   'ubah_profil')     ->name('ubah_profil');
+        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+    });
 
 });
 
 Route::name('wedding-organizer.')
     ->prefix('wedding-organizer')
-    ->middleware('wedding-organizer')
-    ->controller(WOController::class)->group(function() {
+    ->middleware('wedding-organizer')->group(function() {
 
-    Route::get('/', 'index')->name('index');
+    Route::controller(WOController::class)->group(function() {
+        Route::get('/', 'index')->name('index');
+    });
+
+    Route::prefix('/profil')
+        ->controller(WOProfilController::class)->group(function() {
+        Route::get ('/',              'ke_profil')       ->name('ke_profil');
+        Route::get ('/ubah-profil',   'ke_ubah_profil')  ->name('ke_ubah_profil');
+        Route::post('/ubah-profil',   'ubah_profil')     ->name('ubah_profil');
+        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+    });
 
 });
 
