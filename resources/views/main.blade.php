@@ -28,7 +28,7 @@
     {{-- FONT AWESOME ICON --}}
     <script src="https://kit.fontawesome.com/5b8fa639bb.js" crossorigin="anonymous"></script>
 
-    {{-- ANIMATE CSS --}}
+    {{-- ANIMATE CSS CDN --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     @yield('title')
@@ -39,6 +39,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+
+    {{-- JQUERY CDN --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
 </head>
 <body>
     @yield('body')

@@ -19,7 +19,7 @@
 
                 {{-- REGIS FORM --}}
                 <div class="w-full mt-10 font-varela">
-                    <form action="{{ route('daftar') }}" method="post">
+                    <form action="{{ route('daftar') }}" method="post" autocomplete="off">
                         @csrf
                         {{-- EMAIL --}}
                         <div class="w-100 mb-4">
@@ -116,37 +116,24 @@
 
 @section('js')
 <script>
-    const passwordField = document.getElementById('password');
-    const vPasswordField = document.getElementById('vPassword');
-    const toggleButton = document.getElementById('toggle-password-btn');
-    const btnSubmit = document.getElementById('btnSubmit');
-
     function togglePassword() {
-
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            vPasswordField.type = 'text';
-            toggleButton.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
-        } else {
-            passwordField.type = 'password';
-            vPasswordField.type = 'password';
-            toggleButton.innerHTML = '<i class="fa-regular fa-eye"></i>';
-        }
-    }
-
-    function validatePassword() {
-        const password = passwordField.value;
-        const vPassword = vPasswordField.value;
-
-        if (password === vPassword) {
-            btnSubmit.removeAttribute('disabled');
-        } else {
-            btnSubmit.setAttribute('disabled', 'disabled');
+            if ($('#password').attr('type') === 'password') {
+                $('#password').attr('type', 'text');
+                $('#vPassword').attr('type', 'text');
+                $('#toggle-password-btn').html('<i class="fa-regular fa-eye-slash"></i>');
+            } else {
+                $('#password').attr('type', 'password');
+                $('#vPassword').attr('type', 'password');
+                $('#toggle-password-btn').html('<i class="fa-regular fa-eye"></i>');
+            }
         }
 
-        if (password === '' || vPassword === '') {
-            btnSubmit.setAttribute('disabled', 'disabled');
+        function validatePassword() {
+            if ($('#password').val() === $('#vPassword').val() && $('#password').val() !== '' && $('#vPassword').val() !== '') {
+                $('#btnSubmit').removeAttr('disabled');
+            } else {
+                $('#btnSubmit').attr('disabled', 'disabled');
+            }
         }
-    }
 </script>
 @endsection

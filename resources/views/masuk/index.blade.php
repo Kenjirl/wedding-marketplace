@@ -59,7 +59,7 @@
                     @endif
 
                     {{-- FORM --}}
-                    <form action="{{ route('masuk') }}" method="post">
+                    <form action="{{ route('masuk') }}" method="post" autocomplete="off">
                         @csrf
                         {{-- EMAIL --}}
                         <div class="w-100 mb-4">
@@ -138,22 +138,19 @@
 @section('js')
 <script>
     function togglePassword() {
-        const passwordField = document.getElementById('password');
-        const toggleButton = document.getElementById('toggle-password-btn');
-
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            toggleButton.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
+        if ($('#password').attr('type') === 'password') {
+            $('#password').attr('type', 'text');
+            $('#vPassword').attr('type', 'text');
+            $('#toggle-password-btn').html('<i class="fa-regular fa-eye-slash"></i>');
         } else {
-            passwordField.type = 'password';
-            toggleButton.innerHTML = '<i class="fa-regular fa-eye"></i>';
+            $('#password').attr('type', 'password');
+            $('#vPassword').attr('type', 'password');
+            $('#toggle-password-btn').html('<i class="fa-regular fa-eye"></i>');
         }
     }
 
     function toggleAlert() {
-        const alertBoard = document.getElementById('alertBoard');
-
-        alertBoard.classList.add('hidden');
+        $('#alertBoard').addClass('hidden');
     }
 </script>
 @endsection

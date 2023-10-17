@@ -136,37 +136,28 @@
     {{-- GENDER SCRIPT --}}
     <script>
         function showGenderOptions() {
-            const genderOptions = document.getElementById('genderOptions');
-            genderOptions.classList.remove('hidden');
-            genderOptions.classList.add('flex');
+            $('#genderOptions').removeClass('hidden').addClass('flex');
         }
 
         function hideGenderOptions() {
-            const genderOptions = document.getElementById('genderOptions');
-            genderOptions.classList.remove('flex');
-            genderOptions.classList.add('hidden');
+            $('#genderOptions').removeClass('flex').addClass('hidden');
         }
 
         function changeGenderOptions() {
-            const genderInput = document.getElementById('gender');
-            const genderOptions = document.getElementById('genderOptions');
-            const genderButtons = genderOptions.querySelectorAll('button');
-            const filterValue = genderInput.value.toLowerCase();
-
-            for (const button of genderButtons) {
-                const buttonFilter = button.getAttribute('data-value').toLowerCase();
+            const filterValue = $('#gender').val().toLowerCase();
+            $('#genderOptions button').each(function() {
+                const buttonFilter = $(this).data('value').toLowerCase();
                 if (buttonFilter.includes(filterValue)) {
-                    button.classList.remove('hidden');
+                    $(this).removeClass('hidden');
                 } else {
-                    button.classList.add('hidden');
+                    $(this).addClass('hidden');
                 }
-            }
+            });
         }
 
         function selectGender(button) {
-            const genderInput = document.getElementById('gender');
             const dataValue = button.getAttribute('data-value');
-            genderInput.value = dataValue;
+            $('#gender').val(dataValue);
             hideGenderOptions();
         }
     </script>
@@ -174,9 +165,7 @@
     <script>
         document.addEventListener('click', function(event) {
             const genderOptions = document.getElementById('genderOptions');
-
             const genderInput = document.getElementById('gender');
-
             if (!genderOptions.classList.contains('hidden') && event.target !== genderOptions && !genderOptions.contains(event.target) && event.target !== genderInput) {
                 hideGenderOptions();
             }

@@ -89,14 +89,10 @@
 @section('js')
     <script>
         function openProfile() {
-            const profileLayout = document.getElementById('profileLayout');
-
-            if (profileLayout.classList.contains("hidden")) {
-                profileLayout.classList.remove("hidden");
-                profileLayout.classList.add("flex");
+            if ($('#profileLayout').hasClass("hidden")) {
+                $('#profileLayout').removeClass("hidden").addClass("flex");
             } else {
-                profileLayout.classList.remove("flex");
-                profileLayout.classList.add("hidden");
+                $('#profileLayout').removeClass("flex").addClass("hidden");
             }
         }
     </script>

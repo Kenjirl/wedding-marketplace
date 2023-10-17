@@ -63,41 +63,29 @@
 
 @section('js')
 <script>
-    const inputRole = document.getElementById('role');
-    const btnSubmit = document.getElementById('btnSubmit');
-    const fieldKeterangan = document.getElementById('keterangan');
-
     function selectRole(role) {
-        const btnRole = document.getElementById(role);
+        $("button:not(#btnSubmit)").removeClass("bg-pink text-white").addClass("text-pink");
+        $('#' + role).addClass("bg-pink text-white");
 
-        let buttons = document.querySelectorAll("button:not(#btnSubmit)");
-        buttons.forEach(function(btn) {
-            btn.classList.remove("bg-pink", "text-white");
-            btn.classList.add("text-pink");
-        });
-
-        btnRole.classList.add("bg-pink", "text-white");
-
-        inputRole.value = role;
-
-        btnSubmit.disabled = (role === "");
+        $('#role').val(role);
+        $('#btnSubmit').prop('disabled', role === '');
 
         if (role === 'wedding-couple') {
-            fieldKeterangan.innerHTML = `
+            $('#keterangan').html(`
                 Sebagai <b class="text-pink">Wedding Couple</b>,
                 anda dapat mencari <b>Wedding Organizer</b> dan <b>Wedding Photographer</b>, membuat dan mengatur undangan, serta mengelola tamu undangan untuk pernikahan anda.
-                `
-            } else if (role === 'wedding-organizer') {
-                fieldKeterangan.innerHTML = `
+            `);
+        } else if (role === 'wedding-organizer') {
+            $('#keterangan').html(`
                 Sebagai <b class="text-pink">Wedding Organizer</b>,
                 anda dapat mengatur profil, menambahkan portofolio, dan menawarkan paket layanan kepada <b>Wedding Couple</b>.
-                `
-            } else {
-                fieldKeterangan.innerHTML = `
+            `);
+        } else {
+            $('#keterangan').html(`
                 Sebagai <b class="text-pink">Wedding Photographer</b>,
                 anda dapat mengatur profil, menambahkan portofolio, dan menawarkan paket layanan kepada <b>Wedding Couple</b>.
-            `
+            `);
         }
     }
-    </script>
+</script>
 @endsection
