@@ -31,34 +31,9 @@
                 <div class="relative w-fit">
                     <button class="flex items-center justify-center gap-4 px-4 py-2 hover:bg-slate-200 focus:outline-none focus:bg-slate-200 active:bg-slate-400 transition-colors rounded-md"
                         type="button" onclick="openProfile()">
-                        @if (auth()->user()->name)
-                            <span>{{ auth()->user()->name }}</span>
-                        @else
-                            <span>User</span>
-                        @endif
+                        <span>{{ auth()->user()->name }}</span>
 
-                        @if (auth()->user()->w_photographer)
-                            @if (auth()->user()->w_photographer->foto_profil)
-                                <img class="w-[40px] aspect-square object-cover object-center rounded-full"
-                                    src="{{ asset('img/Foto Profil.jpg') }}" alt="">
-                            @elseif(!auth()->user()->name)
-                                <span class="w-[40px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white">
-                                    U
-                                </span>
-                            @else
-                                <span class="w-[40px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white">
-                                    {{ substr(auth()->user()->name, 0, 1) }}
-                                </span>
-                            @endif
-                        @elseif(!auth()->user()->name)
-                            <span class="w-[40px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white">
-                                U
-                            </span>
-                        @else
-                            <span class="w-[40px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white">
-                                {{ substr(auth()->user()->name, 0, 1) }}
-                            </span>
-                        @endif
+                        @yield('tombol-profil')
                     </button>
 
                     <div class="absolute bottom-[calc(-5em+3px-2rem)] right-0 w-full bg-white border-4 border-slate-200 rounded hidden flex-col items-center justify-center animate__animated animate__flipInX z-50"

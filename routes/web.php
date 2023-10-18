@@ -50,11 +50,13 @@ Route::name('wedding-couple.')
 
     Route::prefix('/profil')
         ->controller(WCProfilController::class)->group(function() {
-        Route::get ('/',              'ke_profil')       ->name('ke_profil');
-        Route::get ('/ubah-profil',   'ke_ubah_profil')  ->name('ke_ubah_profil');
-        Route::post('/ubah-profil',   'ubah_profil')     ->name('ubah_profil');
-        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+        Route::get ('/',                 'ke_profil')       ->name('ke_profil');
+        Route::get ('/ubah-profil',      'ke_ubah_profil')  ->name('ke_ubah_profil');
+        Route::post('/ubah-profil',      'ubah_profil')     ->name('ubah_profil');
+        Route::get ('/ubah-password',    'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password',    'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto-profil', 'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto-profil', 'ubah_foto')       ->name('ubah_foto');
     });
 
 });
@@ -69,11 +71,13 @@ Route::name('wedding-organizer.')
 
     Route::prefix('/profil')
         ->controller(WOProfilController::class)->group(function() {
-        Route::get ('/',              'ke_profil')       ->name('ke_profil');
-        Route::get ('/ubah-profil',   'ke_ubah_profil')  ->name('ke_ubah_profil');
-        Route::post('/ubah-profil',   'ubah_profil')     ->name('ubah_profil');
-        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+        Route::get ('/',                 'ke_profil')       ->name('ke_profil');
+        Route::get ('/ubah-profil',      'ke_ubah_profil')  ->name('ke_ubah_profil');
+        Route::post('/ubah-profil',      'ubah_profil')     ->name('ubah_profil');
+        Route::get ('/ubah-password',    'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password',    'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto-profil', 'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto-profil', 'ubah_foto')       ->name('ubah_foto');
     });
 
 });
@@ -88,11 +92,13 @@ Route::name('wedding-photographer.')
 
     Route::prefix('/profil')
         ->controller(WPProfilController::class)->group(function() {
-        Route::get ('/',              'ke_profil')       ->name('ke_profil');
-        Route::get ('/ubah-profil',   'ke_ubah_profil')  ->name('ke_ubah_profil');
-        Route::post('/ubah-profil',   'ubah_profil')     ->name('ubah_profil');
-        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+        Route::get ('/',                 'ke_profil')       ->name('ke_profil');
+        Route::get ('/ubah-profil',      'ke_ubah_profil')  ->name('ke_ubah_profil');
+        Route::post('/ubah-profil',      'ubah_profil')     ->name('ubah_profil');
+        Route::get ('/ubah-password',    'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password',    'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto-profil', 'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto-profil', 'ubah_foto')       ->name('ubah_foto');
     });
 
 });

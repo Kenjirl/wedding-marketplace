@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\WeddingCouple;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class WCProfilController extends Controller
 {
@@ -91,5 +92,35 @@ class WCProfilController extends Controller
 
         // Gagal save Password
         return redirect()->route('wedding-couple.ke_profil')->with('gagal', 'Maaf, telah terjadi kesalahan. Password Anda belum bisa diubah');
+    }
+
+    public function ke_ubah_foto() {
+        return view('user.wedding-couple.profil.ubah-foto');
+    }
+
+    public function ubah_foto(Request $req) {
+        $req->validate([
+            'foto_profil' => 'required|image'
+        ]);
+
+        if ($req->hasFile('foto_profil')) {
+            $foto_profil = $req->file('foto_profil');
+
+            $foto_profil = Storage::disk('public')->putFileAs('/',
+                $foto_profil,
+                'WC/profil/'.str()->uuid() . '.' . $foto_profil->extension()
+            );
+
+            $data = WeddingCouple::where('user_id', auth()->user()->id)
+                ->update([
+                    'foto_profil' => $foto_profil,
+                ]);
+
+            if ($data) {
+                return redirect()->route('wedding-couple.ke_profil')->with('sukses', 'Foto profil anda berhasil diubah');
+            }
+        }
+
+        return redirect()->route('wedding-couple.ke_profil')->with('gagal', 'Maaf, telah terjadi kesalahan. Foto profil Anda belum bisa diubah');
     }
 }

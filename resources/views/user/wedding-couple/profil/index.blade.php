@@ -9,9 +9,26 @@
 @section('content')
     {{-- DATA DIRI --}}
     <div class="w-100 flex gap-8">
-        <div>
-            <img class="w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
-                src="{{ asset('img/Foto Profil.jpg') }}" alt="Foto Profil">
+        <div class="w-fit flex flex-col items-center justify-start gap-4">
+            @if (auth()->user()->w_couple && auth()->user()->w_couple->foto_profil)
+                <img class="w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
+                    src="{{ asset(auth()->user()->w_couple->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
+            @else
+                <span class="w-[200px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
+                    id="fotoProfilText">
+                    {{ substr(auth()->user()->name, 0, 1) }}
+                </span>
+                <img class="hidden w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
+                    src="" alt="Foto Profil" id="fotoProfil">
+            @endif
+
+            @if (auth()->user()->w_photographer)
+                <a class="w-full py-2 font-semibold outline-none text-center text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                    href="{{ route('wedding-couple.ke_ubah_foto') }}" id="gantiFotoBtn">
+                    <i class="fa-regular fa-image"></i>
+                    <span>Ganti Foto</span>
+                </a>
+            @endif
         </div>
 
         <div class="w-[50%]">
