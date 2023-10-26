@@ -68,5 +68,8 @@ class Kernel extends HttpKernel
         'wedding-photographer' => \App\Http\Middleware\isWeddingPhotographer::class,
         'admin' => \App\Http\Middleware\isAdmin::class,
         'super-admin' => \App\Http\Middleware\isSuperAdmin::class,
+        'wc-profil' => \App\Http\Middleware\hasWCProfil::class,
+        'wo-profil' => \App\Http\Middleware\hasWOProfil::class,
+        'wp-profil' => \App\Http\Middleware\hasWPProfil::class,
     ];
 }

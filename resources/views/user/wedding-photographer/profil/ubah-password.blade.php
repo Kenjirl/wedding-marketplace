@@ -9,7 +9,7 @@
 @section('content')
     {{-- FORM GANTI PASSWORD --}}
     <div class="w-[50%] p-4">
-        <form class="m-0" action="{{ route('wedding-photographer.ubah_password') }}" method="post">
+        <form class="m-0" action="{{ route('wedding-photographer.profil.ubah_password') }}" method="post">
             @csrf
             {{-- PASSWORD --}}
             <div class="w-100 mb-4">
@@ -53,7 +53,7 @@
             {{-- SUBMIT BUTTON --}}
             <div class="w-100 flex items-center justify-end gap-4">
                 <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                    href="{{ route('wedding-photographer.ke_profil') }}">
+                    href="{{ route('wedding-photographer.profil.index') }}">
                     <i class="fa-solid fa-arrow-left-long"></i>
                     <span>Kembali</span>
                 </a>

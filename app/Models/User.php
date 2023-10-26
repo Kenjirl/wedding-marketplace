@@ -46,6 +46,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function admin(): HasOne {
+        return $this->hasOne(Admin::class, 'user_id');
+    }
+
     public function w_couple(): HasOne {
         return $this->hasOne(WeddingCouple::class, 'user_id');
     }

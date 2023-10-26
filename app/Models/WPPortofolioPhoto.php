@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WPPortofolioPhoto extends Model
 {
@@ -13,4 +14,8 @@ class WPPortofolioPhoto extends Model
         'w_p_portofolio_id',
         'url',
     ];
+
+    public function portofolio(): BelongsTo {
+        return $this->belongsTo(WPPortofolio::class, 'w_p_portofolio_id');
+    }
 }

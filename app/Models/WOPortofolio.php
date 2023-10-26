@@ -11,8 +11,10 @@ class WOPortofolio extends Model
 
     protected $fillable = [
         'wedding_organizer_id',
+        'admin_id',
         'judul',
         'tanggal',
         'lokasi',
+        'status',
     ];
 }

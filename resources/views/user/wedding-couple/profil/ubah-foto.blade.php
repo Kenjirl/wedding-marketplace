@@ -7,7 +7,7 @@
 @section('h1', 'Profil > Ubah Foto Profil')
 
 @section('content')
-    <form action="{{ route('wedding-couple.ubah_foto') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('wedding-couple.profil.ubah_foto') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="w-full p-4 flex item-center justify-evenly">
             {{-- KIRI --}}
@@ -50,7 +50,7 @@
 
         <div class="w-100 mt-8 flex items-center justify-end gap-4">
             <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                href="{{ route('wedding-couple.ke_profil') }}">
+                href="{{ route('wedding-couple.profil.index') }}">
                 <i class="fa-solid fa-arrow-left-long"></i>
                 <span>Kembali</span>
             </a>

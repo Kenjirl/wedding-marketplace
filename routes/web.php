@@ -1,11 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\ACategoryController;
+use App\Http\Controllers\Admin\AController;
+use App\Http\Controllers\Admin\AProfilController;
+use App\Http\Controllers\SuperAdmin\SAAdminController;
+use App\Http\Controllers\SuperAdmin\SAController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeddingCouple\WCController;
 use App\Http\Controllers\WeddingCouple\WCProfilController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
 use App\Http\Controllers\WeddingOrganizer\WOProfilController;
 use App\Http\Controllers\WeddingPhotographer\WPController;
+use App\Http\Controllers\WeddingPhotographer\WPPortofolioController;
 use App\Http\Controllers\WeddingPhotographer\WPProfilController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +46,55 @@ Route::controller(UserController::class)->group(function() {
 
 });
 
+Route::name('super-admin.')
+    ->prefix('super-admin')
+    ->middleware('super-admin')->group(function() {
+
+    Route::controller(SAController::class)->group(function() {
+        Route::get('/', 'index')->name('index');
+    });
+
+    Route::name('daftar-admin.')->prefix('/daftar-admin')
+        ->controller(SAAdminController::class)->group(function() {
+        Route::get ('/',           'ke_daftar')->name('ke_daftar');
+        Route::get ('/tambah',     'ke_tambah')->name('ke_tambah');
+        Route::post('/tambah',     'tambah')   ->name('tambah');
+        Route::get ('/ubah/{id}',  'ke_ubah')  ->name('ke_ubah');
+        Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
+        Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+    });
+
+});
+
+Route::name('admin.')
+    ->prefix('admin')
+    ->middleware('admin')->group(function() {
+
+    Route::controller(AController::class)->group(function() {
+        Route::get('/', 'index')->name('index');
+    });
+
+    Route::name('profil.')->prefix('/profil')
+        ->controller(AProfilController::class)->group(function() {
+        Route::get ('/',              'index')           ->name('index');
+        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
+        Route::post('/ubah',          'ubah')            ->name('ubah');
+        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+    });
+
+    Route::name('kategori-pernikahan.')->prefix('/kategori-pernikahan')
+        ->controller(ACategoryController::class)->group(function() {
+        Route::get ('/',          'index')    ->name('index');
+        Route::get ('/tambah',    'ke_tambah')->name('ke_tambah');
+        Route::post('/tambah',    'tambah')   ->name('tambah');
+        Route::get ('/ubah/{id}', 'ke_ubah')  ->name('ke_ubah');
+        Route::post('/ubah{id}',  'ubah')     ->name('ubah');
+        Route::post('/hapus{id}', 'hapus')    ->name('hapus');
+    });
+
+});
+
 Route::name('wedding-couple.')
     ->prefix('wedding-couple')
     ->middleware('wedding-couple')->group(function() {
@@ -48,15 +103,20 @@ Route::name('wedding-couple.')
         Route::get('/', 'index')->name('index');
     });
 
-    Route::prefix('/profil')
+    Route::name('profil.')->prefix('/profil')
         ->controller(WCProfilController::class)->group(function() {
-        Route::get ('/',                 'ke_profil')       ->name('ke_profil');
-        Route::get ('/ubah-profil',      'ke_ubah_profil')  ->name('ke_ubah_profil');
-        Route::post('/ubah-profil',      'ubah_profil')     ->name('ubah_profil');
-        Route::get ('/ubah-password',    'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password',    'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto-profil', 'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto-profil', 'ubah_foto')       ->name('ubah_foto');
+        Route::get ('/',              'index')           ->name('index');
+        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
+        Route::post('/ubah',          'ubah')            ->name('ubah');
+        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto',     'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto',     'ubah_foto')       ->name('ubah_foto');
+    });
+
+    // Hanya bisa diakses jika sudah melengkapi profil wedding couple
+    Route::middleware('wc-profil')->group(function() {
+
     });
 
 });
@@ -69,15 +129,20 @@ Route::name('wedding-organizer.')
         Route::get('/', 'index')->name('index');
     });
 
-    Route::prefix('/profil')
+    Route::name('profil.')->prefix('/profil')
         ->controller(WOProfilController::class)->group(function() {
-        Route::get ('/',                 'ke_profil')       ->name('ke_profil');
-        Route::get ('/ubah-profil',      'ke_ubah_profil')  ->name('ke_ubah_profil');
-        Route::post('/ubah-profil',      'ubah_profil')     ->name('ubah_profil');
-        Route::get ('/ubah-password',    'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password',    'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto-profil', 'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto-profil', 'ubah_foto')       ->name('ubah_foto');
+        Route::get ('/',              'index')           ->name('index');
+        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
+        Route::post('/ubah',          'ubah')            ->name('ubah');
+        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto',     'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto',     'ubah_foto')       ->name('ubah_foto');
+    });
+
+    // Hanya bisa diakses jika sudah melengkapi profil wedding organizer
+    Route::middleware('wo-profil')->group(function() {
+
     });
 
 });
@@ -90,15 +155,30 @@ Route::name('wedding-photographer.')
         Route::get('/', 'index')->name('index');
     });
 
-    Route::prefix('/profil')
+    Route::name('profil.')->prefix('/profil')
         ->controller(WPProfilController::class)->group(function() {
-        Route::get ('/',                 'ke_profil')       ->name('ke_profil');
-        Route::get ('/ubah-profil',      'ke_ubah_profil')  ->name('ke_ubah_profil');
-        Route::post('/ubah-profil',      'ubah_profil')     ->name('ubah_profil');
-        Route::get ('/ubah-password',    'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password',    'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto-profil', 'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto-profil', 'ubah_foto')       ->name('ubah_foto');
+        Route::get ('/',              'index')           ->name('index');
+        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
+        Route::post('/ubah',          'ubah')            ->name('ubah');
+        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto',     'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto',     'ubah_foto')       ->name('ubah_foto');
+    });
+
+    // Hanya bisa diakses jika sudah melengkapi profil wedding photographer
+    Route::middleware('wp-profil')->group(function() {
+
+        Route::name('portofolio.')->prefix('/portofolio')
+            ->controller(WPPortofolioController::class)->group(function() {
+            Route::get ('/',           'index')    ->name('index');
+            Route::get ('/tambah',     'ke_tambah')->name('ke_tambah');
+            Route::post('/tambah',     'tambah')   ->name('tambah');
+            Route::get ('/ubah/{id}',  'ke_ubah')  ->name('ke_ubah');
+            Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
+            Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+        });
+
     });
 
 });

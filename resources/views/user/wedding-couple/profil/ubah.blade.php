@@ -16,7 +16,7 @@
     </div>
 
     <div class="w-[50%]">
-        <form action="{{ route('wedding-couple.ubah_profil') }}" method="post" autocomplete="off">
+        <form action="{{ route('wedding-couple.profil.ubah') }}" method="post" autocomplete="off">
             @csrf
             {{-- ATAS --}}
             <div class="w-100 flex items-start justify-between gap-8">
@@ -28,7 +28,7 @@
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Nama
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="nama" id="nama" placeholder="Budi Pekerti"
                                 required
                                 value="{{ old('nama', auth()->user()->w_couple ? auth()->user()->w_couple->nama : '') }}">
@@ -48,7 +48,7 @@
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('username') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Nama Pengguna
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 @error('username') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('username') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="username" id="username" placeholder="Budi123"
                                 required
                                 value="{{ old('username', auth()->user()->name) }}">
@@ -68,7 +68,7 @@
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('no_telp') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Telepon
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 @error('no_telp') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_telp') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="number" name="no_telp" id="no_telp" placeholder="081234567890"
                                 required
                                 value="{{ old('no_telp', auth()->user()->w_couple ? auth()->user()->w_couple->no_telp : '') }}">
@@ -88,7 +88,7 @@
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('gender') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Gender
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 @error('gender') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="gender" id="gender" placeholder="Pria/Wanita" onkeyup="changeGenderOptions()" onfocus="showGenderOptions()"
                                 required
                                 value="{{ old('gender', auth()->user()->w_couple ? auth()->user()->w_couple->gender : '') }}">
@@ -119,7 +119,7 @@
             {{-- BUTTON --}}
             <div class="w-100 mt-4 flex items-center justify-end gap-4">
                 <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                    href="{{ route('wedding-couple.ke_profil') }}">
+                    href="{{ route('wedding-couple.profil.index') }}">
                     <i class="fa-solid fa-arrow-left-long"></i>
                     <span>Kembali</span>
                 </a>

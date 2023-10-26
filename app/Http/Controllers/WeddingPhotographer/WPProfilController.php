@@ -14,25 +14,23 @@ use Illuminate\Support\Str;
 
 class WPProfilController extends Controller
 {
-    public function ke_profil() {
+    public function index() {
         return view('user.wedding-photographer.profil.index');
     }
 
-    public function ke_ubah_profil() {
+    public function ke_ubah() {
         $provinsi       = '';
         $kota           = '';
         $kecamatan      = '';
         $kelurahan      = '';
         $alamat_detail  = '';
 
-        if (auth()->user()->w_photographer) {
-            if (auth()->user()->w_photographer->alamat) {
-                $alamatArray = explode(', ', auth()->user()->w_photographer->alamat);
-                list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
-            }
+        if (auth()->user()->w_photographer && auth()->user()->w_photographer->alamat) {
+            $alamatArray = explode(', ', auth()->user()->w_photographer->alamat);
+            list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
         }
 
-        return view('user.wedding-photographer.profil.ubah-profil',
+        return view('user.wedding-photographer.profil.ubah',
                     compact(
                         'provinsi',
                         'kota',
@@ -42,7 +40,7 @@ class WPProfilController extends Controller
                     ));
     }
 
-    public function ubah_profil(ProfilRequest $req) {
+    public function ubah(ProfilRequest $req) {
         $req->validated();
 
         $gender = null;
@@ -93,10 +91,10 @@ class WPProfilController extends Controller
         }
 
         if ($data) {
-            return redirect()->route('wedding-photographer.ke_profil')->with('sukses', 'Data diri anda berhasil diperbarui');
+            return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Data diri anda berhasil diperbarui');
         }
 
-        return redirect()->route('wedding-photographer.ke_profil')->with('gagal', 'Maaf, telah terjadi kesalahan. Data diri anda belum diperbarui');
+        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Data diri anda belum diperbarui');
     }
 
     public function ke_ubah_password() {
@@ -112,11 +110,9 @@ class WPProfilController extends Controller
             ]);
 
         if ($data) {
-            return redirect()->route('wedding-photographer.ke_profil')->with('sukses', 'Password anda berhasil diubah');
+            return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Password anda berhasil diubah');
         }
-
-        // Gagal save Password
-        return redirect()->route('wedding-photographer.ke_profil')->with('gagal', 'Maaf, telah terjadi kesalahan. Password Anda belum bisa diubah');
+        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Password Anda belum bisa diubah');
     }
 
     public function ke_ubah_foto() {
@@ -142,10 +138,9 @@ class WPProfilController extends Controller
                 ]);
 
             if ($data) {
-                return redirect()->route('wedding-photographer.ke_profil')->with('sukses', 'Foto profil anda berhasil diubah');
+                return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Foto profil anda berhasil diubah');
             }
         }
-
-        return redirect()->route('wedding-photographer.ke_profil')->with('gagal', 'Maaf, telah terjadi kesalahan. Foto profil Anda belum bisa diubah');
+        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Foto profil Anda belum bisa diubah');
     }
 }

@@ -1,15 +1,7 @@
 @extends('user.dashboard-layout')
 
-@section('title')
-    @yield('title')
-@endsection
-
 @section('menu')
     @include('user.wedding-organizer.menu')
-@endsection
-
-@section('h1')
-    @yield('h1')
 @endsection
 
 @section('tombol-profil')
@@ -25,12 +17,8 @@
 
 @section('profil')
     <a class="w-full p-2 bg-white hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-        href="{{ route('wedding-organizer.ke_profil') }}">
+        href="{{ route('wedding-organizer.profil.index') }}">
         <i class="fa-regular fa-user"></i>
         Profil
     </a>
-@endsection
-
-@section('content')
-    <span>Wedding Organizer</span>
 @endsection

@@ -7,23 +7,21 @@ $currentUrl = Request::url();
     <i class="fa-solid fa-house"></i>
     Dashboard
 </a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-solid fa-grip"></i>
-    Portofolio
-</a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-solid fa-gift"></i>
-    Layanan
-</a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-regular fa-calendar"></i>
-    Jadwal
-</a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-regular fa-comment"></i>
-    Ulasan
-</a>
+
+@if (auth()->user()->w_couple)
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        href="#">
+        <i class="fa-solid fa-dove"></i>
+        Pernikahan
+    </a>
+    <a class="w-full p-2 rounded {{ Str::contains($currentUrl, '/wedding-organizer') ? 'bg-pink text-white' : '' }} hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        href="#">
+        <i class="fa-regular fa-building"></i>
+        Wedding Organizer
+    </a>
+    <a class="w-full p-2 rounded {{ Str::contains($currentUrl, '/wedding-photographer') ? 'bg-pink text-white' : '' }} hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        href="#">
+        <i class="fa-solid fa-camera-retro"></i>
+        Wedding Photographer
+    </a>
+@endif

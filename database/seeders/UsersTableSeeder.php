@@ -17,10 +17,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'	=> 'Kencong',
-            'email'	=> 'kenji@gmail.com',
+            'name'	=> 'Super Admin',
+            'email'	=> 'superadmin@gmail.com',
             'email_verified_at'	=> now(),
-            'password'	=> Hash::make('password'),
+            'password'	=> Hash::make('adminganteng285'),
             'verification_code' => sha1(time()),
             'role' => 'super-admin',
         ]);

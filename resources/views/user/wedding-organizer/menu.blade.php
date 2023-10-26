@@ -7,23 +7,26 @@ $currentUrl = Request::url();
     <i class="fa-solid fa-house"></i>
     Dashboard
 </a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-solid fa-grip"></i>
-    Portofolio
-</a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-solid fa-gift"></i>
-    Layanan
-</a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-regular fa-calendar"></i>
-    Jadwal
-</a>
-<a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-    href="#">
-    <i class="fa-regular fa-comment"></i>
-    Ulasan
-</a>
+
+@if (auth()->user()->w_organizer)
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        href="#">
+        <i class="fa-solid fa-grip"></i>
+        Portofolio
+    </a>
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        href="#">
+        <i class="fa-solid fa-gift"></i>
+        Layanan
+    </a>
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        href="#">
+        <i class="fa-regular fa-calendar"></i>
+        Jadwal
+    </a>
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        href="#">
+        <i class="fa-regular fa-comment"></i>
+        Ulasan
+    </a>
+@endif

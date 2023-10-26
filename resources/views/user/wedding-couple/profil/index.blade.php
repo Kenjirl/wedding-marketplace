@@ -22,9 +22,9 @@
                     src="" alt="Foto Profil" id="fotoProfil">
             @endif
 
-            @if (auth()->user()->w_photographer)
+            @if (auth()->user()->w_couple)
                 <a class="w-full py-2 font-semibold outline-none text-center text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                    href="{{ route('wedding-couple.ke_ubah_foto') }}" id="gantiFotoBtn">
+                    href="{{ route('wedding-couple.profil.ke_ubah_foto') }}" id="gantiFotoBtn">
                     <i class="fa-regular fa-image"></i>
                     <span>Ganti Foto</span>
                 </a>
@@ -41,7 +41,7 @@
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             Nama
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 rounded-b focus:border-pink focus:outline-none"
+                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="nama" id="nama" placeholder="Budi Pekerti"
                             value="{{ auth()->user()->w_couple ? auth()->user()->w_couple->nama : 'Belum Terdata'  }}"
                             disabled>
@@ -52,7 +52,7 @@
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             Telepon
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 rounded-b focus:border-pink focus:outline-none"
+                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="number" name="no_telp" id="no_telp" placeholder="081234567890"
                             value="{{ auth()->user()->w_couple ? auth()->user()->w_couple->no_telp : '0800000000'  }}"
                             disabled>
@@ -63,7 +63,7 @@
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             Email
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 rounded-b focus:border-pink focus:outline-none"
+                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="email" name="email" id="email" placeholder="email@gmai.com" value="{{ auth()->user()->email }}" disabled>
                     </div>
 
@@ -72,7 +72,7 @@
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             Gender
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 rounded-b focus:border-pink focus:outline-none"
+                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="gender" id="gender" placeholder="Pria/Wanita"
                             value="{{ auth()->user()->w_couple ? auth()->user()->w_couple->gender : 'Belum Terdata'  }}"
                             disabled>
@@ -83,13 +83,13 @@
             {{-- BUTTON --}}
             <div class="w-100 mt-4 flex items-center justify-end gap-4">
                 <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                    href="{{ route('wedding-couple.ke_ubah_password') }}">
+                    href="{{ route('wedding-couple.profil.ke_ubah_password') }}">
                     <i class="fa-solid fa-lock"></i>
                     <span>Ubah Password</span>
                 </a>
 
                 <a class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                    href="{{ route('wedding-couple.ke_ubah_profil') }}">
+                    href="{{ route('wedding-couple.profil.ke_ubah') }}">
                     <i class="fa-regular fa-pen-to-square"></i>
                     <span>Ubah Profil</span>
                 </a>
