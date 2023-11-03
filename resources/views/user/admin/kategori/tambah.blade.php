@@ -14,17 +14,17 @@
                 {{-- KATEGORI --}}
                 <div class="w-100 mb-4">
                     <div class="w-100">
-                        <div class="w-100 p-2 text-xs font-bold bg-pink @error('kategori') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                        <div class="w-100 p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kategori
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kategori') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="kategori" id="kategori" placeholder="kategori"
-                            value="{{ old('kategori', '') }}"
+                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            type="text" name="nama" id="nama" placeholder="nama"
+                            value="{{ old('nama', '') }}"
                             required>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                        @error('kategori')
+                        @error('nama')
                             <i class="fa-solid fa-circle-info"></i>
                             <span>{{ $message }}</span>
                         @enderror
@@ -35,12 +35,11 @@
                 <div class="w-100 mb-4">
                     <div class="w-100">
                         <div class="w-100 p-2 text-xs font-bold bg-pink @error('keterangan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            Kategori
+                            Keterangan
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('keterangan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="keterangan" id="keterangan" placeholder="keterangan"
-                            value="{{ old('keterangan', '') }}"
-                            required>
+                        <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('keterangan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            name="keterangan" id="input" rows="3" placeholder="masukkan keterangan kategori ini"
+                            >{{ old('keterangan', '') }}</textarea>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">

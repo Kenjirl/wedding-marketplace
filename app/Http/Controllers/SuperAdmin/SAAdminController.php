@@ -43,9 +43,9 @@ class SAAdminController extends Controller
         $data2 = $admin->save();
 
         if ($data1 && $data2) {
-            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('sukses', 'Data admin berhasil ditambahkan');
+            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('sukses', 'Menambah Admin');
         }
-        return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'Terjadi kesalahan! Tidak dapat menambah data admin');
+        return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'Menambah Admin');
     }
 
     public function ke_ubah($id) {
@@ -77,9 +77,9 @@ class SAAdminController extends Controller
             ]);
 
         if ($data) {
-            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('sukses', 'Data admin berhasil diubah');
+            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('sukses', 'Mengubah Admin');
         }
-        return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'Terjadi kesalahan! Tidak dapat mengubah data admin');
+        return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'Mengubah Admin');
     }
 
     public function hapus($id) {
@@ -90,8 +90,8 @@ class SAAdminController extends Controller
         $data2 = $admin->delete();
 
         if ($data1 && $data2) {
-            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('sukses', 'Data admin berhasil dihapus');
+            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('sukses', 'Menghapus Admin');
         }
-        return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'Terjadi kesalahan! Tidak dapat menghapus data admin');
+        return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'Menghapus Admin');
     }
 }

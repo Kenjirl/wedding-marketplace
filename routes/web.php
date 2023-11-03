@@ -3,12 +3,15 @@
 use App\Http\Controllers\Admin\ACategoryController;
 use App\Http\Controllers\Admin\AController;
 use App\Http\Controllers\Admin\AProfilController;
+use App\Http\Controllers\Admin\WOrganizerController;
+use App\Http\Controllers\Admin\WPhotographerController;
 use App\Http\Controllers\SuperAdmin\SAAdminController;
 use App\Http\Controllers\SuperAdmin\SAController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeddingCouple\WCController;
 use App\Http\Controllers\WeddingCouple\WCProfilController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
+use App\Http\Controllers\WeddingOrganizer\WOPortofolioController;
 use App\Http\Controllers\WeddingOrganizer\WOProfilController;
 use App\Http\Controllers\WeddingPhotographer\WPController;
 use App\Http\Controllers\WeddingPhotographer\WPPortofolioController;
@@ -93,6 +96,20 @@ Route::name('admin.')
         Route::post('/hapus{id}', 'hapus')    ->name('hapus');
     });
 
+    Route::name('wo.portofolio.')->prefix('/wedding-organizer/portofolio')
+        ->controller(WOrganizerController::class)->group(function() {
+        Route::get ('/',              'index')      ->name('index');
+        Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
+        Route::post('/validasi{id}',  'validasi')   ->name('validasi');
+    });
+
+    Route::name('wp.portofolio.')->prefix('/wedding-photographer/portofolio')
+        ->controller(WPhotographerController::class)->group(function() {
+        Route::get ('/',              'index')      ->name('index');
+        Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
+        Route::post('/validasi{id}',  'validasi')   ->name('validasi');
+    });
+
 });
 
 Route::name('wedding-couple.')
@@ -143,6 +160,17 @@ Route::name('wedding-organizer.')
     // Hanya bisa diakses jika sudah melengkapi profil wedding organizer
     Route::middleware('wo-profil')->group(function() {
 
+        Route::name('portofolio.')->prefix('/portofolio')
+            ->controller(WOPortofolioController::class)->group(function() {
+            Route::get ('/',                'index')     ->name('index');
+            Route::get ('/tambah',          'ke_tambah') ->name('ke_tambah');
+            Route::post('/tambah',          'tambah')    ->name('tambah');
+            Route::get ('/ubah/{id}',       'ke_ubah')   ->name('ke_ubah');
+            Route::post('/ubah/{id}',       'ubah')      ->name('ubah');
+            Route::post('/hapus/{id}',      'hapus')     ->name('hapus');
+            Route::post('/hapus-foto/{id}', 'hapus_foto')->name('hapus-foto');
+        });
+
     });
 
 });
@@ -171,12 +199,13 @@ Route::name('wedding-photographer.')
 
         Route::name('portofolio.')->prefix('/portofolio')
             ->controller(WPPortofolioController::class)->group(function() {
-            Route::get ('/',           'index')    ->name('index');
-            Route::get ('/tambah',     'ke_tambah')->name('ke_tambah');
-            Route::post('/tambah',     'tambah')   ->name('tambah');
-            Route::get ('/ubah/{id}',  'ke_ubah')  ->name('ke_ubah');
-            Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
-            Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+            Route::get ('/',                'index')     ->name('index');
+            Route::get ('/tambah',          'ke_tambah') ->name('ke_tambah');
+            Route::post('/tambah',          'tambah')    ->name('tambah');
+            Route::get ('/ubah/{id}',       'ke_ubah')   ->name('ke_ubah');
+            Route::post('/ubah/{id}',       'ubah')      ->name('ubah');
+            Route::post('/hapus/{id}',      'hapus')     ->name('hapus');
+            Route::post('/hapus-foto/{id}', 'hapus_foto')->name('hapus-foto');
         });
 
     });

@@ -1,4 +1,4 @@
-@extends('user.wedding-photographer.layout')
+@extends('user.wedding-organizer.layout')
 
 @section('title')
     <title>Portofolio | Wedding Marketplace</title>
@@ -12,14 +12,14 @@
         <div class="flex items-center justify-start gap-4 overflow-x-auto">
             {{-- ADD NEW CARD --}}
             <a class="w-[calc(200px-8px)] h-[calc(244px-8px)] flex items-center justify-center border-4 border-dashed outline-none border-pink rounded-xl text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-                href="{{ route('wedding-photographer.portofolio.ke_tambah') }}">
+                href="{{ route('wedding-organizer.portofolio.ke_tambah') }}">
                 <i class="text-[2em] fa-solid fa-plus"></i>
             </a>
 
             @forelse ($latest_portofolio as $l_portofolio)
                 {{-- CARD --}}
                 <a class="w-[200px] rounded-xl outline-none hover:bg-slate-100 focus:bg-slate-100 transition-colors"
-                    href="{{ route('wedding-photographer.portofolio.ke_ubah', $l_portofolio->id) }}">
+                    href="{{ route('wedding-organizer.portofolio.ke_ubah', $l_portofolio->id) }}">
                     {{-- IMG --}}
                     <div class="w-full pt-4 px-4 flex items-end justify-center bg-slate-100 rounded-t-xl">
                         <img class="w-[200px] aspect-square object-cover object-center rounded-t-lg"
@@ -49,7 +49,7 @@
             @forelse ($portofolio as $pfolio)
                 {{-- CARD --}}
                 <a class="w-full rounded-xl outline-none hover:bg-slate-100 focus:bg-slate-100 transition-colors"
-                    href="#">
+                    href="{{ route('wedding-organizer.portofolio.ke_ubah', $pfolio->id) }}">
                     {{-- IMG --}}
                     <div class="w-full pt-4 px-4 flex items-end justify-center bg-slate-100 rounded-t-xl">
                         <img class="w-[200px] aspect-square object-cover object-center rounded-t-lg"

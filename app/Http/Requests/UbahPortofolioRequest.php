@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PortofolioRequest extends FormRequest
+class UbahPortofolioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,14 +26,12 @@ class PortofolioRequest extends FormRequest
         return [
             'judul'         => 'required|string',
             'tanggal'       => 'required|date',
-            'detail'        => 'required',
             'provinsi'      => 'string|regex:/^[a-zA-Z\s]*$/',
             'kota'          => 'string|regex:/^[a-zA-Z\s]*$/',
             'kecamatan'     => 'string|regex:/^[a-zA-Z\s]*$/',
             'kelurahan'     => 'string|regex:/^[a-zA-Z\s]*$/',
             'alamat_detail' => 'string|regex:/^[a-zA-Z\s.0-9]*$/',
-            'form-info'     => 'required|in:add,edit',
-            'foto'          => 'required_if:form-info,add|image',
+            'foto'          => 'image',
         ];
     }
 
@@ -44,7 +42,6 @@ class PortofolioRequest extends FormRequest
             'judul.string'         => 'Judul harus berupa karakter',
             'tanggal.required'     => 'Tanggal tidak boleh kosong',
             'tanggal.date'         => 'Tanggal harus menggunakan format tanggal yang benar',
-            'detail.required'      => 'Detail tidak boleh kosong',
             'provinsi.string'      => 'Provinsi harus berupa karakter',
             'provinsi.regex'       => 'Provinsi tidak boleh memuat angka dan/atau tanda baca',
             'kota.string'          => 'Kota harus berupa karakter',
@@ -55,7 +52,6 @@ class PortofolioRequest extends FormRequest
             'kelurahan.regex'      => 'Kelurahan tidak boleh memuat angka dan/atau tanda baca',
             'alamat_detail.string' => 'Alamat Detail harus berupa karakter',
             'alamat_detail.regex'  => 'Alamat Detail tidak boleh memuat tanda baca selain titik',
-            'foto.required_if'     => 'Foto tidak boleh kosong',
             'foto.image'           => 'Foto harus berupa gambar',
         ];
     }

@@ -1,4 +1,4 @@
-@extends('user.wedding-photographer.layout')
+@extends('user.wedding-organizer.layout')
 
 @section('title')
     <title>Tambah Portofolio | Wedding Marketplace</title>
@@ -7,7 +7,7 @@
 @section('h1', 'Portofolio > Tambah Portofolio')
 
 @section('content')
-    <form action="{{ route('wedding-photographer.portofolio.tambah') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('wedding-organizer.portofolio.tambah') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="w-full flex items-start justify-between gap-8">
             {{-- KIRI --}}
@@ -39,7 +39,7 @@
                             Tanggal
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('tanggal') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="date" name="tanggal" id="tanggal" placeholder="Pernikahan Budi dan Ani"
+                            type="date" name="tanggal" id="tanggal"
                             required
                             value="{{ old('tanggal', '') }}">
                     </div>
@@ -59,12 +59,12 @@
                             Detail
                         </div>
                         <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            name="detail" id="input" rows="3" placeholder="masukkan detail portofolio ini"
+                            name="detail" id="input" rows="3" placeholder="masukan detail acara ini"
                             >{{ old('detail', '') }}</textarea>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                        @error('detail')
+                        @error('tanggal')
                             <i class="fa-solid fa-circle-info"></i>
                             <span>{{ $message }}</span>
                         @enderror
@@ -79,7 +79,7 @@
                                 Provinsi
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="provinsi" id="provinsi" placeholder="Bali" required
+                                type="text" name="provinsi" id="provinsi" placeholder="Bali"
                                 value="{{ old('provinsi', '') }}">
                         </div>
 
@@ -98,7 +98,7 @@
                                 Kota/Kabupaten
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kota" id="kota" placeholder="Badung" required
+                                type="text" name="kota" id="kota" placeholder="Badung"
                                 value="{{ old('kota', '') }}">
                         </div>
 
@@ -117,7 +117,7 @@
                                 Kecamatan
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan" required
+                                type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan"
                                 value="{{ old('kecamatan', '') }}">
                         </div>
 
@@ -136,7 +136,7 @@
                                 Kelurahan
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran" required
+                                type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran"
                                 value="{{ old('kelurahan', '') }}">
                         </div>
 
@@ -155,7 +155,7 @@
                                 Alamat Detail
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1" required
+                                type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1"
                                 value="{{ old('alamat_detail', '') }}">
                         </div>
 
@@ -204,7 +204,7 @@
         {{-- BUTTON --}}
         <div class="w-100 mt-4 flex items-center justify-end gap-4">
             <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                href="{{ route('wedding-photographer.portofolio.index') }}">
+                href="{{ route('wedding-organizer.portofolio.index') }}">
                 <i class="fa-solid fa-arrow-left-long"></i>
                 <span>Kembali</span>
             </a>

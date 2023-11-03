@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->string('judul');
             $table->date('tanggal');
+            $table->text('detail');
             $table->string('lokasi');
             $table->enum('status', ['diterima', 'menunggu konfirmasi', 'ditolak'])->default('menunggu konfirmasi');
             $table->timestamps();

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('wedding_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('admin_id');
-            $table->string('kategori');
-            $table->string('keterangan');
+            $table->string('nama');
+            $table->text('keterangan');
             $table->timestamps();
 
             $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');

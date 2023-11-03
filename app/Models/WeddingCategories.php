@@ -12,7 +12,7 @@ class WeddingCategories extends Model
 
     protected $fillable = [
         'admin_id',
-        'kategori',
+        'nama',
         'keterangan',
     ];
 

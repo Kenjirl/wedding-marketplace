@@ -91,10 +91,10 @@ class WPProfilController extends Controller
         }
 
         if ($data) {
-            return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Data diri anda berhasil diperbarui');
+            return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Mengubah Data Diri');
         }
 
-        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Data diri anda belum diperbarui');
+        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Mengubah Data Diri');
     }
 
     public function ke_ubah_password() {
@@ -110,9 +110,9 @@ class WPProfilController extends Controller
             ]);
 
         if ($data) {
-            return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Password anda berhasil diubah');
+            return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Mengubah Password');
         }
-        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Password Anda belum bisa diubah');
+        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Mengubah Password');
     }
 
     public function ke_ubah_foto() {
@@ -123,6 +123,11 @@ class WPProfilController extends Controller
         $req->validate([
             'foto_profil' => 'required|image'
         ]);
+
+        $foto_profil_lama = auth()->user()->w_photographer->foto_profil;
+        if ($foto_profil_lama) {
+            unlink(public_path($foto_profil_lama));
+        }
 
         if ($req->hasFile('foto_profil')) {
             $foto_profil = $req->file('foto_profil');
@@ -138,9 +143,9 @@ class WPProfilController extends Controller
                 ]);
 
             if ($data) {
-                return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Foto profil anda berhasil diubah');
+                return redirect()->route('wedding-photographer.profil.index')->with('sukses', 'Mengubah Foto Profil');
             }
         }
-        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Foto profil Anda belum bisa diubah');
+        return redirect()->route('wedding-photographer.profil.index')->with('gagal', 'Mengubah Foto Profil');
     }
 }

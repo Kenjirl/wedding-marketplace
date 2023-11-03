@@ -9,8 +9,9 @@ $currentUrl = Request::url();
 </a>
 
 @if (auth()->user()->w_organizer)
-    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-        href="#">
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
+        {{ Str::contains($currentUrl, '/portofolio') ? 'bg-pink text-white' : '' }}"
+        href="{{ route('wedding-organizer.portofolio.index') }}">
         <i class="fa-solid fa-grip"></i>
         Portofolio
     </a>

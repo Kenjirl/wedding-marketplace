@@ -24,40 +24,6 @@
 
                 {{-- LOGIN FORM --}}
                 <div class="w-full mt-10 font-varela">
-                    {{-- ALERT --}}
-                    @if (session()->has('sukses'))
-                        <div class="w-100 mb-4" id="alertBoard">
-                            <div class="w-100 flex">
-                                <div class="w-10 aspect-square p-2 bg-blue-400 text-white flex items-center justify-center rounded-s">
-                                    <i class="fa-solid fa-info-circle"></i>
-                                </div>
-                                <div class="w-100 p-2 flex-1 border-y-2 border-blue-400 text-sm">
-                                    {{ session('sukses') }}
-                                </div>
-                                <button class="w-10 aspect-square p-2 bg-blue-400 hover:bg-blue-200 focus:bg-blue-200 active:bg-blue-300 focus:outline-blue-200 focus:outline-offset-2 transition-colors text-white flex items-center justify-center rounded-e"
-                                    type="button" id="toggle-password-btn" onclick="toggleAlert()">
-                                    <i class="fa-regular fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                        </div>
-                    @endif
-                    @if (session()->has('gagal'))
-                        <div class="w-100 mb-4" id="alertBoard">
-                            <div class="w-100 flex">
-                                <div class="w-10 aspect-square p-2 bg-red-500 text-white flex items-center justify-center rounded-s">
-                                    <i class="fa-solid fa-info-circle"></i>
-                                </div>
-                                <div class="w-100 p-2 flex-1 border-y-2 border-red-500 text-sm">
-                                    {{ session('gagal') }}
-                                </div>
-                                <button class="w-10 aspect-square p-2 bg-red-500 hover:bg-red-300 focus:bg-red-300 active:bg-red-400 focus:outline-red-300 focus:outline-offset-2 transition-colors text-white flex items-center justify-center rounded-e"
-                                    type="button" id="toggle-password-btn" onclick="toggleAlert()">
-                                    <i class="fa-regular fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                        </div>
-                    @endif
-
                     {{-- FORM --}}
                     <form action="{{ route('masuk') }}" method="post" autocomplete="off">
                         @csrf
@@ -147,10 +113,6 @@
             $('#vPassword').attr('type', 'password');
             $('#toggle-password-btn').html('<i class="fa-regular fa-eye"></i>');
         }
-    }
-
-    function toggleAlert() {
-        $('#alertBoard').addClass('hidden');
     }
 </script>
 @endsection

@@ -47,9 +47,9 @@ class AProfilController extends Controller
             ]);
 
         if ($data1 && $data2) {
-            return redirect()->route('admin.profil.index')->with('sukses', 'Data diri anda berhasil diperbarui');
+            return redirect()->route('admin.profil.index')->with('sukses', 'Mengubah Data Diri');
         }
-        return redirect()->route('admin.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Data diri anda belum diperbarui');
+        return redirect()->route('admin.profil.index')->with('gagal', 'Mengubah Data Diri');
     }
 
     public function ke_ubah_password() {
@@ -65,8 +65,8 @@ class AProfilController extends Controller
             ]);
 
         if ($data) {
-            return redirect()->route('admin.profil.index')->with('sukses', 'Password anda berhasil diubah');
+            return redirect()->route('admin.profil.index')->with('sukses', 'Mengubah Password');
         }
-        return redirect()->route('admin.profil.index')->with('gagal', 'Maaf, telah terjadi kesalahan. Password Anda belum bisa diubah');
+        return redirect()->route('admin.profil.index')->with('gagal', 'Mengubah Password');
     }
 }

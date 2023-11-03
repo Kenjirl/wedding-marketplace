@@ -9,13 +9,13 @@
 @section('content')
     <div class="px-4 pb-4">
         <ol class="list-decimal text-sm">
-            <li>Silahkan isi detail dari portofolio Anda</li>
-            <li>Harap memasukan gambar (maks. 5) secara sekaligus agar gambar dapat tersimpan dengan benar</li>
-            <li>Jika gambar lebih dari 5, maka yang akan tersimpan adalah 5 gambar pertama</li>
+            <li>Silahkan lengkapi gambar dari portofolio Anda</li>
+            <li>Masukan maksimal 5 gambar untuk tiap portofolio</li>
+            <li>Masukan gambar 1 per 1 kemudian submit untuk tiap gambar</li>
         </ol>
     </div>
 
-    <form action="{{ route('wedding-photographer.ubah', $portofolio->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('wedding-photographer.portofolio.ubah', $portofolio->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="w-full flex items-start justify-between gap-8">
             {{-- KIRI --}}
@@ -60,6 +60,25 @@
                     </div>
                 </div>
 
+                {{-- DETAIL --}}
+                <div class="w-100 mb-4">
+                    <div class="w-100">
+                        <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            Detail
+                        </div>
+                        <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            name="detail" id="input" rows="3" placeholder="masukkan detail portofolio ini"
+                            >{{ old('detail', $portofolio->detail) }}</textarea>
+                    </div>
+
+                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        @error('detail')
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-2 gap-4">
                     {{-- PROVINSI --}}
                     <div class="relative w-100">
@@ -69,6 +88,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="provinsi" id="provinsi" placeholder="Bali"
+                                required
                                 value="{{ old('provinsi', $provinsi) }}">
                         </div>
 
@@ -88,6 +108,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kota" id="kota" placeholder="Badung"
+                                required
                                 value="{{ old('kota', $kota) }}">
                         </div>
 
@@ -107,6 +128,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan"
+                                required
                                 value="{{ old('kecamatan', $kecamatan) }}">
                         </div>
 
@@ -126,6 +148,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran"
+                                required
                                 value="{{ old('kelurahan', $kelurahan) }}">
                         </div>
 
@@ -145,6 +168,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1"
+                                required
                                 value="{{ old('alamat_detail', $alamat_detail) }}">
                         </div>
 
@@ -158,39 +182,54 @@
                 </div>
             </div>
 
+            <div class="hidden">
+                <input type="text" name="form-info" id="form-info" value="edit">
+            </div>
+
             {{-- KANAN --}}
             <div class="flex-1">
                 {{-- UPLOAD MULTI FOTO --}}
                 <div class="w-100 mb-4">
                     <div class="w-100 mb-4">
-                        <button class="w-full px-4 py-2 rounded text-white font-semibold text-sm bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                            type="button" id="unggahFotoBtn">
+                        <button class="w-full px-4 py-2 rounded text-white font-semibold text-sm {{ $count >= 5 ? 'cursor-not-allowed' : '' }} bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:bg-slate-400 transition-colors"
+                            type="button" id="unggahFotoBtn"
+                            {{ $count >= 5 ? 'disabled' : '' }}>
                             <i class="fa-solid fa-plus"></i>
                             Unggah Foto
                         </button>
 
-                        <input class="hidden" type="file" name="foto[]" id="foto" accept="image/*" value="{{ old('foto[]', '') }}" multiple>
+                        <input class="hidden" type="file" name="foto" id="foto" accept="image/*" value="{{ old('foto', '') }}">
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                            @error('foto[]')
+                            @error('foto')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>
                             @enderror
-
-                            @if (session()->has('gagal_foto'))
-                                <i class="fa-solid fa-circle-info"></i>
-                                <span>{{ session('gagal_foto') }}</span>
-                            @endif
                         </div>
                     </div>
                 </div>
 
-                <div class="w-full mt-4 flex items-start justify-start gap-2 overflow-x-auto"
-                    id="image-preview">
-                    @foreach ($portofolio->photo as $foto)
-                        <img class="h-[300px] object-fit"
-                            src="{{ asset($foto->url) }}" alt="Foto Portofolio">
-                    @endforeach
+                <div class="w-full mt-4 rounded shadow">
+                    <div class="p-2 rounded-t font-semibold bg-slate-100">
+                        Galeri
+                    </div>
+
+                    <div class="w-full max-h-[350px] grid grid-cols-2 p-2 gap-2 overflow-y-auto"
+                        id="image-preview">
+                        @foreach ($portofolio->photo as $foto)
+                            <div class="relative flex items-center justify-center rounded bg-slate-100">
+                                <img class="h-[300px] object-contain"
+                                    src="{{ asset($foto->url) }}" alt="Foto Portofolio">
+
+                                @if ($count > 1)
+                                    <button class="absolute top-0 right-0 w-8 aspect-square bg-pink rounded text-white"
+                                        type="button" onclick="deleteImage({{ $foto->id }})">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                            @endif
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,7 +237,7 @@
         {{-- BUTTON --}}
         <div class="w-100 mt-4 flex items-center justify-end gap-4">
             <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                href="{{ route('wedding-photographer.ke_portofolio') }}">
+                href="{{ route('wedding-photographer.portofolio.index') }}">
                 <i class="fa-solid fa-arrow-left-long"></i>
                 <span>Kembali</span>
             </a>
@@ -217,13 +256,18 @@
         </div>
     </form>
 
-    <form class="hidden" action="{{ route('wedding-photographer.hapus', $portofolio->id) }}" method="post">
+    {{-- FORM HAPUS PORTOFOLIO --}}
+    <form class="hidden" action="{{ route('wedding-photographer.portofolio.hapus', $portofolio->id) }}" method="post">
         @csrf
-        <button id="submitDeleteBtn" type="submit">
-            <i class="fa-solid fa-trash-can"></i>
-            <span>Hapus</span>
-        </button>
+        <button id="submitDeleteBtn" type="submit"></button>
     </form>
+
+    {{-- FORM HAPUS FOTO PORTOFOLIO --}}
+    @foreach ($portofolio->photo as $foto)
+        <form id="deleteImageForm-{{ $foto->id }}" action="{{ route('wedding-photographer.portofolio.hapus-foto', $foto->id) }}" method="post">
+            @csrf
+        </form>
+    @endforeach
 
     <script>
         $("#unggahFotoBtn").on("click", function () {
@@ -238,17 +282,29 @@
 
         $('#foto').on('change', function() {
             let files = this.files;
-            console.log(files)
-            $('#image-preview').empty();
+            $('#image-preview').find('#new-image').remove();
 
             for (let i = 0; i < files.length; i++) {
                 if (i < 5) {
-                    let img = $('<img>');
-                    img.attr('src', URL.createObjectURL(files[i])).addClass('h-[300px] object-fit');
-
-                    $('#image-preview').append(img);
+                    $('#image-preview').append(`
+                        <div style="position: relative; display: flex; align-items: center; justify-content: center; border-radius: 0.25rem; background-color: rgb(241 245 249 / 1)">
+                            <img style="height: 300px; object-fit: contain;"
+                                src="${URL.createObjectURL(files[i])}" alt="Foto Portofolio" id="new-image">
+                        </div>
+                    `);
                 }
             }
         });
+
+        function deleteImage(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
+                const formId = 'deleteImageForm-' + id;
+                const imageForm = document.getElementById(formId);
+
+                if (imageForm) {
+                    imageForm.submit();
+                }
+            }
+        }
     </script>
 @endsection

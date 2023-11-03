@@ -31,6 +31,9 @@
     {{-- ANIMATE CSS CDN --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
+    {{-- TOASTR CSS --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+
     @yield('title')
 
     {{-- GOOGLE FONT --}}
@@ -41,11 +44,63 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 
     {{-- JQUERY CDN --}}
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    {{-- TOASTR JS --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    {{-- TINYMCE JS FOR TEXTAREA EDITOR --}}
+    <script src="https://cdn.tiny.cloud/1/5srmzqe0lwc149l1fawecd3dsl6ebehc3ohcc0n7u12k78m8/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+    tinymce.init({
+        selector: 'textarea#input',
+        plugins: 'visualblocks wordcount powerpaste',
+        // plugins: 'lists advlist visualblocks wordcount checklist powerpaste',
+        toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | indent outdent',
+        // toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | checklist numlist bullist indent outdent',
+        menu: {
+            format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat' },
+        }
+    });
+    </script>
 </head>
 <body>
     @yield('body')
 
     @yield('js')
+
+    {{-- SCRIPT TOASTR --}}
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+
+    @if(session()->has('sukses'))
+        <script>
+            toastr.success("{{ session('sukses') }}", "Sukses");
+        </script>
+    @endif
+
+    @if(session()->has('gagal'))
+        <script>
+            toastr.error("{{ session('gagal') }}", "Gagal");
+        </script>
+    @endif
 </body>
 </html>

@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\WeddingPhotographer;
+namespace App\Http\Controllers\WeddingOrganizer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PortofolioRequest;
-use App\Models\WPPortofolio;
-use App\Models\WPPortofolioPhoto;
+use App\Models\WOPortofolio;
+use App\Models\WOPortofolioPhoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class WPPortofolioController extends Controller
+class WOPortofolioController extends Controller
 {
     public function index() {
-        $latest_portofolio = WPPortofolio::orderBy('created_at', 'desc')->take(4)->get();
-        $portofolio = WPPortofolio::orderBy('judul', 'asc')->get();
+        $latest_portofolio = WOPortofolio::orderBy('created_at', 'desc')->take(4)->get();
+        $portofolio = WOPortofolio::orderBy('judul', 'asc')->get();
 
-        return view('user.wedding-photographer.portofolio.index', compact('latest_portofolio', 'portofolio'));
+        return view('user.wedding-organizer.portofolio.index', compact('latest_portofolio', 'portofolio'));
     }
 
     public function ke_tambah() {
-        return view('user.wedding-photographer.portofolio.tambah');
+        return view('user.wedding-organizer.portofolio.tambah');
     }
 
     public function tambah(PortofolioRequest $req) {
@@ -27,8 +27,8 @@ class WPPortofolioController extends Controller
 
         $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
-        $portofolio = new WPPortofolio();
-        $portofolio->wedding_photographer_id = auth()->user()->w_photographer->id;
+        $portofolio = new WOPortofolio();
+        $portofolio->wedding_organizer_id = auth()->user()->w_organizer->id;
         $portofolio->judul = $req->judul;
         $portofolio->tanggal = $req->tanggal;
         $portofolio->detail = $req->detail;
@@ -41,26 +41,26 @@ class WPPortofolioController extends Controller
 
             $url = Storage::disk('public')->putFileAs('/',
                 $foto,
-                'WP/portofolio/' . str()->uuid() . '.' . $foto->extension()
+                'WO/portofolio/' . str()->uuid() . '.' . $foto->extension()
             );
 
-            $f_portofolio = new WPPortofolioPhoto();
-            $f_portofolio->w_p_portofolio_id = $portofolio->id;
+            $f_portofolio = new WOPortofolioPhoto();
+            $f_portofolio->w_o_portofolio_id = $portofolio->id;
             $f_portofolio->url = $url;
             $data2 = $f_portofolio->save();
         }
 
         if ($data1 && $data2) {
-            return redirect()->route('wedding-photographer.portofolio.index')->with('sukses', 'Menambah Portofolio');
+            return redirect()->route('wedding-organizer.portofolio.ke_ubah', $portofolio->id)->with('sukses', 'Menambah Portofolio');
         }
-        return redirect()->route('wedding-photographer.portofolio.index')->with('gagal', 'Menambah Portofolio');
+        return redirect()->route('wedding-organizer.portofolio.index')->with('gagal', 'Menambah Portofolio');
     }
 
     public function ke_ubah($id) {
-        $portofolio = WPPortofolio::find($id);
+        $portofolio = WOPortofolio::find($id);
 
         if (!$portofolio) {
-            return redirect()->route('wedding-photographer.ke_portofolio')->with('gagal', 'Portofolio tidak ditemukan');
+            return redirect()->route('wedding-organizer.ke_portofolio')->with('gagal', 'Portofolio tidak ditemukan');
         }
 
         $provinsi       = '';
@@ -72,9 +72,9 @@ class WPPortofolioController extends Controller
         $alamatArray = explode(', ', $portofolio->lokasi);
         list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
 
-        $count = WPPortofolioPhoto::where('w_p_portofolio_id', $id)->count();
+        $count = WOPortofolioPhoto::where('w_o_portofolio_id', $id)->count();
 
-        return view('user.wedding-photographer.portofolio.ubah',
+        return view('user.wedding-organizer.portofolio.ubah',
             compact(
                 'portofolio',
                 'provinsi',
@@ -89,12 +89,12 @@ class WPPortofolioController extends Controller
     public function ubah(PortofolioRequest $req, $id) {
         $req->validated();
 
-        $count = WPPortofolioPhoto::where('w_p_portofolio_id', $id)->count();
+        $count = WOPortofolioPhoto::where('w_o_portofolio_id', $id)->count();
         if ($count >= 5) {
-            return redirect()->route('wedding-photographer.portofolio.ke_ubah', $id)->with('gagal', 'Maksimal 5 Gambar Saja');
+            return redirect()->route('wedding-organizer.portofolio.ke_ubah', $id)->with('gagal', 'Maksimal 5 Gambar Saja');
         }
 
-        $data1 = WPPortofolio::where('id', $id)
+        $data1 = WOPortofolio::where('id', $id)
                     ->update([
                         'judul' => $req->judul,
                         'tanggal' => $req->tanggal,
@@ -109,45 +109,45 @@ class WPPortofolioController extends Controller
 
             $url = Storage::disk('public')->putFileAs('/',
                 $foto,
-                'WP/portofolio/' . str()->uuid() . '.' . $foto->extension()
+                'WO/portofolio/' . str()->uuid() . '.' . $foto->extension()
             );
 
-            $f_portofolio = new WPPortofolioPhoto();
-            $f_portofolio->w_p_portofolio_id = $id;
+            $f_portofolio = new WOPortofolioPhoto();
+            $f_portofolio->w_o_portofolio_id = $id;
             $f_portofolio->url = $url;
             $data2 = $f_portofolio->save();
 
             if ($data1 && $data2) {
-                return redirect()->route('wedding-photographer.portofolio.ke_ubah', $id)->with('sukses', 'Mengubah Portofolio');
+                return redirect()->route('wedding-organizer.portofolio.ke_ubah', $id)->with('sukses', 'Mengubah Portofolio');
             }
         }
 
         if ($data1) {
-            return redirect()->route('wedding-photographer.portofolio.ke_ubah', $id)->with('sukses', 'Mengubah Portofolio');
+            return redirect()->route('wedding-organizer.portofolio.ke_ubah', $id)->with('sukses', 'Mengubah Portofolio');
         }
 
-        return redirect()->route('wedding-photographer.portofolio.index')->with('gagal', 'Mengubah Portofolio');
+        return redirect()->route('wedding-organizer.portofolio.index')->with('gagal', 'Mengubah Portofolio');
     }
 
     public function hapus($id) {
-        $photos = WPPortofolioPhoto::where('w_p_portofolio_id', $id)->get();
+        $photos = WOPortofolioPhoto::where('w_o_portofolio_id', $id)->get();
 
         foreach ($photos as $foto) {
             unlink(public_path($foto->url));
             $foto->delete();
         }
 
-        $portofolio = WPPortofolio::where('id', $id)->first();
+        $portofolio = WOPortofolio::where('id', $id)->first();
         $data = $portofolio->delete();
 
         if ($data) {
-            return redirect()->route('wedding-photographer.portofolio.index')->with('sukses', 'Menghapus Portofolio');
+            return redirect()->route('wedding-organizer.portofolio.index')->with('sukses', 'Menghapus Portofolio');
         }
-        return redirect()->route('wedding-photographer.portofolio.index')->with('gagal', 'Menghapus Portofolio');
+        return redirect()->route('wedding-organizer.portofolio.index')->with('gagal', 'Menghapus Portofolio');
     }
 
     public function hapus_foto($id) {
-        $foto = WPPortofolioPhoto::where('id', $id)->first();
+        $foto = WOPortofolioPhoto::where('id', $id)->first();
         $url = $foto->url;
         $data = $foto->delete();
 
