@@ -13,13 +13,13 @@ class WOrganizerController extends Controller
         $accepted = WOPortofolio::where('status', 'diterima')->get();
         $rejected = WOPortofolio::where('status', 'ditolak')->get();
 
-        return view('user.admin.w-organizer.portofolio.index', compact('pending', 'accepted', 'rejected'));
+        return view('user.admin.portofolio.w-organizer.index', compact('pending', 'accepted', 'rejected'));
     }
 
     public function ke_validasi($id) {
         $portofolio = WOPortofolio::find($id);
 
-        return view('user.admin.w-organizer.portofolio.validasi', compact('portofolio'));
+        return view('user.admin.portofolio.w-organizer.validasi', compact('portofolio'));
     }
 
     public function validasi(Request $req, $id) {

@@ -48,6 +48,18 @@
                     </div>
                 </div>
 
+                {{-- DETAIL --}}
+                <div class="w-100 mb-4">
+                    <div class="w-100">
+                        <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                            Detail
+                        </div>
+                        <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none">
+                            {!! $portofolio->detail !!}
+                        </div>
+                    </div>
+                </div>
+
                 {{-- LOKASI --}}
                 <div class="w-100 mb-4">
                     <div class="w-100">
@@ -60,10 +72,6 @@
                                 value="{{ $portofolio->lokasi }}">
                         </div>
                     </div>
-                    @error('status')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
                 </div>
 
                 {{-- STATUS --}}

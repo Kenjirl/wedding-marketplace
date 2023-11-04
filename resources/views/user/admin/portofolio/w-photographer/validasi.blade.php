@@ -72,10 +72,6 @@
                                 value="{{ $portofolio->lokasi }}">
                         </div>
                     </div>
-                    @error('status')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
                 </div>
 
                 {{-- STATUS --}}

@@ -13,13 +13,13 @@ class WPhotographerController extends Controller
         $accepted = WPPortofolio::where('status', 'diterima')->get();
         $rejected = WPPortofolio::where('status', 'ditolak')->get();
 
-        return view('user.admin.w-photographer.portofolio.index', compact('pending', 'accepted', 'rejected'));
+        return view('user.admin.portofolio.w-photographer.index', compact('pending', 'accepted', 'rejected'));
     }
 
     public function ke_validasi($id) {
         $portofolio = WPPortofolio::find($id);
 
-        return view('user.admin.w-photographer.portofolio.validasi', compact('portofolio'));
+        return view('user.admin.portofolio.w-photographer.validasi', compact('portofolio'));
     }
 
     public function validasi(Request $req, $id) {
