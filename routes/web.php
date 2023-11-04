@@ -148,13 +148,16 @@ Route::name('wedding-organizer.')
 
     Route::name('profil.')->prefix('/profil')
         ->controller(WOProfilController::class)->group(function() {
-        Route::get ('/',              'index')           ->name('index');
-        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
-        Route::post('/ubah',          'ubah')            ->name('ubah');
-        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto',     'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto',     'ubah_foto')       ->name('ubah_foto');
+        Route::get ('/',                    'index')           ->name('index');
+        Route::get ('/ubah',                'ke_ubah')         ->name('ke_ubah');
+        Route::post('/ubah',                'ubah')            ->name('ubah');
+        Route::get ('/ubah-password',       'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password',       'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto',           'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto',           'ubah_foto')       ->name('ubah_foto');
+        Route::get ('/ubah-kategori',       'ke_ubah_kategori')->name('ke_ubah_kategori');
+        Route::post('/tambah-kategori',     'tambah_kategori') ->name('tambah_kategori');
+        Route::post('/hapus-kategori/{id}', 'hapus_kategori')  ->name('hapus_kategori');
     });
 
     // Hanya bisa diakses jika sudah melengkapi profil wedding organizer

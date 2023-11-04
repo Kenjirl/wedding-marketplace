@@ -9,29 +9,48 @@
 @section('content')
     {{-- DATA DIRI --}}
     <div class="w-100 flex gap-8">
-        <div class="w-fit flex flex-col items-center justify-start gap-4">
-            @if (auth()->user()->w_organizer && auth()->user()->w_organizer->foto_profil)
-                <img class="w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
-                    src="{{ asset(auth()->user()->w_organizer->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
-            @else
-                <span class="w-[200px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
-                    id="fotoProfilText">
-                    {{ substr(auth()->user()->name, 0, 1) }}
-                </span>
-                <img class="hidden w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
-                    src="" alt="Foto Profil" id="fotoProfil">
-            @endif
+        <div class="w-fit">
+            <div class="flex flex-col items-center justify-start gap-4 mb-4">
+                @if (auth()->user()->w_organizer && auth()->user()->w_organizer->foto_profil)
+                    <img class="w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
+                        src="{{ asset(auth()->user()->w_organizer->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
+                @else
+                    <span class="w-[200px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
+                        id="fotoProfilText">
+                        {{ substr(auth()->user()->name, 0, 1) }}
+                    </span>
+                    <img class="hidden w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
+                        src="" alt="Foto Profil" id="fotoProfil">
+                @endif
 
-            @if (auth()->user()->w_organizer)
-                <a class="w-full py-2 font-semibold outline-none text-center text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                    href="{{ route('wedding-organizer.profil.ke_ubah_foto') }}" id="gantiFotoBtn">
-                    <i class="fa-regular fa-image"></i>
-                    <span>Ganti Foto</span>
-                </a>
-            @endif
+                @if (auth()->user()->w_organizer)
+                    <a class="w-full py-2 font-semibold outline-none text-center text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                        href="{{ route('wedding-organizer.profil.ke_ubah_foto') }}" id="gantiFotoBtn">
+                        <i class="fa-regular fa-image"></i>
+                        <span>Ganti Foto</span>
+                    </a>
+                @endif
+            </div>
+
+            <div class="w-full shadow rounded">
+                <div class="w-full px-2 py-1 bg-pink text-white text-sm font-semibold rounded-t">
+                    Kategori
+                </div>
+                <div class="w-full p-2 flex flex-wrap items-start justify-start">
+                    @forelse (auth()->user()->w_organizer->category as $category)
+                        <div class="w-fit px-2 py-1 text-xs border border-pink rounded-full">
+                            {{ $category->w_categories->nama }}
+                        </div>
+                    @empty
+                        <div class="w-fit px-1 text-xs border border-pink rounded-full">
+                            no data
+                        </div>
+                    @endforelse
+                </div>
+            </div>
         </div>
 
-        <div class="w-100 flex-1">
+        <div class="w-full flex-1">
             {{-- ATAS --}}
             <div class="w-100 flex items-start justify-between gap-8">
                 {{-- KIRI --}}
@@ -119,10 +138,16 @@
 
             {{-- BUTTON --}}
             <div class="w-100 mt-4 flex items-center justify-end gap-4">
-                <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                     href="{{ route('wedding-organizer.profil.ke_ubah_password') }}">
                     <i class="fa-solid fa-lock"></i>
                     <span>Ubah Password</span>
+                </a>
+
+                <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                    href="{{ route('wedding-organizer.profil.ke_ubah_kategori') }}">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <span>Ubah Kategori</span>
                 </a>
 
                 <a class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"

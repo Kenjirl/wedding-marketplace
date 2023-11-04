@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WeddingCategories extends Model
 {
@@ -18,5 +19,9 @@ class WeddingCategories extends Model
 
     public function admin(): BelongsTo {
         return $this->belongsTo(Admin::class, 'admin_id');
+    }
+
+    public function wo_category(): HasMany {
+        return $this->hasMany(WOCategories::class, 'wedding_categories_id');
     }
 }

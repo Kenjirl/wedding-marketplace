@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="w-100 flex-1 rounded-lg bg-white">
+        <div class="relative w-100 flex-1 rounded-lg bg-white">
 
             {{-- HEADER --}}
             <div class="w-full p-2 flex items-center justify-between border-b-4 border-b-slate-200">
@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <div class=" max-h-[calc(100vh-14%)] p-4 bg-white rounded-lg overflow-y-auto">
+            <div class="max-h-[calc(100vh-14%)] p-4 bg-white rounded-lg overflow-y-auto">
                 @yield('content')
             </div>
         </div>

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UbahPasswordRequest;
 use App\Http\Requests\WeddingOrganizer\ProfilRequest;
 use App\Models\User;
+use App\Models\WeddingCategories;
 use App\Models\WeddingOrganizer;
+use App\Models\WOCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -141,5 +143,50 @@ class WOProfilController extends Controller
         }
 
         return redirect()->route('wedding-organizer.profil.index')->with('gagal', 'Mengubah Foto Profil');
+    }
+
+    public function ke_ubah_kategori() {
+        $categories = WeddingCategories::all();
+
+        $woCategories = WOCategories::where('wedding_organizer_id', auth()->user()->w_organizer->id)->get();
+        $woCategoriesIds = $woCategories->pluck('wedding_categories_id')->all();
+
+        $categories = $categories->reject(function ($category) use ($woCategoriesIds) {
+            return in_array($category->id, $woCategoriesIds);
+        })->sortBy('nama');
+
+        // dd($categories);
+
+        return view('user.wedding-organizer.profil.kategori', compact('categories', 'woCategories'));
+    }
+
+    public function tambah_kategori(Request $req) {
+        $req->validate([
+            'kategori' => 'required',
+        ],[
+            'kategori.required' => 'Kategori tidak boleh kosong',
+        ]);
+
+        // dd($req->kategori);
+
+        $kategori = new WOCategories();
+        $kategori->wedding_organizer_id = auth()->user()->w_organizer->id;
+        $kategori->wedding_categories_id = $req->kategori;
+        $data = $kategori->save();
+
+        if ($data) {
+            return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('sukses', 'Menambah Kategori');
+        }
+        return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('gagal', 'Menambah Kategori');
+    }
+
+    public function hapus_kategori($id) {
+        $kategori = WOCategories::find($id);
+        $data = $kategori->delete();
+
+        if ($data) {
+            return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('sukses', 'Menghapus Kategori');
+        }
+        return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('gagal', 'Menghapus Kategori');
     }
 }

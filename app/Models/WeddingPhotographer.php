@@ -27,7 +27,7 @@ class WeddingPhotographer extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function w_photographer(): HasMany {
+    public function portofolio(): HasMany {
         return $this->hasMany(WPPortofolio::class, 'wedding_photographer_id');
     }
 }
