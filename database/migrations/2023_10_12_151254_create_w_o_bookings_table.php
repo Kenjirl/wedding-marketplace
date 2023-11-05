@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('w_o_bookings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_invitation_id');
+            $table->unsignedBigInteger('wedding_id');
             $table->unsignedBigInteger('w_o_plan_id');
             $table->enum('status', ['diproses', 'ditolak', 'diterima', 'selesai']);
             $table->string('bukti_bayar');
             $table->date('untuk_tanggal');
             $table->timestamps();
 
-            $table->foreign('wedding_invitation_id')->references('id')->on('wedding_invitations')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('wedding_id')->references('id')->on('weddings')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('w_o_plan_id')->references('id')->on('w_o_plans')->onUpdate('cascade')->onDelete('cascade');
         });
     }
