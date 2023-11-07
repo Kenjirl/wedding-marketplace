@@ -20,6 +20,7 @@
                         <th class="border border-slate-500">No</th>
                         <th class="border border-slate-500">Judul</th>
                         <th class="border border-slate-500">Pembuat</th>
+                        <th class="border border-slate-500">Dibuat Pada</th>
                         <th class="border border-slate-500">Aksi</th>
                     </tr>
                 </thead>
@@ -35,6 +36,9 @@
                         <td class="border border-slate-500 px-2">
                             {{ $pdg->w_photographer->nama }}
                         </td>
+                        <td class="border border-slate-500 px-2 text-end">
+                            {{ $pdg->updated_at }}
+                        </td>
                         <td class="border-b border-slate-500 flex items-center justify-evenly gap-2 p-2">
                             <a class="flex-1 text-center text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                                 href="{{ route('admin.wp.portofolio.ke_validasi', $pdg->id) }}">
@@ -45,6 +49,7 @@
                     </tr>
                     @empty
                         <tr>
+                            <td class="text-center">-</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
@@ -70,6 +75,7 @@
                         <th class="border border-slate-500">Judul</th>
                         <th class="border border-slate-500">Pembuat</th>
                         <th class="border border-slate-500">Penanggun Jawab</th>
+                        <th class="border border-slate-500">Diterima Pada</th>
                         <th class="border border-slate-500">Aksi</th>
                     </tr>
                 </thead>
@@ -88,6 +94,9 @@
                         <td class="border border-slate-500 px-2">
                             {{ $acc->admin->nama }}
                         </td>
+                        <td class="border border-slate-500 px-2">
+                            {{ $acc->updated_at }}
+                        </td>
                         <td class="border-b border-slate-500 flex items-center justify-evenly gap-2 p-2">
                             <a class="flex-1 text-center text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                                 href="{{ route('admin.wp.portofolio.ke_validasi', $acc->id) }}">
@@ -98,6 +107,7 @@
                     </tr>
                     @empty
                         <tr>
+                            <td class="text-center">-</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
@@ -124,6 +134,7 @@
                         <th class="border border-slate-500">Judul</th>
                         <th class="border border-slate-500">Pembuat</th>
                         <th class="border border-slate-500">Penanggun Jawab</th>
+                        <th class="border border-slate-500">Ditolak Pada</th>
                         <th class="border border-slate-500">Aksi</th>
                     </tr>
                 </thead>
@@ -142,6 +153,9 @@
                         <td class="border border-slate-500 px-2">
                             {{ $rej->admin->nama }}
                         </td>
+                        <td class="border border-slate-500 px-2">
+                            {{ $rej->updated_at }}
+                        </td>
                         <td class="border-b border-slate-500 flex items-center justify-evenly gap-2 p-2">
                             <a class="flex-1 text-center text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                                 href="{{ route('admin.wp.portofolio.ke_validasi', $rej->id) }}">
@@ -152,6 +166,7 @@
                     </tr>
                     @empty
                         <tr>
+                            <td class="text-center">-</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>

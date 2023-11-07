@@ -28,12 +28,12 @@
 
                     {{-- DETAIL --}}
                     <div class="w-full p-2">
-                        <span class="font-semibold line-clamp-1">
+                        <span class="font-semibold text-lg line-clamp-1">
                             {{ $l_portofolio->judul }}
                         </span>
 
                         <p class="text-sm">
-                            {{ $l_portofolio->tanggal }}
+                            Terakhir diubah : {{ $l_portofolio->updated_at->format('Y-m-d') }}
                         </p>
                     </div>
                 </a>
@@ -58,15 +58,15 @@
 
                     {{-- DETAIL --}}
                     <div class="w-full p-4">
-                        <span class="text-[1.2em] font-semibold line-clamp-2">
+                        <span class="text-2xl font-semibold line-clamp-2">
                             {{ $pfolio->judul }}
                         </span>
 
-                        <p>
-                            {{ $pfolio->tanggal }}
-                        </p>
+                        <div class="my-2 text-sm line-clamp-2">
+                            {!! $pfolio->detail !!}
+                        </div>
 
-                        <div class="mt-1 text-[.8em]">
+                        <div class="text-[.8em]">
                             @if ($l_portofolio->admin_id && $l_portofolio->status == 'ditolak')
                                 <span class="bg-red-100 border border-red-500 px-1">
                             @elseif ($l_portofolio->admin_id && $l_portofolio->status == 'diterima')
@@ -80,7 +80,7 @@
                     </div>
                 </a>
             @empty
-                Belum ada data
+                Belum ada portofolio
             @endforelse
         </div>
     </div>

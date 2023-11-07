@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\WOPortofolio;
+use App\Models\WOPortofolioPhoto;
 use Illuminate\Http\Request;
 
 class WOrganizerController extends Controller
@@ -26,6 +27,24 @@ class WOrganizerController extends Controller
         $req->validate([
             'status' => 'required'
         ]);
+
+        // SET FOTO JADI FALSE
+        $fotos = WOPortofolioPhoto::where('w_o_portofolio_id', $id)->get();
+        foreach ($fotos as $foto) {
+            WOPortofolioPhoto::where('id', $foto->id)->update([
+                'rejected' => false,
+            ]);
+        }
+
+        if ($req->status == 'ditolak') {
+            // SET FOTO DICENTANG JADI TRUE
+            $rejectedPhotoIds = $req->input('rejected', []);
+            foreach ($rejectedPhotoIds as $photoId) {
+                WOPortofolioPhoto::where('id', $photoId)->update([
+                    'rejected' => true,
+                ]);
+            }
+        }
 
         $data = WOPortofolio::where('id', $id)
                 ->update([

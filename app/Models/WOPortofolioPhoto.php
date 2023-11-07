@@ -13,6 +13,7 @@ class WOPortofolioPhoto extends Model
     protected $fillable = [
         'w_o_portofolio_id',
         'url',
+        'rejected'
     ];
 
     public function portofolio(): BelongsTo {

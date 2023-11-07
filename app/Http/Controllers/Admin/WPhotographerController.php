@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\WPPortofolio;
+use App\Models\WPPortofolioPhoto;
 use Illuminate\Http\Request;
 
 class WPhotographerController extends Controller
@@ -27,6 +28,25 @@ class WPhotographerController extends Controller
             'status' => 'required'
         ]);
 
+        // SET FOTO JADI FALSE
+        $fotos = WPPortofolioPhoto::where('w_p_portofolio_id', $id)->get();
+        foreach ($fotos as $foto) {
+            WPPortofolioPhoto::where('id', $foto->id)->update([
+                'rejected' => false,
+            ]);
+        }
+
+        if ($req->status == 'ditolak') {
+            // SET FOTO DICENTANG JADI TRUE
+            $rejectedPhotoIds = $req->input('rejected', []);
+            foreach ($rejectedPhotoIds as $photoId) {
+                WPPortofolioPhoto::where('id', $photoId)->update([
+                    'rejected' => true,
+                ]);
+            }
+        }
+
+        // UPDATE STATUS PORTOFOLIO
         $data = WPPortofolio::where('id', $id)
                 ->update([
                     'admin_id' => auth()->user()->admin->id,

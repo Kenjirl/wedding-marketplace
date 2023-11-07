@@ -1,12 +1,20 @@
 @extends('user.admin.layout')
 
 @section('title')
-    <title>Ubah Portofolio | Wedding Marketplace</title>
+    <title>Validasi Portofolio | Wedding Marketplace</title>
 @endsection
 
-@section('h1', 'Portofolio > Ubah Portofolio')
+@section('h1', 'Portofolio > Validasi Portofolio')
 
 @section('content')
+    <div class="w-full px-4 pb-4">
+        <div class="w-full">
+            <ol class="list-decimal text-sm">
+                <li>Jika terdapat gambar yang mengandung SARA, harap mencentang gambar tersebut sebelum menolak</li>
+            </ol>
+        </div>
+    </div>
+
     <form action="{{ route('admin.wo.portofolio.validasi', $portofolio->id) }}" method="post" id="validasiForm">
         @csrf
         <div class="w-full flex items-start justify-between gap-8">
@@ -19,7 +27,7 @@
                             Judul
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                            type="text" readonly
+                            type="text" readonly disabled
                             value="{{ $portofolio->judul }}">
                     </div>
                 </div>
@@ -31,7 +39,7 @@
                             Pembuat
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                            type="text" readonly
+                            type="text" readonly disabled
                             value="{{ $portofolio->w_organizer->nama_perusahaan }}">
                     </div>
                 </div>
@@ -43,7 +51,7 @@
                             Tanggal
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                            type="date" readonly
+                            type="date" readonly disabled
                             value="{{ $portofolio->tanggal }}">
                     </div>
                 </div>
@@ -68,7 +76,7 @@
                                 Lokasi
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                                type="text" readonly
+                                type="text" readonly disabled
                                 value="{{ $portofolio->lokasi }}">
                         </div>
                     </div>
@@ -82,6 +90,28 @@
                         </div>
                     </div>
                 </div>
+
+                @if ($portofolio->admin)
+                    <div class="w-100 mb-4">
+                        <div class="w-100">
+                            @if ($portofolio->status == 'diterima')
+                                <div class="w-full p-2 text-xs font-bold bg-blue-500 text-white flex items-center justify-start rounded-t">
+                                    Diterima Oleh
+                                </div>
+                                <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b border-blue-500">
+                                    {!! $portofolio->admin->nama !!}
+                                </div>
+                            @else
+                                <div class="w-full p-2 text-xs font-bold bg-red-500 text-white flex items-center justify-start rounded-t">
+                                    Ditolak Oleh
+                                </div>
+                                <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b border-red-500 ">
+                                    {!! $portofolio->admin->nama !!}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
 
             {{-- KANAN --}}
@@ -98,6 +128,9 @@
                             <div class="relative flex items-center justify-center rounded bg-slate-100">
                                 <img class="h-[300px] object-contain"
                                     src="{{ asset($foto->url) }}" alt="Foto Portofolio">
+
+                                    <input class="absolute top-0 right-0 w-6 aspect-square"
+                                        type="checkbox" name="rejected[]" value="{{ $foto->id }}" {{ $foto->rejected ? 'checked' : '' }}>
                             </div>
                         @endforeach
                     </div>

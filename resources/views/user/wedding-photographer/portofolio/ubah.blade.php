@@ -7,12 +7,26 @@
 @section('h1', 'Portofolio > Ubah Portofolio')
 
 @section('content')
-    <div class="px-4 pb-4">
-        <ol class="list-decimal text-sm">
-            <li>Silahkan lengkapi gambar dari portofolio Anda</li>
-            <li>Masukan maksimal 5 gambar untuk tiap portofolio</li>
-            <li>Masukan gambar 1 per 1 kemudian submit untuk tiap gambar</li>
-        </ol>
+    <div class="pl-4 mb-4 flex items-end justify-normal">
+        <div class="flex-1 w-full">
+            <ol class="list-decimal text-sm">
+                <li>Silahkan lengkapi gambar dari portofolio Anda</li>
+                <li>Masukan maksimal 5 gambar untuk tiap portofolio</li>
+                <li>Masukan gambar 1 per 1 kemudian submit untuk tiap gambar</li>
+            </ol>
+        </div>
+
+        <div class="flex-1 w-full flex items-start justify-end">
+            @if ($portofolio->admin_id && $portofolio->status == 'diterima')
+                <div class="w-fit px-4 py-2 bg-blue-500 font-semibold text-white rounded">
+            @elseif ($portofolio->admin_id && $portofolio->status == 'ditolak')
+                <div class="w-fit px-4 py-2 bg-red-500 font-semibold text-white rounded">
+            @else
+                <div class="w-fit px-4 py-2 bg-yellow-500 font-semibold text-white rounded">
+            @endif
+                    {{ $portofolio->status }}
+                </div>
+        </div>
     </div>
 
     <form action="{{ route('wedding-photographer.portofolio.ubah', $portofolio->id) }}" method="post" enctype="multipart/form-data">
@@ -190,22 +204,20 @@
             <div class="flex-1">
                 {{-- UPLOAD MULTI FOTO --}}
                 <div class="w-100 mb-4">
-                    <div class="w-100 mb-4">
-                        <button class="w-full px-4 py-2 rounded text-white font-semibold text-sm {{ $count >= 5 ? 'cursor-not-allowed' : '' }} bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:bg-slate-400 transition-colors"
-                            type="button" id="unggahFotoBtn"
-                            {{ $count >= 5 ? 'disabled' : '' }}>
-                            <i class="fa-solid fa-plus"></i>
-                            Unggah Foto
-                        </button>
+                    <button class="w-full px-4 py-2 rounded text-white font-semibold text-sm {{ $count >= 5 ? 'cursor-not-allowed' : '' }} bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:bg-slate-400 transition-colors"
+                        type="button" id="unggahFotoBtn"
+                        {{ $count >= 5 ? 'disabled' : '' }}>
+                        <i class="fa-solid fa-plus"></i>
+                        Unggah Foto
+                    </button>
 
-                        <input class="hidden" type="file" name="foto" id="foto" accept="image/*" value="{{ old('foto', '') }}">
+                    <input class="hidden" type="file" name="foto" id="foto" accept="image/*" value="{{ old('foto', '') }}">
 
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                            @error('foto')
-                                <i class="fa-solid fa-circle-info"></i>
-                                <span>{{ $message }}</span>
-                            @enderror
-                        </div>
+                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        @error('foto')
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
 
@@ -216,6 +228,8 @@
 
                     <div class="w-full max-h-[350px] grid grid-cols-2 p-2 gap-2 overflow-y-auto"
                         id="image-preview">
+                        <div class="relative hidden items-center justify-center rounded bg-slate-100" id="new-image"></div>
+
                         @foreach ($portofolio->photo as $foto)
                             <div class="relative flex items-center justify-center rounded bg-slate-100">
                                 <img class="h-[300px] object-contain"
@@ -226,7 +240,7 @@
                                         type="button" onclick="deleteImage({{ $foto->id }})">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
-                            @endif
+                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -282,15 +296,18 @@
 
         $('#foto').on('change', function() {
             let files = this.files;
-            $('#image-preview').find('#new-image').remove();
+            $('#new-image').empty().removeClass('hidden').addClass('flex');
 
             for (let i = 0; i < files.length; i++) {
                 if (i < 5) {
-                    $('#image-preview').append(`
-                        <div style="position: relative; display: flex; align-items: center; justify-content: center; border-radius: 0.25rem; background-color: rgb(241 245 249 / 1)">
-                            <img style="height: 300px; object-fit: contain;"
-                                src="${URL.createObjectURL(files[i])}" alt="Foto Portofolio" id="new-image">
-                        </div>
+                    $('#new-image').append(`
+                        <img style="height: 300px; object-fit: contain;"
+                            src="${URL.createObjectURL(files[i])}" alt="Foto Portofolio">
+
+                        <button class="absolute top-0 right-0 w-8 aspect-square bg-pink rounded text-white"
+                            type="button" onclick="deleteNewImage()">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
                     `);
                 }
             }
@@ -305,6 +322,10 @@
                     imageForm.submit();
                 }
             }
+        }
+
+        function deleteNewImage() {
+            $('#new-image').empty().removeClass('flex').addClass('hidden');
         }
     </script>
 @endsection

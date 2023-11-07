@@ -13,6 +13,7 @@ class WPPortofolioPhoto extends Model
     protected $fillable = [
         'w_p_portofolio_id',
         'url',
+        'rejected',
     ];
 
     public function portofolio(): BelongsTo {

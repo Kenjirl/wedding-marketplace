@@ -37,15 +37,21 @@
                     Kategori
                 </div>
                 <div class="w-full p-2 flex flex-wrap items-start justify-start">
-                    @forelse (auth()->user()->w_organizer->category as $category)
-                        <div class="w-fit px-2 py-1 text-xs border border-pink rounded-full">
-                            {{ $category->w_categories->nama }}
-                        </div>
-                    @empty
+                    @if (auth()->user()->w_organizer)
+                        @forelse (auth()->user()->w_organizer->category as $category)
+                            <div class="w-fit px-2 py-1 text-xs border border-pink rounded-full">
+                                {{ $category->w_categories->nama }}
+                            </div>
+                        @empty
+                            <div class="w-fit px-1 text-xs border border-pink rounded-full">
+                                no data
+                            </div>
+                        @endforelse
+                    @else
                         <div class="w-fit px-1 text-xs border border-pink rounded-full">
                             no data
                         </div>
-                    @endforelse
+                    @endif
                 </div>
             </div>
         </div>
@@ -144,11 +150,13 @@
                     <span>Ubah Password</span>
                 </a>
 
-                <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                    href="{{ route('wedding-organizer.profil.ke_ubah_kategori') }}">
-                    <i class="fa-solid fa-hashtag"></i>
-                    <span>Ubah Kategori</span>
-                </a>
+                @if (auth()->user()->w_organizer)
+                    <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                        href="{{ route('wedding-organizer.profil.ke_ubah_kategori') }}">
+                        <i class="fa-solid fa-hashtag"></i>
+                        <span>Ubah Kategori</span>
+                    </a>
+                @endif
 
                 <a class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
                     href="{{ route('wedding-organizer.profil.ke_ubah') }}">
