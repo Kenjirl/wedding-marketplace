@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WPPlan extends Model
 {
@@ -12,7 +13,11 @@ class WPPlan extends Model
     protected $fillable = [
         'wedding_photographer_id',
         'nama',
-        'detail_layanan',
         'harga',
+        'status',
     ];
+
+    public function fitur(): HasMany {
+        return $this->hasMany(WPPlanDetail::class, 'w_p_plan_id');
+    }
 }

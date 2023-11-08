@@ -11,9 +11,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeddingCouple\WCController;
 use App\Http\Controllers\WeddingCouple\WCProfilController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
+use App\Http\Controllers\WeddingOrganizer\WOLayananController;
 use App\Http\Controllers\WeddingOrganizer\WOPortofolioController;
 use App\Http\Controllers\WeddingOrganizer\WOProfilController;
 use App\Http\Controllers\WeddingPhotographer\WPController;
+use App\Http\Controllers\WeddingPhotographer\WPLayananController;
 use App\Http\Controllers\WeddingPhotographer\WPPortofolioController;
 use App\Http\Controllers\WeddingPhotographer\WPProfilController;
 use Illuminate\Support\Facades\Route;
@@ -174,6 +176,17 @@ Route::name('wedding-organizer.')
             Route::post('/hapus-foto/{id}', 'hapus_foto')->name('hapus-foto');
         });
 
+        Route::name('layanan.')->prefix('/layanan')
+            ->controller(WOLayananController::class)->group(function() {
+            Route::get ('/',                 'index')      ->name('index');
+            Route::get ('/tambah',           'ke_tambah')  ->name('ke_tambah');
+            Route::post('/tambah',           'tambah')     ->name('tambah');
+            Route::get ('/ubah/{id}',        'ke_ubah')    ->name('ke_ubah');
+            Route::post('/ubah/{id}',        'ubah')       ->name('ubah');
+            Route::post('/hapus/{id}',       'hapus')      ->name('hapus');
+            Route::post('/ubah-status/{id}', 'ubah_status')->name('ubah_status');
+        });
+
     });
 
 });
@@ -209,6 +222,17 @@ Route::name('wedding-photographer.')
             Route::post('/ubah/{id}',       'ubah')      ->name('ubah');
             Route::post('/hapus/{id}',      'hapus')     ->name('hapus');
             Route::post('/hapus-foto/{id}', 'hapus_foto')->name('hapus-foto');
+        });
+
+        Route::name('layanan.')->prefix('/layanan')
+            ->controller(WPLayananController::class)->group(function() {
+            Route::get ('/',                 'index')      ->name('index');
+            Route::get ('/tambah',           'ke_tambah')  ->name('ke_tambah');
+            Route::post('/tambah',           'tambah')     ->name('tambah');
+            Route::get ('/ubah/{id}',        'ke_ubah')    ->name('ke_ubah');
+            Route::post('/ubah/{id}',        'ubah')       ->name('ubah');
+            Route::post('/hapus/{id}',       'hapus')      ->name('hapus');
+            Route::post('/ubah-status/{id}', 'ubah_status')->name('ubah_status');
         });
 
     });

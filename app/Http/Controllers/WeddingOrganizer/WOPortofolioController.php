@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class WOPortofolioController extends Controller
 {
     public function index() {
-        $latest_portofolio = WOPortofolio::orderBy('created_at', 'desc')->take(4)->get();
+        $latest_portofolio = WOPortofolio::orderBy('updated_at', 'desc')->take(4)->get();
         $portofolio = WOPortofolio::orderBy('judul', 'asc')->get();
 
         return view('user.wedding-organizer.portofolio.index', compact('latest_portofolio', 'portofolio'));

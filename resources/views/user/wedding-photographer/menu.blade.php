@@ -16,8 +16,9 @@ $currentUrl = Request::url();
         <i class="fa-solid fa-grip"></i>
         Portofolio
     </a>
-    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-        href="#">
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
+        {{ Str::contains($currentUrl, '/layanan') ? 'bg-pink text-white' : '' }}"
+        href="{{ route('wedding-photographer.layanan.index') }}">
         <i class="fa-solid fa-gift"></i>
         Layanan
     </a>

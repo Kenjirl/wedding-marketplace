@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WOPlan extends Model
 {
@@ -12,7 +13,11 @@ class WOPlan extends Model
     protected $fillable = [
         'wedding_organizer_id',
         'nama',
-        'detail_layanan',
         'harga',
+        'status',
     ];
+
+    public function fitur(): HasMany {
+        return $this->hasMany(WOPlanDetail::class, 'w_o_plan_id');
+    }
 }
