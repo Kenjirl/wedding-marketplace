@@ -39,7 +39,10 @@
                     {{-- NAMA --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Nama
+                            <i class="fa-solid fa-user"></i>
+                            <span class="ml-2">
+                                Nama
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="nama" id="nama" placeholder="Budi Pekerti"
@@ -50,7 +53,10 @@
                     {{-- TELEPON --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Telepon
+                            <i class="fa-solid fa-phone"></i>
+                            <span class="ml-2">
+                                Telepon
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="number" name="no_telp" id="no_telp" placeholder="081234567890"
@@ -61,7 +67,10 @@
                     {{-- EMAIL --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Email
+                            <i class="fa-solid fa-at"></i>
+                            <span class="ml-2">
+                                Email
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="email" name="email" id="email" placeholder="email@gmai.com" value="{{ auth()->user()->email }}" disabled>
@@ -71,7 +80,10 @@
                         {{-- GENDER --}}
                         <div class="w-100 mb-4">
                             <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                                Gender
+                                <i class="fa-solid fa-venus-mars"></i>
+                                <span class="ml-2">
+                                    Gender
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="gender" id="gender" placeholder="Pria/Wanita"
@@ -86,7 +98,10 @@
                     {{-- BASIS OPERASI --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Basis Operasi
+                            <i class="fa-regular fa-circle-dot"></i>
+                            <span class="ml-2">
+                                Basis Operasi
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="basis_operasi" id="basis_operasi" placeholder="Dalam/Luar Kota"
@@ -98,7 +113,10 @@
                         {{-- KOTA OPERASI --}}
                         <div class="w-100 mb-4">
                             <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                                Kota Operasi
+                                <i class="fa-solid fa-location-crosshairs"></i>
+                                <span class="ml-2">
+                                    Kota Operasi
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kota_operasi" id="kota_operasi" placeholder="Badung"
@@ -110,7 +128,10 @@
                     {{-- STATUS --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Status
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span class="ml-2">
+                                Status
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="status" id="status" placeholder="Individu/Organisasi"
@@ -124,12 +145,15 @@
             @if (auth()->user()->w_photographer && auth()->user()->w_photographer->status == 'Organisasi')
                 <div class="w-100 mb-4">
                     <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                        Alamat
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="ml-2">
+                            Alamat
+                        </span>
                     </div>
                     <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                    type="text" name="alamat" id="alamat" placeholder="Jl. Kebon Duren"
-                    value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->alamat : 'Belum Terdata'  }}"
-                    disabled>
+                        type="text" name="alamat" id="alamat" placeholder="Jl. Kebon Duren"
+                        value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->alamat : 'Belum Terdata'  }}"
+                        disabled>
                 </div>
             @endif
 

@@ -60,7 +60,7 @@ class WOPortofolioController extends Controller
         $portofolio = WOPortofolio::find($id);
 
         if (!$portofolio) {
-            return redirect()->route('wedding-organizer.ke_portofolio')->with('gagal', 'Portofolio tidak ditemukan');
+            return redirect()->route('wedding-organizer.portofolio.index')->with('gagal', 'Portofolio tidak ditemukan');
         }
 
         $provinsi       = '';
@@ -152,7 +152,6 @@ class WOPortofolioController extends Controller
         $data = $foto->delete();
 
         if ($data) {
-            // Storage::delete(public_path($url));
             unlink(public_path($url));
             return back()->with('sukses', 'Menghapus Foto Portofolio');
         }

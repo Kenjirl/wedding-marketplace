@@ -34,7 +34,10 @@
 
             <div class="w-full shadow rounded">
                 <div class="w-full px-2 py-1 bg-pink text-white text-sm font-semibold rounded-t">
-                    Kategori
+                    <i class="fa-solid fa-hashtag"></i>
+                    <span class="ml-2">
+                        Kategori
+                    </span>
                 </div>
                 <div class="w-full p-2 flex flex-wrap items-start justify-start">
                     @if (auth()->user()->w_organizer)
@@ -64,7 +67,10 @@
                     {{-- NAMA PEMILIK --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Nama Pemilik
+                            <i class="fa-solid fa-building-user"></i>
+                            <span class="ml-2">
+                                Nama Pemilik
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="nama_pemilik" id="nama_pemilik" placeholder="Budi Pekerti"
@@ -75,7 +81,10 @@
                     {{-- NAMA PERUSAHAAN --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Nama Perusahaan
+                            <span class="ml-2">
+                                <i class="fa-solid fa-building"></i>
+                                Nama Perusahaan
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="nama_perusahaan" id="nama_perusahaan" placeholder="PT. Ayo Nikah"
@@ -86,7 +95,10 @@
                     {{-- TELEPON --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Telepon
+                            <i class="fa-solid fa-phone"></i>
+                            <span class="ml-2">
+                                Telepon
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="number" name="no_telp" id="no_telp" placeholder="081234567890"
@@ -97,7 +109,10 @@
                     {{-- EMAIL --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Email
+                            <i class="fa-solid fa-at"></i>
+                            <span class="ml-2">
+                                Email
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="email" name="email" id="email" placeholder="email@gmai.com" value="{{ auth()->user()->email }}" disabled>
@@ -109,7 +124,10 @@
                     {{-- BASIS OPERASI --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            Basis Operasi
+                            <i class="fa-regular fa-circle-dot"></i>
+                            <span class="ml-2">
+                                Basis Operasi
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="basis_operasi" id="basis_operasi" placeholder="Dalam/Luar Kota"
@@ -121,7 +139,10 @@
                         {{-- KOTA OPERASI --}}
                         <div class="w-100 mb-4">
                             <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                                Kota Operasi
+                                <i class="fa-solid fa-location-crosshairs"></i>
+                                <span class="ml-2">
+                                    Kota Operasi
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kota_operasi" id="kota_operasi" placeholder="Badung"
@@ -134,7 +155,10 @@
 
             <div class="w-100 mb-4">
                 <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                    Alamat Perusahaan
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="ml-2">
+                        Alamat Perusahaan
+                    </span>
                 </div>
                 <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                 type="text" name="alamat" id="alamat" placeholder="Jl. Kebon Duren"

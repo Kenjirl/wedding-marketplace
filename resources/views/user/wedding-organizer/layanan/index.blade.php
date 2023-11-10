@@ -18,9 +18,10 @@
 
         <div class="w-full flex items-stretch justify-normal flex-wrap gap-4">
             @forelse ($plans as $plan)
-                <div class="w-full max-w-[20%] flex flex-col items-stretch justify-between rounded-lg shadow">
+                <div class="w-full max-w-[20%] flex flex-col items-stretch justify-between rounded shadow">
                     <div class="w-full">
-                        <div class="w-full px-4 py-2 bg-slate-200 rounded-t-lg">
+                        <div class="w-full px-4 py-2 flex items-center justify-start gap-2 bg-slate-200 rounded-t">
+                            <i class="fa-solid fa-gift"></i>
                             <span class="text-lg line-clamp-1">
                                 {{ $plan->nama }}
                             </span>
@@ -43,7 +44,7 @@
                         </div>
 
                         <div class="w-full flex items-center justify-end">
-                            <a class="w-full p-2 rounded-b-lg text-pink text-center text-sm font-semibold outline-none bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                            <a class="w-full p-2 rounded-b text-pink text-center text-sm font-semibold outline-none bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
                                 href="{{ route('wedding-organizer.layanan.ke_ubah', $plan->id) }}">
                                 Detail
                             </a>

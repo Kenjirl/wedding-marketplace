@@ -15,7 +15,10 @@
                 <div class="w-full mb-4">
                     <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            Nama Paket
+                            <i class="fa-solid fa-gift"></i>
+                            <span class="ml-2">
+                                Nama Paket
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                             type="text" name="nama" id="nama" placeholder="nama"
@@ -35,7 +38,10 @@
                 <div class="w-full mb-4">
                     <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('fitur_utama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            Detail Fitur
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span class="ml-2">
+                                Detail Fitur
+                            </span>
                         </div>
 
                         <div class="w-full px-2 pt-2 border-2 border-t-0 ">
@@ -75,7 +81,10 @@
                 <div class="w-full mb-4">
                     <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('harga') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            Harga Paket (dalam rupiah)
+                            <i class="fa-solid fa-rupiah-sign"></i>
+                            <span class="ml-2">
+                                Harga Paket
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('harga') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                             type="number" name="harga" id="harga" placeholder="tanpa Rp"

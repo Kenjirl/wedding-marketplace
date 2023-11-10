@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 class WPLayananController extends Controller
 {
     public function index() {
-        $plans = WPPlan::where('wedding_photographer_id', auth()->user()->w_photographer->id)->get();
+        $plans = WPPlan::where('wedding_photographer_id', auth()->user()->w_photographer->id)
+                ->orderBy('harga', 'asc')
+                ->get();
         return view('user.wedding-photographer.layanan.index', compact('plans'));
     }
 
@@ -46,7 +48,7 @@ class WPLayananController extends Controller
         foreach ($fitur_tambahans as $fitur) {
             if ($fitur !== '' && $fitur !== NULL) {
                 $plan_detail = new WPPlanDetail();
-                $plan_detail->W_p_plan_id = $plan->id;
+                $plan_detail->w_p_plan_id = $plan->id;
                 $plan_detail->isi = $fitur;
                 $plan_detail->save();
             }
@@ -99,7 +101,7 @@ class WPLayananController extends Controller
         foreach ($fitur_tambahans as $fitur) {
             if ($fitur !== '' && $fitur !== NULL) {
                 $plan_detail = new WPPlanDetail();
-                $plan_detail->W_p_plan_id = $id;
+                $plan_detail->w_p_plan_id = $id;
                 $plan_detail->isi = $fitur;
                 $plan_detail->save();
             }

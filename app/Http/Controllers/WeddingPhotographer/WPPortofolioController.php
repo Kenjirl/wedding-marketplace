@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class WPPortofolioController extends Controller
 {
     public function index() {
-        $latest_portofolio = WPPortofolio::orderBy('created_at', 'desc')->take(4)->get();
+        $latest_portofolio = WPPortofolio::orderBy('updated_at', 'desc')->take(4)->get();
         $portofolio = WPPortofolio::orderBy('judul', 'asc')->get();
 
         return view('user.wedding-photographer.portofolio.index', compact('latest_portofolio', 'portofolio'));
@@ -51,7 +51,7 @@ class WPPortofolioController extends Controller
         }
 
         if ($data1 && $data2) {
-            return redirect()->route('wedding-photographer.portofolio.index')->with('sukses', 'Menambah Portofolio');
+            return redirect()->route('wedding-photographer.portofolio.ke_ubah', $portofolio->id)->with('sukses', 'Menambah Portofolio');
         }
         return redirect()->route('wedding-photographer.portofolio.index')->with('gagal', 'Menambah Portofolio');
     }
@@ -60,7 +60,7 @@ class WPPortofolioController extends Controller
         $portofolio = WPPortofolio::find($id);
 
         if (!$portofolio) {
-            return redirect()->route('wedding-photographer.ke_portofolio')->with('gagal', 'Portofolio tidak ditemukan');
+            return redirect()->route('wedding-photographer.portofolio.index')->with('gagal', 'Portofolio tidak ditemukan');
         }
 
         $provinsi       = '';
@@ -152,7 +152,6 @@ class WPPortofolioController extends Controller
         $data = $foto->delete();
 
         if ($data) {
-            // Storage::delete(public_path($url));
             unlink(public_path($url));
             return back()->with('sukses', 'Menghapus Foto Portofolio');
         }

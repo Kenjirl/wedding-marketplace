@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 class WOLayananController extends Controller
 {
     public function index() {
-        $plans = WOPlan::where('wedding_organizer_id', auth()->user()->w_organizer->id)->get();
+        $plans = WOPlan::where('wedding_organizer_id', auth()->user()->w_organizer->id)
+                ->orderBy('harga', 'asc')
+                ->get();
         return view('user.wedding-organizer.layanan.index', compact('plans'));
     }
 
@@ -46,7 +48,7 @@ class WOLayananController extends Controller
         foreach ($fitur_tambahans as $fitur) {
             if ($fitur !== '' && $fitur !== NULL) {
                 $plan_detail = new WOPlanDetail();
-                $plan_detail->W_o_plan_id = $plan->id;
+                $plan_detail->w_o_plan_id = $plan->id;
                 $plan_detail->isi = $fitur;
                 $plan_detail->save();
             }
@@ -99,7 +101,7 @@ class WOLayananController extends Controller
         foreach ($fitur_tambahans as $fitur) {
             if ($fitur !== '' && $fitur !== NULL) {
                 $plan_detail = new WOPlanDetail();
-                $plan_detail->W_o_plan_id = $id;
+                $plan_detail->w_o_plan_id = $id;
                 $plan_detail->isi = $fitur;
                 $plan_detail->save();
             }

@@ -16,7 +16,10 @@
                 <div class="w-100 mb-4">
                     <div class="w-100">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('judul') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            Judul
+                            <i class="fa-solid fa-heading"></i>
+                            <span class="ml-2">
+                                Judul
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('judul') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                             type="text" name="judul" id="judul" placeholder="Pernikahan Budi dan Ani"
@@ -36,7 +39,10 @@
                 <div class="w-100 mb-4">
                     <div class="w-100">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('tanggal') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            Tanggal
+                            <i class="fa-regular fa-calendar"></i>
+                            <span class="ml-2">
+                                Tanggal
+                            </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('tanggal') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                             type="date" name="tanggal" id="tanggal" placeholder="Pernikahan Budi dan Ani"
@@ -56,7 +62,10 @@
                 <div class="w-100 mb-4">
                     <div class="w-100">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            Detail
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span class="ml-2">
+                                Detail
+                            </span>
                         </div>
                         <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                             name="detail" id="input" rows="3" placeholder="masukkan detail portofolio ini"
@@ -76,7 +85,10 @@
                     <div class="relative w-100">
                         <div class="w-100">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                Provinsi
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="ml-2">
+                                    Provinsi
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="provinsi" id="provinsi" placeholder="Bali" required
@@ -95,7 +107,10 @@
                     <div class="relative w-100">
                         <div class="w-100">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kota') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                Kota/Kabupaten
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="ml-2">
+                                    Kota/Kabupaten
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kota" id="kota" placeholder="Badung" required
@@ -114,7 +129,10 @@
                     <div class="relative w-100">
                         <div class="w-100">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                Kecamatan
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="ml-2">
+                                    Kecamatan
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan" required
@@ -133,7 +151,10 @@
                     <div class="relative w-100">
                         <div class="w-100">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                Kelurahan
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="ml-2">
+                                    Kelurahan
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran" required
@@ -152,7 +173,10 @@
                     <div class="relative w-100 mb-4 col-span-2">
                         <div class="w-100">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat_detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                Alamat Detail
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="ml-2">
+                                    Alamat Detail
+                                </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1" required
