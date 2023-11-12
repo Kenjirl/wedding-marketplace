@@ -30,4 +30,8 @@ class WeddingPhotographer extends Model
     public function portofolio(): HasMany {
         return $this->hasMany(WPPortofolio::class, 'wedding_photographer_id');
     }
+
+    public function rating(): HasMany {
+        return $this->hasMany(WPRating::class, 'wedding_photographer_id');
+    }
 }

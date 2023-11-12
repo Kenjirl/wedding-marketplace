@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('wedding_guests', function (Blueprint $table) {
+        Schema::create('w_c_guests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_id');
+            $table->unsignedBigInteger('w_c_wedding_id');
             $table->string('nama');
             $table->string('no_telp');
             $table->enum('gender', ['Pria', 'Wanita']);
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('pesan')->nullable();
             $table->timestamps();
 
-            $table->foreign('wedding_id')->references('id')->on('weddings')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wedding_guests');
+        Schema::dropIfExists('w_c_guests');
     }
 };

@@ -33,4 +33,8 @@ class WeddingOrganizer extends Model
     public function portofolio(): HasMany {
         return $this->hasMany(WOPortofolio::class, 'wedding_organizer_id');
     }
+
+    public function rating(): HasMany {
+        return $this->hasMany(WORating::class, 'wedding_organizer_id');
+    }
 }

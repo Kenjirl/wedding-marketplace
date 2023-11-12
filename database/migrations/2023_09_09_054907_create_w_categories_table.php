@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('wedding_invitations', function (Blueprint $table) {
+        Schema::create('w_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_id');
-            $table->string('tema');
-            $table->string('template');
+            $table->unsignedBigInteger('admin_id');
+            $table->string('nama');
+            $table->text('keterangan');
             $table->timestamps();
 
-            $table->foreign('wedding_id')->references('id')->on('weddings')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wedding_invitations');
+        Schema::dropIfExists('w_categories');
     }
 };

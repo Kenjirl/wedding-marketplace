@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('w_o_bookings', function (Blueprint $table) {
+        Schema::create('w_c_group_guests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('w_c_wedding_id');
-            $table->unsignedBigInteger('w_o_plan_id');
-            $table->enum('status', ['diproses', 'ditolak', 'diterima', 'selesai']);
-            $table->string('bukti_bayar');
-            $table->date('untuk_tanggal');
+            $table->string('nama');
+            $table->string('link_grup');
+            $table->string('link')->nullable();
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('w_o_plan_id')->references('id')->on('w_o_plans')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('w_o_bookings');
+        Schema::dropIfExists('w_c_group_guests');
     }
 };

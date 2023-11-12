@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Wedding extends Model
+class WCWedding extends Model
 {
     use HasFactory;
 
@@ -18,4 +19,8 @@ class Wedding extends Model
         'lokasi_pemberkatan',
         'lokasi_perayaan',
     ];
+
+    public function w_couple(): BelongsTo {
+        return $this->belongsTo(WeddingCouple::class, 'wedding_couple_id');
+    }
 }

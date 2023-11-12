@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class WeddingGuest extends Model
+class WCGuest extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'wedding_id',
+        'w_c_wedding_id',
         'nama',
         'no_telp',
         'gender',
@@ -21,4 +22,8 @@ class WeddingGuest extends Model
         'jumlah',
         'pesan',
     ];
+
+    public function wedding(): BelongsTo {
+        return $this->belongsTo(WCWedding::class, 'w_c_wedding_id');
+    }
 }
