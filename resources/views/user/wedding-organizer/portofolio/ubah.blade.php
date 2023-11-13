@@ -13,6 +13,7 @@
                 <li>Silahkan lengkapi gambar dari portofolio Anda</li>
                 <li>Masukan maksimal 5 gambar untuk tiap portofolio</li>
                 <li>Masukan gambar 1 per 1 kemudian submit untuk tiap gambar</li>
+                <li>Jika latar gambar berwarna kemerahan, artinya gambar tersebut ditolak oleh admin</li>
             </ol>
         </div>
 
@@ -231,7 +232,7 @@
                         <div class="relative hidden items-center justify-center rounded bg-slate-100" id="new-image"></div>
 
                         @foreach ($portofolio->photo as $foto)
-                            <div class="relative flex items-center justify-center rounded bg-slate-100">
+                            <div class="relative flex items-center justify-center rounded {{ $foto->rejected ? 'bg-red-500' : 'bg-slate-100' }} ">
                                 <img class="h-[300px] object-contain"
                                     src="{{ asset($foto->url) }}" alt="Foto Portofolio">
 
@@ -240,7 +241,7 @@
                                         type="button" onclick="deleteImage({{ $foto->id }})">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
-                            @endif
+                                @endif
                             </div>
                         @endforeach
                     </div>

@@ -81,8 +81,8 @@
                     {{-- NAMA PERUSAHAAN --}}
                     <div class="w-100 mb-4">
                         <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                            <i class="fa-solid fa-building"></i>
                             <span class="ml-2">
-                                <i class="fa-solid fa-building"></i>
                                 Nama Perusahaan
                             </span>
                         </div>

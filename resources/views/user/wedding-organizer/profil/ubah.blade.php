@@ -49,8 +49,8 @@
                     <div class="w-100 mb-4">
                         <div class="w-100">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('nama_perusahaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <i class="fa-solid fa-building"></i>
                                 <span class="ml-2">
-                                    <i class="fa-solid fa-building"></i>
                                     Nama Perusahaan
                                 </span>
                             </div>
