@@ -36,7 +36,7 @@
                         @yield('tombol-profil')
                     </button>
 
-                    <div class="absolute bottom-[calc(-5em+3px-2rem)] right-0 w-full bg-white border-4 border-slate-200 rounded hidden flex-col items-center justify-center animate__animated animate__flipInX z-50"
+                    <div class="absolute bottom-[calc(-5em+3px-2rem)] right-0 w-full max-w-[200px] bg-white border-4 border-slate-200 rounded hidden flex-col items-center justify-center animate__animated animate__flipInX z-50"
                         id="profileLayout">
                         @yield('profil')
 

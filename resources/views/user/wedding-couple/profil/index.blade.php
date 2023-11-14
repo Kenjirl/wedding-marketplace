@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="max-w-[600px] mx-auto">
+    <div class="max-w-[800px] mx-auto">
         {{-- H1 --}}
         <div class="mb-8">
             <h1 class="text-[2em] font-bold">

@@ -21,7 +21,7 @@ use App\Http\Controllers\WeddingPhotographer\WPProfilController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/masuk');
+    return view('user.wedding-couple.index');
 });
 
 Route::controller(UserController::class)->group(function() {

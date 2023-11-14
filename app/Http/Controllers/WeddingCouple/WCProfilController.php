@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UbahPasswordRequest;
 use App\Http\Requests\WeddingCouple\ProfilRequest;
 use App\Models\User;
-use App\Models\WeddingCouple;
+use App\Models\WCouple;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +51,7 @@ class WCProfilController extends Controller
 
         if (auth()->user()->w_couple) {
             # Update
-            $data = WeddingCouple::where('id', auth()->user()->w_couple->id)
+            $data = WCouple::where('id', auth()->user()->w_couple->id)
                 ->update([
                     'nama'    => $req->nama,
                     'no_telp' => $req->no_telp,
@@ -59,7 +59,7 @@ class WCProfilController extends Controller
                 ]);
         } else {
             # Make New
-            $couple = new WeddingCouple();
+            $couple = new WCouple();
             $couple->user_id = auth()->user()->id;
             $couple->nama    = $req->nama;
             $couple->no_telp = $req->no_telp;
@@ -115,7 +115,7 @@ class WCProfilController extends Controller
                 'WC/profil/'.str()->uuid() . '.' . $foto_profil->extension()
             );
 
-            $data = WeddingCouple::where('user_id', auth()->user()->id)
+            $data = WCouple::where('user_id', auth()->user()->id)
                 ->update([
                     'foto_profil' => $foto_profil,
                 ]);

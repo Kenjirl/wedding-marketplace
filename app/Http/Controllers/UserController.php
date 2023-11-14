@@ -98,7 +98,7 @@ class UserController extends Controller
         Auth::logout();
         $req->session()->invalidate();
         $req->session()->regenerateToken();
-        return redirect()->route('ke_masuk')->with('sukses', 'Anda telah keluar');
+        return redirect()->intended('/')->with('sukses', 'Anda telah keluar');
     }
 
     public function ke_daftar() {
