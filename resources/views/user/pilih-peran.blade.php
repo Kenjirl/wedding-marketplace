@@ -61,31 +61,31 @@
     </div>
 @endsection
 
-@section('js')
-<script>
-    function selectRole(role) {
-        $("button:not(#btnSubmit)").removeClass("bg-pink text-white").addClass("text-pink");
-        $('#' + role).addClass("bg-pink text-white");
+@push('child-js')
+    <script>
+        function selectRole(role) {
+            $("button:not(#btnSubmit)").removeClass("bg-pink text-white").addClass("text-pink");
+            $('#' + role).addClass("bg-pink text-white");
 
-        $('#role').val(role);
-        $('#btnSubmit').prop('disabled', role === '');
+            $('#role').val(role);
+            $('#btnSubmit').prop('disabled', role === '');
 
-        if (role === 'wedding-couple') {
-            $('#keterangan').html(`
-                Sebagai <b class="text-pink">Wedding Couple</b>,
-                anda dapat mencari <b>Wedding Organizer</b> dan <b>Wedding Photographer</b>, membuat dan mengatur undangan, serta mengelola tamu undangan untuk pernikahan anda.
-            `);
-        } else if (role === 'wedding-organizer') {
-            $('#keterangan').html(`
-                Sebagai <b class="text-pink">Wedding Organizer</b>,
-                anda dapat mengatur profil, menambahkan portofolio, dan menawarkan paket layanan kepada <b>Wedding Couple</b>.
-            `);
-        } else {
-            $('#keterangan').html(`
-                Sebagai <b class="text-pink">Wedding Photographer</b>,
-                anda dapat mengatur profil, menambahkan portofolio, dan menawarkan paket layanan kepada <b>Wedding Couple</b>.
-            `);
+            if (role === 'wedding-couple') {
+                $('#keterangan').html(`
+                    Sebagai <b class="text-pink">Wedding Couple</b>,
+                    anda dapat mencari <b>Wedding Organizer</b> dan <b>Wedding Photographer</b>, membuat dan mengatur undangan, serta mengelola tamu undangan untuk pernikahan anda.
+                `);
+            } else if (role === 'wedding-organizer') {
+                $('#keterangan').html(`
+                    Sebagai <b class="text-pink">Wedding Organizer</b>,
+                    anda dapat mengatur profil, menambahkan portofolio, dan menawarkan paket layanan kepada <b>Wedding Couple</b>.
+                `);
+            } else {
+                $('#keterangan').html(`
+                    Sebagai <b class="text-pink">Wedding Photographer</b>,
+                    anda dapat mengatur profil, menambahkan portofolio, dan menawarkan paket layanan kepada <b>Wedding Couple</b>.
+                `);
+            }
         }
-    }
-</script>
-@endsection
+    </script>
+@endpush

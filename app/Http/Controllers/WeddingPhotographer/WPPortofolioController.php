@@ -28,7 +28,7 @@ class WPPortofolioController extends Controller
         $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
         $portofolio = new WPPortofolio();
-        $portofolio->wedding_photographer_id = auth()->user()->w_photographer->id;
+        $portofolio->w_photographer_id = auth()->user()->w_photographer->id;
         $portofolio->judul = $req->judul;
         $portofolio->tanggal = $req->tanggal;
         $portofolio->detail = $req->detail;

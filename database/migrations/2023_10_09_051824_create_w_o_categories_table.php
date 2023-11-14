@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('w_o_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_organizer_id');
-            $table->unsignedBigInteger('wedding_categories_id');
+            $table->unsignedBigInteger('w_organizer_id');
+            $table->unsignedBigInteger('w_categories_id');
             $table->timestamps();
 
-            $table->foreign('wedding_organizer_id')->references('id')->on('wedding_organizers')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('wedding_categories_id')->references('id')->on('wedding_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_organizer_id')->references('id')->on('w_organizers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_categories_id')->references('id')->on('w_categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

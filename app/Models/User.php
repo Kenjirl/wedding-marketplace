@@ -51,14 +51,14 @@ class User extends Authenticatable
     }
 
     public function w_couple(): HasOne {
-        return $this->hasOne(WeddingCouple::class, 'user_id');
+        return $this->hasOne(WCouple::class, 'user_id');
     }
 
     public function w_organizer(): HasOne {
-        return $this->hasOne(WeddingOrganizer::class, 'user_id');
+        return $this->hasOne(WOrganizer::class, 'user_id');
     }
 
     public function w_photographer(): HasOne {
-        return $this->hasOne(WeddingPhotographer::class, 'user_id');
+        return $this->hasOne(WPhotographer::class, 'user_id');
     }
 }

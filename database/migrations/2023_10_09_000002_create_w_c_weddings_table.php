@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('w_c_weddings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_couple_id');
+            $table->unsignedBigInteger('w_couple_id');
             $table->string('groom');
             $table->string('bride');
             $table->dateTime('waktu_pemberkatan');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('lokasi_perayaan');
             $table->timestamps();
 
-            $table->foreign('wedding_couple_id')->references('id')->on('wedding_couples')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_couple_id')->references('id')->on('w_couples')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

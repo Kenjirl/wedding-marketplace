@@ -283,7 +283,9 @@
             @csrf
         </form>
     @endforeach
+@endsection
 
+@push('child-js')
     <script>
         $("#unggahFotoBtn").on("click", function () {
             $("#foto").click();
@@ -329,4 +331,4 @@
             $('#new-image').empty().removeClass('flex').addClass('hidden');
         }
     </script>
-@endsection
+@endpush

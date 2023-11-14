@@ -262,7 +262,9 @@
             </button>
         </div>
     </form>
+@endsection
 
+@push('child-js')
     {{-- GENDER SCRIPT --}}
     <script>
         function showGenderOptions() {
@@ -299,4 +301,4 @@
             }
         });
     </script>
-@endsection
+@endpush

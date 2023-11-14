@@ -283,7 +283,9 @@
             @csrf
         </form>
     @endforeach
+@endsection
 
+@push('child-js')
     <script>
         $("#unggahFotoBtn").on("click", function () {
             $("#foto").click();
@@ -330,4 +332,4 @@
             $('#foto').val('');
         }
     </script>
-@endsection
+@endpush

@@ -62,7 +62,9 @@
             </button>
         </div>
     </form>
+@endsection
 
+@push('child-js')
     <script>
         $("#editBtn").on("click", function () {
             $("#foto_profil").click();
@@ -84,4 +86,4 @@
             }
         });
     </script>
-@endsection
+@endpush

@@ -159,7 +159,9 @@
             </button>
         </div>
     </form>
+@endsection
 
+@push('child-js')
     <script>
         function kirim(status) {
             console.log(status);
@@ -171,4 +173,4 @@
             }
         }
     </script>
-@endsection
+@endpush

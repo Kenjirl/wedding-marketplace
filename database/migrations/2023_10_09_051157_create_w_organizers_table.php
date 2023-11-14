@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('wedding_couples', function (Blueprint $table) {
+        Schema::create('w_organizers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('nama');
+            $table->string('nama_pemilik');
+            $table->string('nama_perusahaan');
             $table->string('no_telp');
-            $table->enum('gender', ['Pria', 'Wanita']);
+            $table->string('alamat');
+            $table->enum('basis_operasi', ['Hanya di Dalam Kota', 'Bisa ke Luar Kota']);
+            $table->string('kota_operasi')->nullable();
             $table->string('foto_profil')->nullable();
             $table->timestamps();
 
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wedding_couples');
+        Schema::dropIfExists('w_organizers');
     }
 };

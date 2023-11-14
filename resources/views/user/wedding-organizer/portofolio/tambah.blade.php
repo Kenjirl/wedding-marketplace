@@ -240,7 +240,9 @@
             </button>
         </div>
     </form>
+@endsection
 
+@push('child-js')
     <script>
         $("#unggahFotoBtn").on("click", function () {
             $("#foto").click();
@@ -261,4 +263,4 @@
             }
         });
     </script>
-@endsection
+@endpush

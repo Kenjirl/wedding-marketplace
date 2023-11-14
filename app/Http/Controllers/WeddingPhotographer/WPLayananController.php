@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class WPLayananController extends Controller
 {
     public function index() {
-        $plans = WPPlan::where('wedding_photographer_id', auth()->user()->w_photographer->id)
+        $plans = WPPlan::where('w_photographer_id', auth()->user()->w_photographer->id)
                 ->orderBy('harga', 'asc')
                 ->get();
         return view('user.wedding-photographer.layanan.index', compact('plans'));
@@ -33,7 +33,7 @@ class WPLayananController extends Controller
         ]);
 
         $plan = new WPPlan();
-        $plan->wedding_photographer_id = auth()->user()->w_photographer->id;
+        $plan->w_photographer_id = auth()->user()->w_photographer->id;
         $plan->nama = $req->nama;
         $plan->harga = $req->harga;
         $data1 = $plan->save();

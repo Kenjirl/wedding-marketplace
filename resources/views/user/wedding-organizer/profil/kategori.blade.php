@@ -7,7 +7,7 @@
 @section('h1', 'Profil > Kategori')
 
 @section('content')
-    {{-- DATA DIRI --}}
+    {{-- DATA KATEGORI --}}
     <div class="w-100 flex gap-8">
         <div class="w-full h-fit flex-1 rounded shadow">
             <div class="w-full px-2 py-1 bg-pink text-white font-semibold rounded-t">
@@ -111,7 +111,9 @@
             </div>
         </div>
     </div>
+@endsection
 
+@push('child-js')
     <script>
         function showDetail(id) {
             $('.select-kategori-detail').hide();
@@ -141,4 +143,4 @@
             showDetail(select.val());
         });
     </script>
-@endsection
+@endpush

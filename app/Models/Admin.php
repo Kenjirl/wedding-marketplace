@@ -24,6 +24,6 @@ class Admin extends Model
     }
 
     public function w_category(): HasMany {
-        return $this->hasMany(WeddingCategories::class, 'admin_id');
+        return $this->hasMany(WCategories::class, 'admin_id');
     }
 }

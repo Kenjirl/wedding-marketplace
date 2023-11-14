@@ -117,7 +117,9 @@
             </div>
         </div>
     </form>
+@endsection
 
+@push('child-js')
     <script>
         $(document).ready(function() {
             let count = 0;
@@ -151,4 +153,4 @@
             }
         });
     </script>
-@endsection
+@endpush

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('w_o_portofolios', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_organizer_id');
+            $table->unsignedBigInteger('w_organizer_id');
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->string('judul');
             $table->date('tanggal');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('status', ['diterima', 'menunggu konfirmasi', 'ditolak'])->default('menunggu konfirmasi');
             $table->timestamps();
 
-            $table->foreign('wedding_organizer_id')->references('id')->on('wedding_organizers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_organizer_id')->references('id')->on('w_organizers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
         });
     }

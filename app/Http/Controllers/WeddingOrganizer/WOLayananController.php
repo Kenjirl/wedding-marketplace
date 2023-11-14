@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class WOLayananController extends Controller
 {
     public function index() {
-        $plans = WOPlan::where('wedding_organizer_id', auth()->user()->w_organizer->id)
+        $plans = WOPlan::where('w_organizer_id', auth()->user()->w_organizer->id)
                 ->orderBy('harga', 'asc')
                 ->get();
         return view('user.wedding-organizer.layanan.index', compact('plans'));
@@ -33,7 +33,7 @@ class WOLayananController extends Controller
         ]);
 
         $plan = new WOPlan();
-        $plan->wedding_organizer_id = auth()->user()->w_organizer->id;
+        $plan->w_organizer_id = auth()->user()->w_organizer->id;
         $plan->nama = $req->nama;
         $plan->harga = $req->harga;
         $data1 = $plan->save();

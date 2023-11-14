@@ -313,7 +313,9 @@
             </div>
         </form>
     </div>
+@endsection
 
+@push('child-js')
     {{-- BASIS OPERASI SCRIPT --}}
     <script>
         function showBasisOperasiOptions() {
@@ -374,4 +376,4 @@
             }
         });
     </script>
-@endsection
+@endpush

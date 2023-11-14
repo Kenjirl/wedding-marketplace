@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('wedding_photographers', function (Blueprint $table) {
+        Schema::create('w_couples', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('nama');
             $table->string('no_telp');
-            $table->enum('gender', ['Pria', 'Wanita'])->nullable();
-            $table->enum('basis_operasi', ['Hanya di Dalam Kota', 'Bisa ke Luar Kota']);
-            $table->string('kota_operasi')->nullable();
-            $table->enum('status', ['Individu', 'Organisasi']);
-            $table->string('alamat')->nullable();
+            $table->enum('gender', ['Pria', 'Wanita']);
             $table->string('foto_profil')->nullable();
             $table->timestamps();
 
@@ -37,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wedding_photographers');
+        Schema::dropIfExists('w_couples');
     }
 };

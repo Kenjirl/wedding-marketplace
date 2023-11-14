@@ -65,10 +65,12 @@
             </tbody>
         </table>
     </div>
+@endsection
 
+@push('child-js')
     <script>
         function showDeleteConfirmation(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data Admin ini?')) {
+            if (confirm('Apakah Anda yakin ingin menghapus data kategori ini?')) {
                 const formId = 'deleteForm-' + id;
                 const deleteForm = document.getElementById(formId);
 
@@ -79,4 +81,4 @@
             }
         }
     </script>
-@endsection
+@endpush

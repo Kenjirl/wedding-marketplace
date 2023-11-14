@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('w_c_wedding_id');
             $table->unsignedBigInteger('w_o_plan_id');
-            $table->enum('status', ['diproses', 'ditolak', 'diterima', 'selesai']);
+            $table->enum('status', ['diproses', 'ditolak', 'diterima', 'selesai'])->default('diproses');
             $table->string('bukti_bayar');
             $table->date('untuk_tanggal');
             $table->timestamps();

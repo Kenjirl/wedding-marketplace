@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('w_o_plans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_organizer_id');
+            $table->unsignedBigInteger('w_organizer_id');
             $table->string('nama');
             $table->bigInteger('harga');
             $table->enum('status', ['aktif','nonaktif'])->default('aktif');
             $table->timestamps();
 
-            $table->foreign('wedding_organizer_id')->references('id')->on('wedding_organizers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_organizer_id')->references('id')->on('w_organizers')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

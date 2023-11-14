@@ -70,7 +70,9 @@
             </tbody>
         </table>
     </div>
+@endsection
 
+@push('child-js')
     <script>
         function showDeleteConfirmation(id) {
             if (confirm('Apakah Anda yakin ingin menghapus data Admin ini?')) {
@@ -84,4 +86,4 @@
             }
         }
     </script>
-@endsection
+@endpush

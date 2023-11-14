@@ -361,7 +361,9 @@
             </div>
         </form>
     </div>
+@endsection
 
+@push('child-js')
     {{-- GENDER SCRIPT --}}
     <script>
         function showGenderOptions() {
@@ -515,7 +517,6 @@
 
                 $('#gender').prop({ disabled: false, required: true });
                 $('#genderContainer').removeClass('hidden');
-                console.log('Individu');
             } else if ($('#status').val() === 'Organisasi') {
                 $('#provinsi').prop({ required: true, disabled: false });
                 $('#kota').prop({ required: true, disabled: false });
@@ -528,7 +529,6 @@
 
                 $('#gender').prop({ disabled: true, required: false });
                 $('#genderContainer').addClass('hidden');
-                console.log('Not Individu');
             }
 
             // BASIS OPERASI
@@ -562,4 +562,4 @@
             }
         });
     </script>
-@endsection
+@endpush

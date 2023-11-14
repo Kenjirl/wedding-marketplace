@@ -12,14 +12,14 @@ class WOPlan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'wedding_organizer_id',
+        'w_organizer_id',
         'nama',
         'harga',
         'status',
     ];
 
     public function w_organizer(): BelongsTo {
-        return $this->belongsTo(WeddingOrganizer::class, 'wedding_organizer_id');
+        return $this->belongsTo(WOrganizer::class, 'w_organizer_id');
     }
 
     public function fitur(): HasMany {

@@ -114,26 +114,26 @@
 </div>
 @endsection
 
-@section('js')
-<script>
-    function togglePassword() {
-            if ($('#password').attr('type') === 'password') {
-                $('#password').attr('type', 'text');
-                $('#vPassword').attr('type', 'text');
-                $('#toggle-password-btn').html('<i class="fa-regular fa-eye-slash"></i>');
-            } else {
-                $('#password').attr('type', 'password');
-                $('#vPassword').attr('type', 'password');
-                $('#toggle-password-btn').html('<i class="fa-regular fa-eye"></i>');
+@push('child-js')
+    <script>
+        function togglePassword() {
+                if ($('#password').attr('type') === 'password') {
+                    $('#password').attr('type', 'text');
+                    $('#vPassword').attr('type', 'text');
+                    $('#toggle-password-btn').html('<i class="fa-regular fa-eye-slash"></i>');
+                } else {
+                    $('#password').attr('type', 'password');
+                    $('#vPassword').attr('type', 'password');
+                    $('#toggle-password-btn').html('<i class="fa-regular fa-eye"></i>');
+                }
             }
-        }
 
-        function validatePassword() {
-            if ($('#password').val() === $('#vPassword').val() && $('#password').val() !== '' && $('#vPassword').val() !== '') {
-                $('#btnSubmit').removeAttr('disabled');
-            } else {
-                $('#btnSubmit').attr('disabled', 'disabled');
+            function validatePassword() {
+                if ($('#password').val() === $('#vPassword').val() && $('#password').val() !== '' && $('#vPassword').val() !== '') {
+                    $('#btnSubmit').removeAttr('disabled');
+                } else {
+                    $('#btnSubmit').attr('disabled', 'disabled');
+                }
             }
-        }
-</script>
-@endsection
+    </script>
+@endpush

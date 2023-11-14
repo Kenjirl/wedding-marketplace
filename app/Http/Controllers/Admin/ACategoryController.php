@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\WeddingCategories;
+use App\Models\WCategories;
 use Illuminate\Http\Request;
 
 class ACategoryController extends Controller
 {
     public function index() {
-        $categories = WeddingCategories::all();
+        $categories = WCategories::all();
 
         return view('user.admin.kategori.index', compact('categories'));
     }
@@ -31,7 +31,7 @@ class ACategoryController extends Controller
             'keterangan.string' => 'Keterangan harus berupa karakter',
         ]);
 
-        $wkg = new WeddingCategories();
+        $wkg = new WCategories();
         $wkg->admin_id = auth()->user()->admin->id;
         $wkg->nama = strtolower($req->nama);
         $wkg->keterangan = $req->keterangan;
@@ -44,7 +44,7 @@ class ACategoryController extends Controller
     }
 
     public function ke_ubah($id) {
-        $wkg = WeddingCategories::where('id', $id)->first();
+        $wkg = WCategories::where('id', $id)->first();
 
         return view('user.admin.kategori.ubah', compact('wkg'));
     }
@@ -62,7 +62,7 @@ class ACategoryController extends Controller
             'keterangan.string' => 'Keterangan harus berupa karakter',
         ]);
 
-        $data = WeddingCategories::where('id', $id)
+        $data = WCategories::where('id', $id)
             ->update([
                 'admin_id' => auth()->user()->admin->id,
                 'nama' => strtolower($req->nama),
@@ -76,7 +76,7 @@ class ACategoryController extends Controller
     }
 
     public function hapus($id) {
-        $kategori = WeddingCategories::where('id', $id)->first();
+        $kategori = WCategories::where('id', $id)->first();
         $data = $kategori->delete();
 
         if ($data) {

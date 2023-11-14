@@ -11,7 +11,7 @@ class WCWedding extends Model
     use HasFactory;
 
     protected $fillable = [
-        'wedding_couple_id',
+        'w_couple_id',
         'groom',
         'bride',
         'waktu_pemberkatan',
@@ -21,6 +21,6 @@ class WCWedding extends Model
     ];
 
     public function w_couple(): BelongsTo {
-        return $this->belongsTo(WeddingCouple::class, 'wedding_couple_id');
+        return $this->belongsTo(WCouple::class, 'w_couple_id');
     }
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UbahPasswordRequest;
 use App\Http\Requests\WeddingPhotographer\ProfilRequest;
 use App\Models\User;
-use App\Models\WeddingPhotographer;
+use App\Models\WPhotographer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -66,7 +66,7 @@ class WPProfilController extends Controller
 
         if (auth()->user()->w_photographer) {
             # Update
-            $data = WeddingPhotographer::where('id', auth()->user()->w_photographer->id)
+            $data = WPhotographer::where('id', auth()->user()->w_photographer->id)
                 ->update([
                     'nama'          => $req->nama,
                     'no_telp'       => $req->no_telp,
@@ -78,7 +78,7 @@ class WPProfilController extends Controller
                 ]);
         } else {
             # Make New
-            $photographer = new WeddingPhotographer();
+            $photographer = new WPhotographer();
             $photographer->user_id       = auth()->user()->id;
             $photographer->nama          = $req->nama;
             $photographer->no_telp       = $req->no_telp;
@@ -137,7 +137,7 @@ class WPProfilController extends Controller
                 'WP/profil/'.str()->uuid() . '.' . $foto_profil->extension()
             );
 
-            $data = WeddingPhotographer::where('user_id', auth()->user()->id)
+            $data = WPhotographer::where('user_id', auth()->user()->id)
                 ->update([
                     'foto_profil' => $foto_profil,
                 ]);

@@ -136,6 +136,17 @@ Route::name('wedding-couple.')
     // Hanya bisa diakses jika sudah melengkapi profil wedding couple
     Route::middleware('wc-profil')->group(function() {
 
+        // Route::name('booking.')->prefix('/booking')
+        //     ->group(function() {
+        //     Route::name('wo.')->prefix('/wedding-organizer')
+        //         ->group(function() {
+        //             Route::get ('/',              'index')           ->name('index');
+        //             Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
+        //             Route::post('/ubah',          'ubah')            ->name('ubah');
+        //         });
+
+        // });
+
     });
 
 });

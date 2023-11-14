@@ -12,7 +12,7 @@ class WPPortofolio extends Model
     use HasFactory;
 
     protected $fillable = [
-        'wedding_photographer_id',
+        'w_photographer_id',
         'admin_id',
         'judul',
         'tanggal',
@@ -22,7 +22,7 @@ class WPPortofolio extends Model
     ];
 
     public function w_photographer(): BelongsTo {
-        return $this->belongsTo(WeddingPhotographer::class, 'wedding_photographer_id');
+        return $this->belongsTo(WPhotographer::class, 'w_photographer_id');
     }
 
     public function admin(): BelongsTo {

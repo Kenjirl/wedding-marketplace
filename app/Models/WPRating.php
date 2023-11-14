@@ -11,17 +11,17 @@ class WPRating extends Model
     use HasFactory;
 
     protected $fillable = [
-        'wedding_couple_id',
-        'wedding_photographer_id',
+        'w_couple_id',
+        'w_photographer_id',
         'rating',
         'komentar'
     ];
 
     public function w_couple(): BelongsTo {
-        return $this->belongsTo(WeddingCouple::class, 'wedding_couple_id');
+        return $this->belongsTo(WCouple::class, 'w_couple_id');
     }
 
     public function w_photographer(): BelongsTo {
-        return $this->belongsTo(WeddingPhotographer::class, 'wedding_photographer_id');
+        return $this->belongsTo(WPhotographer::class, 'w_photographer_id');
     }
 }

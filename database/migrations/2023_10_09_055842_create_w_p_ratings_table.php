@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('w_o_ratings', function (Blueprint $table) {
+        Schema::create('w_p_ratings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_couple_id');
-            $table->unsignedBigInteger('wedding_organizer_id');
+            $table->unsignedBigInteger('w_couple_id');
+            $table->unsignedBigInteger('w_photographer_id');
             $table->float('rating', 8, 1);
             $table->string('komentar');
             $table->timestamps();
 
-            $table->foreign('wedding_couple_id')->references('id')->on('wedding_couples')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('wedding_organizer_id')->references('id')->on('wedding_organizers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_couple_id')->references('id')->on('w_couples')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_photographer_id')->references('id')->on('w_photographers')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('w_o_ratings');
+        Schema::dropIfExists('w_p_ratings');
     }
 };

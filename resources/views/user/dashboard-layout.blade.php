@@ -61,7 +61,7 @@
     </div>
 @endsection
 
-@section('js')
+@push('child-js')
     <script>
         function openProfile() {
             if ($('#profileLayout').hasClass("hidden")) {
@@ -71,4 +71,4 @@
             }
         }
     </script>
-@endsection
+@endpush

@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UbahPasswordRequest;
 use App\Http\Requests\WeddingOrganizer\ProfilRequest;
 use App\Models\User;
-use App\Models\WeddingCategories;
-use App\Models\WeddingOrganizer;
+use App\Models\WCategories;
 use App\Models\WOCategories;
+use App\Models\WOrganizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -61,7 +61,7 @@ class WOProfilController extends Controller
 
         if (auth()->user()->w_organizer) {
             # Update
-            $data = WeddingOrganizer::where('id', auth()->user()->w_organizer->id)
+            $data = WOrganizer::where('id', auth()->user()->w_organizer->id)
                 ->update([
                     'nama_pemilik'   => $req->nama_pemilik,
                     'nama_perusahaan'=> $req->nama_perusahaan,
@@ -72,7 +72,7 @@ class WOProfilController extends Controller
                 ]);
         } else {
             # Make New
-            $organizer = new WeddingOrganizer();
+            $organizer = new WOrganizer();
             $organizer->user_id         = auth()->user()->id;
             $organizer->nama_pemilik    = $req->nama_pemilik;
             $organizer->nama_perusahaan = $req->nama_perusahaan;
@@ -132,7 +132,7 @@ class WOProfilController extends Controller
                 'WO/profil/'.str()->uuid() . '.' . $foto_profil->extension()
             );
 
-            $data = WeddingOrganizer::where('user_id', auth()->user()->id)
+            $data = WOrganizer::where('user_id', auth()->user()->id)
                 ->update([
                     'foto_profil' => $foto_profil,
                 ]);
@@ -146,10 +146,10 @@ class WOProfilController extends Controller
     }
 
     public function ke_ubah_kategori() {
-        $categories = WeddingCategories::all();
+        $categories = WCategories::all();
 
-        $woCategories = WOCategories::where('wedding_organizer_id', auth()->user()->w_organizer->id)->get();
-        $woCategoriesIds = $woCategories->pluck('wedding_categories_id')->all();
+        $woCategories = WOCategories::where('w_organizer_id', auth()->user()->w_organizer->id)->get();
+        $woCategoriesIds = $woCategories->pluck('w_categories_id')->all();
 
         $categories = $categories->reject(function ($category) use ($woCategoriesIds) {
             return in_array($category->id, $woCategoriesIds);
@@ -170,8 +170,8 @@ class WOProfilController extends Controller
         // dd($req->kategori);
 
         $kategori = new WOCategories();
-        $kategori->wedding_organizer_id = auth()->user()->w_organizer->id;
-        $kategori->wedding_categories_id = $req->kategori;
+        $kategori->w_organizer_id = auth()->user()->w_organizer->id;
+        $kategori->w_categories_id = $req->kategori;
         $data = $kategori->save();
 
         if ($data) {

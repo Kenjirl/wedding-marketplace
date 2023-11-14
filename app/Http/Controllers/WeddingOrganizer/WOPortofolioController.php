@@ -28,7 +28,7 @@ class WOPortofolioController extends Controller
         $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
         $portofolio = new WOPortofolio();
-        $portofolio->wedding_organizer_id = auth()->user()->w_organizer->id;
+        $portofolio->w_organizer_id = auth()->user()->w_organizer->id;
         $portofolio->judul = $req->judul;
         $portofolio->tanggal = $req->tanggal;
         $portofolio->detail = $req->detail;

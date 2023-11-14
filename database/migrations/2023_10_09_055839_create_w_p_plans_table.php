@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('w_p_plans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('wedding_photographer_id');
+            $table->unsignedBigInteger('w_photographer_id');
             $table->string('nama');
             $table->bigInteger('harga');
             $table->enum('status', ['aktif','nonaktif'])->default('aktif');
             $table->timestamps();
 
-            $table->foreign('wedding_photographer_id')->references('id')->on('wedding_photographers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_photographer_id')->references('id')->on('w_photographers')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

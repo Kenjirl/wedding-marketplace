@@ -1,4 +1,4 @@
-@extends('user.wedding-photographer.layout')
+@extends('user.admin.layout')
 
 @section('title')
     <title>Ubah Password | Wedding Marketplace</title>
@@ -66,7 +66,9 @@
             </div>
         </form>
     </div>
+@endsection
 
+@push('child-js')
     <script>
         function togglePassword() {
             if ($('#password').attr('type') === 'password') {
@@ -88,4 +90,4 @@
             }
         }
     </script>
-@endsection
+@endpush

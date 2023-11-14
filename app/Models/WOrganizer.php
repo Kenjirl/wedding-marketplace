@@ -7,19 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class WeddingPhotographer extends Model
+class WOrganizer extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'nama',
+        'nama_pemilik',
+        'nama_perusahaan',
         'no_telp',
-        'gender',
+        'alamat',
         'basis_operasi',
         'kota_operasi',
-        'status',
-        'alamat',
         'foto_profil',
     ];
 
@@ -27,11 +26,19 @@ class WeddingPhotographer extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function category(): HasMany {
+        return $this->hasMany(WOCategories::class, 'w_organizer_id');
+    }
+
     public function portofolio(): HasMany {
-        return $this->hasMany(WPPortofolio::class, 'wedding_photographer_id');
+        return $this->hasMany(WOPortofolio::class, 'w_organizer_id');
+    }
+
+    public function plan(): HasMany {
+        return $this->hasMany(WOPlan::class, 'w_organizer_id');
     }
 
     public function rating(): HasMany {
-        return $this->hasMany(WPRating::class, 'wedding_photographer_id');
+        return $this->hasMany(WORating::class, 'w_organizer_id');
     }
 }

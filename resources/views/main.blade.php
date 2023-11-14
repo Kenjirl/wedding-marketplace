@@ -68,7 +68,7 @@
 <body>
     @yield('body')
 
-    @yield('js')
+    @stack('child-js')
 
     {{-- SCRIPT TOASTR --}}
     <script>
