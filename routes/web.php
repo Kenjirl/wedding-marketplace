@@ -9,7 +9,11 @@ use App\Http\Controllers\SuperAdmin\SAAdminController;
 use App\Http\Controllers\SuperAdmin\SAController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeddingCouple\WCController;
+use App\Http\Controllers\WeddingCouple\WCInvitationController;
 use App\Http\Controllers\WeddingCouple\WCProfilController;
+use App\Http\Controllers\WeddingCouple\WCWeddingController;
+use App\Http\Controllers\WeddingCouple\WOBookingController;
+use App\Http\Controllers\WeddingCouple\WPBookingController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
 use App\Http\Controllers\WeddingOrganizer\WOLayananController;
 use App\Http\Controllers\WeddingOrganizer\WOPortofolioController;
@@ -136,16 +140,60 @@ Route::name('wedding-couple.')
     // Hanya bisa diakses jika sudah melengkapi profil wedding couple
     Route::middleware('wc-profil')->group(function() {
 
-        // Route::name('booking.')->prefix('/booking')
-        //     ->group(function() {
-        //     Route::name('wo.')->prefix('/wedding-organizer')
-        //         ->group(function() {
-        //             Route::get ('/',              'index')           ->name('index');
-        //             Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
-        //             Route::post('/ubah',          'ubah')            ->name('ubah');
-        //         });
+        Route::prefix('/pernikahan')->controller(WCWeddingController::class)->group(function() {
+            Route::get ('/',              'index')    ->name('pernikahan.index');
+            Route::get ('/tambah',        'ke_tambah')->name('pernikahan.ke_tambah');
+            Route::post('/tambah',        'tambah')   ->name('pernikahan.tambah');
+            Route::get ('/ubah/{id}',     'ke_ubah')  ->name('pernikahan.ke_ubah');
+            Route::post('/ubah/{id}',     'ubah')     ->name('pernikahan.ubah');
+            Route::get ('/detail/{id}',   'ke_detail')->name('pernikahan.ke_detail');
+            Route::post('/hapus/{id}',    'hapus')    ->name('pernikahan.hapus');
+            Route::post('/hapus-wo/{id}', 'hapus_wo') ->name('pernikahan.hapus_wo');
+            Route::post('/hapus-wp/{id}', 'hapus_wp') ->name('pernikahan.hapus_wp');
 
-        // });
+            Route::name('undangan.')->prefix('/undangan')
+                ->controller(WCInvitationController::class)->group(function() {
+                Route::get ('/tambah',     'ke_tambah')->name('ke_tambah');
+                Route::post('/tambah',     'tambah')   ->name('tambah');
+                Route::get ('/ubah/{id}',  'ke_ubah')  ->name('ke_ubah');
+                Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
+                Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+            });
+
+            Route::name('tamu.')->prefix('/tamu')
+                ->controller(WCInvitationController::class)->group(function() {
+                Route::get ('/',           'index')    ->name('index');
+                Route::post('/tambah',     'tambah')   ->name('tambah');
+                Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+            });
+
+            Route::name('grup.')->prefix('/grup')
+                ->controller(WCInvitationController::class)->group(function() {
+                Route::get ('/',           'index')    ->name('index');
+                Route::post('/tambah',     'tambah')   ->name('tambah');
+                Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+            });
+        });
+
+        Route::name('search.')->prefix('/search')->group(function() {
+
+            // Route Search Wedding Organizer
+            Route::name('wo.')->prefix('/wedding-organizer')
+                ->controller(WOBookingController::class)->group(function() {
+                Route::get ('/',            'index')    ->name('index');
+                Route::get ('/{id}/detail', 'ke_detail')->name('ke_detail');
+                Route::post('/pesan',       'pesan')    ->name('pesan');
+            });
+
+            // Route Search Wedding Photographer
+            Route::name('wp.')->prefix('/wedding-photographer')
+                ->controller(WPBookingController::class)->group(function() {
+                Route::get ('/',            'index')    ->name('index');
+                Route::get ('/{id}/detail', 'ke_detail')->name('ke_detail');
+                Route::post('/pesan',       'pesan')    ->name('pesan');
+            });
+
+        });
 
     });
 

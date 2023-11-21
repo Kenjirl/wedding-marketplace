@@ -64,6 +64,66 @@
         <div class="w-full min-h-screen">
             @yield('content')
         </div>
+
+        {{-- FOOTER --}}
+        <div class="w-full bg-pink text-white">
+            <div class="w-full max-w-[1200px] min-h-[25vh] mx-auto px-4 py-8 flex items-start justify-between gap-8">
+                <div class="w-fit flex flex-col items-center justify-start">
+                    <div class="w-fit">
+                        <img class="w-[100px] aspect-square rounded-full bg-white"
+                            src="{{ asset('img/Logo.png') }}" alt="Logo">
+                    </div>
+
+                    <div>
+                        <p class="font-great-vibes text-xl text-center">
+                            Wedding <br> Marketplace
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex-1 w-full mt-8 text-base">
+                    <table class="table-fixed">
+                        <tbody>
+                            <tr>
+                                <td><i class="fa-brands fa-whatsapp"></i></td>
+                                <td>:</td>
+                                <td>
+                                    <a href="https://wa.me/6281246007474" target="_blank" rel="noopener noreferrer">
+                                        (+62) 081246007474
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-regular fa-envelope"></i></td>
+                                <td>:</td>
+                                <td>
+                                    <a href="mailto:taweddingmarketplace@gmail.com" target="_blank" rel="noopener noreferrer">
+                                        taweddingmarketplace@gmail.com
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa-solid fa-location-dot"></i></td>
+                                <td>:</td>
+                                <td id="location_map"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {{-- <div class="w-fit flex flex-col items-start justify-start">
+                    @include('user.wedding-couple.menu')
+                </div> --}}
+            </div>
+        </div>
+
+        <div class="w-full">
+            <div class="w-full max-w-[1200px] mx-auto py-4">
+                <span class="text-sm">
+                    @2023 Wedding Marketplace
+                </span>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -76,5 +136,11 @@
                 $('#profileLayout').removeClass("flex").addClass("hidden");
             }
         }
+
+        $(document).ready(function() {
+            let location_text = 'Jl. Puri Gading blok F2/no.5, Jimbaran, Badung, Bali';
+            let location_tag = "<a href='http://maps.google.com/maps?q=" + encodeURIComponent(location_text) + "' target='_blank'>" + location_text + "</a>";
+            $('#location_map').html(location_tag);
+        });
     </script>
 @endpush

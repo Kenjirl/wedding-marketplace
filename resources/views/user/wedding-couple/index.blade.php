@@ -1,10 +1,8 @@
 @extends('user.wedding-couple.layout')
 
 @section('title')
-    <title>Dashboard | Wedding Marketplace</title>
+    <title>Wedding Marketplace</title>
 @endsection
-
-@section('h1', 'Dashboard')
 
 @section('content')
     {{-- ITEM 1 --}}
@@ -115,7 +113,7 @@
                     </p>
                     @if (auth()->user() && auth()->user()->w_couple)
                         <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                            href="#">
+                            href="{{ route('wedding-couple.search.wo.index') }}">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             Cari
                         </a>
@@ -140,7 +138,7 @@
                     </p>
                     @if (auth()->user() && auth()->user()->w_couple)
                         <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                            href="#">
+                            href="{{ route('wedding-couple.search.wp.index') }}">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             Cari
                         </a>
@@ -153,37 +151,6 @@
                     @endif
                 </div>
             </div>
-        </div>
-    </div>
-
-    {{-- ITEM 5 --}}
-    <div class="w-full bg-pink">
-        <div class="w-full max-w-[1200px] min-h-[25vh] mx-auto px-8 py-4 flex items-center justify-between">
-            <div class="flex-1 w-full flex items-center justify-start gap-8">
-                <div class="w-fit">
-                    <img class="w-[100px] aspect-square rounded-full bg-white"
-                        src="{{ asset('img/Logo.png') }}" alt="Logo">
-                </div>
-
-                <div>
-                    <span class="font-great-vibes text-[3em] text-white">
-                        Wedding Marketplace
-                    </span>
-                </div>
-            </div>
-
-            <div class="w-fit flex flex-col items-start justify-start">
-                @include('user.wedding-couple.menu')
-            </div>
-        </div>
-    </div>
-
-    {{-- ITEM 6 --}}
-    <div class="w-full">
-        <div class="w-full max-w-[1200px] mx-auto py-4">
-            <span>
-                @2023 Wedding Marketplace
-            </span>
         </div>
     </div>
 @endsection

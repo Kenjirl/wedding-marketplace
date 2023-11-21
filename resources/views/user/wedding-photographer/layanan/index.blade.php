@@ -27,7 +27,7 @@
                             </span>
                         </div>
 
-                        <div class="w-full px-8 my-2">
+                        <div class="w-full px-8 my-2 text-sm">
                             <ul class="list-disc">
                                 @forelse ($plan->fitur as $fitur)
                                     <li>{{ $fitur->isi }}</li>

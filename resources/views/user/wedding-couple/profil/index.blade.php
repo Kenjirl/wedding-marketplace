@@ -24,8 +24,6 @@
                         id="fotoProfilText">
                         {{ substr(auth()->user()->name, 0, 1) }}
                     </span>
-                    <img class="hidden w-[300px] aspect-square object-cover object-center rounded-full border-4 border-pink"
-                        src="" alt="Foto Profil" id="fotoProfil">
                 @endif
 
                 @if (auth()->user()->w_couple)

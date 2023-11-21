@@ -69,6 +69,7 @@
                         </div>
                         <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                             name="detail" id="input" rows="3" placeholder="masukkan detail portofolio ini"
+                            required
                             >{{ old('detail', '') }}</textarea>
                     </div>
 
@@ -92,6 +93,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="provinsi" id="provinsi" placeholder="Bali" required
+                                required
                                 value="{{ old('provinsi', '') }}">
                         </div>
 
@@ -114,6 +116,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kota" id="kota" placeholder="Badung" required
+                                required
                                 value="{{ old('kota', '') }}">
                         </div>
 
@@ -136,6 +139,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan" required
+                                required
                                 value="{{ old('kecamatan', '') }}">
                         </div>
 
@@ -158,6 +162,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran" required
+                                required
                                 value="{{ old('kelurahan', '') }}">
                         </div>
 
@@ -180,6 +185,7 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1" required
+                                required
                                 value="{{ old('alamat_detail', '') }}">
                         </div>
 
@@ -256,7 +262,7 @@
             for (let i = 0; i < files.length; i++) {
                 if (i < 1) { // Hanya tampilkan maksimal 1 gambar
                     let img = $('<img>');
-                    img.attr('src', URL.createObjectURL(files[i])).addClass('h-[300px] object-fit');
+                    img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-fit');
 
                     $('#image-preview').append(img);
                 }

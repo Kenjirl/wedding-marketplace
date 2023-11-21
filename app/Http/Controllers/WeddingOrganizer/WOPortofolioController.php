@@ -12,8 +12,13 @@ use Illuminate\Support\Facades\Storage;
 class WOPortofolioController extends Controller
 {
     public function index() {
-        $latest_portofolio = WOPortofolio::orderBy('updated_at', 'desc')->take(4)->get();
-        $portofolio = WOPortofolio::orderBy('judul', 'asc')->get();
+        $latest_portofolio = WOPortofolio::where('w_organizer_id', auth()->user()->w_organizer->id)
+                        ->orderBy('updated_at', 'desc')
+                        ->take(4)
+                        ->get();
+        $portofolio = WOPortofolio::where('w_organizer_id', auth()->user()->w_organizer->id)
+                        ->orderBy('judul', 'asc')
+                        ->get();
 
         return view('user.wedding-organizer.portofolio.index', compact('latest_portofolio', 'portofolio'));
     }
@@ -96,11 +101,12 @@ class WOPortofolioController extends Controller
 
         $data1 = WOPortofolio::where('id', $id)
                     ->update([
-                        'judul' => $req->judul,
-                        'tanggal' => $req->tanggal,
-                        'detail' => $req->detail,
-                        'lokasi' => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
-                        'status' => 'menunggu konfirmasi',
+                        'admin_id' => null,
+                        'judul'    => $req->judul,
+                        'tanggal'  => $req->tanggal,
+                        'detail'   => $req->detail,
+                        'lokasi'   => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
+                        'status'   => 'menunggu konfirmasi',
                     ]);
 
         $data2 = false;

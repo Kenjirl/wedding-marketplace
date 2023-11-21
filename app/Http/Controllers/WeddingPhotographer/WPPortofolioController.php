@@ -12,8 +12,13 @@ use Illuminate\Support\Facades\Storage;
 class WPPortofolioController extends Controller
 {
     public function index() {
-        $latest_portofolio = WPPortofolio::orderBy('updated_at', 'desc')->take(4)->get();
-        $portofolio = WPPortofolio::orderBy('judul', 'asc')->get();
+        $latest_portofolio = WPPortofolio::where('w_photographer_id', auth()->user()->w_photographer->id)
+                        ->orderBy('updated_at', 'desc')
+                        ->take(4)
+                        ->get();
+        $portofolio = WPPortofolio::where('w_photographer_id', auth()->user()->w_photographer->id)
+                        ->orderBy('judul', 'asc')
+                        ->get();
 
         return view('user.wedding-photographer.portofolio.index', compact('latest_portofolio', 'portofolio'));
     }
@@ -96,11 +101,12 @@ class WPPortofolioController extends Controller
 
         $data1 = WPPortofolio::where('id', $id)
                     ->update([
-                        'judul' => $req->judul,
-                        'tanggal' => $req->tanggal,
-                        'detail' => $req->detail,
-                        'lokasi' => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
-                        'status' => 'menunggu konfirmasi',
+                        'admin_id' => null,
+                        'judul'    => $req->judul,
+                        'tanggal'  => $req->tanggal,
+                        'detail'   => $req->detail,
+                        'lokasi'   => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
+                        'status'   => 'menunggu konfirmasi',
                     ]);
 
         $data2 = false;

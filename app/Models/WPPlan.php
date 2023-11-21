@@ -19,7 +19,7 @@ class WPPlan extends Model
     ];
 
     public function w_photographer(): BelongsTo {
-        return $this->belongsTo(WeddingPhotographer::class, 'w_photographer_id');
+        return $this->belongsTo(WPhotographer::class, 'w_photographer_id');
     }
 
     public function fitur(): HasMany {

@@ -15,7 +15,7 @@ class WPBooking extends Model
         'w_p_plan_id',
         'status',
         'bukti_bayar',
-        'tanggal',
+        'untuk_tanggal',
     ];
 
     public function wedding(): BelongsTo {

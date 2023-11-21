@@ -9,9 +9,9 @@
 @section('content')
     <div class="mb-8">
         <h2 class="w-full mb-4 text-[2em]">Terbaru</h2>
-        <div class="flex items-center justify-start gap-4 overflow-x-auto">
+        <div class="py-4 flex items-center justify-start gap-4 overflow-x-auto">
             {{-- ADD NEW CARD --}}
-            <a class="w-[calc(200px-8px)] h-[calc(244px-8px)] flex items-center justify-center border-4 border-dashed outline-none border-pink rounded-xl text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+            <a class="w-[calc(200px-8px)] h-[calc(244px-8px)] flex items-center justify-center border-4 border-dashed outline-none border-pink rounded-xl text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active transition-colors"
                 href="{{ route('wedding-photographer.portofolio.ke_tambah') }}">
                 <i class="text-[2em] fa-solid fa-plus"></i>
             </a>

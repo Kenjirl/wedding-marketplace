@@ -15,7 +15,7 @@ class WOBooking extends Model
         'w_o_plan_id',
         'status',
         'bukti_bayar',
-        'tanggal',
+        'untuk_tanggal',
     ];
 
     public function wedding(): BelongsTo {

@@ -26,7 +26,7 @@ class WOrganizer extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function category(): HasMany {
+    public function categories(): HasMany {
         return $this->hasMany(WOCategories::class, 'w_organizer_id');
     }
 

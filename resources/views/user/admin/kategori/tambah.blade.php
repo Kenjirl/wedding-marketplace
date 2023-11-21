@@ -18,7 +18,7 @@
                             Kategori
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="nama" id="nama" placeholder="nama"
+                            type="text" name="nama" id="nama" placeholder="nama" autofocus
                             value="{{ old('nama', '') }}"
                             required>
                     </div>

@@ -19,8 +19,6 @@
                         id="fotoProfilText">
                         {{ substr(auth()->user()->name, 0, 1) }}
                     </span>
-                    <img class="hidden w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
-                        src="" alt="Foto Profil" id="fotoProfil">
                 @endif
 
                 @if (auth()->user()->w_organizer)
@@ -39,9 +37,9 @@
                         Kategori
                     </span>
                 </div>
-                <div class="w-full p-2 flex flex-wrap items-start justify-start">
+                <div class="w-full p-2 flex flex-wrap items-start justify-start gap-2">
                     @if (auth()->user()->w_organizer)
-                        @forelse (auth()->user()->w_organizer->category as $category)
+                        @forelse (auth()->user()->w_organizer->categories as $category)
                             <div class="w-fit px-2 py-1 text-xs border border-pink rounded-full">
                                 {{ $category->w_categories->nama }}
                             </div>
