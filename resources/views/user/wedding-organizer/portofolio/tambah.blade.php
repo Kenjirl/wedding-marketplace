@@ -69,7 +69,6 @@
                         </div>
                         <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                             name="detail" id="input" rows="3" placeholder="masukan detail acara ini"
-                            required
                             >{{ old('detail', '') }}</textarea>
                     </div>
 

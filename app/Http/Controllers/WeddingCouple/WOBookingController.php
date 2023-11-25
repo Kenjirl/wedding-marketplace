@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 class WOBookingController extends Controller
 {
     public function index(Request $req) {
-        $organizers = WOrganizer::orderBy('nama_perusahaan', 'asc')->get();
+        $organizers = WOrganizer::orderBy('nama_perusahaan', 'asc')
+                    ->where('deleted', 0)
+                    ->get();
 
         foreach ($organizers as $organizer) {
             $plans = WOPlan::where('w_organizer_id', $organizer->id)->get();
@@ -120,7 +122,7 @@ class WOBookingController extends Controller
                         ->orderBy('judul', 'asc')
                         ->get();
         $plans = WOPlan::where('w_organizer_id', $organizer->id)
-                        ->where('status', 'aktif')
+                        ->where('deleted', 0)
                         ->orderBy('harga', 'asc')
                         ->get();
 

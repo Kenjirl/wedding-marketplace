@@ -26,4 +26,8 @@ class Admin extends Model
     public function w_category(): HasMany {
         return $this->hasMany(WCategories::class, 'admin_id');
     }
+
+    public function w_event(): HasMany {
+        return $this->hasMany(WEvent::class, 'admin_id');
+    }
 }

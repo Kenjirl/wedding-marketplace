@@ -55,7 +55,7 @@
     <script>
     tinymce.init({
         selector: 'textarea#input',
-        plugins: 'visualblocks wordcount powerpaste',
+        plugins: 'visualblocks wordcount',
         // plugins: 'lists advlist visualblocks wordcount checklist powerpaste',
         toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | indent outdent',
         // toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | checklist numlist bullist indent outdent',

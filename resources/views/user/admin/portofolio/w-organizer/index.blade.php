@@ -7,6 +7,20 @@
 @section('h1', 'Portofolio')
 
 @section('content')
+    {{-- CONFIG --}}
+    <div class="w-full mb-2 text-end">
+        <form action="{{ route('admin.wo.portofolio.config') }}" method="post" id="configForm">
+            @csrf
+            <label class="relative inline-flex items-center mb-5 cursor-pointer">
+                <input name="config" id="config" type="checkbox" class="sr-only peer"
+                    {{ $config->automation ? 'checked' : '' }}
+                >
+                <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-pink-hover peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink"></div>
+                <span class="ms-3 text-sm font-medium text-gray-900">Auto Confirm?</span>
+            </label>
+        </form>
+    </div>
+
     {{-- PENDING --}}
     <div class="w-full rounded shadow">
         <div class="bg-yellow-100 p-2 font-semibold rounded-t">
@@ -180,3 +194,18 @@
     </div>
 
 @endsection
+
+@push('child-js')
+    <script>
+        $(document).ready(function () {
+            $("#config").on("change", function () {
+                let confirmed = confirm('Apakah Anda yakin ingin membuat portofolio organizer tidak memerlukan validasi?');
+                if (confirmed) {
+                    $("#configForm").submit();
+                } else {
+                    $(this).prop("checked", !$(this).prop("checked"));
+                }
+            });
+        });
+    </script>
+@endpush

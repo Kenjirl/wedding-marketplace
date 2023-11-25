@@ -26,6 +26,10 @@ class WCWedding extends Model
         return $this->belongsTo(WCouple::class, 'w_couple_id');
     }
 
+    public function w_detail(): HasMany {
+        return $this->hasMany(WeddingDetail::class, 'w_c_wedding_id');
+    }
+
     public function w_o_booking(): HasOne {
         return $this->hasOne(WOBooking::class, 'w_c_wedding_id');
     }

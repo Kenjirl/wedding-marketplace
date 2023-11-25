@@ -7,21 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class WPPlan extends Model
+class WEvent extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'w_photographer_id',
+        'admin_id',
         'nama',
-        'harga',
+        'keterangan',
+        'jenis',
     ];
 
-    public function w_photographer(): BelongsTo {
-        return $this->belongsTo(WPhotographer::class, 'w_photographer_id');
+    public function admin(): BelongsTo {
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 
-    public function fitur(): HasMany {
-        return $this->hasMany(WPPlanDetail::class, 'w_p_plan_id');
+    public function w_detail(): HasMany {
+        return $this->hasMany(WCWeddingDetail::class, 'w_event_id');
     }
 }

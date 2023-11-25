@@ -21,12 +21,20 @@ $currentUrl = Request::url();
         <i class="fa-solid fa-gift"></i>
         Layanan
     </a>
-    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
+        {{ Str::contains($currentUrl, '/pesanan') ? 'bg-pink text-white' : '' }}"
+        href="{{ route('wedding-organizer.pesanan.index') }}">
+        <i class="fa-solid fa-grip-vertical"></i>
+        Pesanan
+    </a>
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
+        "
         href="#">
         <i class="fa-regular fa-calendar"></i>
         Jadwal
     </a>
-    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
+        "
         href="#">
         <i class="fa-regular fa-comment"></i>
         Ulasan

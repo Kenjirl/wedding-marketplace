@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
             AdminsTableSeeder::class,
+            AConfigTableSeeder::class,
             WCategoriesTableSeeder::class,
             WOsTableSeeder::class,
             WPsTableSeeder::class,

@@ -17,3 +17,21 @@
         Profil
     </a>
 @endsection
+
+@push('child-js')
+    <script>
+        $(document).ready(function () {
+            $("#masterMenuBtn").on("click", function () {
+                let isOpen = $(this).data("open");
+
+                if (isOpen === "true") {
+                    $(this).data("open", "false");
+                    $("#masterMenuContainer").removeClass("grid").addClass("hidden");
+                } else {
+                    $(this).data("open", "true");
+                    $("#masterMenuContainer").addClass("grid").removeClass("hidden");
+                }
+            });
+        });
+    </script>
+@endpush

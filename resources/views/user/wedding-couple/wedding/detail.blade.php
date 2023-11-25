@@ -20,7 +20,7 @@
                     </span>
                     &
                     <span class="text-red-400">
-                        Ny. {{ $wedding->bride }}
+                        Nn. {{ $wedding->bride }}
                     </span>
                 </div>
             </div>
@@ -149,21 +149,46 @@
                             </div>
                         </div>
 
-                        <div class="w-full pt-4 flex items-center justify-end gap-4 border-t-2 border-slate-100">
-                            @if ($wedding->w_o_booking->status == 'diproses' || $wedding->w_o_booking->status == 'ditolak')
-                                <form action="{{ route('wedding-couple.pernikahan.hapus_wo', $wedding->w_o_booking->id) }}" method="post" id="hapusWOForm">
-                                    @csrf
-                                    <button class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
-                                        type="button" id="hapusWOBtn">
-                                        Hapus Pesanan
-                                    </button>
-                                </form>
-                            @endif
+                        <div class="w-full pt-4 flex items-center justify-between border-t-2 border-slate-100">
+                            <div class="flex items-center justify-start gap-2 text-[.8em]">
+                                @if ($wedding->w_o_booking->status == 'ditolak')
+                                    <div class="w-fit aspect-square rounded-full text-red-500">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </div>
+                                @elseif ($wedding->w_o_booking->status == 'diterima')
+                                    <div class="w-fit aspect-square rounded-full text-blue-500">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                @elseif ($wedding->w_o_booking->status == 'selesai')
+                                    <div class="w-fit aspect-square rounded-full text-green-500">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                @else
+                                    <div class="w-fit aspect-square rounded-full text-yellow-400">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                @endif
+                                <span>
+                                    {{ $wedding->w_o_booking->status }}
+                                </span>
+                            </div>
 
-                            <a class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                                href="{{ route('wedding-couple.search.wo.ke_detail', $wedding->w_o_booking->plan->w_organizer->id) }}">
-                                Lihat Detail
-                            </a>
+                            <div class="flex-1 w-full flex items-center justify-end gap-4">
+                                @if ($wedding->w_o_booking->status == 'diproses' || $wedding->w_o_booking->status == 'ditolak')
+                                    <form action="{{ route('wedding-couple.pernikahan.hapus_wo', $wedding->w_o_booking->id) }}" method="post" id="hapusWOForm">
+                                        @csrf
+                                        <button class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
+                                            type="button" id="hapusWOBtn">
+                                            Hapus Pesanan
+                                        </button>
+                                    </form>
+                                @endif
+
+                                <a class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                    href="{{ route('wedding-couple.search.wo.ke_detail', $wedding->w_o_booking->plan->w_organizer->id) }}">
+                                    Lihat Detail
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @else
@@ -206,21 +231,46 @@
                             </div>
                         </div>
 
-                        <div class="w-full pt-4 flex items-center justify-end gap-4 border-t-2 border-slate-100">
-                            @if ($wpb->status == 'diproses' || $wpb->status == 'ditolak')
-                                <form action="{{ route('wedding-couple.pernikahan.hapus_wp', $wpb->id) }}" method="post" id="hapusWPForm-{{ $wpb->id }}">
-                                    @csrf
-                                    <button class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors hapus-wp-btn"
-                                        type="button" data-id="{{ $wpb->id }}">
-                                        Hapus Pesanan
-                                    </button>
-                                </form>
-                            @endif
+                        <div class="w-full pt-4 flex items-center justify-between border-t-2 border-slate-100">
+                            <div class="flex items-center justify-start gap-2 text-[.8em]">
+                                @if ($wpb->status == 'ditolak')
+                                    <div class="w-fit aspect-square rounded-full text-red-500">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </div>
+                                @elseif ($wpb->status == 'diterima')
+                                    <div class="w-fit aspect-square rounded-full text-blue-500">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                @elseif ($wpb->status == 'selesai')
+                                    <div class="w-fit aspect-square rounded-full text-green-500">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                @else
+                                    <div class="w-fit aspect-square rounded-full text-yellow-400">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                @endif
+                                <span>
+                                    {{ $wpb->status }}
+                                </span>
+                            </div>
 
-                            <a class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                                href="{{ route('wedding-couple.search.wp.ke_detail', $wpb->plan->w_photographer->id) }}">
-                                Lihat Detail
-                            </a>
+                            <div class="flex-1 w-full flex items-center justify-end gap-4">
+                                @if ($wpb->status == 'diproses' || $wpb->status == 'ditolak')
+                                    <form action="{{ route('wedding-couple.pernikahan.hapus_wp', $wpb->id) }}" method="post" id="hapusWPForm-{{ $wpb->id }}">
+                                        @csrf
+                                        <button class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors hapus-wp-btn"
+                                            type="button" data-id="{{ $wpb->id }}">
+                                            Hapus Pesanan
+                                        </button>
+                                    </form>
+                                @endif
+
+                                <a class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                    href="{{ route('wedding-couple.search.wp.ke_detail', $wpb->plan->w_photographer->id) }}">
+                                    Lihat Detail
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @empty

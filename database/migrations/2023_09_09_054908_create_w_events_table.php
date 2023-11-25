@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('w_o_plans', function (Blueprint $table) {
+        Schema::create('w_events', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('w_organizer_id');
+            $table->unsignedBigInteger('admin_id');
             $table->string('nama');
-            $table->bigInteger('harga');
+            $table->text('keterangan');
+            $table->enum('jenis', ['Buddha', 'Hindu', 'Islam', 'Katolik', 'Khonghucu', 'Protestan', 'Umum']);
             $table->boolean('deleted')->default(false);
             $table->timestamps();
 
-            $table->foreign('w_organizer_id')->references('id')->on('w_organizers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('w_o_plans');
+        Schema::dropIfExists('w_events');
     }
 };

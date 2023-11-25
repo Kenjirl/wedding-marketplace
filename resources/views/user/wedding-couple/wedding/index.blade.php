@@ -32,7 +32,7 @@
                         </p>
 
                         <p class="text-center text-red-500">
-                            {{ 'Ny. ' . $wedding->bride }}
+                            {{ 'Nn. ' . $wedding->bride }}
                         </p>
                     </div>
 

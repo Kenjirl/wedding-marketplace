@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ACategoryController;
 use App\Http\Controllers\Admin\AController;
+use App\Http\Controllers\Admin\AEventController;
 use App\Http\Controllers\Admin\AProfilController;
 use App\Http\Controllers\Admin\WOrganizerController;
 use App\Http\Controllers\Admin\WPhotographerController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\WeddingCouple\WOBookingController;
 use App\Http\Controllers\WeddingCouple\WPBookingController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
 use App\Http\Controllers\WeddingOrganizer\WOLayananController;
+use App\Http\Controllers\WeddingOrganizer\WOPesananController;
 use App\Http\Controllers\WeddingOrganizer\WOPortofolioController;
 use App\Http\Controllers\WeddingOrganizer\WOProfilController;
 use App\Http\Controllers\WeddingPhotographer\WPController;
@@ -102,11 +104,22 @@ Route::name('admin.')
         Route::post('/hapus{id}', 'hapus')    ->name('hapus');
     });
 
+    Route::name('event-pernikahan.')->prefix('/event-pernikahan')
+        ->controller(AEventController::class)->group(function() {
+        Route::get ('/',          'index')    ->name('index');
+        Route::get ('/tambah',    'ke_tambah')->name('ke_tambah');
+        Route::post('/tambah',    'tambah')   ->name('tambah');
+        Route::get ('/ubah/{id}', 'ke_ubah')  ->name('ke_ubah');
+        Route::post('/ubah{id}',  'ubah')     ->name('ubah');
+        Route::post('/hapus{id}', 'hapus')    ->name('hapus');
+    });
+
     Route::name('wo.portofolio.')->prefix('/wedding-organizer/portofolio')
         ->controller(WOrganizerController::class)->group(function() {
         Route::get ('/',              'index')      ->name('index');
         Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
         Route::post('/validasi{id}',  'validasi')   ->name('validasi');
+        Route::post('/config',        'config')     ->name('config');
     });
 
     Route::name('wp.portofolio.')->prefix('/wedding-photographer/portofolio')
@@ -114,6 +127,7 @@ Route::name('admin.')
         Route::get ('/',              'index')      ->name('index');
         Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
         Route::post('/validasi{id}',  'validasi')   ->name('validasi');
+        Route::post('/config',        'config')     ->name('config');
     });
 
 });
@@ -237,13 +251,19 @@ Route::name('wedding-organizer.')
 
         Route::name('layanan.')->prefix('/layanan')
             ->controller(WOLayananController::class)->group(function() {
-            Route::get ('/',                 'index')      ->name('index');
-            Route::get ('/tambah',           'ke_tambah')  ->name('ke_tambah');
-            Route::post('/tambah',           'tambah')     ->name('tambah');
-            Route::get ('/ubah/{id}',        'ke_ubah')    ->name('ke_ubah');
-            Route::post('/ubah/{id}',        'ubah')       ->name('ubah');
-            Route::post('/hapus/{id}',       'hapus')      ->name('hapus');
-            Route::post('/ubah-status/{id}', 'ubah_status')->name('ubah_status');
+            Route::get ('/',           'index')      ->name('index');
+            Route::get ('/tambah',     'ke_tambah')  ->name('ke_tambah');
+            Route::post('/tambah',     'tambah')     ->name('tambah');
+            Route::get ('/ubah/{id}',  'ke_ubah')    ->name('ke_ubah');
+            Route::post('/ubah/{id}',  'ubah')       ->name('ubah');
+            Route::post('/hapus/{id}', 'hapus')      ->name('hapus');
+        });
+
+        Route::name('pesanan.')->prefix('/pesanan')
+            ->controller(WOPesananController::class)->group(function() {
+            Route::get ('/',            'index')    ->name('index');
+            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
+            Route::post('/respon/{id}', 'respon')   ->name('respon');
         });
 
     });
@@ -285,13 +305,12 @@ Route::name('wedding-photographer.')
 
         Route::name('layanan.')->prefix('/layanan')
             ->controller(WPLayananController::class)->group(function() {
-            Route::get ('/',                 'index')      ->name('index');
-            Route::get ('/tambah',           'ke_tambah')  ->name('ke_tambah');
-            Route::post('/tambah',           'tambah')     ->name('tambah');
-            Route::get ('/ubah/{id}',        'ke_ubah')    ->name('ke_ubah');
-            Route::post('/ubah/{id}',        'ubah')       ->name('ubah');
-            Route::post('/hapus/{id}',       'hapus')      ->name('hapus');
-            Route::post('/ubah-status/{id}', 'ubah_status')->name('ubah_status');
+            Route::get ('/',           'index')      ->name('index');
+            Route::get ('/tambah',     'ke_tambah')  ->name('ke_tambah');
+            Route::post('/tambah',     'tambah')     ->name('tambah');
+            Route::get ('/ubah/{id}',  'ke_ubah')    ->name('ke_ubah');
+            Route::post('/ubah/{id}',  'ubah')       ->name('ubah');
+            Route::post('/hapus/{id}', 'hapus')      ->name('hapus');
         });
 
     });

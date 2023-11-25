@@ -16,7 +16,9 @@ class WPBookingController extends Controller
         $photographers = WPhotographer::orderBy('nama', 'asc')->get();
 
         foreach ($photographers as $photographer) {
-            $plans = WPPlan::where('w_photographer_id', $photographer->id)->get();
+            $plans = WPPlan::where('w_photographer_id', $photographer->id)
+                    ->where('deleted', 0)
+                    ->get();
 
             $photographer->harga_terendah = null;
             $photographer->harga_tertinggi = null;
@@ -90,7 +92,7 @@ class WPBookingController extends Controller
                         ->orderBy('judul', 'asc')
                         ->get();
         $plans = WPPlan::where('w_photographer_id', $photographer->id)
-                        ->where('status', 'aktif')
+                        ->where('deleted', 0)
                         ->orderBy('harga', 'asc')
                         ->get();
 

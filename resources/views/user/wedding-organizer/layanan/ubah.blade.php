@@ -7,25 +7,13 @@
 @section('h1', 'Layanan > Ubah Layanan')
 
 @section('content')
-    <div class="-w-full mb-4 flex items-end justify-center gap-4">
-        <div class="flex-1 w-full px-4">
-            <ol class="list-decimal text-sm">
-                <li>Silahkan ubah detail layanan Anda</li>
-                <li>Untuk fitur tambahan tidak dapat diubah, namun dapat dihapus</li>
-                <li>Jika ingin mengubah fitur tambahan, silahkan hapus kemudian tambahkan fitur tambahan baru</li>
-                <li>Jika status layanan nonaktif, maka pelanggan tidak akan dapat memilih layanan ini</li>
-            </ol>
-        </div>
-
-        <div class="w-fit">
-            @if ($plan->status == 'aktif')
-                <div class="w-fit px-4 py-2 text-sm bg-blue-500 font-semibold text-white rounded">
-            @else
-                <div class="w-fit px-4 py-2 text-sm bg-red-500 font-semibold text-white rounded">
-            @endif
-                    Status Layanan : {{ $plan->status }}
-                </div>
-        </div>
+    <div class="flex-1 w-full px-4">
+        <ol class="list-decimal text-sm">
+            <li>Silahkan ubah detail layanan Anda</li>
+            <li>Untuk fitur tambahan tidak dapat diubah, namun dapat dihapus</li>
+            <li>Jika ingin mengubah fitur tambahan, silahkan hapus kemudian tambahkan fitur tambahan baru</li>
+            <li>Jika status layanan nonaktif, maka pelanggan tidak akan dapat memilih layanan ini</li>
+        </ol>
     </div>
 
     <form action="{{ route('wedding-organizer.layanan.ubah', $plan->id) }}" method="post" autocomplete="off">
@@ -93,20 +81,6 @@
                         <i class="fa-solid fa-trash-can"></i>
                         <span>Hapus</span>
                     </button>
-
-                    @if ($plan->status == 'aktif')
-                        <button class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                            id="ubahStatusBtn" type="button">
-                            <i class="fa-solid fa-xmark"></i>
-                            <span>Nonaktifkan</span>
-                        </button>
-                    @else
-                        <button class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                            id="ubahStatusBtn" type="button">
-                            <i class="fa-solid fa-check"></i>
-                            <span>Aktifkan</span>
-                        </button>
-                    @endif
 
                     <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
                         type="submit">
@@ -182,19 +156,6 @@
         @csrf
         <button id="submitDeleteBtn" type="submit"></button>
     </form>
-
-    {{-- FORM AKTIF/NONAKTIF LAYANAN --}}
-    <form class="hidden" action="{{ route('wedding-organizer.layanan.ubah_status', $plan->id) }}" method="post">
-        @csrf
-        @if ($plan->status == 'aktif')
-            <input class="hidden"
-                type="text" name="status" id="status" value="nonaktif" readonly>
-        @else
-            <input class="hidden"
-                type="text" name="status" id="status" value="aktif" readonly>
-        @endif
-        <button id="submitUbahStatusBtn" type="submit"></button>
-    </form>
 @endsection
 
 @push('child-js')
@@ -239,12 +200,6 @@
             $('#deleteBtn').on("click", function () {
                 if(confirm('Yakin ingin menghapus layanan ini?')) {
                     $('#submitDeleteBtn').click();
-                }
-            });
-
-            $('#ubahStatusBtn').on("click", function () {
-                if(confirm('Yakin ingin mengubah status layanan ini?')) {
-                    $('#submitUbahStatusBtn').click();
                 }
             });
         });

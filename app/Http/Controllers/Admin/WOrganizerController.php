@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AConfiguration;
 use App\Models\WOPortofolio;
 use App\Models\WOPortofolioPhoto;
 use Illuminate\Http\Request;
@@ -14,7 +15,14 @@ class WOrganizerController extends Controller
         $accepted = WOPortofolio::where('status', 'diterima')->get();
         $rejected = WOPortofolio::where('status', 'ditolak')->get();
 
-        return view('user.admin.portofolio.w-organizer.index', compact('pending', 'accepted', 'rejected'));
+        $config = AConfiguration::where('nama', 'portofolio_wo')->first();
+
+        return view('user.admin.portofolio.w-organizer.index', compact(
+            'pending',
+            'accepted',
+            'rejected',
+            'config',
+        ));
     }
 
     public function ke_validasi($id) {
@@ -53,8 +61,28 @@ class WOrganizerController extends Controller
                 ]);
 
         if ($data) {
-            return redirect()->route('admin.wo.portofolio.index')->with('sukses', 'Mengubah Validasi Portofolio');
+            return redirect()->route('admin.wo.portofolio.index')->with('sukses', 'Mengubah Validasi Portofolio Organizer');
         }
-        return redirect()->route('admin.wo.portofolio.index')->with('gagal', 'Mengubah Validasi Portofolio');
+        return redirect()->route('admin.wo.portofolio.index')->with('gagal', 'Mengubah Validasi Portofolio Organizer');
+    }
+
+    public function config(Request $req) {
+        $config = AConfiguration::where('nama', 'portofolio_wo')->first();
+
+        $data = null;
+        if ($req->config == 'on') {
+            $config->admin_id = auth()->user()->admin->id;
+            $config->automation = true;
+            $data = $config->save();
+        } else {
+            $config->admin_id = null;
+            $config->automation = false;
+            $data = $config->save();
+        }
+
+        if ($data) {
+            return redirect()->route('admin.wo.portofolio.index')->with('sukses', 'Mengubah Konfigurasi Portofolio Organizer');
+        }
+        return redirect()->route('admin.wo.portofolio.index')->with('gagal', 'Mengubah Konfigurasi Portofolio Organizer');
     }
 }

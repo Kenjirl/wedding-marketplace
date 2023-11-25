@@ -15,7 +15,6 @@ class WOPlan extends Model
         'w_organizer_id',
         'nama',
         'harga',
-        'status',
     ];
 
     public function w_organizer(): BelongsTo {
@@ -24,5 +23,9 @@ class WOPlan extends Model
 
     public function fitur(): HasMany {
         return $this->hasMany(WOPlanDetail::class, 'w_o_plan_id');
+    }
+
+    public function bookings(): HasMany {
+        return $this->hasMany(WOBooking::class, 'w_o_plan_id');
     }
 }

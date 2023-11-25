@@ -11,6 +11,7 @@ class WPLayananController extends Controller
 {
     public function index() {
         $plans = WPPlan::where('w_photographer_id', auth()->user()->w_photographer->id)
+                ->where('deleted', 0)
                 ->orderBy('harga', 'asc')
                 ->get();
         return view('user.wedding-photographer.layanan.index', compact('plans'));
@@ -115,23 +116,12 @@ class WPLayananController extends Controller
 
     public function hapus($id) {
         $plan = WPPlan::where('id', $id)->first();
-        $data = $plan->delete();
+        $plan->deleted = true;
+        $data = $plan->save();
 
         if ($data) {
             return redirect()->route('wedding-photographer.layanan.index')->with('sukses', 'Menghapus Paket Layanan');
         }
         return redirect()->route('wedding-photographer.layanan.index')->with('gagal', 'Menghapus Paket Layanan');
-    }
-
-    public function ubah_status(Request $req, $id) {
-        $data = WPPlan::where('id', $id)
-                ->update([
-                    'status' => $req->status,
-                ]);
-
-        if ($data) {
-            return redirect()->route('wedding-photographer.layanan.ubah', $id)->with('sukses', 'Mengubah Status Layanan');
-        }
-        return redirect()->route('wedding-photographer.layanan.ubah', $id)->with('gagal', 'Mengubah Status Layanan');
     }
 }

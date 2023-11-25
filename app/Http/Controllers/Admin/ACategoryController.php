@@ -11,11 +11,11 @@ class ACategoryController extends Controller
     public function index() {
         $categories = WCategories::all();
 
-        return view('user.admin.kategori.index', compact('categories'));
+        return view('user.admin.master.kategori.index', compact('categories'));
     }
 
     public function ke_tambah() {
-        return view('user.admin.kategori.tambah');
+        return view('user.admin.master.kategori.tambah');
     }
 
     public function tambah(Request $req) {
@@ -46,7 +46,7 @@ class ACategoryController extends Controller
     public function ke_ubah($id) {
         $wkg = WCategories::where('id', $id)->first();
 
-        return view('user.admin.kategori.ubah', compact('wkg'));
+        return view('user.admin.master.kategori.ubah', compact('wkg'));
     }
 
     public function ubah(Request $req, $id) {

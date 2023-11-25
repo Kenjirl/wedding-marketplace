@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WeddingOrganizer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PortofolioRequest;
+use App\Models\AConfiguration;
 use App\Models\WOPortofolio;
 use App\Models\WOPortofolioPhoto;
 use Illuminate\Http\Request;
@@ -30,6 +31,8 @@ class WOPortofolioController extends Controller
     public function tambah(PortofolioRequest $req) {
         $req->validated();
 
+        $config = AConfiguration::where('nama', 'portofolio_wp')->first();
+
         $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
         $portofolio = new WOPortofolio();
@@ -38,6 +41,12 @@ class WOPortofolioController extends Controller
         $portofolio->tanggal = $req->tanggal;
         $portofolio->detail = $req->detail;
         $portofolio->lokasi = $lokasi;
+
+        if ($config->automation) {
+            $portofolio->admin_id = $config->admin_id;
+            $portofolio->status = 'diterima';
+        }
+
         $data1 = $portofolio->save();
 
         $data2 = false;
