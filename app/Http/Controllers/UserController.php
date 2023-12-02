@@ -50,9 +50,9 @@ class UserController extends Controller
             $req->session()->regenerate();
 
             if (array_key_exists($user->role, $this->allowedRoles)) {
-                return redirect()->route($this->allowedRoles[$user->role]);
+                return redirect()->route($this->allowedRoles[$user->role])->with('berhasil', 'Selamat datang!');
             } else {
-                return redirect()->route('ke_pilih_peran');
+                return redirect()->route('ke_pilih_peran')->with('berhasil', 'Selamat datang!');
             }
         }
 

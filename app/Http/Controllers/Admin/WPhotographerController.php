@@ -11,9 +11,15 @@ use Illuminate\Http\Request;
 class WPhotographerController extends Controller
 {
     public function index() {
-        $pending  = WPPortofolio::where('status', 'menunggu konfirmasi')->get();
-        $accepted = WPPortofolio::where('status', 'diterima')->get();
-        $rejected = WPPortofolio::where('status', 'ditolak')->get();
+        $pending  = WPPortofolio::where('status', 'menunggu konfirmasi')
+                        ->orderBy('updated_at', 'asc')
+                        ->get();
+        $accepted = WPPortofolio::where('status', 'diterima')
+                        ->orderBy('updated_at', 'asc')
+                        ->get();
+        $rejected = WPPortofolio::where('status', 'ditolak')
+                        ->orderBy('updated_at', 'asc')
+                        ->get();
 
         $config = AConfiguration::where('nama', 'portofolio_wp')->first();
 
@@ -72,11 +78,11 @@ class WPhotographerController extends Controller
 
         $data = null;
         if ($req->config == 'on') {
-            $config->admin_id = auth()->user()->admin->id;
+            $config->admin_id   = auth()->user()->admin->id;
             $config->automation = true;
             $data = $config->save();
         } else {
-            $config->admin_id = null;
+            $config->admin_id   = null;
             $config->automation = false;
             $data = $config->save();
         }

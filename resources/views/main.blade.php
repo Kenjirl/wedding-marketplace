@@ -34,6 +34,9 @@
     {{-- TOASTR CSS --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 
+    {{-- MAGNIFIC LIGHTBOX CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+
     @yield('title')
 
     {{-- GOOGLE FONT --}}
@@ -67,6 +70,15 @@
 </head>
 <body>
     @yield('body')
+
+    {{-- TIPPY JS CDN --}}
+    <script src="https://unpkg.com/popper.js@1"></script>
+    <script src="https://unpkg.com/tippy.js@5"></script>
+    <script>
+        tippy('[data-tippy-content]');
+    </script>
+
+    <script src="{{ asset('js/magnific-popup.js') }}"></script>
 
     @stack('child-js')
 

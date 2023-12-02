@@ -164,7 +164,6 @@
 @push('child-js')
     <script>
         function kirim(status) {
-            console.log(status);
             if (confirm('Apakah Anda yakin ingin menjalankan aksi ini?')) {
                 $("#status").val(status);
 

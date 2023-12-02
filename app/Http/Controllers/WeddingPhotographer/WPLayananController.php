@@ -23,14 +23,15 @@ class WPLayananController extends Controller
 
     public function tambah(Request $req) {
         $req->validate([
-            'nama' => 'required',
+            'nama'        => 'required|max:20',
             'fitur_utama' => 'required',
-            'harga' => 'required|numeric',
+            'harga'       => 'required|numeric',
         ],[
-            'nama.required' => 'Nama Layanan tidak boleh kosong',
+            'nama.required'        => 'Nama Layanan tidak boleh kosong',
+            'nama.max'             => 'Nama tidak boleh lebih dari 20 karakter',
             'fitur_utama.required' => 'Harap masukkan minimal 1 fitur',
-            'harga.required' => 'Harga tidak boleh kosong',
-            'harga.numeric' => 'Harga harus berupa numerik',
+            'harga.required'       => 'Harga tidak boleh kosong',
+            'harga.numeric'        => 'Harga harus berupa numerik',
         ]);
 
         $plan = new WPPlan();
@@ -71,14 +72,15 @@ class WPLayananController extends Controller
 
     public function ubah(Request $req, $id) {
         $req->validate([
-            'nama' => 'required',
+            'nama'        => 'required|max:20',
             'fitur_utama' => 'required',
-            'harga' => 'required|numeric',
+            'harga'       => 'required|numeric',
         ],[
-            'nama.required' => 'Nama Layanan tidak boleh kosong',
+            'nama.required'        => 'Nama Layanan tidak boleh kosong',
+            'nama.max'             => 'Nama tidak boleh lebih dari 20 karakter',
             'fitur_utama.required' => 'Harap masukkan minimal 1 fitur',
-            'harga.required' => 'Harga tidak boleh kosong',
-            'harga.numeric' => 'Harga harus berupa numerik',
+            'harga.required'       => 'Harga tidak boleh kosong',
+            'harga.numeric'        => 'Harga harus berupa numerik',
         ]);
 
         $data1 = WPPlan::where('id', $id)

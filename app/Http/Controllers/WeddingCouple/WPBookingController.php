@@ -17,7 +17,6 @@ class WPBookingController extends Controller
 
         foreach ($photographers as $photographer) {
             $plans = WPPlan::where('w_photographer_id', $photographer->id)
-                    ->where('deleted', 0)
                     ->get();
 
             $photographer->harga_terendah = null;
@@ -121,9 +120,9 @@ class WPBookingController extends Controller
 
     public function pesan(Request $req) {
         $req->validate([
-            'plan_id' => 'required',
+            'plan_id'    => 'required',
             'wedding_id' => 'required',
-            'tanggal' => 'required',
+            'tanggal'    => 'required',
         ],[
             'plan_id.required'    => 'Paket Layanan tidak boleh kosong',
             'wedding_id.required' => 'Pernikahan tidak boleh kosong',
@@ -132,9 +131,8 @@ class WPBookingController extends Controller
 
         $booking = new WPBooking();
         $booking->w_c_wedding_id = $req->wedding_id;
-        $booking->w_p_plan_id = $req->plan_id;
-        $booking->bukti_bayar = '-';
-        $booking->untuk_tanggal = $req->tanggal;
+        $booking->w_p_plan_id    = $req->plan_id;
+        $booking->untuk_tanggal  = $req->tanggal;
         $data = $booking->save();
 
         if ($data) {

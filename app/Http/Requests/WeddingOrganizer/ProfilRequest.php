@@ -25,8 +25,8 @@ class ProfilRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_pemilik'   =>'required|string|regex:/^[a-zA-Z\s]*$/',
-            'nama_perusahaan'=>'required|string|regex:/^[a-zA-Z\s.0-9]*$/',
+            'nama_pemilik'   =>'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
+            'nama_perusahaan'=>'required|string|regex:/^[a-zA-Z\s.0-9]*$/|max:50',
             'username'       =>[
                 'required',
                 Rule::unique('users', 'name')->ignore(auth()->id()),
@@ -53,9 +53,11 @@ class ProfilRequest extends FormRequest
             'nama_pemilik.required'   => 'Nama Pemilik tidak boleh kosong',
             'nama_pemilik.string'     => 'Nama Pemilik harus berupa karakter',
             'nama_pemilik.regex'      => 'Nama Pemilik tidak boleh memuat angka dan/atau tanda baca',
+            'nama_pemilik.max'        => 'Nama Pemilik tidak boleh lebih dari 50 karakter',
             'nama_perusahaan.required'=> 'Nama Perusahaan tidak boleh kosong',
             'nama_perusahaan.string'  => 'Nama Perusahaan harus berupa karakter',
             'nama_perusahaan.regex'   => 'Nama Perusahaan tidak boleh memuat tanda baca selain titik',
+            'nama_perusahaan.max'     => 'Nama Perusahaan tidak boleh lebih dari 50 karakter',
             'username.required'       => 'Username tidak boleh kosong',
             'username.unique'         => 'Username sudah digunakan',
             'no_telp.required'        => 'Nomor Telepon tidak boleh kosong',

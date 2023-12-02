@@ -25,7 +25,7 @@ class ProfilRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama'    =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'nama'    =>'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
             'username'=>[
                 'required',
                 Rule::unique('users', 'name')->ignore(auth()->id()),
@@ -46,6 +46,7 @@ class ProfilRequest extends FormRequest
             'nama.required'          => 'Nama tidak boleh kosong',
             'nama.string'            => 'Nama harus berupa karakter',
             'nama.regex'             => 'Nama tidak boleh memuat angka dan/atau tanda baca',
+            'nama.max'               => 'Nama tidak boleh lebih dari 50 karakter',
             'username.required'      => 'Username tidak boleh kosong',
             'username.unique'        => 'Username sudah digunakan',
             'no_telp.required'       => 'Nomor Telepon tidak boleh kosong',

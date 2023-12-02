@@ -67,11 +67,11 @@
                         </div>
 
                         <div class="flex items-center justify-start gap-2 text-[.8em]">
-                            @if ($l_portofolio->admin_id && $l_portofolio->status == 'ditolak')
+                            @if ($pfolio->admin_id && $pfolio->status == 'ditolak')
                                 <div class="w-fit aspect-square rounded-full text-red-500">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                 </div>
-                            @elseif ($l_portofolio->admin_id && $l_portofolio->status == 'diterima')
+                            @elseif ($pfolio->admin_id && $pfolio->status == 'diterima')
                                 <div class="w-fit aspect-square rounded-full text-blue-500">
                                     <i class="fa-solid fa-circle-check"></i>
                                 </div>
@@ -81,7 +81,7 @@
                                 </div>
                             @endif
                             <span>
-                                {{ $l_portofolio->status }}
+                                {{ $pfolio->status }}
                             </span>
                         </div>
                     </div>

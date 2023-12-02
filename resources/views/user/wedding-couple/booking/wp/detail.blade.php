@@ -228,11 +228,11 @@
                         </div>
                     </div>
                 @empty
-                    <div class="w-full">
-                        <span class="text-4xl font-semibold">
+                    {{-- <div class="w-full p-2">
+                        <span class="text-2xl font-semibold">
                             Tidak ada Paket Layanan
                         </span>
-                    </div>
+                    </div> --}}
                 @endforelse
 
                 {{-- form booking --}}

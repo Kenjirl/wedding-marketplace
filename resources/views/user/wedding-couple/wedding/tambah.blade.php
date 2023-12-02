@@ -16,10 +16,11 @@
         <div class="w-full">
             <form action="{{ route('wedding-couple.pernikahan.tambah') }}" method="post">
                 @csrf
-                <div class="w-full flex items-start justify-between gap-4">
-                    <div class="flex-1 w-full">
+                <div class="w-full">
+                    {{-- GROOM & BRIDE --}}
+                    <div class="flex-1 w-full flex items-start justify-center gap-4">
                         {{-- GROOM --}}
-                        <div class="w-100 mb-4">
+                        <div class="w-full mb-4">
                             <div class="w-100">
                                 <div class="w-full p-2 text-xs font-bold bg-pink @error('groom') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                     <i class="fa-solid fa-mars"></i>
@@ -41,161 +42,8 @@
                             </div>
                         </div>
 
-                        <div class="w-full">
-                            {{-- PEMBERKATAN --}}
-                            <div class="w-full p-2 bg-slate-200 text-center rounded-t-lg border-2 border-slate-200 border-b-0">
-                                <span class="text-sm">
-                                    Tempat & Tanggal Pemberkatan
-                                </span>
-                            </div>
-
-                            <div class="w-full p-2 rounded-b-lg border-2 border-slate-200 border-t-0">
-                                {{-- TANGGAL --}}
-                                <div class="w-100 mb-4">
-                                    <div class="w-100">
-                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('waktu_pemberkatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                            <i class="fa-regular fa-calendar"></i>
-                                            <span class="ml-2">
-                                                Waktu Pemberkatan
-                                            </span>
-                                        </div>
-                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu_pemberkatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                            type="datetime-local" name="waktu_pemberkatan" id="waktu_pemberkatan"
-                                            required
-                                            value="{{ old('waktu_pemberkatan', '') }}">
-                                    </div>
-
-                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                        @error('waktu_pemberkatan')
-                                            <i class="fa-solid fa-circle-info"></i>
-                                            <span>{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-4">
-                                    {{-- PROVINSI --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi_pemberkatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Provinsi
-                                                </span>
-                                            </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi_pemberkatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="provinsi_pemberkatan" id="provinsi_pemberkatan" placeholder="Bali"
-                                                required
-                                                value="{{ old('provinsi_pemberkatan', '') }}">
-                                        </div>
-
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('provinsi_pemberkatan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- KOTA --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('kota_pemberkatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Kota/Kabupaten
-                                                </span>
-                                            </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota_pemberkatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="kota_pemberkatan" id="kota_pemberkatan" placeholder="Badung"
-                                                required
-                                                value="{{ old('kota_pemberkatan', '') }}">
-                                        </div>
-
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('kota_pemberkatan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- KECAMATAN --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan_pemberkatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Kecamatan
-                                                </span>
-                                            </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan_pemberkatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="kecamatan_pemberkatan" id="kecamatan_pemberkatan" placeholder="Kuta Selatan"
-                                                required
-                                                value="{{ old('kecamatan_pemberkatan', '') }}">
-                                        </div>
-
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('kecamatan_pemberkatan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- KELURAHAN --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan_pemberkatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Kelurahan
-                                                </span>
-                                            </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan_pemberkatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="kelurahan_pemberkatan" id="kelurahan_pemberkatan" placeholder="Jimbaran"
-                                                required
-                                                value="{{ old('kelurahan_pemberkatan', '') }}">
-                                        </div>
-
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('kelurahan_pemberkatan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- ALAMAT --}}
-                                    <div class="relative w-100 col-span-2">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat_pemberkatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Alamat Detail
-                                                </span>
-                                            </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_pemberkatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="alamat_pemberkatan" id="alamat_pemberkatan" placeholder="Jl. Besar no. 1"
-                                                required
-                                                value="{{ old('alamat_pemberkatan', '') }}">
-                                        </div>
-
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('alamat_pemberkatan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex-1 w-full">
                         {{-- BRIDE --}}
-                        <div class="w-100 mb-4">
+                        <div class="w-full mb-4">
                             <div class="w-100">
                                 <div class="w-full p-2 text-xs font-bold bg-pink @error('bride') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                     <i class="fa-solid fa-venus"></i>
@@ -216,175 +64,406 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
 
-                        <div class="w-full">
-                            {{-- PERAYAAN --}}
-                            <div class="w-full p-2 bg-slate-200 text-center rounded-t-lg border-2 border-slate-200 border-b-0">
-                                <span class="text-sm">
-                                    Tempat & Tanggal Perayaan
+                    <div class="w-1/2 mb-4">
+                        <div class="w-fit px-4 py-2 bg-pink rounded-t text-white">
+                            Perhatian
+                        </div>
+                        <div class="w-full px-6 py-2 border-2 border-pink">
+                            <ol class="list-decimal text-sm">
+                                <li>Pilih acara pernikahan yang ingin ditampilkan pada undangan</li>
+                                <li>Acara pernikahan dapat dipilih dengan mencentang kotak yang ada di bagian kiri judul acara pernikahan</li>
+                                <li>Setiap acara pernikahan dikelompokkan berdasarkan Agama</li>
+                                <li>Harap lengkapi data setiap acara pernikahan yang dipilih</li>
+                                <li>Rentetan acara pernikahan akan diurutkan berdasarkan waktu pelaksanaan acara</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    {{-- EVENTS CONTAINER --}}
+                    <div class="w-full">
+                        {{-- BUTTON FILTER EVENT BERDASARKAN JENIS EVENT --}}
+                        <div class="w-full flex items-stretch justify-center">
+                            <button class="filter-button w-fit px-4 outline-none rounded-t bg-pink text-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                type="button" data-tippy-content="Umum">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>
+                                    Umum
                                 </span>
-                            </div>
+                            </button>
+                            <button class="filter-button w-fit px-4 py-2 outline-none rounded-t bg-white text-slate-600 hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                type="button" data-tippy-content="Buddha">
+                                <i class="fa-solid fa-dharmachakra"></i>
+                                <span>
+                                    Buddha
+                                </span>
+                            </button>
+                            <button class="filter-button w-fit px-4 py-2 outline-none rounded-t bg-white text-slate-600 hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                type="button" data-tippy-content="Hindu">
+                                <i class="fa-solid fa-om"></i>
+                                <span>
+                                    Hindu
+                                </span>
+                            </button>
+                            <button class="filter-button w-fit px-4 py-2 outline-none rounded-t bg-white text-slate-600 hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                type="button" data-tippy-content="Islam">
+                                <i class="fa-solid fa-star-and-crescent"></i>
+                                <span>
+                                    Islam
+                                </span>
+                            </button>
+                            <button class="filter-button w-fit px-4 py-2 outline-none rounded-t bg-white text-slate-600 hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                type="button" data-tippy-content="Katolik">
+                                <i class="fa-solid fa-cross"></i>
+                                <span>
+                                    Katolik
+                                </span>
+                            </button>
+                            <button class="filter-button w-fit px-4 py-2 outline-none rounded-t bg-white text-slate-600 hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                type="button" data-tippy-content="Khonghucu">
+                                <i class="fa-solid fa-yin-yang"></i>
+                                <span>
+                                    Khonghucu
+                                </span>
+                            </button>
+                            <button class="filter-button w-fit px-4 py-2 outline-none rounded-t bg-white text-slate-600 hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                type="button" data-tippy-content="Protestan">
+                                <i class="fa-solid fa-cross"></i>
+                                <span>
+                                    Protestan
+                                </span>
+                            </button>
+                        </div>
 
-                            <div class="w-full p-2 rounded-b-lg border-2 border-slate-200 border-t-0">
-                                {{-- TANGGAL --}}
-                                <div class="w-100 mb-4">
-                                    <div class="w-100">
-                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('waktu_perayaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                            <i class="fa-regular fa-calendar"></i>
-                                            <span class="ml-2">
-                                                Waktu Perayaan
-                                            </span>
+                        {{-- EVENT INPUT --}}
+                        <div class="w-full max-h-[80vh] p-4 grid grid-cols-2 gap-4 border-2 border-pink overflow-y-auto">
+                            {{-- EVENT PER-AGAMA --}}
+                            @foreach ($events as $event)
+                                <div class="w-full event-item hidden container-{{ $event->jenis }} container-event-per-agama">
+                                    <div class="w-full p-2 flex items-center justify-between bg-slate-200 text-center rounded-t-lg border-2 border-slate-200 border-b-0">
+                                        <div class="w-fit flex items-center justify-start gap-2">
+                                            <input class="w-4 aspect-square event-checkbox"
+                                                id="event_checkbox" type="checkbox" value="" data-id="{{ $event->id }}">
                                         </div>
-                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu_perayaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                            type="datetime-local" name="waktu_perayaan" id="waktu_perayaan"
-                                            required
-                                            value="{{ old('waktu_perayaan', '') }}">
+                                        <div class="flex-1 w-full text-sm text-center">
+                                            Tempat & Tanggal {{ ucwords($event->nama) }}
+                                        </div>
+                                        <div class="w-4 aspect-square flex items-center justify-end cursor-pointer"
+                                            data-tippy-content="{{ $event->keterangan }}">
+                                            <i class="fa-regular fa-circle-question"></i>
+                                        </div>
                                     </div>
 
-                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                        @error('waktu_perayaan')
-                                            <i class="fa-solid fa-circle-info"></i>
-                                            <span>{{ $message }}</span>
-                                        @enderror
+                                    <div class="w-full p-2 rounded-b-lg border-2 border-slate-200 border-t-0 input-container-{{ $event->id }}">
+                                        {{-- ID EVENT --}}
+                                        <input class="hidden"
+                                            type="number" name="w_event_id[]" id="w_event_id" value="{{ $event->id }}" disabled>
+
+                                        {{-- TANGGAL --}}
+                                        <div class="w-100 mb-4">
+                                            <div class="w-100">
+                                                <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('waktu[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <i class="fa-regular fa-calendar"></i>
+                                                    <span class="ml-2">
+                                                        Waktu
+                                                    </span>
+                                                </div>
+                                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                    type="datetime-local" name="waktu[]" id="waktu"
+                                                    disabled
+                                                    value="{{ old('waktu[]') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-4">
+                                            {{-- PROVINSI --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('provinsi[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Provinsi
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                        type="text" name="provinsi[]" id="provinsi" placeholder="Bali"
+                                                        disabled
+                                                        value="{{ old('provinsi[]') }}">
+                                                </div>
+                                            </div>
+
+                                            {{-- KOTA --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kota[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Kota/Kabupaten
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                        type="text" name="kota[]" id="kota" placeholder="Badung"
+                                                        disabled
+                                                        value="{{ old('kota[]') }}">
+                                                </div>
+                                            </div>
+
+                                            {{-- KECAMATAN --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kecamatan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Kecamatan
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                        type="text" name="kecamatan[]" id="kecamatan" placeholder="Kuta Selatan"
+                                                        disabled
+                                                        value="{{ old('kecamatan[]') }}">
+                                                </div>
+                                            </div>
+
+                                            {{-- KELURAHAN --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kelurahan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Kelurahan
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                        type="text" name="kelurahan[]" id="kelurahan" placeholder="Jimbaran"
+                                                        disabled
+                                                        value="{{ old('kelurahan[]') }}">
+                                                </div>
+                                            </div>
+
+                                            {{-- ALAMAT --}}
+                                            <div class="relative w-100 col-span-2">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('alamat[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Alamat Detail
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                        type="text" name="alamat[]" id="alamat" placeholder="Jl. Besar no. 1"
+                                                        disabled
+                                                        value="{{ old('alamat[]') }}">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            @endforeach
 
-                                <div class="grid grid-cols-2 gap-4">
-                                    {{-- PROVINSI --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi_perayaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Provinsi
-                                                </span>
-                                            </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi_perayaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="provinsi_perayaan" id="provinsi_perayaan" placeholder="Bali"
-                                                required
-                                                value="{{ old('provinsi_perayaan', '') }}">
+                            {{-- EVENT UMUM --}}
+                            @foreach ($event_umum as $evu)
+                                <div class="w-full">
+                                    <div class="w-full p-2 flex items-center justify-between bg-slate-200 text-center rounded-t-lg border-2 border-slate-200 border-b-0">
+                                        <div class="w-4 flex items-center justify-start gap-2">
                                         </div>
-
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('provinsi_perayaan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
+                                        <div class="flex-1 w-full text-sm text-center">
+                                            Tempat & Tanggal {{ ucwords($evu->nama) }}
+                                        </div>
+                                        <div class="w-4 aspect-square flex items-center justify-end cursor-pointer"
+                                            data-tippy-content="{{ $evu->keterangan }}">
+                                            <i class="fa-regular fa-circle-question"></i>
                                         </div>
                                     </div>
 
-                                    {{-- KOTA --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('kota_perayaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Kota/Kabupaten
-                                                </span>
+                                    <div class="w-full p-2 rounded-b-lg border-2 border-slate-200 border-t-0">
+                                        {{-- ID EVENT --}}
+                                        <input class="hidden"
+                                            type="number" name="w_event_id[]" id="w_event_id" value="{{ $evu->id }}">
+
+                                        {{-- TANGGAL --}}
+                                        <div class="w-100 mb-4">
+                                            <div class="w-100">
+                                                <div class="w-full p-2 text-xs font-bold bg-pink @error('waktu[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <i class="fa-regular fa-calendar"></i>
+                                                    <span class="ml-2">
+                                                        Waktu
+                                                    </span>
+                                                </div>
+                                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                    type="datetime-local" name="waktu[]" id="waktu"
+                                                    required
+                                                    value="{{ old('waktu[]', '') }}">
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota_perayaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="kota_perayaan" id="kota_perayaan" placeholder="Badung"
-                                                required
-                                                value="{{ old('kota_perayaan', '') }}">
                                         </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('kota_perayaan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- KECAMATAN --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan_perayaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Kecamatan
-                                                </span>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            {{-- PROVINSI --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Provinsi
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                        type="text" name="provinsi[]" id="provinsi" placeholder="Bali"
+                                                        required
+                                                        value="{{ old('provinsi[]', '') }}">
+                                                </div>
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan_perayaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="kecamatan_perayaan" id="kecamatan_perayaan" placeholder="Kuta Selatan"
-                                                required
-                                                value="{{ old('kecamatan_perayaan', '') }}">
-                                        </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('kecamatan_perayaan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- KELURAHAN --}}
-                                    <div class="relative w-100">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan_perayaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Kelurahan
-                                                </span>
+                                            {{-- KOTA --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kota[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Kota/Kabupaten
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                        type="text" name="kota[]" id="kota" placeholder="Badung"
+                                                        required
+                                                        value="{{ old('kota[]', '') }}">
+                                                </div>
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan_perayaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="kelurahan_perayaan" id="kelurahan_perayaan" placeholder="Jimbaran"
-                                                required
-                                                value="{{ old('kelurahan_perayaan', '') }}">
-                                        </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('kelurahan_perayaan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- ALAMAT --}}
-                                    <div class="relative w-100 col-span-2">
-                                        <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat_perayaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                                <i class="fa-solid fa-location-dot"></i>
-                                                <span class="ml-2">
-                                                    Alamat Detail
-                                                </span>
+                                            {{-- KECAMATAN --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Kecamatan
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                        type="text" name="kecamatan[]" id="kecamatan" placeholder="Kuta Selatan"
+                                                        required
+                                                        value="{{ old('kecamatan[]', '') }}">
+                                                </div>
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_perayaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                type="text" name="alamat_perayaan" id="alamat_perayaan" placeholder="Jl. Besar no. 1"
-                                                required
-                                                value="{{ old('alamat_perayaan', '') }}">
-                                        </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('alamat_perayaan')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
+                                            {{-- KELURAHAN --}}
+                                            <div class="relative w-100">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Kelurahan
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                        type="text" name="kelurahan[]" id="kelurahan" placeholder="Jimbaran"
+                                                        required
+                                                        value="{{ old('kelurahan[]', '') }}">
+                                                </div>
+                                            </div>
+
+                                            {{-- ALAMAT --}}
+                                            <div class="relative w-100 col-span-2">
+                                                <div class="w-100">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                        <i class="fa-solid fa-location-dot"></i>
+                                                        <span class="ml-2">
+                                                            Alamat Detail
+                                                        </span>
+                                                    </div>
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                        type="text" name="alamat[]" id="alamat" placeholder="Jl. Besar no. 1"
+                                                        required
+                                                        value="{{ old('alamat[]', '') }}">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
 
-                <div class="w-100 mt-4 flex items-center justify-end gap-4">
-                    <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        href="{{ route('wedding-couple.pernikahan.index') }}">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                        <span>Kembali</span>
-                    </a>
+                <div class="w-full mt-4 flex items-start justify-center gap-4">
+                    <div class="flex-1 w-full">
+                        @if($errors->any())
+                            <div class="w-fit px-4 py-2 bg-red-500 rounded-t text-white">
+                                Terdapat Kesalahan!
+                            </div>
+                            <div class="w-full px-6 py-2 border-2 border-red-500">
+                                <ol class="list-disc text-sm">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ol>
+                            </div>
+                        @endif
+                    </div>
 
-                    <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                        type="submit">
-                        <i class="fa-regular fa-floppy-disk"></i>
-                        <span>Simpan</span>
-                    </button>
+                    <div class="flex-1 w-full flex items-center justify-end gap-4">
+                        <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                            href="{{ route('wedding-couple.pernikahan.index') }}">
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                            <span>Kembali</span>
+                        </a>
+
+                        <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                            type="submit">
+                            <i class="fa-regular fa-floppy-disk"></i>
+                            <span>Simpan</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
 
     </div>
 @endsection
+
+@push('child-js')
+    <script>
+        $(document).ready(function () {
+            // Tangani klik pada tombol agama
+            $('.filter-button').click(function () {
+                let agama = 'container-' + $(this).data('tippy-content');
+
+                $('.filter-button').removeClass('bg-pink text-white').addClass('bg-white text-slate-600');
+                $(this).removeClass('bg-white text-slate-600').addClass('bg-pink text-white');
+
+                $('.event-checkbox').prop("checked", false);
+                let cepa = $('.container-event-per-agama input').not(':checkbox');
+                cepa.prop('disabled', true);
+                cepa.prop('required', false);
+
+                let pervDiv = cepa.prev('div');
+                pervDiv.removeClass('bg-pink').addClass('bg-slate-300');
+
+                // Sembunyikan semua elemen event
+                $('.event-item').addClass('hidden');
+
+                // Tampilkan elemen yang sesuai dengan agama yang diklik
+                $('.' + agama).removeClass('hidden');
+            });
+
+            $('.event-checkbox').change(function () {
+                let eventId = $(this).data('id');
+                let isChecked = $(this).prop('checked');
+
+                // Temukan semua input yang sesuai dengan ID event
+                let inputs = $('.input-container-' + eventId + ' input');
+
+                // Ubah atribut input sesuai dengan status checkbox
+                inputs.prop('disabled', !isChecked);
+                inputs.prop('required', isChecked);
+
+                let pervDiv = inputs.prev('div');
+                if (isChecked) {
+                    pervDiv.removeClass('bg-slate-300').addClass('bg-pink');
+                } else {
+                    pervDiv.removeClass('bg-pink').addClass('bg-slate-300');
+                }
+            });
+        });
+        </script>
+@endpush

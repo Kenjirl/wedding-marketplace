@@ -25,7 +25,7 @@ class TambahAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama'          =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'nama'          =>'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
             'email'         =>[
                 'required',
                 Rule::unique('users', 'email'),
@@ -55,6 +55,7 @@ class TambahAdminRequest extends FormRequest
             'nama.required'          => 'Nama tidak boleh kosong',
             'nama.string'            => 'Nama harus berupa karakter',
             'nama.regex'             => 'Nama tidak boleh memuat angka dan/atau tanda baca',
+            'nama.max'               => 'Nama tidak boleh lebih dari 50 karakter',
             'email.required'         => 'Email tidak boleh kosong',
             'email.unique'           => 'Email sudah digunakan',
             'username.required'      => 'Username tidak boleh kosong',

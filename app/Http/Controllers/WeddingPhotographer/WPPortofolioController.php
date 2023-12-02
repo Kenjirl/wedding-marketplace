@@ -103,20 +103,27 @@ class WPPortofolioController extends Controller
     public function ubah(PortofolioRequest $req, $id) {
         $req->validated();
 
+        $config = AConfiguration::where('nama', 'portofolio_wp')->first();
+
         $count = WPPortofolioPhoto::where('w_p_portofolio_id', $id)->count();
         if ($count >= 5) {
             return redirect()->route('wedding-photographer.portofolio.ke_ubah', $id)->with('gagal', 'Maksimal 5 Gambar Saja');
         }
 
-        $data1 = WPPortofolio::where('id', $id)
-                    ->update([
-                        'admin_id' => null,
-                        'judul'    => $req->judul,
-                        'tanggal'  => $req->tanggal,
-                        'detail'   => $req->detail,
-                        'lokasi'   => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
-                        'status'   => 'menunggu konfirmasi',
-                    ]);
+        $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
+
+        $portofolio = WPPortofolio::find($id);
+        $portofolio->judul = $req->judul;
+        $portofolio->detail = $req->detail;
+        $portofolio->lokasi = $lokasi;
+        if ($config->automation) {
+            $portofolio->admin_id = $config->admin_id;
+            $portofolio->status = 'diterima';
+        } else {
+            $portofolio->admin_id = null;
+            $portofolio->status = 'menunggu konfirmasi';
+        }
+        $data1 = $portofolio->save();
 
         $data2 = false;
         if ($req->hasFile('foto')) {

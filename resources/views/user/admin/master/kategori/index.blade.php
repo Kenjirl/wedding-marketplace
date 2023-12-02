@@ -35,10 +35,12 @@
                         {{ $wkg->nama }}
                     </td>
                     <td class="border border-slate-500 px-2">
-                        {!! $wkg->keterangan !!}
+                        <div class="line-clamp-1">
+                            {!! $wkg->keterangan !!}
+                        </div>
                     </td>
-                    <td class="border-b border-slate-500 flex flex-col items-stretch justify-center gap-2 p-2">
-                        <a class="flex-1 w-full text-center text-sm font-semibold p-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                    <td class="h-full border-b border-slate-500 flex flex-nowrap items-center justify-center gap-2 p-2">
+                        <a class="flex-1 w-full text-center whitespace-nowrap text-sm font-semibold p-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                             href="{{ route('admin.kategori-pernikahan.ke_ubah', $wkg->id) }}">
                             <i class="fa-regular fa-pen-to-square"></i>
                             Ubah
@@ -46,7 +48,7 @@
                         <form class="flex-1 w-full"
                             action="{{ route('admin.kategori-pernikahan.hapus', $wkg->id) }}" method="post" id="deleteForm-{{ $wkg->id }}">
                             @csrf
-                            <button class="w-full p-2 rounded text-sm text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                            <button class="w-full p-2 rounded text-sm whitespace-nowrap text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
                                 type="button" onclick="showDeleteConfirmation({{ $wkg->id }})">
                                 <i class="fa-solid fa-trash-can"></i>
                                 Hapus

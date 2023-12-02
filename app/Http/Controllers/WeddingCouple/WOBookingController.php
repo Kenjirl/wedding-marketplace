@@ -16,7 +16,6 @@ class WOBookingController extends Controller
 {
     public function index(Request $req) {
         $organizers = WOrganizer::orderBy('nama_perusahaan', 'asc')
-                    ->where('deleted', 0)
                     ->get();
 
         foreach ($organizers as $organizer) {
@@ -154,9 +153,9 @@ class WOBookingController extends Controller
 
     public function pesan(Request $req) {
         $req->validate([
-            'plan_id' => 'required',
+            'plan_id'    => 'required',
             'wedding_id' => 'required',
-            'tanggal' => 'required',
+            'tanggal'    => 'required',
         ],[
             'plan_id.required'    => 'Paket Layanan tidak boleh kosong',
             'wedding_id.required' => 'Pernikahan tidak boleh kosong',
@@ -165,14 +164,13 @@ class WOBookingController extends Controller
 
         $booking = new WOBooking();
         $booking->w_c_wedding_id = $req->wedding_id;
-        $booking->w_o_plan_id = $req->plan_id;
-        $booking->bukti_bayar = '-';
-        $booking->untuk_tanggal = $req->tanggal;
+        $booking->w_o_plan_id    = $req->plan_id;
+        $booking->untuk_tanggal  = $req->tanggal;
         $data = $booking->save();
 
         if ($data) {
-            return redirect()->route('wedding-couple.pernikahan.index')->with('sukses', 'Memesan Wedding Organizer');
+            return redirect()->route('wedding-couple.pernikahan.ke_detail', $req->wedding_id)->with('sukses', 'Memesan Wedding Organizer');
         }
-        return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'Memesan Wedding Organizer');
+        return redirect()->route('wedding-couple.pernikahan.ke_detail', $req->wedding_id)->with('gagal', 'Memesan Wedding Organizer');
     }
 }

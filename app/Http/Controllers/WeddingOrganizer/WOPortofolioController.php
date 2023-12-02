@@ -31,7 +31,7 @@ class WOPortofolioController extends Controller
     public function tambah(PortofolioRequest $req) {
         $req->validated();
 
-        $config = AConfiguration::where('nama', 'portofolio_wp')->first();
+        $config = AConfiguration::where('nama', 'portofolio_wo')->first();
 
         $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
@@ -42,7 +42,7 @@ class WOPortofolioController extends Controller
         $portofolio->detail = $req->detail;
         $portofolio->lokasi = $lokasi;
 
-        if ($config->automation) {
+        if ($config->automation == 1) {
             $portofolio->admin_id = $config->admin_id;
             $portofolio->status = 'diterima';
         }
@@ -103,20 +103,27 @@ class WOPortofolioController extends Controller
     public function ubah(PortofolioRequest $req, $id) {
         $req->validated();
 
+        $config = AConfiguration::where('nama', 'portofolio_wo')->first();
+
         $count = WOPortofolioPhoto::where('w_o_portofolio_id', $id)->count();
         if ($count >= 5) {
             return redirect()->route('wedding-organizer.portofolio.ke_ubah', $id)->with('gagal', 'Maksimal 5 Gambar Saja');
         }
 
-        $data1 = WOPortofolio::where('id', $id)
-                    ->update([
-                        'admin_id' => null,
-                        'judul'    => $req->judul,
-                        'tanggal'  => $req->tanggal,
-                        'detail'   => $req->detail,
-                        'lokasi'   => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
-                        'status'   => 'menunggu konfirmasi',
-                    ]);
+        $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
+
+        $portofolio = WOPortofolio::find($id);
+        $portofolio->judul = $req->judul;
+        $portofolio->detail = $req->detail;
+        $portofolio->lokasi = $lokasi;
+        if ($config->automation) {
+            $portofolio->admin_id = $config->admin_id;
+            $portofolio->status = 'diterima';
+        } else {
+            $portofolio->admin_id = null;
+            $portofolio->status = 'menunggu konfirmasi';
+        }
+        $data1 = $portofolio->save();
 
         $data2 = false;
         if ($req->hasFile('foto')) {

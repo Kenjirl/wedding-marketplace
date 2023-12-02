@@ -15,7 +15,7 @@
                 <input name="config" id="config" type="checkbox" class="sr-only peer"
                     {{ $config->automation ? 'checked' : '' }}
                 >
-                <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-pink-hover peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink"></div>
+                <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-pink-hover peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink"></div>
                 <span class="ms-3 text-sm font-medium text-gray-900">Auto Confirm?</span>
             </label>
         </form>
@@ -38,23 +38,27 @@
                         <th class="border border-slate-500">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-sm">
                     @forelse ($pending as $pdg)
                     <tr>
                         <td class="border border-slate-500 text-center">
                             {{ $loop->iteration }}
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $pdg->judul }}
+                            <div class="line-clamp-1">
+                                {{ $pdg->judul }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $pdg->w_organizer->nama_perusahaan }}
+                            <div class="line-clamp-1">
+                                {{ $pdg->w_organizer->nama_perusahaan }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2 text-end">
                             {{ $pdg->updated_at }}
                         </td>
                         <td class="border-b border-slate-500 flex items-center justify-evenly gap-2 p-2">
-                            <a class="flex-1 text-center text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                            <a class="flex-1 text-center whitespace-nowrap text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                                 href="{{ route('admin.wo.portofolio.ke_validasi', $pdg->id) }}">
                                 <i class="fa-regular fa-pen-to-square"></i>
                                 Lihat Detail
@@ -93,26 +97,32 @@
                         <th class="border border-slate-500">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-sm">
                     @forelse ($accepted as $acc)
                     <tr>
                         <td class="border border-slate-500 text-center">
                             {{ $loop->iteration }}
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $acc->judul }}
+                            <div class="line-clamp-1">
+                                {{ $acc->judul }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $acc->w_organizer->nama_perusahaan }}
+                            <div class="line-clamp-1">
+                                {{ $acc->w_organizer->nama_perusahaan }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $acc->admin->nama }}
+                            <div class="line-clamp-1">
+                                {{ $acc->admin->nama }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2">
                             {{ $acc->updated_at }}
                         </td>
                         <td class="border-b border-slate-500 flex items-center justify-evenly gap-2 p-2">
-                            <a class="flex-1 text-center text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                            <a class="flex-1 text-center whitespace-nowrap text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                                 href="{{ route('admin.wo.portofolio.ke_validasi', $acc->id) }}">
                                 <i class="fa-regular fa-pen-to-square"></i>
                                 Lihat Detail
@@ -152,26 +162,32 @@
                         <th class="border border-slate-500">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-sm">
                     @forelse ($rejected as $rej)
                     <tr>
                         <td class="border border-slate-500 text-center">
                             {{ $loop->iteration }}
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $rej->judul }}
+                            <div class="line-clamp-1">
+                                {{ $rej->judul }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $rej->w_organizer->nama_perusahaan }}
+                            <div class="line-clamp-1">
+                                {{ $rej->w_organizer->nama_perusahaan }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2">
-                            {{ $rej->admin->nama }}
+                            <div class="line-clamp-1">
+                                {{ $rej->admin->nama }}
+                            </div>
                         </td>
                         <td class="border border-slate-500 px-2">
                             {{ $rej->updated_at }}
                         </td>
                         <td class="border-b border-slate-500 flex items-center justify-evenly gap-2 p-2">
-                            <a class="flex-1 text-center text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                            <a class="flex-1 text-center whitespace-nowrap text-sm font-semibold py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                                 href="{{ route('admin.wo.portofolio.ke_validasi', $rej->id) }}">
                                 <i class="fa-regular fa-pen-to-square"></i>
                                 Lihat Detail

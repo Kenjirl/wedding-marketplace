@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 class AEventController extends Controller
 {
     public function index() {
-        $events = WEvent::orderBy('nama', 'asc')->get();
+        $events = WEvent::where('deleted', 0)
+                    ->orderBy('jenis', 'asc')
+                    ->orderBy('nama', 'asc')
+                    ->get();
 
         return view('user.admin.master.event.index', compact('events'));
     }
@@ -20,7 +23,7 @@ class AEventController extends Controller
 
     public function tambah(Request $req) {
         $req->validate([
-            'nama'       => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'nama'       => 'required|string|regex:/^[a-zA-Z\s]*$/|max:20',
             'jenis'      => 'required|in:Buddha,Hindu,Islam,Katolik,Khonghucu,Protestan,Umum',
             'keterangan' => 'required|string',
         ],
@@ -28,18 +31,19 @@ class AEventController extends Controller
             'nama.required'       => 'Event tidak boleh kosong',
             'nama.string'         => 'Event harus berupa karakter',
             'nama.regex'          => 'Event tidak boleh memuat angka dan/atau tanda baca',
+            'nama.max'            => 'Event tidak boleh lebih dari 20 karakter',
             'jenis.required'      => 'Jenis tidak boleh kosong',
             'jenis.in'            => 'Jenis harus dipilih dari opsi yang tersedia',
             'keterangan.required' => 'Keterangan tidak boleh kosong',
             'keterangan.string'   => 'Keterangan harus berupa karakter',
         ]);
 
-        $event = new WEvent();
-        $event->admin_id = auth()->user()->admin->id;
-        $event->nama = $req->nama;
-        $event->jenis = $req->jenis;
-        $event->keterangan = $req->keterangan;
-        $data = $event->save();
+        $event              = new WEvent();
+        $event->admin_id    = auth()->user()->admin->id;
+        $event->nama        = ucwords($req->nama);
+        $event->jenis       = $req->jenis;
+        $event->keterangan  = $req->keterangan;
+        $data               = $event->save();
 
         if ($data) {
             return redirect()->route('admin.event-pernikahan.index')->with('sukses', 'Menambah Event Pernikahan');
@@ -55,7 +59,7 @@ class AEventController extends Controller
 
     public function ubah(Request $req, $id) {
         $req->validate([
-            'nama'       => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'nama'       => 'required|string|regex:/^[a-zA-Z\s]*$/|max:20',
             'jenis'      => 'required|in:Buddha,Hindu,Islam,Katolik,Khonghucu,Protestan,Umum',
             'keterangan' => 'required|string',
         ],
@@ -63,6 +67,7 @@ class AEventController extends Controller
             'nama.required'       => 'Event tidak boleh kosong',
             'nama.string'         => 'Event harus berupa karakter',
             'nama.regex'          => 'Event tidak boleh memuat angka dan/atau tanda baca',
+            'nama.max'            => 'Event tidak boleh lebih dari 20 karakter',
             'jenis.required'      => 'Jenis tidak boleh kosong',
             'jenis.in'            => 'Jenis harus dipilih dari opsi yang tersedia',
             'keterangan.required' => 'Keterangan tidak boleh kosong',
@@ -71,9 +76,9 @@ class AEventController extends Controller
 
         $data = WEvent::where('id', $id)
             ->update([
-                'admin_id' => auth()->user()->admin->id,
-                'nama' => strtolower($req->nama),
-                'jenis' => $req->jenis,
+                'admin_id'   => auth()->user()->admin->id,
+                'nama'       => ucwords($req->nama),
+                'jenis'      => $req->jenis,
                 'keterangan' => $req->keterangan,
             ]);
 

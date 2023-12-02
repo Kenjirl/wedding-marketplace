@@ -25,7 +25,7 @@
                 <div class="my-16">
                     @if (auth()->user() && auth()->user()->w_couple)
                         <a class="w-fit px-4 py-2 rounded-lg border-2 border-white outline-pink bg-white text-pink active:bg-pink active:text-white transition-colors"
-                            href="#">
+                            href="{{ route('wedding-couple.pernikahan.index') }}">
                             <i class="fa-regular fa-envelope"></i>
                             Buat Undangan
                         </a>

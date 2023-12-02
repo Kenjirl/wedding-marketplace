@@ -24,7 +24,7 @@ class PortofolioRequest extends FormRequest
     public function rules()
     {
         return [
-            'judul'         => 'required|string',
+            'judul'         => 'required|string|max:100',
             'tanggal'       => 'required|date',
             'detail'        => 'required',
             'provinsi'      => 'string|regex:/^[a-zA-Z\s]*$/',
@@ -42,6 +42,7 @@ class PortofolioRequest extends FormRequest
         return [
             'judul.required'       => 'Judul tidak boleh kosong',
             'judul.string'         => 'Judul harus berupa karakter',
+            'judul.max'            => 'Judul tidak boleh lebih dari 100 karakter',
             'tanggal.required'     => 'Tanggal tidak boleh kosong',
             'tanggal.date'         => 'Tanggal harus menggunakan format tanggal yang benar',
             'detail.required'      => 'Detail tidak boleh kosong',

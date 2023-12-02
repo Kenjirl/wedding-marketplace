@@ -24,7 +24,7 @@ class UbahAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama'          =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'nama'          =>'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
             'no_telp'       =>'required|string|min:8|max:12',
             'gender'        =>'string|regex:/^[a-zA-Z\s]*$/|in:Pria,Wanita',
             'provinsi'      =>'string|regex:/^[a-zA-Z\s]*$/',
@@ -46,6 +46,7 @@ class UbahAdminRequest extends FormRequest
             'nama.required'          => 'Nama tidak boleh kosong',
             'nama.string'            => 'Nama harus berupa karakter',
             'nama.regex'             => 'Nama tidak boleh memuat angka dan/atau tanda baca',
+            'nama.max'               => 'Nama tidak boleh lebih dari 50 karakter',
             'no_telp.required'       => 'Nomor Telepon tidak boleh kosong',
             'no_telp.string'         => 'Nomor Telepon harus berupa angka',
             'no_telp.min'            => 'Nomor Telepon minimal 8 karakter',

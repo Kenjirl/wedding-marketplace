@@ -40,10 +40,10 @@ class AProfilController extends Controller
 
         $data2 = Admin::where('id', auth()->user()->admin->id)
             ->update([
-                'nama' => $req->nama,
-                'gender' => $req->gender,
+                'nama'    => $req->nama,
+                'gender'  => $req->gender,
                 'no_telp' => $req->no_telp,
-                'alamat' => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
+                'alamat'  => $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi,
             ]);
 
         if ($data1 && $data2) {

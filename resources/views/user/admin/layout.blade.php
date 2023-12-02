@@ -32,6 +32,18 @@
                     $("#masterMenuContainer").addClass("grid").removeClass("hidden");
                 }
             });
+
+            $("#portofolioMenuBtn").on("click", function () {
+                let isOpen = $(this).data("open");
+
+                if (isOpen === "true") {
+                    $(this).data("open", "false");
+                    $("#portofolioMenuContainer").removeClass("grid").addClass("hidden");
+                } else {
+                    $(this).data("open", "true");
+                    $("#portofolioMenuContainer").addClass("grid").removeClass("hidden");
+                }
+            });
         });
     </script>
 @endpush
