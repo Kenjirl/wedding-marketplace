@@ -10,24 +10,40 @@ use Illuminate\Http\Request;
 
 class WOrganizerController extends Controller
 {
-    public function index() {
-        $pending  = WOPortofolio::where('status', 'menunggu konfirmasi')
+    public function index($tab) {
+        if ($tab == 'diterima') {
+            $tab = 'accept';
+        }
+        if ($tab == 'ditolak') {
+            $tab = 'reject';
+        }
+
+        if ($tab != 'pending' && $tab != 'accept' && $tab != 'reject') {
+            return redirect()->route('admin.wo.portofolio.index', 'pending');
+        }
+
+        $portofolio = [];
+
+        if ($tab == 'accept') {
+            $portofolio = WOPortofolio::where('status', 'diterima')
                         ->orderBy('updated_at', 'asc')
                         ->get();
-        $accepted = WOPortofolio::where('status', 'diterima')
+        } else if ($tab == 'reject') {
+            $portofolio = WOPortofolio::where('status', 'ditolak')
                         ->orderBy('updated_at', 'asc')
                         ->get();
-        $rejected = WOPortofolio::where('status', 'ditolak')
+        } else if ($tab == 'pending') {
+            $portofolio = WOPortofolio::where('status', 'menunggu konfirmasi')
                         ->orderBy('updated_at', 'asc')
                         ->get();
+        }
 
         $config = AConfiguration::where('nama', 'portofolio_wo')->first();
 
         return view('user.admin.portofolio.w-organizer.index', compact(
-            'pending',
-            'accepted',
-            'rejected',
+            'portofolio',
             'config',
+            'tab',
         ));
     }
 
@@ -67,9 +83,9 @@ class WOrganizerController extends Controller
                 ]);
 
         if ($data) {
-            return redirect()->route('admin.wo.portofolio.index')->with('sukses', 'Mengubah Validasi Portofolio Organizer');
+            return redirect()->route('admin.wo.portofolio.index', $req->status)->with('sukses', 'Mengubah Validasi Portofolio Organizer');
         }
-        return redirect()->route('admin.wo.portofolio.index')->with('gagal', 'Mengubah Validasi Portofolio Organizer');
+        return redirect()->route('admin.wo.portofolio.index', $req->status)->with('gagal', 'Mengubah Validasi Portofolio Organizer');
     }
 
     public function config(Request $req) {
@@ -87,8 +103,8 @@ class WOrganizerController extends Controller
         }
 
         if ($data) {
-            return redirect()->route('admin.wo.portofolio.index')->with('sukses', 'Mengubah Konfigurasi Portofolio Organizer');
+            return redirect()->back()->with('sukses', 'Mengubah Konfigurasi Portofolio Organizer');
         }
-        return redirect()->route('admin.wo.portofolio.index')->with('gagal', 'Mengubah Konfigurasi Portofolio Organizer');
+        return redirect()->back()->with('gagal', 'Mengubah Konfigurasi Portofolio Organizer');
     }
 }

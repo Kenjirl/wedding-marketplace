@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('w_photographer_id');
             $table->string('nama');
-            $table->bigInteger('harga');
+            $table->unsignedBigInteger('harga');
             $table->boolean('deleted')->default(false);
             $table->timestamps();
 

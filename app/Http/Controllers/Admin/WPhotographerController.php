@@ -10,24 +10,40 @@ use Illuminate\Http\Request;
 
 class WPhotographerController extends Controller
 {
-    public function index() {
-        $pending  = WPPortofolio::where('status', 'menunggu konfirmasi')
+    public function index($tab) {
+        if ($tab == 'diterima') {
+            $tab = 'accept';
+        }
+        if ($tab == 'ditolak') {
+            $tab = 'reject';
+        }
+
+        if ($tab != 'pending' && $tab != 'accept' && $tab != 'reject') {
+            return redirect()->route('admin.wp.portofolio.index', 'pending');
+        }
+
+        $portofolio = [];
+
+        if ($tab == 'accept') {
+            $portofolio = WPPortofolio::where('status', 'diterima')
                         ->orderBy('updated_at', 'asc')
                         ->get();
-        $accepted = WPPortofolio::where('status', 'diterima')
+        } else if ($tab == 'reject') {
+            $portofolio = WPPortofolio::where('status', 'ditolak')
                         ->orderBy('updated_at', 'asc')
                         ->get();
-        $rejected = WPPortofolio::where('status', 'ditolak')
+        } else if ($tab == 'pending') {
+            $portofolio = WPPortofolio::where('status', 'menunggu konfirmasi')
                         ->orderBy('updated_at', 'asc')
                         ->get();
+        }
 
         $config = AConfiguration::where('nama', 'portofolio_wp')->first();
 
         return view('user.admin.portofolio.w-photographer.index', compact(
-            'pending',
-            'accepted',
-            'rejected',
+            'portofolio',
             'config',
+            'tab',
         ));
     }
 
@@ -68,9 +84,9 @@ class WPhotographerController extends Controller
                 ]);
 
         if ($data) {
-            return redirect()->route('admin.wp.portofolio.index')->with('sukses', 'Mengubah Validasi Portofolio');
+            return redirect()->route('admin.wp.portofolio.index', $req->status)->with('sukses', 'Mengubah Validasi Portofolio');
         }
-        return redirect()->route('admin.wp.portofolio.index')->with('gagal', 'Mengubah Validasi Portofolio');
+        return redirect()->route('admin.wp.portofolio.index', $req->status)->with('gagal', 'Mengubah Validasi Portofolio');
     }
 
     public function config(Request $req) {
@@ -88,8 +104,8 @@ class WPhotographerController extends Controller
         }
 
         if ($data) {
-            return redirect()->route('admin.wp.portofolio.index')->with('sukses', 'Mengubah Konfigurasi Portofolio Photographer');
+            return redirect()->back()->with('sukses', 'Mengubah Konfigurasi Portofolio Photographer');
         }
-        return redirect()->route('admin.wp.portofolio.index')->with('gagal', 'Mengubah Konfigurasi Portofolio Photographer');
+        return redirect()->back()->with('gagal', 'Mengubah Konfigurasi Portofolio Photographer');
     }
 }

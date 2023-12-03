@@ -63,7 +63,7 @@
                                 </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                                type="number" name="no_telp" id="no_telp" placeholder="081234567890"
+                                type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0"
                                 value="{{ auth()->user()->w_couple ? auth()->user()->w_couple->no_telp : '0800000000'  }}"
                                 disabled>
                         </div>

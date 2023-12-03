@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('w_couple_id');
             $table->unsignedBigInteger('w_organizer_id');
-            $table->float('rating', 8, 1);
+            $table->unsignedFloat('rating', 8, 1);
             $table->string('komentar');
             $table->timestamps();
 

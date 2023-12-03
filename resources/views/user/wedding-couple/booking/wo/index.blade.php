@@ -54,7 +54,7 @@
                             <i class="fa-solid fa-rupiah-sign"></i>
                         </div>
                         <input class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
-                            type="number" name="harga" id="harga" placeholder="Budget (Rp)"
+                            type="number" name="harga" id="harga" placeholder="Budget (Rp)" min="0"
                             value="{{ $search_harga === null ? '' : $search_harga }}">
                     </div>
 

@@ -141,7 +141,7 @@
         {{-- BUTTON --}}
         <div class="w-100 mt-4 flex items-center justify-end gap-4">
             <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                href="{{ route('admin.wo.portofolio.index') }}">
+                href="{{ route('admin.wo.portofolio.index', $portofolio->status) }}">
                 <i class="fa-solid fa-arrow-left-long"></i>
                 <span>Kembali</span>
             </a>

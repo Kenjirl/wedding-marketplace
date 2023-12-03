@@ -60,7 +60,7 @@
                             Telepon
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_telp') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="number" name="no_telp" id="no_telp" placeholder="081234567890"
+                            type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0"
                             value="{{ old('no_telp', auth()->user()->admin->no_telp) }}"
                             required>
                     </div>

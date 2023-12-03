@@ -54,7 +54,7 @@
                                 </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('harga') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="number" name="harga" id="harga" placeholder="tanpa Rp"
+                                type="number" name="harga" id="harga" placeholder="tanpa Rp" min="0"
                                 value="{{ old('harga', $plan->harga) }}"
                                 required>
                         </div>

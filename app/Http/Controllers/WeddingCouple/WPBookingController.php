@@ -122,11 +122,13 @@ class WPBookingController extends Controller
         $req->validate([
             'plan_id'    => 'required',
             'wedding_id' => 'required',
-            'tanggal'    => 'required',
+            'tanggal'    => 'required|date|after:' . date('Y-m-d'),
         ],[
             'plan_id.required'    => 'Paket Layanan tidak boleh kosong',
             'wedding_id.required' => 'Pernikahan tidak boleh kosong',
             'tanggal.required'    => 'Tanggal Pernikahan tidak boleh kosong',
+            'tanggal.date'        => 'Tanggal Pernikahan herus menggunakan format tanggal yang benar',
+            'tanggal.after'       => 'Tanggal Pernikahan harus setelah tanggal hari ini',
         ]);
 
         $booking = new WPBooking();

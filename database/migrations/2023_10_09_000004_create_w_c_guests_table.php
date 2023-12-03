@@ -23,7 +23,7 @@ return new class extends Migration
             $table->enum('status', ['Terkirim', 'Belum Terkirim'])->default('Belum Terkirim');
             $table->enum('respon', ['Hadir', 'Belum Menjawab', 'Tidak Hadir'])->default('Belum Menjawab');
             $table->enum('alasan', ['-', 'Sakit', 'Urusan Pekerjaan', 'Urusan Keluarga', 'Kendala Lainnya'])->default('-');
-            $table->integer('jumlah')->default(0);
+            $table->unsignedInteger('jumlah')->default(0);
             $table->text('pesan')->nullable();
             $table->timestamps();
 

@@ -34,6 +34,9 @@
     {{-- TOASTR CSS --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 
+    {{-- DATATABLES CSS --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
     {{-- MAGNIFIC LIGHTBOX CSS --}}
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
 
@@ -52,6 +55,9 @@
 
     {{-- TOASTR JS --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    {{-- DATATABLES JS --}}
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     {{-- TINYMCE JS FOR TEXTAREA EDITOR --}}
     <script src="https://cdn.tiny.cloud/1/5srmzqe0lwc149l1fawecd3dsl6ebehc3ohcc0n7u12k78m8/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -76,6 +82,14 @@
     <script src="https://unpkg.com/tippy.js@5"></script>
     <script>
         tippy('[data-tippy-content]');
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                // ordering: false,
+            });
+        });
     </script>
 
     <script src="{{ asset('js/magnific-popup.js') }}"></script>

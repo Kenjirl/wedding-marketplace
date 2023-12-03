@@ -115,7 +115,7 @@ Route::name('admin.')
 
     Route::name('wo.portofolio.')->prefix('/wedding-organizer/portofolio')
         ->controller(WOrganizerController::class)->group(function() {
-        Route::get ('/',              'index')      ->name('index');
+        Route::get ('/{tab}',         'index')      ->name('index');
         Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
         Route::post('/validasi{id}',  'validasi')   ->name('validasi');
         Route::post('/config',        'config')     ->name('config');
@@ -123,7 +123,7 @@ Route::name('admin.')
 
     Route::name('wp.portofolio.')->prefix('/wedding-photographer/portofolio')
         ->controller(WPhotographerController::class)->group(function() {
-        Route::get ('/',              'index')      ->name('index');
+        Route::get ('/{tab}',         'index')      ->name('index');
         Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
         Route::post('/validasi{id}',  'validasi')   ->name('validasi');
         Route::post('/config',        'config')     ->name('config');

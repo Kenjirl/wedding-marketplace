@@ -40,14 +40,14 @@ $currentUrl = Request::url();
     <div class="w-full mt-2 {{ Str::contains($currentUrl, 'portofolio') ? 'grid' : 'hidden' }} p-2 grid-cols-1 gap-2 bg-slate-100 rounded-lg"
         id="portofolioMenuContainer">
         <a class="w-full p-2 rounded {{ Str::contains($currentUrl, '/wedding-organizer') ? 'bg-pink text-white' : '' }} hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-            href="{{ route('admin.wo.portofolio.index') }}">
+            href="{{ route('admin.wo.portofolio.index', 'pending') }}">
             <i class="fa-regular fa-building"></i>
-            Wedding Organizer
+            Organizer
         </a>
         <a class="w-full p-2 rounded {{ Str::contains($currentUrl, '/wedding-photographer') ? 'bg-pink text-white' : '' }} hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-            href="{{ route('admin.wp.portofolio.index') }}">
+            href="{{ route('admin.wp.portofolio.index', 'pending') }}">
             <i class="fa-solid fa-camera-retro"></i>
-            Wedding Photographer
+            Photographer
         </a>
     </div>
 </div>
