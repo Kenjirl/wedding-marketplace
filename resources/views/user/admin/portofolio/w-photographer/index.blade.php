@@ -40,11 +40,11 @@
 
     {{-- BAWAH --}}
     @if ($tab == 'accept')
-        <div class="w-full rounded-b border border-blue-300 shadow">
+        <div class="w-full border-t-2 border-blue-300">
     @elseif ($tab == 'reject')
-        <div class="w-full rounded-b border border-red-300 shadow">
+        <div class="w-full border-t-2 border-red-300">
     @else
-        <div class="w-full rounded-b border border-yellow-300 shadow">
+        <div class="w-full border-t-2 border-yellow-300">
     @endif
 
         <div class="p-4">
@@ -99,12 +99,21 @@
     <script>
         $(document).ready(function () {
             $("#config").on("change", function () {
-                let confirmed = confirm('Apakah Anda yakin ingin membuat portofolio photographer tidak memerlukan validasi?');
-                if (confirmed) {
-                    $("#configForm").submit();
-                } else {
-                    $(this).prop("checked", !$(this).prop("checked"));
-                }
+                Swal.fire({
+                    title: "Aktifkan auto konfirmasi?",
+                    text: "Portofolio Fotografer akan langsung dikonfirmasi dan ditampilkan ke pengguna",
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#configForm").submit();
+                    } else {
+                        $(this).prop("checked", !$(this).prop("checked"));
+                    }
+                });
             });
         });
     </script>

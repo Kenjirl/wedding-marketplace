@@ -55,10 +55,9 @@
                 <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                     Alamat
                 </div>
-                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                type="text" name="alamat" id="alamat" placeholder="Jl. Kebon Duren"
-                value="{{ auth()->user()->admin->alamat }}"
-                disabled>
+                <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
+                    {{ auth()->user()->admin->alamat }}
+                </div>
             </div>
         </div>
 

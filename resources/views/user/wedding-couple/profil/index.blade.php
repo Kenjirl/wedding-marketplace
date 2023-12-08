@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="max-w-[800px] mx-auto">
+    <div class="max-w-[800px] mx-auto mt-4">
         {{-- H1 --}}
         <div class="mb-8">
             <h1 class="text-[2em] font-bold">
@@ -98,7 +98,7 @@
 
                 {{-- BUTTON --}}
                 <div class="w-100 mt-4 flex items-center justify-end gap-4">
-                    <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                    <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                         href="{{ route('wedding-couple.profil.ke_ubah_password') }}">
                         <i class="fa-solid fa-lock"></i>
                         <span>Ubah Password</span>

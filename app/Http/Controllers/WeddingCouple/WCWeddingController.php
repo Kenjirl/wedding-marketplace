@@ -10,6 +10,7 @@ use App\Models\WEvent;
 use App\Models\WOBooking;
 use App\Models\WPBooking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WCWeddingController extends Controller
 {
@@ -88,10 +89,12 @@ class WCWeddingController extends Controller
     }
 
     public function hapus_wo($id) {
-        $data = WOBooking::find($id)
-                ->update([
-                    'status' => 'batal',
-                ]);
+        // $data = WOBooking::find($id)
+        //         ->update([
+        //             'status' => 'batal',
+        //         ]);
+        $booking = WOBooking::find($id);
+        $data = $booking->delete();
 
         if ($data) {
             return redirect()->back()->with('sukses', 'Menghapus Pesanan Wedding Organizer');
@@ -100,14 +103,74 @@ class WCWeddingController extends Controller
     }
 
     public function hapus_wp($id) {
-        $data = WPBooking::find($id)
-                ->update([
-                    'status' => 'batal',
-                ]);
+        // $data = WPBooking::find($id)
+        //         ->update([
+        //             'status' => 'batal',
+        //         ]);
+        $booking = WPBooking::find($id);
+        $data = $booking->delete();
 
         if ($data) {
             return redirect()->back()->with('sukses', 'Menghapus Pesanan Wedding Photographer');
         }
         return redirect()->back()->with('gagal', 'Menghapus Pesanan Wedding Photographer');
+    }
+
+    public function upload_bukti_bayar_wo(Request $req, $id) {
+        $req->validate([
+            'bukti_bayar' => 'required|image',
+        ],[
+            'bukti_bayar.required' => 'Bukti bayar tidak boleh kosong',
+            'bukti_bayar.image'    => 'Bukti bayar harus berupa gambar',
+        ]);
+
+        $data = false;
+        if ($req->hasFile(('bukti_bayar'))) {
+            $foto = $req->file('bukti_bayar');
+
+            $url = Storage::disk('public')->putFileAs('/',
+                $foto,
+                'WC/bukti-bayar/WO/' . str()->uuid() . '.' . $foto->extension()
+            );
+
+            $data = WOBooking::find($id)
+                    ->update([
+                        'bukti_bayar' => $url
+                    ]);
+        }
+
+        if ($data) {
+            return redirect()->back()->with('sukses', 'Mengunggah bukti bayar');
+        }
+        return redirect()->back()->with('gagal', 'Mengunggah bukti bayar');
+    }
+
+    public function upload_bukti_bayar_wp(Request $req, $id) {
+        $req->validate([
+            'bukti_bayar' => 'required|image',
+        ],[
+            'bukti_bayar.required' => 'Bukti bayar tidak boleh kosong',
+            'bukti_bayar.image'    => 'Bukti bayar harus berupa gambar',
+        ]);
+
+        $data = false;
+        if ($req->hasFile(('bukti_bayar'))) {
+            $foto = $req->file('bukti_bayar');
+
+            $url = Storage::disk('public')->putFileAs('/',
+                $foto,
+                'WC/bukti-bayar/WP/' . str()->uuid() . '.' . $foto->extension()
+            );
+
+            $data = WPBooking::find($id)
+                    ->update([
+                        'bukti_bayar' => $url
+                    ]);
+        }
+
+        if ($data) {
+            return redirect()->back()->with('sukses', 'Mengunggah bukti bayar');
+        }
+        return redirect()->back()->with('gagal', 'Mengunggah bukti bayar');
     }
 }

@@ -30,14 +30,47 @@ class WPProfilController extends Controller
             list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
         }
 
+        // Load data JSON untuk dropdown
+        $provinsiData = collect(json_decode(file_get_contents(public_path('json/provinsi.json'))))->sortBy('name');
+        $kotaData = collect(json_decode(file_get_contents(public_path('json/kabupaten.json'))));
+        $kecamatanData = collect(json_decode(file_get_contents(public_path('json/kecamatan.json'))));
+        $kelurahanData = collect(json_decode(file_get_contents(public_path('json/kelurahan.json'))));
+
+        // Cari ID Provinsi berdasarkan nama Provinsi
+        $selectedProvinsi = $provinsiData->firstWhere('name', $provinsi);
+        $provinsiId = $selectedProvinsi ? $selectedProvinsi->id : null;
+
+        // Filter data Kabupaten berdasarkan ID Provinsi
+        $filteredKotaData = $kotaData->where('provinsi_id', $provinsiId)->sortBy('name');
+        $sortedKotaData = $kotaData->sortBy('name');
+
+        // Cari ID Kabupaten berdasarkan nama Kabupaten
+        $selectedKota = $filteredKotaData->firstWhere('name', $kota);
+        $kotaId = $selectedKota ? $selectedKota->id : null;
+
+        // Filter data Kecamatan berdasarkan ID Kabupaten
+        $filteredKecamatanData = $kecamatanData->where('kabupaten_id', $kotaId)->sortBy('name');
+
+        // Cari ID Kecamatan berdasarkan nama Kecamatan
+        $selectedKecamatan = $filteredKecamatanData->firstWhere('name', $kecamatan);
+        $kecamatanId = $selectedKecamatan ? $selectedKecamatan->id : null;
+
+        // Filter data Kelurahan berdasarkan ID Kecamatan
+        $filteredKelurahanData = $kelurahanData->where('kecamatan_id', $kecamatanId)->sortBy('name');
+
         return view('user.wedding-photographer.profil.ubah',
-                    compact(
-                        'provinsi',
-                        'kota',
-                        'kecamatan',
-                        'kelurahan',
-                        'alamat_detail'
-                    ));
+            compact(
+                'provinsi',
+                'kota',
+                'kecamatan',
+                'kelurahan',
+                'alamat_detail',
+                'provinsiData',
+                'sortedKotaData',
+                'filteredKotaData',
+                'filteredKecamatanData',
+                'filteredKelurahanData',
+            ));
     }
 
     public function ubah(ProfilRequest $req) {
@@ -68,25 +101,29 @@ class WPProfilController extends Controller
             # Update
             $data = WPhotographer::where('id', auth()->user()->w_photographer->id)
                 ->update([
-                    'nama'          => $req->nama,
-                    'no_telp'       => $req->no_telp,
-                    'gender'        => $gender,
-                    'basis_operasi' => $req->basis_operasi,
-                    'status'        => $req->status,
-                    'kota_operasi'  => $kota_operasi,
-                    'alamat'        => $alamat,
+                    'nama'           => $req->nama,
+                    'no_telp'        => $req->no_telp,
+                    'gender'         => $gender,
+                    'basis_operasi'  => $req->basis_operasi,
+                    'status'         => $req->status,
+                    'kota_operasi'   => $kota_operasi,
+                    'alamat'         => $alamat,
+                    'jenis_rekening' => $req->jenis_rekening,
+                    'no_rekening'    => $req->no_rekening,
                 ]);
         } else {
             # Make New
             $photographer = new WPhotographer();
-            $photographer->user_id       = auth()->user()->id;
-            $photographer->nama          = $req->nama;
-            $photographer->no_telp       = $req->no_telp;
-            $photographer->gender        = $gender;
-            $photographer->basis_operasi = $req->basis_operasi;
-            $photographer->status        = $req->status;
-            $photographer->kota_operasi  = $kota_operasi;
-            $photographer->alamat        = $alamat;
+            $photographer->user_id        = auth()->user()->id;
+            $photographer->nama           = $req->nama;
+            $photographer->no_telp        = $req->no_telp;
+            $photographer->gender         = $gender;
+            $photographer->basis_operasi  = $req->basis_operasi;
+            $photographer->status         = $req->status;
+            $photographer->kota_operasi   = $kota_operasi;
+            $photographer->alamat         = $alamat;
+            $photographer->jenis_rekening = $req->jenis_rekening;
+            $photographer->no_rekening    = $req->no_rekening;
             $data = $photographer->save();
         }
 

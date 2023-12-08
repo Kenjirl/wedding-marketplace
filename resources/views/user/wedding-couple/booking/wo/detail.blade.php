@@ -7,7 +7,7 @@
 @section('content')
     <div class="w-full">
         {{-- container a --}}
-        <div class="w-full p-8 flex items-start justify-start gap-8">
+        <div class="w-full px-8 py-4 flex items-start justify-start gap-8">
             {{-- container kiri --}}
             <div class="w-1/2">
                 {{-- data organizer --}}
@@ -38,7 +38,7 @@
                                     <td class="text-center align-top"><i class="fa-solid fa-building"></i></td>
                                     <td class="align-top">Perusahaan</td>
                                     <td class="align-top">:</td>
-                                    <td class="align-top">{{ $organizer->nama_perusahaan }}</td>
+                                    <td class="align-top" id="namaOrganizer">{{ $organizer->nama_perusahaan }}</td>
                                 </tr>
                                 <tr> {{-- Telepon --}}
                                     <td class="text-center align-top"><i class="fa-solid fa-phone"></i></td>
@@ -86,15 +86,15 @@
                 </div>
 
                 {{-- list portofolio --}}
-                <div class="w-full shadow rounded-lg">
-                    <div class="w-full p-4 rounded-t-lg bg-slate-100">
+                <div class="w-full p-4">
+                    <div class="w-full">
                         <i class="fa-solid fa-grip"></i>
                         <span class="font-semibold">
                             Portofolio
                         </span>
                     </div>
 
-                    <div class="w-full p-4 flex flex-nowrap items-start justify-start gap-4 rounded-b border-2 border-t-0 border-slate-100 overflow-x-auto">
+                    <div class="w-full py-4 flex flex-nowrap items-start justify-start gap-4 overflow-x-auto">
                         {{-- item portofolio --}}
                         @forelse ($portofolios as $portofolio)
                             <button class="w-[200px] min-w-[200px] rounded-lg outline-none shadow text-start hover:shadow-lg focus:shadow-lg active:shadow transition-all"
@@ -131,7 +131,7 @@
             @if ($portofolio_detail)
                 <div class="w-1/2 bg-slate-100 rounded-lg">
                     {{-- detail foto portofolio --}}
-                    <div class="w-full p-2 flex items-center justify-center gap-2">
+                    <div class="w-full p-2">
                         {{-- foto besar --}}
                         <div class="w-full aspect-video flex items-center justify-center"
                             id="foto_besar">
@@ -140,21 +140,19 @@
                         </div>
 
                         {{-- foto kecil --}}
-                        <div>
-                            <div class="w-fit max-h-[400px] flex flex-col items-start justify-start gap-2 overflow-y-auto">
-                                @foreach ($portofolio_detail->photo as $foto)
-                                    <button class="w-[75px] p-1 flex items-center justify-center rounded outline-none bg-white hover:bg-slate-500 focus:bg-slate-500 active:bg-slate-300 transition-colors foto-kecil"
-                                        type="button">
-                                        <img class="w-full aspect-square object-contain"
-                                            src="{{ asset($foto->url) }}" alt="">
-                                    </button>
-                                @endforeach
-                            </div>
+                        <div class="w-full mt-2 flex items-start justify-center gap-2 overflow-x-auto">
+                            @foreach ($portofolio_detail->photo as $foto)
+                                <button class="w-[50px] p-1 flex items-center justify-center rounded outline-none bg-white hover:bg-slate-500 focus:bg-slate-500 active:bg-slate-300 transition-colors foto-kecil"
+                                    type="button">
+                                    <img class="w-full aspect-square object-contain"
+                                        src="{{ asset($foto->url) }}" alt="">
+                                </button>
+                            @endforeach
                         </div>
                     </div>
 
                     {{-- detail portofolio --}}
-                    <div class="w-full p-4">
+                    <div class="w-full px-4 pb-4">
                         <h2 class="text-2xl font-semibold">
                             {{ $portofolio_detail->judul }}
                         </h2>
@@ -185,6 +183,7 @@
             @endif
         </div>
 
+        {{-- form ganti portofolio --}}
         <div class="hidden">
             <form action="{{ route('wedding-couple.search.wo.ke_detail', $organizer->id) }}" method="get" id="portofolioForm">
                 @csrf
@@ -198,7 +197,7 @@
             <div class="w-2/3 grid grid-cols-4 gap-4">
                 @forelse ($plans as $plan)
                     <button class="w-full p-4 rounded text-start outline-none bg-white border-2 border-slate-100 shadow hover:shadow-lg hover:-translate-y-2 focus:shadow-lg focus:-translate-y-2 active:shadow active:translate-y-0 transition-all paket-layanan-button"
-                        type="button" data-plan-id="{{ $plan->id }}">
+                        type="button" data-plan-id="{{ $plan->id }}" id="planBtn-{{ $plan->id }}">
                         <div class="w-full mb-4 flex items-center justify-start gap-2">
                             <i class="fa-solid fa-gift text-3xl text-pink"></i>
                             <span class="flex-1 w-full line-clamp-1 text-lg">
@@ -217,50 +216,51 @@
             </div>
 
             {{-- detail paket layanan kanan --}}
-            <div class="w-1/3 shadow rounded-lg border-2 border-slate-100">
-                @forelse ($plans as $plan)
-                    <div class="w-full px-4 pt-2 mb-4 hidden detail-layanan"
-                        id="detailLayanan-{{  $plan->id  }}">
-                        {{-- nama --}}
-                        <div class="w-full">
-                            <span class="text-4xl font-semibold">
-                                {{ $plan->nama }}
-                            </span>
-                        </div>
+            @if (!$plans->isEmpty())
+                <div class="w-1/3 shadow rounded-lg border-2 border-slate-100">
+                    @forelse ($plans as $plan)
+                        <div class="w-full px-4 pt-2 mb-4 hidden detail-layanan"
+                            id="detailLayanan-{{  $plan->id  }}">
+                            {{-- nama --}}
+                            <div class="w-full">
+                                <span class="text-4xl font-semibold"
+                                    id="namaPlan">
+                                    {{ $plan->nama }}
+                                </span>
+                            </div>
 
-                        {{-- fitur --}}
+                            {{-- fitur --}}
+                            <div class="w-full p-4">
+                                <ul class="list-disc">
+                                    @forelse ($plan->fitur as $fitur)
+                                        <li>{{ $fitur->isi }}</li>
+                                    @empty
+                                        <li>Tidak ada fitur</li>
+                                    @endforelse
+                                </ul>
+                            </div>
+
+                            {{-- harga --}}
+                            <div class="w-full flex items-start justify-end gap-2">
+                                <i class="fa-solid fa-rupiah-sign text-2xl"></i>
+                                <span class="text-xl">
+                                    {{ number_format($plan->harga, 0, ',', '.') }}
+                                </span>
+                            </div>
+                        </div>
+                    @empty
                         <div class="w-full p-4">
-                            <ul class="list-disc">
-                                @forelse ($plan->fitur as $fitur)
-                                    <li>{{ $fitur->isi }}</li>
-                                @empty
-                                    <li>Tidak ada fitur</li>
-                                @endforelse
-                            </ul>
-                        </div>
-
-                        {{-- harga --}}
-                        <div class="w-full flex items-start justify-end gap-2">
-                            <i class="fa-solid fa-rupiah-sign text-2xl"></i>
-                            <span class="text-xl">
-                                {{ number_format($plan->harga, 0, ',', '.') }}
+                            <span class="text-2xl font-semibold">
+                                Tidak ada Paket Layanan
                             </span>
                         </div>
-                    </div>
-                @empty
-                    <div class="w-full">
-                        <span class="text-4xl font-semibold">
-                            Tidak ada Paket Layanan
-                        </span>
-                    </div>
-                @endforelse
+                    @endforelse
 
-                {{-- form booking --}}
-                @if (!$plans->isEmpty())
+                    {{-- form booking --}}
                     <div class="w-full px-4 py-2 border-t-2 border-slate-100">
                         <form action="{{ route('wedding-couple.search.wo.pesan') }}" method="post" id="bookingForm">
                             @csrf
-                            <input class="hidden" type="text" name="plan_id" id="plan_id">
+                            <input class="hidden" type="text" name="plan_id" id="plan_id" value="{{ old('plan_id', '') }}">
 
                             <div class="w-full flex flex-col items-end justify-start gap-4">
                                 @if (!$weddings->isEmpty())
@@ -270,7 +270,7 @@
                                             <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
                                                 <i class="fa-solid fa-dove"></i>
                                             </div>
-                                            <select class="w-full p-2 text-sm appearance-none outline-none text-slate-500 border-2 border-s-0 border-transparent focus:border-pink rounded-e"
+                                            <select class="w-full p-2 text-sm appearance-none outline-none text-slate-500 border-2 border-s-0 focus:border-pink rounded-e"
                                                 name="wedding_id" id="wedding_id">
                                                 <option value="" selected>
                                                     Pilih Pernikahan
@@ -278,7 +278,7 @@
 
                                                 @foreach ($weddings as $wedding)
                                                     @if (!$wedding->w_o_booking)
-                                                        <option value="{{ $wedding->id }}">
+                                                        <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
                                                             {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
                                                         </option>
                                                     @endif
@@ -299,7 +299,7 @@
                                             <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
                                                 <i class="fa-regular fa-calendar"></i>
                                             </div>
-                                            <input class="w-full p-2 flex-1 text-sm border-y-2 border-e-2 rounded-e border-white focus:border-pink focus:outline-none"
+                                            <input class="w-full p-2 flex-1 text-sm border-y-2 border-e-2 rounded-e focus:border-pink focus:outline-none"
                                                 type="date" name="tanggal" id="tanggal" placeholder="tanggal"
                                                 required
                                                 value="{{ old('tanggal') }}">
@@ -327,8 +327,8 @@
                             </div>
                         </form>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
@@ -366,13 +366,85 @@
                 $('#plan_id').val(planId);
             });
 
-            // Pilih Paket Layanan Pertama ketika halaman di-load
-            $('.paket-layanan-button:first').click();
+            // PILIH PAKET LAYANAN KETIKA HALAMAN DI-LOAD
+            // JIKA ADA NILAI OLD PADA PLAN ID
+            if ($('#plan_id').val()) {
+                // KLIK BUTTON DENGAN ID YANG SESUAI
+                let btnId = $('#plan_id').val();
+                $(`#planBtn-${btnId}`).click();
+            } else {
+                // KLIK BUTTON PERTAMA
+                $('.paket-layanan-button:first').click();
+            }
 
             $('#bookingBtn').on('click', function() {
-                if (confirm('Apakah Anda yakin ingin memesan paket layanan ini?')) {
-                    $('#bookingForm').submit();
+                let organizer = $('#namaOrganizer').text();
+                let plan      = $(`#planBtn-${$('#plan_id').val()} span`).text();
+                let wedding   = "Anda belum memilih pernikahan!";
+                let tanggal   = "Anda belum memilih tanggal!";
+
+                if ($('#wedding_id').val() != '') {
+                    wedding = `Pernikahan ${$(`#wedding_id option[value='${$('#wedding_id').val()}']`).text()}`;
                 }
+
+                if ($('#tanggal').val() != '') {
+                    tanggal = $('#tanggal').val();
+                }
+
+                Swal.fire({
+                    title: "Yakin ingin melakukan pemesanan?",
+                    icon: "info",
+                    iconColor: "#F78CA2",
+                    html: `
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="text-start align-top whitespace-nowrap">
+                                        Nama
+                                    </td>
+                                    <td class="align-top"> : </td>
+                                    <td class="text-start align-top">
+                                        ${organizer}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start align-top whitespace-nowrap">
+                                        Paket
+                                    </td>
+                                    <td class="align-top"> : </td>
+                                    <td class="text-start align-top">
+                                        ${plan}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start align-top whitespace-nowrap">
+                                        Untuk
+                                    </td>
+                                    <td class="align-top"> : </td>
+                                    <td class="text-start align-top">
+                                        ${wedding}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start align-top whitespace-nowrap">
+                                        Pada
+                                    </td>
+                                    <td class="align-top"> : </td>
+                                    <td class="text-start align-top">
+                                        ${tanggal}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    `,
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#bookingForm').submit();
+                    }
+                });
             });
         });
     </script>

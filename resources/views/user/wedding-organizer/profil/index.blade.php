@@ -8,7 +8,7 @@
 
 @section('content')
     {{-- DATA DIRI --}}
-    <div class="w-100 flex gap-8">
+    <div class="w-full flex gap-8">
         <div class="w-fit">
             <div class="flex flex-col items-center justify-start gap-4 mb-4">
                 @if (auth()->user()->w_organizer && auth()->user()->w_organizer->foto_profil)
@@ -59,12 +59,12 @@
 
         <div class="w-full flex-1">
             {{-- ATAS --}}
-            <div class="w-100 flex items-start justify-between gap-8">
+            <div class="w-full flex items-start justify-between gap-8">
                 {{-- KIRI --}}
                 <div class="flex-1">
                     {{-- NAMA PEMILIK --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                    <div class="w-full mb-4">
+                        <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             <i class="fa-solid fa-building-user"></i>
                             <span class="ml-2">
                                 Nama Pemilik
@@ -77,8 +77,8 @@
                     </div>
 
                     {{-- NAMA PERUSAHAAN --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                    <div class="w-full mb-4">
+                        <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             <i class="fa-solid fa-building"></i>
                             <span class="ml-2">
                                 Nama Perusahaan
@@ -91,8 +91,8 @@
                     </div>
 
                     {{-- TELEPON --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                    <div class="w-full mb-4">
+                        <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             <i class="fa-solid fa-phone"></i>
                             <span class="ml-2">
                                 Telepon
@@ -105,8 +105,8 @@
                     </div>
 
                     {{-- EMAIL --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                    <div class="w-full mb-4">
+                        <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             <i class="fa-solid fa-at"></i>
                             <span class="ml-2">
                                 Email
@@ -120,8 +120,8 @@
                 {{-- KANAN --}}
                 <div class="flex-1">
                     {{-- BASIS OPERASI --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                    <div class="w-full mb-4">
+                        <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             <i class="fa-regular fa-circle-dot"></i>
                             <span class="ml-2">
                                 Basis Operasi
@@ -135,8 +135,8 @@
 
                     @if (auth()->user()->w_organizer && auth()->user()->w_organizer->basis_operasi == 'Hanya di Dalam Kota')
                         {{-- KOTA OPERASI --}}
-                        <div class="w-100 mb-4">
-                            <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                        <div class="w-full mb-4">
+                            <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-crosshairs"></i>
                                 <span class="ml-2">
                                     Kota Operasi
@@ -151,21 +151,20 @@
                 </div>
             </div>
 
-            <div class="w-100 mb-4">
-                <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+            <div class="w-full mb-4">
+                <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                     <i class="fa-solid fa-location-dot"></i>
                     <span class="ml-2">
                         Alamat Perusahaan
                     </span>
                 </div>
-                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                type="text" name="alamat" id="alamat" placeholder="Jl. Kebon Duren"
-                value="{{ auth()->user()->w_organizer ? auth()->user()->w_organizer->alamat : 'Belum Terdata'  }}"
-                disabled>
+                <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
+                    {{ auth()->user()->w_organizer ? auth()->user()->w_organizer->alamat : 'Belum Terdata'  }}
+                </div>
             </div>
 
             {{-- BUTTON --}}
-            <div class="w-100 mt-4 flex items-center justify-end gap-4">
+            <div class="w-full mt-4 flex items-center justify-end gap-4">
                 <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                     href="{{ route('wedding-organizer.profil.ke_ubah_password') }}">
                     <i class="fa-solid fa-lock"></i>

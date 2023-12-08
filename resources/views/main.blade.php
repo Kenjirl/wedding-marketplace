@@ -37,6 +37,9 @@
     {{-- DATATABLES CSS --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
+    {{-- SWEETALERT CSS CDN --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
+
     {{-- MAGNIFIC LIGHTBOX CSS --}}
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
 
@@ -53,11 +56,14 @@
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script> --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    {{-- TOASTR JS --}}
+    {{-- TOASTR CDN JS --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    {{-- DATATABLES JS --}}
+    {{-- DATATABLES CDN JS --}}
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    {{-- SWEETALERT JS CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
 
     {{-- TINYMCE JS FOR TEXTAREA EDITOR --}}
     <script src="https://cdn.tiny.cloud/1/5srmzqe0lwc149l1fawecd3dsl6ebehc3ohcc0n7u12k78m8/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -84,17 +90,15 @@
         tippy('[data-tippy-content]');
     </script>
 
+    {{-- DATA TABLE JS --}}
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable({
-                // ordering: false,
-            });
+            $('#dataTable').DataTable({});
         });
     </script>
 
+    {{-- MAGNIFIC POPUP JS --}}
     <script src="{{ asset('js/magnific-popup.js') }}"></script>
-
-    @stack('child-js')
 
     {{-- SCRIPT TOASTR --}}
     <script>
@@ -128,5 +132,7 @@
             toastr.error("{{ session('gagal') }}", "Gagal");
         </script>
     @endif
+
+    @stack('child-js')
 </body>
 </html>

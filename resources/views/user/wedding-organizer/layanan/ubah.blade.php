@@ -77,7 +77,7 @@
                     </a>
 
                     <button class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        id="deleteBtn" type="button">
+                        id="deleteBtn" type="button" data-layanan="{{ $plan->nama }}">
                         <i class="fa-solid fa-trash-can"></i>
                         <span>Hapus</span>
                     </button>
@@ -198,9 +198,19 @@
             @endforeach
 
             $('#deleteBtn').on("click", function () {
-                if(confirm('Yakin ingin menghapus layanan ini?')) {
-                    $('#submitDeleteBtn').click();
-                }
+                Swal.fire({
+                    title: `Hapus layanan ${$(this).data('layanan')}?`,
+                    text: "Data tidak akan dapat dikembalikan lagi",
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#submitDeleteBtn').click();
+                    }
+                });
             });
         });
     </script>

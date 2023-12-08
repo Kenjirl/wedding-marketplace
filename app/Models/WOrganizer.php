@@ -20,6 +20,8 @@ class WOrganizer extends Model
         'basis_operasi',
         'kota_operasi',
         'foto_profil',
+        'jenis_rekening',
+        'no_rekening',
     ];
 
     public function user(): BelongsTo {

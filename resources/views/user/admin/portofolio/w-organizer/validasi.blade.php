@@ -62,7 +62,7 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                             Detail
                         </div>
-                        <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none">
+                        <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
                             {!! $portofolio->detail !!}
                         </div>
                     </div>
@@ -75,9 +75,9 @@
                             <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                                 Lokasi
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                                type="text" readonly disabled
-                                value="{{ $portofolio->lokasi }}">
+                            <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
+                                {{  $portofolio->lokasi  }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,13 +147,13 @@
             </a>
 
             <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
-                id="rejectBtn" type="button" onclick="kirim('ditolak')">
+                id="rejectBtn" type="button" onclick="kirim('ditolak', 'Tolak')">
                 <i class="fa-solid fa-ban"></i>
                 <span>Tolak</span>
             </button>
 
             <button class="w-fit px-4 py-2 font-semibold outline-none text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
-                id="acceptBtn" type="button" onclick="kirim('diterima')">
+                id="acceptBtn" type="button" onclick="kirim('diterima', 'Terima')">
                 <i class="fa-regular fa-circle-check"></i>
                 <span>Terima</span>
             </button>
@@ -163,13 +163,21 @@
 
 @push('child-js')
     <script>
-        function kirim(status) {
-            if (confirm('Apakah Anda yakin ingin menjalankan aksi ini?')) {
-                $("#status").val(status);
-
-                const validasiForm = document.getElementById('validasiForm');
-                validasiForm.submit();
-            }
+        function kirim(status, text) {
+            Swal.fire({
+                title: `${text} portofolio ini?`,
+                icon: "warning",
+                iconColor: "#F78CA2",
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "Konfirmasi"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#status").val(status);
+                    const validasiForm = document.getElementById('validasiForm');
+                    validasiForm.submit();
+                }
+            });
         }
     </script>
 @endpush

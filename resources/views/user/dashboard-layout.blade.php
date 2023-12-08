@@ -36,16 +36,16 @@
                         @yield('tombol-profil')
                     </button>
 
-                    <div class="absolute bottom-[calc(-5em+3px-2rem)] right-0 w-full max-w-[200px] bg-white border-4 border-slate-200 rounded hidden flex-col items-center justify-center animate__animated animate__flipInX z-50"
+                    <div class="absolute bottom-[calc(-5em+3px-2rem)] right-0 w-[200px] bg-white border-4 border-slate-200 rounded hidden flex-col items-center justify-center animate__animated animate__flipInX z-50"
                         id="profileLayout">
                         @yield('profil')
 
                         <div class="w-full h-[2px] bg-slate-200"></div>
 
-                        <form class="w-full" action="{{ route('keluar') }}" method="post">
+                        <form class="w-full" action="{{ route('keluar') }}" method="post" id="logoutForm">
                             @csrf
                             <button class="w-full text-start p-2 hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-                                type="submit">
+                                type="button" id="logoutBtn">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 Keluar
                             </button>
@@ -70,5 +70,18 @@
                 $('#profileLayout').removeClass("flex").addClass("hidden");
             }
         }
+
+        $('#logoutBtn').on("click", function () {
+            Swal.fire({
+                title: "Yakin ingin keluar?",
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "Konfirmasi"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#logoutForm").submit();
+                }
+            });
+        });
     </script>
 @endpush

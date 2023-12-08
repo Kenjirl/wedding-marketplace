@@ -52,7 +52,7 @@
 
             {{-- SUBMIT BUTTON --}}
             <div class="w-100 flex items-center justify-end gap-4">
-                <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                     href="{{ route('wedding-photographer.profil.index') }}">
                     <i class="fa-solid fa-arrow-left-long"></i>
                     <span>Kembali</span>

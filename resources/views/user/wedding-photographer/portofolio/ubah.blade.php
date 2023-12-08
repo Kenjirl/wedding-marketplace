@@ -36,8 +36,8 @@
             {{-- KIRI --}}
             <div class="flex-1">
                 {{-- JUDUL --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100">
+                <div class="w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('judul') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             <i class="fa-solid fa-heading"></i>
                             <span class="ml-2">
@@ -59,8 +59,8 @@
                 </div>
 
                 {{-- TANGGAL --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100">
+                <div class="w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('tanggal') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             <i class="fa-regular fa-calendar"></i>
                             <span class="ml-2">
@@ -82,8 +82,8 @@
                 </div>
 
                 {{-- DETAIL --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100">
+                <div class="w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             <i class="fa-solid fa-circle-info"></i>
                             <span class="ml-2">
@@ -105,18 +105,25 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     {{-- PROVINSI --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
                                     Provinsi
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="provinsi" id="provinsi" placeholder="Bali"
-                                required
-                                value="{{ old('provinsi', $provinsi) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="provinsi" id="provinsi">
+                                <option value="" selected>Pilih Provinsi</option>
+                                @forelse ($provinsiData as $provinsiItem)
+                                    <option value="{{ $provinsiItem->name }}" {{ $provinsiItem->name == $provinsi ? 'selected' : '' }}>
+                                        {{ $provinsiItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -128,18 +135,25 @@
                     </div>
 
                     {{-- KOTA --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kota') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
                                     Kota/Kabupaten
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kota" id="kota" placeholder="Badung"
-                                required
-                                value="{{ old('kota', $kota) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kota" id="kota">
+                                <option value="" selected>Pilih Kota/Kabupaten</option>
+                                @forelse ($filteredKotaData as $kotaItem)
+                                    <option value="{{ $kotaItem->name }}" {{ $kotaItem->name == $kota ? 'selected' : '' }}>
+                                        {{ $kotaItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -151,18 +165,25 @@
                     </div>
 
                     {{-- KECAMATAN --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
                                     Kecamatan
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan"
-                                required
-                                value="{{ old('kecamatan', $kecamatan) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kecamatan" id="kecamatan">
+                                <option value="" selected>Pilih Kecamatan</option>
+                                @forelse ($filteredKecamatanData as $kecamatanItem)
+                                    <option value="{{ $kecamatanItem->name }}" {{ $kecamatanItem->name == $kecamatan ? 'selected' : '' }}>
+                                        {{ $kecamatanItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -174,18 +195,25 @@
                     </div>
 
                     {{-- KELURAHAN --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
                                     Kelurahan
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran"
-                                required
-                                value="{{ old('kelurahan', $kelurahan) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kelurahan" id="kelurahan">
+                                <option value="" selected>Pilih Kelurahan</option>
+                                @forelse ($filteredKelurahanData as $kelurahanItem)
+                                    <option value="{{ $kelurahanItem->name }}" {{ $kelurahanItem->name == $kelurahan ? 'selected' : '' }}>
+                                        {{ $kelurahanItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -197,8 +225,8 @@
                     </div>
 
                     {{-- ALAMAT --}}
-                    <div class="relative w-100 mb-4 col-span-2">
-                        <div class="w-100">
+                    <div class="relative w-full mb-4 col-span-2">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat_detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
@@ -229,7 +257,7 @@
             <div class="flex-1">
                 <div class="w-full">
                     {{-- UPLOAD MULTI FOTO --}}
-                    <div class="w-100 mb-4">
+                    <div class="w-full mb-4">
                         <button class="w-full px-4 py-2 rounded text-white font-semibold text-sm {{ $count >= 5 ? 'cursor-not-allowed' : '' }} bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:bg-slate-400 transition-colors"
                             type="button" id="unggahFotoBtn"
                             {{ $count >= 5 ? 'disabled' : '' }}>
@@ -277,7 +305,7 @@
                 </div>
 
                 {{-- BUTTON --}}
-                <div class="w-100 mt-4 flex items-center justify-end gap-4">
+                <div class="w-full mt-4 flex items-center justify-end gap-4">
                     <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                         href="{{ route('wedding-photographer.portofolio.index') }}">
                         <i class="fa-solid fa-arrow-left-long"></i>
@@ -315,6 +343,8 @@
 @endsection
 
 @push('child-js')
+    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+
     <script>
         $("#unggahFotoBtn").on("click", function () {
             $("#foto").click();

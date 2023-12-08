@@ -21,6 +21,8 @@ class WPhotographer extends Model
         'status',
         'alamat',
         'foto_profil',
+        'jenis_rekening',
+        'no_rekening',
     ];
 
     public function user(): BelongsTo {

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->enum('basis_operasi', ['Hanya di Dalam Kota', 'Bisa ke Luar Kota']);
             $table->string('kota_operasi')->nullable();
             $table->string('foto_profil')->nullable();
+            $table->enum('jenis_rekening', ['BCA', 'BNI', 'BRI', 'Mandiri']);
+            $table->unsignedBigInteger('no_rekening');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

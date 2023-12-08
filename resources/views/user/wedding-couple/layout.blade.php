@@ -1,11 +1,11 @@
 @extends('main')
 
 @section('body')
-    <div class="w-full font-quicksand text-slate-600">
+    <div class="w-full max-w-[1600px] mx-auto font-quicksand text-slate-600">
         {{-- NAVBAR --}}
         <div class="w-full px-4 py-2 flex items-center justify-between gap-4 bg-white shadow hover:shadow-md transition-shadow">
             {{-- MENU --}}
-            <div class="w-1/3 flex items-center justify-start gap-2 text-sm">
+            <div class="w-1/3 m-4 flex items-center justify-start gap-4 text-sm">
                 @include('user.wedding-couple.menu')
             </div>
 
@@ -18,7 +18,7 @@
             {{-- TOMBOL PROFIL --}}
             <div class="relative w-1/3 flex items-center justify-end">
                 @if (auth()->user() && auth()->user()->w_couple)
-                    <button class="flex items-center justify-center gap-4 px-4 py-2 hover:bg-slate-200 focus:outline-none focus:bg-slate-200 active:bg-slate-400 transition-colors rounded-md"
+                    <button class="flex items-center justify-center gap-4 px-4 py-2 hover:bg-slate-200 outline-pink outline-offset-4 focus:bg-slate-200 active:bg-slate-400 transition-colors rounded-md"
                         type="button" onclick="openProfile()">
                         <span>{{ auth()->user()->name }}</span>
 
@@ -34,7 +34,7 @@
 
                     <div class="absolute bottom-[calc(-5em+3px-2rem)] right-0 w-full max-w-[200px] bg-white border-4 border-slate-200 rounded hidden flex-col items-center justify-center animate__animated animate__flipInX z-50"
                         id="profileLayout">
-                        <a class="w-full p-2 bg-white hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                        <a class="w-full p-2 bg-white hover:bg-pink hover:text-white outline-pink outline-offset-4 focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
                             href="{{ route('wedding-couple.profil.index') }}">
                             <i class="fa-regular fa-user"></i>
                             Profil
@@ -44,7 +44,7 @@
 
                         <form class="w-full" action="{{ route('keluar') }}" method="post">
                             @csrf
-                            <button class="w-full text-start p-2 hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                            <button class="w-full text-start p-2 hover:bg-pink hover:text-white outline-pink outline-offset-4 focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
                                 type="submit">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 Keluar
@@ -52,10 +52,12 @@
                         </form>
                     </div>
                 @else
-                    <a class="w-fit p-4 outline-none rounded hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                    @guest
+                    <a class="w-fit px-4 py-2  outline-pink outline-offset-4 rounded hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
                         href="{{ route('ke_masuk') }}">
                         Masuk
                     </a>
+                @endguest
                 @endif
             </div>
         </div>
@@ -88,7 +90,8 @@
                                 <td><i class="fa-brands fa-whatsapp"></i></td>
                                 <td>:</td>
                                 <td>
-                                    <a href="https://wa.me/6281246007474" target="_blank" rel="noopener noreferrer">
+                                    <a class="outline-none hover:underline"
+                                        href="https://wa.me/6281246007474" target="_blank" rel="noopener noreferrer">
                                         (+62) 081246007474
                                     </a>
                                 </td>
@@ -97,7 +100,8 @@
                                 <td><i class="fa-regular fa-envelope"></i></td>
                                 <td>:</td>
                                 <td>
-                                    <a href="mailto:taweddingmarketplace@gmail.com" target="_blank" rel="noopener noreferrer">
+                                    <a class="outline-none hover:underline"
+                                        href="mailto:taweddingmarketplace@gmail.com" target="_blank" rel="noopener noreferrer">
                                         taweddingmarketplace@gmail.com
                                     </a>
                                 </td>
@@ -139,7 +143,12 @@
 
         $(document).ready(function() {
             let location_text = 'Jl. Puri Gading blok F2/no.5, Jimbaran, Badung, Bali';
-            let location_tag = "<a href='http://maps.google.com/maps?q=" + encodeURIComponent(location_text) + "' target='_blank'>" + location_text + "</a>";
+            let location_tag = `
+                <a class="outline-none hover:underline"
+                    href="http://maps.google.com/maps?q=${encodeURIComponent(location_text)}" target="_blank">
+                    ${location_text}
+                </a>
+            `;
             $('#location_map').html(location_tag);
         });
     </script>

@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                        @error('tanggal')
+                        @error('detail')
                             <i class="fa-solid fa-circle-info"></i>
                             <span>{{ $message }}</span>
                         @enderror
@@ -90,10 +90,10 @@
                                     Provinsi
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="provinsi" id="provinsi" placeholder="Bali"
-                                required
-                                value="{{ old('provinsi', '') }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="provinsi" id="provinsi">
+                                <option value="" selected>Pilih Provinsi</option>
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -113,10 +113,10 @@
                                     Kota/Kabupaten
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kota" id="kota" placeholder="Badung"
-                                required
-                                value="{{ old('kota', '') }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kota" id="kota">
+                                <option value="" selected>Pilih Kota/Kabupaten</option>
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -136,10 +136,10 @@
                                     Kecamatan
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan"
-                                required
-                                value="{{ old('kecamatan', '') }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kecamatan" id="kecamatan">
+                                <option value="" selected>Pilih Kecamatan</option>
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -159,10 +159,10 @@
                                     Kelurahan
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran"
-                                required
-                                value="{{ old('kelurahan', '') }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kelurahan" id="kelurahan">
+                                <option value="" selected>Pilih Kelurahan</option>
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -213,7 +213,7 @@
                             Unggah Foto Sampul
                         </button>
 
-                        <input class="hidden" type="file" name="foto" id="foto" accept="image/*" value="{{ old('foto', '') }}">
+                        <input class="hidden" type="file" name="foto" id="foto" accept="image/*" value="{{ old('foto', '') }}" tabindex="-1">
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
                             @error('foto')
@@ -248,6 +248,14 @@
 @endsection
 
 @push('child-js')
+    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            let provinsiData = {!! file_get_contents(public_path('json/provinsi.json')) !!};
+            populateSelect(provinsiData, 'provinsi', 'Pilih Provinsi', 'name');
+        });
+    </script>
+
     <script>
         $("#unggahFotoBtn").on("click", function () {
             $("#foto").click();
@@ -261,7 +269,7 @@
             for (let i = 0; i < files.length; i++) {
                 if (i < 1) { // Hanya tampilkan maksimal 1 gambar
                     let img = $('<img>');
-                    img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-fit');
+                    img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-contain');
 
                     $('#image-preview').append(img);
                 }

@@ -103,22 +103,16 @@
                                         Status
                                     </span>
                                 </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('status') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                    type="text" name="status" id="status" placeholder="Individu/Organisasi" onkeyup="changeStatusOptions()" onfocus="showStatusOptions()"
-                                    required
-                                    value="{{ old('status', auth()->user()->w_photographer ? auth()->user()->w_photographer->status : '') }}">
-
-                                <div class="absolute w-full p-1 gap-1 rounded bg-slate-200 hidden flex-col items-start justify-start z-10"
-                                    id="statusOptions">
-                                    <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                        type="button" data-value="Individu" onclick="selectStatus(this)">
+                                <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('status') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                    name="status" id="status" required>
+                                    <option value="" selected>Pilih Status</option>
+                                    <option value="Individu" {{ old('status', auth()->user()->w_photographer ? auth()->user()->w_photographer->status : '') == 'Individu' ? 'selected' : '' }}>
                                         Individu
-                                    </button>
-                                    <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                        type="button" data-value="Organisasi" onclick="selectStatus(this)">
+                                    </option>
+                                    <option value="Organisasi" {{ old('status', auth()->user()->w_photographer ? auth()->user()->w_photographer->status : '') == 'Organisasi' ? 'selected' : '' }}>
                                         Organisasi
-                                    </button>
-                                </div>
+                                    </option>
+                                </select>
                             </div>
 
                             <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -138,22 +132,17 @@
                                         Gender
                                     </span>
                                 </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                    type="text" name="gender" id="gender" placeholder="Pria/Wanita" onkeyup="changeGenderOptions()" onfocus="showGenderOptions()"
-                                    disabled
-                                    value="{{ old('gender', auth()->user()->w_photographer ? auth()->user()->w_photographer->gender : '') }}">
 
-                                <div class="absolute w-full p-1 gap-1 rounded bg-slate-200 hidden flex-col items-start justify-start z-10"
-                                    id="genderOptions">
-                                    <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                        type="button" data-value="Pria" onclick="selectGender(this)">
+                                <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                    name="gender" id="gender">
+                                    <option value="" selected>Pilih Gender</option>
+                                    <option value="Pria" {{ old('gender',  auth()->user()->w_photographer && auth()->user()->w_photographer->gender) == 'Pria' ? 'selected' : '' }}>
                                         Pria
-                                    </button>
-                                    <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                        type="button" data-value="Wanita" onclick="selectGender(this)">
+                                    </option>
+                                    <option value="Wanita" {{ old('gender',  auth()->user()->w_photographer && auth()->user()->w_photographer->gender) == 'Wanita' ? 'selected' : '' }}>
                                         Wanita
-                                    </button>
-                                </div>
+                                    </option>
+                                </select>
                             </div>
 
                             <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -176,22 +165,16 @@
                                         Basis Operasi
                                     </span>
                                 </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('basis_operasi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                    type="text" name="basis_operasi" id="basis_operasi" placeholder="Dalam/Luar Kota" onkeyup="changeBasisOperasiOptions()" onfocus="showBasisOperasiOptions()"
-                                    required
-                                    value="{{ old('basis_operasi', auth()->user()->w_photographer ? auth()->user()->w_photographer->basis_operasi : '') }}">
-
-                                <div class="absolute w-full p-1 gap-1 rounded bg-slate-200 hidden flex-col items-start justify-start z-10"
-                                    id="basisOperasiOptions">
-                                    <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                        type="button" data-value="Hanya di Dalam Kota" onclick="selectBasisOperasi(this)">
+                                <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('basis_operasi') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                    name="basis_operasi" id="basis_operasi" required>
+                                    <option value="" selected>Pilih Basis Operasi</option>
+                                    <option value="Hanya di Dalam Kota" {{ old('basis_operasi', auth()->user()->w_photographer ? auth()->user()->w_photographer->basis_operasi : '') == 'Hanya di Dalam Kota' ? 'selected' : '' }}>
                                         Hanya di Dalam Kota
-                                    </button>
-                                    <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                        type="button" data-value="Bisa ke Luar Kota" onclick="selectBasisOperasi(this)">
+                                    </option>
+                                    <option value="Bisa ke Luar Kota" {{ old('basis_operasi', auth()->user()->w_photographer ? auth()->user()->w_photographer->basis_operasi : '') == 'Bisa ke Luar Kota' ? 'selected' : '' }}>
                                         Bisa ke Luar Kota
-                                    </button>
-                                </div>
+                                    </option>
+                                </select>
                             </div>
 
                             <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -211,14 +194,82 @@
                                         Kota Operasi
                                     </span>
                                 </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota_operasi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                    type="text" name="kota_operasi" id="kota_operasi" placeholder="Badung"
-                                    disabled
-                                    value="{{ old('kota_operasi', auth()->user()->w_photographer ? auth()->user()->w_photographer->kota_operasi : '') }}">
+                                <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota_operasi') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                    name="kota_operasi" id="kota_operasi">
+                                    <option value="" selected>Pilih Kota/Kabupaten</option>
+                                    @forelse ($sortedKotaData as $sortedKotaItem)
+                                        <option value="{{ $sortedKotaItem->name }}" {{ $sortedKotaItem->name == old('kota_operasi', auth()->user()->w_photographer && auth()->user()->w_photographer->kota_operasi ? auth()->user()->w_photographer->kota_operasi : '') ? 'selected' : '' }}>
+                                            {{ $sortedKotaItem->name }}
+                                        </option>
+                                    @empty
+
+                                    @endforelse
+                                </select>
                             </div>
 
                             <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
                                 @error('kota_operasi')
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <span>{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- REKENING CONTAINER --}}
+                    <div class="grid grid-cols-2 gap-4">
+                        {{-- JENIS REKENING --}}
+                        <div class="relative w-100 mb-4">
+                            <div class="w-100">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('jenis_rekening') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    <span class="ml-2">
+                                        Jenis Rekening
+                                    </span>
+                                </div>
+                                <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('jenis_rekening') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                    name="jenis_rekening" id="jenis_rekening" required>
+                                    <option value="" selected>Pilih Jenis Rekening</option>
+                                    <option value="BCA" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'BCA' ? 'selected' : '' }}>
+                                        Bank BCA
+                                    </option>
+                                    <option value="BNI" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'BNI' ? 'selected' : '' }}>
+                                        Bank BNI
+                                    </option>
+                                    <option value="BRI" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'BRI' ? 'selected' : '' }}>
+                                        Bank BRI
+                                    </option>
+                                    <option value="Mandiri" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'Mandiri' ? 'selected' : '' }}>
+                                        Bank Mandiri
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                @error('jenis_rekening')
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <span>{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- NOMOR REKENING --}}
+                        <div class="relative w-100 mb-4">
+                            <div class="w-100">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('no_rekening') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                    <i class="fa-solid fa-money-check"></i>
+                                    <span class="ml-2">
+                                        Nomor Rekening
+                                    </span>
+                                </div>
+                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_rekening') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                    type="number" name="no_rekening" id="no_rekening" placeholder="tanpa tanda baca" min="0" minlength="10"
+                                    required
+                                    value="{{ old('no_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->no_rekening : '') }}">
+                            </div>
+
+                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                @error('no_rekening')
                                     <i class="fa-solid fa-circle-info"></i>
                                     <span>{{ $message }}</span>
                                 @enderror
@@ -238,10 +289,17 @@
                                     Provinsi
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="provinsi" id="provinsi" placeholder="Bali"
-                                disabled
-                                value="{{ old('provinsi', $provinsi) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="provinsi" id="provinsi">
+                                <option value="" selected>Pilih Provinsi</option>
+                                @forelse ($provinsiData as $provinsiItem)
+                                    <option value="{{ $provinsiItem->name }}" {{ $provinsiItem->name == $provinsi ? 'selected' : '' }}>
+                                        {{ $provinsiItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -261,10 +319,17 @@
                                     Kota/Kabupaten
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kota" id="kota" placeholder="Badung"
-                                disabled
-                                value="{{ old('kota', $kota) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kota" id="kota">
+                                <option value="" selected>Pilih Kota/Kabupaten</option>
+                                @forelse ($filteredKotaData as $kotaItem)
+                                    <option value="{{ $kotaItem->name }}" {{ $kotaItem->name == $kota ? 'selected' : '' }}>
+                                        {{ $kotaItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -284,9 +349,17 @@
                                     Kecamatan
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan"
-                                value="{{ old('kecamatan', $kecamatan) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kecamatan" id="kecamatan">
+                                <option value="" selected>Pilih Kecamatan</option>
+                                @forelse ($filteredKecamatanData as $kecamatanItem)
+                                    <option value="{{ $kecamatanItem->name }}" {{ $kecamatanItem->name == $kecamatan ? 'selected' : '' }}>
+                                        {{ $kecamatanItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -306,10 +379,17 @@
                                     Kelurahan
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran"
-                                disabled
-                                value="{{ old('kelurahan', $kelurahan) }}">
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="kelurahan" id="kelurahan">
+                                <option value="" selected>Pilih Kelurahan</option>
+                                @forelse ($filteredKelurahanData as $kelurahanItem)
+                                    <option value="{{ $kelurahanItem->name }}" {{ $kelurahanItem->name == $kelurahan ? 'selected' : '' }}>
+                                        {{ $kelurahanItem->name }}
+                                    </option>
+                                @empty
+
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -347,7 +427,7 @@
 
             {{-- BUTTON --}}
             <div class="w-100 mt-4 flex items-center justify-end gap-4">
-                <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                     href="{{ route('wedding-photographer.profil.index') }}">
                     <i class="fa-solid fa-arrow-left-long"></i>
                     <span>Kembali</span>
@@ -364,117 +444,24 @@
 @endsection
 
 @push('child-js')
-    {{-- GENDER SCRIPT --}}
-    <script>
-        function showGenderOptions() {
-            $('#genderOptions').removeClass('hidden').addClass('flex');
-        }
-
-        function hideGenderOptions() {
-            $("#genderOptions").removeClass("flex").addClass("hidden");
-        }
-
-        function changeGenderOptions() {
-            const filterValue = $("#gender").val().toLowerCase();
-            $("#genderOptions button").each(function() {
-                const buttonFilter = $(this).data('value').toLowerCase();
-                if (buttonFilter.includes(filterValue)) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
-                }
-            });
-        }
-
-        function selectGender(button) {
-            const dataValue = button.getAttribute('data-value');
-            $('#gender').val(dataValue);
-            hideGenderOptions();
-        }
-    </script>
-
     {{-- BASIS OPERASI SCRIPT --}}
     <script>
-        function showBasisOperasiOptions() {
-            $("#basisOperasiOptions").removeClass("hidden").addClass("flex");
-        }
-
-        function hideBasisOperasiOptions() {
-            $("#basisOperasiOptions").removeClass("flex").addClass("hidden");
-
-        }
-
-        function changeBasisOperasiOptions() {
-            const filterValue = $('#basis_operasi').val().toLowerCase();
-            $('#basisOperasiOptions button').each(function() {
-                const buttonFilter = $(this).data('value').toLowerCase();
-                if (buttonFilter.includes(filterValue)) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
-                }
-            });
-        }
-
-        function selectBasisOperasi(button) {
-            const dataValue = button.getAttribute('data-value');
-
-            $('#basis_operasi').val(dataValue);
-            hideBasisOperasiOptions();
-
-            if (dataValue === 'Hanya di Dalam Kota') {
-                $('#kota_operasi').prop({ disabled: false, required: true });
+        $('#basis_operasi').change(function () {
+            if ($(this).val() === 'Hanya di Dalam Kota') {
+                $('#kota_operasi').prop('disabled', false).prop('required', true).val($('#kota').val());
                 $('#kotaOperasiContainer').removeClass('hidden');
             } else {
-                $('#kota_operasi').prop({ disabled: true, required: false });
+                $('#kota_operasi').prop('disabled', true).prop('required', false).val('');
                 $('#kotaOperasiContainer').addClass('hidden');
             }
-        }
+        });
     </script>
 
     {{-- STATUS SCRIPT --}}
     <script>
-        function showStatusOptions() {
-            $("#statusOptions").removeClass("hidden").addClass("flex");
-
-        }
-
-        function hideStatusOptions() {
-            $("#statusOptions").removeClass("flex").addClass("hidden");
-
-        }
-
-        function changeStatusOptions() {
-            const filterValue = $('#status').val().toLowerCase();
-            $('#statusOptions button').each(function() {
-                const buttonFilter = $(this).data('value').toLowerCase();
-                if (buttonFilter.includes(filterValue)) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
-                }
-            });
-        }
-
-        function selectStatus(button) {
-            const dataValue = button.getAttribute('data-value');
-
-            const formKiri = $('#formKiri');
-            const formKanan = $('#formKanan');
-
-            const genderInput = $('#gender');
-            const genderContainer = $('#genderContainer');
-
-            const provinsiInput = $('#provinsi');
-            const kotaInput = $('#kota');
-            const kecamatanInput = $('#kecamatan');
-            const kelurahanInput = $('#kelurahan');
-            const alamatDetailInput = $('#alamat_detail');
-
-            $('#status').val(dataValue);
-            hideStatusOptions();
-
-            if (dataValue === 'Organisasi') {
+        $('#status').change(function () {
+            console.log($(this).val());
+            if ($(this).val() === 'Organisasi') {
                 $('#provinsi').prop({ required: true, disabled: false });
                 $('#kota').prop({ required: true, disabled: false });
                 $('#kecamatan').prop({ required: true, disabled: false });
@@ -486,7 +473,7 @@
 
                 $('#gender').prop({ disabled: true, required: false });
                 $('#genderContainer').addClass('hidden');
-            } else {
+            } else if ($(this).val() === 'Individu') {
                 $('#provinsi').prop({ required: false, disabled: true });
                 $('#kota').prop({ required: false, disabled: true });
                 $('#kecamatan').prop({ required: false, disabled: true });
@@ -498,8 +485,20 @@
 
                 $('#gender').prop({ disabled: false, required: true });
                 $('#genderContainer').removeClass('hidden');
+            } else {
+                $('#provinsi').prop({ required: false, disabled: true });
+                $('#kota').prop({ required: false, disabled: true });
+                $('#kecamatan').prop({ required: false, disabled: true });
+                $('#kelurahan').prop({ required: false, disabled: true });
+                $('#alamat_detail').prop({ required: false, disabled: true });
+
+                $('#formKiri').removeClass('flex-1').addClass('w-[50%]');
+                $('#formKanan').addClass('hidden');
+
+                $('#gender').prop({ disabled: true, required: false });
+                $('#genderContainer').addClass('hidden');
             }
-        }
+        });
     </script>
 
     <script>
@@ -539,27 +538,8 @@
                 $('#kota_operasi').prop({ disabled: true, required: false });
                 $('#kotaOperasiContainer').addClass('hidden');
             }
-
         }
-
-        document.addEventListener('click', function(event) {
-            const genderOptions = document.getElementById('genderOptions');
-            const basisOperasiOptions = document.getElementById('basisOperasiOptions');
-            const statusOptions = document.getElementById('statusOptions');
-
-            const genderInput = document.getElementById('gender');
-            const basisOperasiInput = document.getElementById('basis_operasi');
-            const statusInput = document.getElementById('status');
-
-            if (!genderOptions.classList.contains('hidden') && event.target !== genderOptions && !genderOptions.contains(event.target) && event.target !== genderInput) {
-                hideGenderOptions();
-            }
-            if (!basisOperasiOptions.classList.contains('hidden') && event.target!== basisOperasiOptions && !basisOperasiOptions.contains(event.target) && event.target!== basisOperasiInput) {
-                hideBasisOperasiOptions();
-            }
-            if (!statusOptions.classList.contains('hidden') && event.target!== statusOptions && !statusOptions.contains(event.target) && event.target!== statusInput) {
-                hideStatusOptions();
-            }
-        });
     </script>
+
+    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
 @endpush

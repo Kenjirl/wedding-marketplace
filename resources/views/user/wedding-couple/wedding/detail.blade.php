@@ -82,173 +82,9 @@
         </div>
 
         <div class="w-full p-4 flex items-start justify-between gap-2 border-t-2 border-slate-100">
-            {{-- ORGANIZER --}}
-            <div class="flex-1 w-full text-center">
-                @if ($bookedOrganizer)
-                    <div class="w-3/4 mx-auto p-4 rounded border-2 border-slate-100">
-                        <div class="w-full pb-4 flex items-center justify-start gap-2 border-b-2 border-slate-100">
-                            <div>
-                                @if ($bookedOrganizer->plan->w_organizer->foto_profil)
-                                    <img class="w-[50px] aspect-square object-cover object-center rounded-full border-2 border-pink"
-                                        src="{{ asset($bookedOrganizer->plan->w_organizer->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
-                                @else
-                                    <span class="w-[50px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white border-4 border-pink"
-                                        id="fotoProfilText">
-                                        {{ substr($bookedOrganizer->plan->w_organizer->nama_perusahaan, 0, 1) }}
-                                    </span>
-                                @endif
-                            </div>
+            @include('user.wedding-couple.wedding.detail.wo')
 
-                            <div class="text-xl font-semibold">
-                                {{ $bookedOrganizer->plan->w_organizer->nama_perusahaan }}
-                            </div>
-                        </div>
-
-                        <div class="w-full mx-auto py-4 px-2">
-                            <div class="w-full flex items-center justify-start gap-2">
-                                <i class="fa-solid fa-gift text-3xl text-pink"></i>
-                                <span>
-                                    {{ $bookedOrganizer->plan->nama }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="w-full pt-4 flex items-center justify-between border-t-2 border-slate-100">
-                            <div class="flex items-center justify-start gap-2 text-[.8em]">
-                                @if ($bookedOrganizer->status == 'ditolak')
-                                    <div class="w-fit aspect-square rounded-full text-red-500">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                    </div>
-                                @elseif ($bookedOrganizer->status == 'diterima')
-                                    <div class="w-fit aspect-square rounded-full text-blue-500">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                @elseif ($bookedOrganizer->status == 'selesai')
-                                    <div class="w-fit aspect-square rounded-full text-green-500">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                @else
-                                    <div class="w-fit aspect-square rounded-full text-yellow-400">
-                                        <i class="fa-solid fa-clock"></i>
-                                    </div>
-                                @endif
-                                <span>
-                                    {{ $bookedOrganizer->status }}
-                                </span>
-                            </div>
-
-                            <div class="flex-1 w-full flex items-center justify-end gap-4">
-                                {{-- @if ($bookedOrganizer->status == 'diproses' || $bookedOrganizer->status == 'ditolak') --}}
-                                @if ($bookedOrganizer->status != 'selesai')
-                                    <form action="{{ route('wedding-couple.pernikahan.hapus_wo', $bookedOrganizer->id) }}" method="post" id="hapusWOForm">
-                                        @csrf
-                                        <button class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
-                                            type="button" id="hapusWOBtn">
-                                            Batal
-                                        </button>
-                                    </form>
-                                @endif
-
-                                <a class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                                    href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer->plan->w_organizer->id) }}">
-                                    Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                        href="{{ route('wedding-couple.search.wo.index') }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Cari Wedding Organizer
-                    </a>
-                @endif
-            </div>
-
-            {{-- PHOTOGRAPHER --}}
-            <div class="flex-1 w-full text-center">
-                @forelse ($bookedPhotographers as $bp)
-                    <div class="w-3/4 mx-auto mb-4 p-4 rounded border-2 border-slate-100">
-                        <div class="w-full pb-4 flex items-center justify-start gap-2 border-b-2 border-slate-100">
-                            <div>
-                                @if ($bp->plan->w_photographer->foto_profil)
-                                    <img class="w-[50px] aspect-square object-cover object-center rounded-full border-2 border-pink"
-                                        src="{{ asset($bp->plan->w_photographer->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
-                                @else
-                                    <span class="w-[50px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white border-4 border-pink"
-                                        id="fotoProfilText">
-                                        {{ substr($bp->plan->w_photographer->nama, 0, 1) }}
-                                    </span>
-                                @endif
-                            </div>
-
-                            <div class="text-xl font-semibold">
-                                {{ $bp->plan->w_photographer->nama }}
-                            </div>
-                        </div>
-
-                        <div class="w-full mx-auto py-4 px-2">
-                            <div class="w-full flex items-center justify-start gap-2">
-                                <i class="fa-solid fa-gift text-3xl text-pink"></i>
-                                <span>
-                                    {{ $bp->plan->nama }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="w-full pt-4 flex items-center justify-between border-t-2 border-slate-100">
-                            <div class="flex items-center justify-start gap-2 text-[.8em]">
-                                @if ($bp->status == 'ditolak')
-                                    <div class="w-fit aspect-square rounded-full text-red-500">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                    </div>
-                                @elseif ($bp->status == 'diterima')
-                                    <div class="w-fit aspect-square rounded-full text-blue-500">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                @elseif ($bp->status == 'selesai')
-                                    <div class="w-fit aspect-square rounded-full text-green-500">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                @else
-                                    <div class="w-fit aspect-square rounded-full text-yellow-400">
-                                        <i class="fa-solid fa-clock"></i>
-                                    </div>
-                                @endif
-                                <span>
-                                    {{ $bp->status }}
-                                </span>
-                            </div>
-
-                            <div class="flex-1 w-full flex items-center justify-end gap-4">
-                                {{-- @if ($bp->status == 'diproses' || $bp->status == 'ditolak') --}}
-                                @if ($bp->status != 'selesai')
-                                    <form action="{{ route('wedding-couple.pernikahan.hapus_wp', $bp->id) }}" method="post" id="hapusWPForm-{{ $bp->id }}">
-                                        @csrf
-                                        <button class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors hapus-wp-btn"
-                                            type="button" data-id="{{ $bp->id }}">
-                                            Batal
-                                        </button>
-                                    </form>
-                                @endif
-
-                                <a class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                                    href="{{ route('wedding-couple.search.wp.ke_detail', $bp->plan->w_photographer->id) }}">
-                                    Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-
-                @endforelse
-
-                <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                    href="{{ route('wedding-couple.search.wp.index') }}">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        Cari Wedding Photographer
-                </a>
-            </div>
+            @include('user.wedding-couple.wedding.detail.wp')
         </div>
     </div>
 @endsection
@@ -257,7 +93,7 @@
     <script>
         $(document).ready(function() {
             // HAPUS PESANAN WO
-            $('#hapusWOBtn').on('click', function() {
+            $('#hapusWOBtn').on('click', function () {
                 if (confirm('Apakah Anda yakin ingin membatalkan pesanan organizer ini?')) {
                     $('#hapusWOForm').submit();
                 }
@@ -269,6 +105,87 @@
                 if (confirm('Apakah Anda yakin ingin membatalkan pesanan photographer ini?')) {
                     form.submit();
                 }
+            });
+
+            // UP BUKTI BAYAR WO
+            $('#upBuktiBayarOrgBtn').on('click', function () {
+                $('#bukti_bayar_org').click();
+            });
+
+            $('#bukti_bayar_org').on('change', function () {
+                let files = this.files;
+                $("#upBuktiBayarOrgContainer").empty();
+
+                for (let i = 0; i < files.length; i++) {
+                    if (i < 1) {
+                        let img = $('<img>');
+                        img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-contain');
+                        $('#upBuktiBayarOrgContainer').append(img);
+                    }
+                }
+
+                $('#submitBuktiBayarOrgBtn').attr('disabled', false);
+            });
+
+            // UP BUKTI BAYAR WP
+            $('.upBuktiBayarFtgBtn').on('click', function () {
+                let id = $(this).data('id');
+                $(`#bukti_bayar_ftg-${id}`).click();
+            });
+
+            $('.bukti_bayar_ftg').on('change', function () {
+                let files = this.files;
+                let id = $(this).data('id');
+                $(`#upBuktiBayarFtgContainer-${id}`).empty();
+
+                for (let i = 0; i < files.length; i++) {
+                    if (i < 1) {
+                        let img = $('<img>');
+                        img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-contain');
+                        $(`#upBuktiBayarFtgContainer-${id}`).append(img);
+                    }
+                }
+
+                $(`#submitBuktiBayarFtgBtn-${id}`).attr('disabled', false);
+            });
+
+            // ORGANIZER TOGGLE MODAL
+            $("#openOrgModalBtn").on('click', function() {
+                $('#bookingOrgModal').removeClass('top-full').addClass('top-0');
+            });
+            $("#closeOrgModalBtn").on('click', function() {
+                $('#bookingOrgModal').removeClass('top-0').addClass('top-full');
+            });
+
+            // FOTOGRAFER TOGGLE MODAL
+            $('.openFtgModalBtn').on('click', function() {
+                const modalId = $(this).data('ftg-modal');
+                const modal = $(`#bookingFtgModal-${modalId}`);
+
+                if (modal) {
+                    modal.removeClass('top-full').addClass('top-0');
+                }
+            });
+            $('.closeFtgModalBtn').on('click', function() {
+                const modalId = $(this).data('ftg-modal');
+                const modal = $(`#bookingFtgModal-${modalId}`);
+
+                if (modal) {
+                    modal.removeClass('top-0').addClass('top-full');
+                }
+            });
+
+            // COPY TO CLIPBOARD
+            $('.copyToClipBtn').on('click', function() {
+                let textToCopy = $(this).data("value");
+
+                let tempInput = $('<input>');
+                $('body').append(tempInput);
+                tempInput.val(textToCopy).select();
+                document.execCommand('copy');
+                tempInput.remove();
+
+                toastr.success("Berhasil menyalin ke clipboard", "Sukses");
             });
         });
     </script>

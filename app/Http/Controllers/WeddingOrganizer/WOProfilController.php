@@ -33,14 +33,45 @@ class WOProfilController extends Controller
             }
         }
 
+        // Load data JSON untuk dropdown
+        $provinsiData = collect(json_decode(file_get_contents(public_path('json/provinsi.json'))))->sortBy('name');
+        $kotaData = collect(json_decode(file_get_contents(public_path('json/kabupaten.json'))));
+        $kecamatanData = collect(json_decode(file_get_contents(public_path('json/kecamatan.json'))));
+        $kelurahanData = collect(json_decode(file_get_contents(public_path('json/kelurahan.json'))));
+
+        // Cari ID Provinsi berdasarkan nama Provinsi
+        $selectedProvinsi = $provinsiData->firstWhere('name', $provinsi);
+        $provinsiId = $selectedProvinsi ? $selectedProvinsi->id : null;
+
+        // Filter data Kabupaten berdasarkan ID Provinsi
+        $filteredKotaData = $kotaData->where('provinsi_id', $provinsiId)->sortBy('name');
+
+        // Cari ID Kabupaten berdasarkan nama Kabupaten
+        $selectedKota = $filteredKotaData->firstWhere('name', $kota);
+        $kotaId = $selectedKota ? $selectedKota->id : null;
+
+        // Filter data Kecamatan berdasarkan ID Kabupaten
+        $filteredKecamatanData = $kecamatanData->where('kabupaten_id', $kotaId)->sortBy('name');
+
+        // Cari ID Kecamatan berdasarkan nama Kecamatan
+        $selectedKecamatan = $filteredKecamatanData->firstWhere('name', $kecamatan);
+        $kecamatanId = $selectedKecamatan ? $selectedKecamatan->id : null;
+
+        // Filter data Kelurahan berdasarkan ID Kecamatan
+        $filteredKelurahanData = $kelurahanData->where('kecamatan_id', $kecamatanId)->sortBy('name');
+
         return view('user.wedding-organizer.profil.ubah',
-                    compact(
-                        'provinsi',
-                        'kota',
-                        'kecamatan',
-                        'kelurahan',
-                        'alamat_detail'
-                    ));
+            compact(
+                'provinsi',
+                'kota',
+                'kecamatan',
+                'kelurahan',
+                'alamat_detail',
+                'provinsiData',
+                'filteredKotaData',
+                'filteredKecamatanData',
+                'filteredKelurahanData',
+            ));
     }
 
     public function ubah(ProfilRequest $req) {
@@ -63,12 +94,14 @@ class WOProfilController extends Controller
             # Update
             $data = WOrganizer::where('id', auth()->user()->w_organizer->id)
                 ->update([
-                    'nama_pemilik'   => $req->nama_pemilik,
-                    'nama_perusahaan'=> $req->nama_perusahaan,
-                    'no_telp'        => $req->no_telp,
-                    'basis_operasi'  => $req->basis_operasi,
-                    'kota_operasi'   => $kota_operasi,
-                    'alamat'         => $alamat,
+                    'nama_pemilik'    => $req->nama_pemilik,
+                    'nama_perusahaan' => $req->nama_perusahaan,
+                    'no_telp'         => $req->no_telp,
+                    'basis_operasi'   => $req->basis_operasi,
+                    'kota_operasi'    => $kota_operasi,
+                    'alamat'          => $alamat,
+                    'jenis_rekening'  => $req->jenis_rekening,
+                    'no_rekening'     => $req->no_rekening,
                 ]);
         } else {
             # Make New
@@ -80,6 +113,8 @@ class WOProfilController extends Controller
             $organizer->basis_operasi   = $req->basis_operasi;
             $organizer->kota_operasi    = $kota_operasi;
             $organizer->alamat          = $alamat;
+            $organizer->jenis_rekening  = $req->jenis_rekening;
+            $organizer->no_rekening     = $req->no_rekening;
             $data = $organizer->save();
         }
 

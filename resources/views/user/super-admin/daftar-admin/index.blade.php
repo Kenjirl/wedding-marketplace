@@ -47,11 +47,10 @@
                             <i class="fa-regular fa-pen-to-square"></i>
                             {{-- Ubah --}}
                         </a>
-                        <form class=""
-                            action="{{ route('super-admin.daftar-admin.hapus', $admin->id) }}" method="post" id="deleteForm-{{ $admin->id }}">
+                        <form action="{{ route('super-admin.daftar-admin.hapus', $admin->id) }}" method="post" id="deleteForm-{{ $admin->id }}">
                             @csrf
                             <button class="w-fit px-4 py-2 rounded text-sm text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                                type="button" onclick="showDeleteConfirmation({{ $admin->id }})">
+                                type="button" onclick="showDeleteConfirmation({{ $admin->id }}, '{{ $admin->nama }}')">
                                 <i class="fa-solid fa-trash-can"></i>
                                 {{-- Hapus --}}
                             </button>
@@ -59,13 +58,7 @@
                     </td>
                 </tr>
                 @empty
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="text-center">Belum ada Data</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+
                 @endforelse
             </tbody>
         </table>
@@ -74,16 +67,25 @@
 
 @push('child-js')
     <script>
-        function showDeleteConfirmation(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data Admin ini?')) {
-                const formId = 'deleteForm-' + id;
-                const deleteForm = document.getElementById(formId);
+        function showDeleteConfirmation(id, nama) {
+            Swal.fire({
+                title: `Hapus data Admin ${nama}?`,
+                text: "Data tidak akan dapat dikembalikan lagi",
+                icon: "warning",
+                iconColor: "#F78CA2",
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "Konfirmasi"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formId = 'deleteForm-' + id;
+                    const deleteForm = document.getElementById(formId);
 
-                if (deleteForm) {
-                    deleteForm.submit();
+                    if (deleteForm) {
+                        deleteForm.submit();
+                    }
                 }
-            } else {
-            }
+            });
         }
     </script>
 @endpush

@@ -8,8 +8,8 @@
     {{-- ITEM 1 --}}
     <div class="w-full p-4">
         <div class="w-full p-8 flex items-end justify-start bg-pink rounded-3xl">
-            <div class="w-2/5">
-                <div class="mt-16">
+            <div class="w-2/5 py-8">
+                <div>
                     <h1 class="text-7xl text-white font-semibold">
                         Wujudkan Pernikahan Impianmu
                     </h1>
@@ -24,13 +24,13 @@
 
                 <div class="my-16">
                     @if (auth()->user() && auth()->user()->w_couple)
-                        <a class="w-fit px-4 py-2 rounded-lg border-2 border-white outline-pink bg-white text-pink active:bg-pink active:text-white transition-colors"
+                        <a class="focus:outline-pink w-fit px-4 py-2 rounded-md  border border-white bg-white text-pink shadow hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-white active:text-pink transition-all"
                             href="{{ route('wedding-couple.pernikahan.index') }}">
                             <i class="fa-regular fa-envelope"></i>
                             Buat Undangan
                         </a>
                     @else
-                        <a class="w-fit px-4 py-2 rounded-lg border-2 border-white outline-pink bg-white text-pink active:bg-pink active:text-white transition-colors"
+                        <a class="focus:outline-pink block w-fit px-4 py-2 rounded-md  border border-white bg-white text-pink shadow hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-white active:text-pink transition-all"
                             href="{{ route('ke_masuk') }}">
                             Bergabung Sekarang
                         </a>
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="mt-8">
-                    <a class="w-fit px-4 py-2 text-white font-semibold"
+                    <a class="focus:outline-pink w-fit p-2 text-white font-semibold  hover:underline focus:underline"
                         href="#penyedia-layanan">
                         Temukan Penyedia Layanan
                         <i class="fa-solid fa-arrow-down"></i>
@@ -62,19 +62,19 @@
     </div>
 
     {{-- ITEM 2 --}}
-    <div class="w-full flex items-center justify-start bg-[url('/public/img/bg/wave-bottom.svg')] bg-bottom bg-no-repeat bg-cover">
-        <div class="flex-1 w-full min-h-screen flex items-center justify-center">
+    <div class="w-full min-h-[80vh] flex items-center justify-start bg-[url('/public/img/bg/wave-bottom.svg')] bg-bottom bg-no-repeat bg-cover">
+        <div class="flex-1 w-full flex items-center justify-center">
             <div class="w-fit bg-white rounded-full shadow-lg -rotate-6">
-                <img class="w-[500px] aspect-square"
+                <img class="w-[400px] aspect-square"
                     src="{{ asset('img/Logo.png') }}" alt="Logo">
             </div>
         </div>
 
         <div class="flex-1 w-full">
             <div class="w-2/3 mx-auto">
-                <p class="relative text-4xl text-black text-center
-                    before:content-['“'] before:absolute before:top-0 before:-left-24 before:text-[6em] before:text-pink
-                    after:content-['”'] after:absolute after:-bottom-24 after:-right-24 after:text-[6em] after:text-pink
+                <p class="relative text-3xl text-black text-center
+                    before:content-['“'] before:absolute before:top-0 before:-left-14 before:text-[4em] before:text-pink
+                    after:content-['”'] after:absolute after:-bottom-14 after:-right-14 after:text-[4em] after:text-pink
                 ">
                     <b class="text-pink">Pernikahan</b>
                     adalah kanvas indah di mana impian menjadi kenyataan, dan cinta melukis warna-warni kebahagiaan abadi yang tak terlupakan
@@ -101,24 +101,27 @@
             </p>
         </div>
 
-        <div class="w-full flex items-center justify-center gap-8">
-            <div class="flex-1 w-full flex items-center justify-center">
-                <div class="w-2/3 p-4 flex flex-col items-center justify-evenly gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
-                    <p class="text-3xl font-semibold">
+        <div class="w-full grid grid-cols-2 gap-8">
+            <div class="w-2/3 mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
+                <div class="w-full flex flex-col items-center justify-start gap-8">
+                    <p class="text-3xl font-semibold text-center">
                         Wedding Organizer
                     </p>
-                    <i class="fa-solid fa-building-user text-[10em] text-pink"></i>
+                    <i class="fa-solid fa-building-user text-[8em] text-pink"></i>
                     <p class="text-center font-semibold">
                         Temukan Organizer yang dapat mewujudkan setiap detail impian pernikahanmu, menciptakan momen istimewa yang abadi dan tak terlupakan
                     </p>
+                </div>
+
+                <div class="w-full flex items-center justify-center">
                     @if (auth()->user() && auth()->user()->w_couple)
-                        <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
                             href="{{ route('wedding-couple.search.wo.index') }}">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             Cari
                         </a>
                     @else
-                        <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
                             href="{{ route('ke_masuk') }}">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             Masuk untuk Mencari
@@ -127,23 +130,26 @@
                 </div>
             </div>
 
-            <div class="flex-1 w-full flex items-center justify-center">
-                <div class="w-2/3 p-4 flex flex-col items-center justify-evenly gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
-                    <p class="text-3xl font-semibold">
+            <div class="w-2/3 mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
+                <div class="w-full flex flex-col items-center justify-start gap-8">
+                    <p class="text-3xl font-semibold text-center">
                         Wedding Photographer
                     </p>
-                    <i class="fa-solid fa-camera-retro text-[10em] text-pink"></i>
+                    <i class="fa-solid fa-camera-retro text-[8em] text-pink"></i>
                     <p class="text-center font-semibold">
                         Temukan Fotografer yang dapat menangkap kisah cinta dalam setiap bidikan, mengabadikan keindahan pernikahanmu menjadi kenangan abadi yang tiada tara
                     </p>
+                </div>
+
+                <div class="w-full flex items-center justify-center">
                     @if (auth()->user() && auth()->user()->w_couple)
-                        <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
                             href="{{ route('wedding-couple.search.wp.index') }}">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             Cari
                         </a>
                     @else
-                        <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
                             href="{{ route('ke_masuk') }}">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             Masuk untuk Mencari

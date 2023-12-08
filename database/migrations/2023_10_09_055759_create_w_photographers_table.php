@@ -24,6 +24,8 @@ return new class extends Migration
             $table->enum('status', ['Individu', 'Organisasi']);
             $table->string('alamat')->nullable();
             $table->string('foto_profil')->nullable();
+            $table->enum('jenis_rekening', ['BCA', 'BNI', 'BRI', 'Mandiri']);
+            $table->unsignedBigInteger('no_rekening');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

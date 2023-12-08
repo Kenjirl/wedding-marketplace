@@ -1,109 +1,125 @@
 @extends('user.wedding-couple.layout')
 
 @section('title')
-    <title>Find Wedding Organizer | Wedding Marketplace</title>
+    <title>Cari Organizer | Wedding Marketplace</title>
 @endsection
 
 @section('content')
     <div class="w-full max-w-[1200px] mx-auto p-4">
         {{-- TITLE --}}
         <div class="w-full mb-4">
-            <p class="w-full text-center">
-                Wedding Organizer
+            <p class="w-full text-center text-xl">
+                Cari Organizer
             </p>
         </div>
 
-        {{-- SEARCH --}}
-        <div class="w-full p-4 rounded-lg shadow">
-            <form action="{{ route('wedding-couple.search.wo.index') }}" method="get">
-                @csrf
-                <div class="w-full flex items-center justify-center gap-4">
-                    {{-- CARI KATEGORI --}}
-                    <div class="w-1/5 flex items-center justify-start">
-                        <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
-                            <i class="fa-solid fa-hashtag"></i>
+        {{-- FILTER --}}
+        <div class="fixed top-0 -right-[400px] w-[400px] bg-white border-l-2 border-pink z-10 transition-all"
+            id="filterContainer">
+            {{-- FILTER CONTAINER --}}
+            <div class="relative w-full min-h-screen mt-20 p-4">
+                {{-- TOGGLE FILTER FORM BUTTON --}}
+                <button class="absolute top-0 -left-12 w-fit px-4 py-2 rounded-s outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                    type="button" id="toggleFilterBtn" data-toggle=false>
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+
+                {{-- FILTER FORM --}}
+                <form action="{{ route('wedding-couple.search.wo.index') }}" method="get">
+                    @csrf
+                    <div class="w-full flex flex-col items-end justify-center gap-4">
+                        {{-- Judul --}}
+                        <div class="w-full text-center text-xl">
+                            <span>Filter</span>
                         </div>
-                        <select class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
-                            name="kategori" id="kategori">
-                            @if (!$categories->isEmpty())
+
+                        {{-- CARI KATEGORI --}}
+                        <div class="w-full flex items-center justify-start">
+                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                                <i class="fa-solid fa-hashtag"></i>
+                            </div>
+                            <select class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                                name="kategori" id="kategori">
+                                @if (!$categories->isEmpty())
+                                    <option value="" selected>
+                                        Pilih Kategori
+                                    </option>
+                                    @foreach ($categories as $kategori)
+                                        @if ($search_kategori !== null && (int)$search_kategori === $kategori->id))
+                                            <option value="{{ $kategori->id }}" selected>
+                                                {{ $kategori->nama }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $kategori->id }}">
+                                                {{ $kategori->nama }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <option value="" selected>
+                                        Tidak ada kategori
+                                    </option>
+                                @endif
+                            </select>
+                        </div>
+
+                        {{-- CARI HARGA --}}
+                        <div class="w-full flex items-center justify-start">
+                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                                <i class="fa-solid fa-rupiah-sign"></i>
+                            </div>
+                            <input class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                                type="number" name="harga" id="harga" placeholder="Budget (Rp)" min="0"
+                                value="{{ $search_harga === null ? '' : $search_harga }}">
+                        </div>
+
+                        {{-- BASIS OPERASI --}}
+                        <div class="w-full flex items-center justify-start">
+                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                                <i class="fa-regular fa-circle-dot"></i>
+                            </div>
+                            <select class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                                name="basis_operasi" id="basis_operasi">
                                 <option value="" selected>
-                                    Pilih Kategori
+                                    Basis Operasi
                                 </option>
-                                @foreach ($categories as $kategori)
-                                    @if ($search_kategori !== null && (int)$search_kategori === $kategori->id))
-                                        <option value="{{ $kategori->id }}" selected>
-                                            {{ $kategori->nama }}
-                                        </option>
-                                    @else
-                                        <option value="{{ $kategori->id }}">
-                                            {{ $kategori->nama }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            @else
-                                <option value="" selected>
-                                    Tidak ada kategori
+                                <option value="Hanya di Dalam Kota" {{ $search_basis_operasi == 'Hanya di Dalam Kota' ? 'selected' : '' }}>
+                                    Hanya di Dalam Kota
                                 </option>
-                            @endif
-                        </select>
-                    </div>
-
-                    {{-- CARI HARGA --}}
-                    <div class="w-1/5 flex items-center justify-start">
-                        <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
-                            <i class="fa-solid fa-rupiah-sign"></i>
+                                <option value="Bisa ke Luar Kota" {{ $search_basis_operasi == 'Bisa ke Luar Kota' ? 'selected' : '' }}>
+                                    Bisa ke Luar Kota
+                                </option>
+                            </select>
                         </div>
-                        <input class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
-                            type="number" name="harga" id="harga" placeholder="Budget (Rp)" min="0"
-                            value="{{ $search_harga === null ? '' : $search_harga }}">
-                    </div>
 
-                    {{-- BASIS OPERASI --}}
-                    <div class="w-1/5 flex items-center justify-start">
-                        <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
-                            <i class="fa-regular fa-circle-dot"></i>
+                        {{-- KOTA OPERASI --}}
+                        <div class="w-full items-center justify-start {{ $search_basis_operasi !== 'Hanya di Dalam Kota' ? 'hidden' : 'flex' }}"
+                            id="kotaOperasiContainer">
+                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                                <i class="fa-solid fa-location-crosshairs"></i>
+                            </div>
+                            <input class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                                type="text" name="kota_operasi" id="kota_operasi" placeholder="Kota Operasi"
+                                {{ $search_basis_operasi !== 'Hanya di Dalam Kota' ? 'disabled' : 'required' }}
+                                value="{{ $search_kota_operasi === null ? '' : $search_kota_operasi }}">
                         </div>
-                        <select class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
-                            name="basis_operasi" id="basis_operasi">
-                            <option value="" selected>
-                                Basis Operasi
-                            </option>
-                            <option value="Hanya di Dalam Kota" {{ $search_basis_operasi == 'Hanya di Dalam Kota' ? 'selected' : '' }}>
-                                Hanya di Dalam Kota
-                            </option>
-                            <option value="Bisa ke Luar Kota" {{ $search_basis_operasi == 'Bisa ke Luar Kota' ? 'selected' : '' }}>
-                                Bisa ke Luar Kota
-                            </option>
-                        </select>
+
+                        {{-- SUBMIT --}}
+                        <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                            type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+
+                        {{-- HAPUS FILTER --}}
+                        @if ($search_kategori !== null || $search_harga !== null || $search_basis_operasi !== null || $search_kota_operasi !== null)
+                            <a class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
+                                href="{{ route('wedding-couple.search.wo.index') }}">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        @endif
                     </div>
-
-                    {{-- KOTA OPERASI --}}
-                    <div class="w-1/5 items-center justify-start {{ $search_basis_operasi !== 'Hanya di Dalam Kota' ? 'hidden' : 'flex' }}"
-                        id="kotaOperasiContainer">
-                        <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
-                            <i class="fa-solid fa-location-crosshairs"></i>
-                        </div>
-                        <input class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
-                            type="text" name="kota_operasi" id="kota_operasi" placeholder="Kota Operasi"
-                            {{ $search_basis_operasi !== 'Hanya di Dalam Kota' ? 'disabled' : 'required' }}
-                            value="{{ $search_kota_operasi === null ? '' : $search_kota_operasi }}">
-                    </div>
-
-                    {{-- SUBMIT --}}
-                    <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                        type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-
-                    {{-- HAPUS FILTER --}}
-                    @if ($search_kategori !== null || $search_harga !== null || $search_basis_operasi !== null || $search_kota_operasi !== null)
-                        <a class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
-                            href="{{ route('wedding-couple.search.wo.index') }}">
-                            <i class="fa-solid fa-xmark"></i>
-                        </a>
-                    @endif
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
 
         {{-- WO CARDS --}}
@@ -196,7 +212,7 @@
     <script>
         $(document).ready(function() {
             // Fungsi yang akan dijalankan saat halaman selesai di-load
-            var selectedValue = $('#basis_operasi').val();
+            let selectedValue = $('#basis_operasi').val();
 
             // Tentukan apakah div terluar dari Kota Operasi harus hidden atau flex
             if (selectedValue === 'Hanya di Dalam Kota') {
@@ -213,7 +229,7 @@
         // Menggunakan jQuery untuk mendeteksi perubahan pada basis_operasi
         $('#basis_operasi').on('change', function() {
             // Ambil nilai yang dipilih
-            var selectedValue = $(this).val();
+            let selectedValue = $(this).val();
 
             // Tentukan apakah div terluar dari Kota Operasi harus hidden atau flex
             if (selectedValue === 'Hanya di Dalam Kota') {
@@ -224,6 +240,18 @@
                 $('#kotaOperasiContainer').removeClass('flex').addClass('hidden');
                 $('#kota_operasi').prop('disabled', true);
                 $('#kota_operasi').prop('required', false);
+            }
+        });
+
+        $('#toggleFilterBtn').on('click', function () {
+            let toggleValue = $(this).data("toggle");
+
+            if (toggleValue == false) {
+                $("#filterContainer").removeClass("-right-[400px]").addClass("right-0");
+                $(this).data("toggle", true);
+            } else {
+                $("#filterContainer").removeClass("right-0").addClass("-right-[400px]");
+                $(this).data("toggle", false);
             }
         });
     </script>

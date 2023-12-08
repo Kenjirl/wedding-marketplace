@@ -37,10 +37,10 @@
                     {{-- EMAIL --}}
                     <div class="w-100 mb-4">
                         <div class="w-100">
-                            <div class="w-full p-2 text-xs font-bold bg-pink @error('username') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('email') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Email
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('username') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('email') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="email" name="email" id="email" placeholder="email@gmail.com"
                                 required
                                 value="{{ old('email', '') }}">
@@ -117,22 +117,12 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('gender') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Gender
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="gender" id="gender" placeholder="Pria/Wanita" onkeyup="changeGenderOptions()" onfocus="showGenderOptions()"
-                            required
-                            value="{{ old('gender', '') }}">
-
-                        <div class="absolute w-full p-1 gap-1 rounded bg-slate-200 hidden flex-col items-start justify-start z-10"
-                            id="genderOptions">
-                            <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                type="button" data-value="Pria" onclick="selectGender(this)">
-                                Pria
-                            </button>
-                            <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                type="button" data-value="Wanita" onclick="selectGender(this)">
-                                Wanita
-                            </button>
-                        </div>
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="gender" id="gender">
+                            <option value="" selected>Pilih Gender</option>
+                            <option value="Pria" {{ old('gender') == 'Pria' ? 'selected' : '' }}>Pria</option>
+                            <option value="Wanita" {{ old('gender') == 'Wanita' ? 'selected' : '' }}>Wanita</option>
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -152,10 +142,10 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Provinsi
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="provinsi" id="provinsi" placeholder="Bali"
-                            required
-                            value="{{ old('provinsi', '') }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="provinsi" id="provinsi">
+                            <option value="" selected>Pilih Provinsi</option>
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -172,10 +162,10 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kota') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kota/Kabupaten
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="kota" id="kota" placeholder="Badung"
-                            required
-                            value="{{ old('kota', '') }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="kota" id="kota">
+                            <option value="" selected>Pilih Kota/Kabupaten</option>
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -192,9 +182,10 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kecamatan
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan"
-                            value="{{ old('kecamatan', '') }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="kecamatan" id="kecamatan">
+                            <option value="" selected>Pilih Kecamatan</option>
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -211,10 +202,10 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kelurahan
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran"
-                            required
-                            value="{{ old('kelurahan', '') }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="kelurahan" id="kelurahan">
+                            <option value="" selected>Pilih Kelurahan</option>
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -232,7 +223,7 @@
                             Alamat Detail
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1"
+                            type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1" maxlength="50"
                             required
                             value="{{ old('alamat_detail', '') }}">
                     </div>
@@ -249,7 +240,7 @@
 
         {{-- BUTTON --}}
         <div class="w-100 mt-4 flex items-center justify-end gap-4">
-            <a class="w-fit p-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+            <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                 href="{{ route('super-admin.daftar-admin.ke_daftar') }}">
                 <i class="fa-solid fa-arrow-left-long"></i>
                 <span>Kembali</span>
@@ -265,40 +256,11 @@
 @endsection
 
 @push('child-js')
-    {{-- GENDER SCRIPT --}}
+    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
     <script>
-        function showGenderOptions() {
-            $('#genderOptions').removeClass('hidden').addClass('flex');
-        }
-
-        function hideGenderOptions() {
-            $("#genderOptions").removeClass("flex").addClass("hidden");
-        }
-
-        function changeGenderOptions() {
-            const filterValue = $("#gender").val().toLowerCase();
-            $("#genderOptions button").each(function() {
-                const buttonFilter = $(this).data('value').toLowerCase();
-                if (buttonFilter.includes(filterValue)) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
-                }
-            });
-        }
-
-        function selectGender(button) {
-            const dataValue = button.getAttribute('data-value');
-            $('#gender').val(dataValue);
-            hideGenderOptions();
-        }
-
-        document.addEventListener('click', function(event) {
-            const genderOptions = document.getElementById('genderOptions');
-            const genderInput = document.getElementById('gender');
-            if (!genderOptions.classList.contains('hidden') && event.target !== genderOptions && !genderOptions.contains(event.target) && event.target !== genderInput) {
-                hideGenderOptions();
-            }
+        $(document).ready(function() {
+            let provinsiData = {!! file_get_contents(public_path('json/provinsi.json')) !!};
+            populateSelect(provinsiData, 'provinsi', 'Pilih Provinsi', 'name');
         });
     </script>
 @endpush

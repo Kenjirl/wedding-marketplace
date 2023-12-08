@@ -8,7 +8,7 @@
     <div class="w-full max-w-[1200px] mx-auto p-4">
         {{-- TITLE --}}
         <div class="w-full mb-4">
-            <p class="w-full text-center">
+            <p class="w-full text-center text-xl">
                 Buat Pernikahan
             </p>
         </div>
@@ -66,18 +66,29 @@
                         </div>
                     </div>
 
-                    <div class="w-1/2 mb-4">
-                        <div class="w-fit px-4 py-2 bg-pink rounded-t text-white">
-                            Perhatian
-                        </div>
-                        <div class="w-full px-6 py-2 border-2 border-pink">
-                            <ol class="list-decimal text-sm">
-                                <li>Pilih acara pernikahan yang ingin ditampilkan pada undangan</li>
-                                <li>Acara pernikahan dapat dipilih dengan mencentang kotak yang ada di bagian kiri judul acara pernikahan</li>
-                                <li>Setiap acara pernikahan dikelompokkan berdasarkan Agama</li>
-                                <li>Harap lengkapi data setiap acara pernikahan yang dipilih</li>
-                                <li>Rentetan acara pernikahan akan diurutkan berdasarkan waktu pelaksanaan acara</li>
-                            </ol>
+                    <div class="fixed top-0 -right-[400px] w-[400px] bg-white border-l-2 border-pink z-10 transition-all"
+                        id="infoContainer">
+                        <div class="relative w-full min-h-screen mt-20 p-4">
+                            <button class="absolute top-0 -left-12 w-fit px-4 py-2 rounded-s outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                type="button" id="toggleInfoBtn" data-toggle=false>
+                                <i class="fa-solid fa-circle-info"></i>
+                            </button>
+
+                            <div class="w-full">
+                                <div class="w-full text-center text-xl">
+                                    <span>Perhatian</span>
+                                </div>
+
+                                <div class="w-full px-6 py-2">
+                                    <ol class="list-decimal text-sm">
+                                        <li>Pilih acara pernikahan yang ingin ditampilkan pada undangan</li>
+                                        <li>Acara pernikahan dapat dipilih dengan mencentang kotak yang ada di bagian kiri judul acara pernikahan</li>
+                                        <li>Setiap acara pernikahan dikelompokkan berdasarkan Agama</li>
+                                        <li>Harap lengkapi data setiap acara pernikahan yang dipilih</li>
+                                        <li>Rentetan acara pernikahan akan diurutkan berdasarkan waktu pelaksanaan acara</li>
+                                    </ol>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -462,6 +473,18 @@
                     pervDiv.removeClass('bg-slate-300').addClass('bg-pink');
                 } else {
                     pervDiv.removeClass('bg-pink').addClass('bg-slate-300');
+                }
+            });
+
+            $('#toggleInfoBtn').on('click', function () {
+                let toggleValue = $(this).data("toggle");
+
+                if (toggleValue == false) {
+                    $("#infoContainer").removeClass("-right-[400px]").addClass("right-0");
+                    $(this).data("toggle", true);
+                } else {
+                    $("#infoContainer").removeClass("right-0").addClass("-right-[400px]");
+                    $(this).data("toggle", false);
                 }
             });
         });

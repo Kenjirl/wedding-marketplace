@@ -79,22 +79,16 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('gender') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Gender
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="gender" id="gender" placeholder="Pria/Wanita" onkeyup="changeGenderOptions()" onfocus="showGenderOptions()"
-                            required
-                            value="{{ old('gender', auth()->user()->admin->gender) }}">
-
-                        <div class="absolute w-full p-1 gap-1 rounded bg-slate-200 hidden flex-col items-start justify-start z-10"
-                            id="genderOptions">
-                            <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                type="button" data-value="Pria" onclick="selectGender(this)">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="gender" id="gender" required>
+                            <option value="" selected>Pilih Gender</option>
+                            <option value="Pria" {{ old('gender', auth()->user()->admin->gender) == 'Pria' ? 'selected' : '' }}>
                                 Pria
-                            </button>
-                            <button class="w-full text-start outline-none rounded-sm px-2 bg-white hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-400 transition-colors"
-                                type="button" data-value="Wanita" onclick="selectGender(this)">
+                            </option>
+                            <option value="Wanita" {{ old('gender', auth()->user()->admin->gender) == 'Wanita' ? 'selected' : '' }}>
                                 Wanita
-                            </button>
-                        </div>
+                            </option>
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -114,10 +108,17 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Provinsi
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="provinsi" id="provinsi" placeholder="Bali"
-                            required
-                            value="{{ old('provinsi', $provinsi) }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="provinsi" id="provinsi">
+                            <option value="" selected>Pilih Provinsi</option>
+                            @forelse ($provinsiData as $provinsiItem)
+                                <option value="{{ $provinsiItem->name }}" {{ $provinsiItem->name == $provinsi ? 'selected' : '' }}>
+                                    {{ $provinsiItem->name }}
+                                </option>
+                            @empty
+
+                            @endforelse
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -134,10 +135,17 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kota') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kota/Kabupaten
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="kota" id="kota" placeholder="Badung"
-                            required
-                            value="{{ old('kota', $kota) }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="kota" id="kota">
+                            <option value="" selected>Pilih Kota/Kabupaten</option>
+                            @forelse ($filteredKotaData as $kotaItem)
+                                <option value="{{ $kotaItem->name }}" {{ $kotaItem->name == $kota ? 'selected' : '' }}>
+                                    {{ $kotaItem->name }}
+                                </option>
+                            @empty
+
+                            @endforelse
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -154,9 +162,17 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kecamatan
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="kecamatan" id="kecamatan" placeholder="Kuta Selatan"
-                            value="{{ old('kecamatan', $kecamatan) }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="kecamatan" id="kecamatan">
+                            <option value="" selected>Pilih Kecamatan</option>
+                            @forelse ($filteredKecamatanData as $kecamatanItem)
+                                <option value="{{ $kecamatanItem->name }}" {{ $kecamatanItem->name == $kecamatan ? 'selected' : '' }}>
+                                    {{ $kecamatanItem->name }}
+                                </option>
+                            @empty
+
+                            @endforelse
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -173,10 +189,17 @@
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kelurahan
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="kelurahan" id="kelurahan" placeholder="Jimbaran"
-                            required
-                            value="{{ old('kelurahan', $kelurahan) }}">
+                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            name="kelurahan" id="kelurahan">
+                            <option value="" selected>Pilih Kelurahan</option>
+                            @forelse ($filteredKelurahanData as $kelurahanItem)
+                                <option value="{{ $kelurahanItem->name }}" {{ $kelurahanItem->name == $kelurahan ? 'selected' : '' }}>
+                                    {{ $kelurahanItem->name }}
+                                </option>
+                            @empty
+
+                            @endforelse
+                        </select>
                     </div>
 
                     <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -227,40 +250,5 @@
 @endsection
 
 @push('child-js')
-    {{-- GENDER SCRIPT --}}
-    <script>
-        function showGenderOptions() {
-            $('#genderOptions').removeClass('hidden').addClass('flex');
-        }
-
-        function hideGenderOptions() {
-            $("#genderOptions").removeClass("flex").addClass("hidden");
-        }
-
-        function changeGenderOptions() {
-            const filterValue = $("#gender").val().toLowerCase();
-            $("#genderOptions button").each(function() {
-                const buttonFilter = $(this).data('value').toLowerCase();
-                if (buttonFilter.includes(filterValue)) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
-                }
-            });
-        }
-
-        function selectGender(button) {
-            const dataValue = button.getAttribute('data-value');
-            $('#gender').val(dataValue);
-            hideGenderOptions();
-        }
-
-        document.addEventListener('click', function(event) {
-            const genderOptions = document.getElementById('genderOptions');
-            const genderInput = document.getElementById('gender');
-            if (!genderOptions.classList.contains('hidden') && event.target !== genderOptions && !genderOptions.contains(event.target) && event.target !== genderInput) {
-                hideGenderOptions();
-            }
-        });
-    </script>
+    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
 @endpush

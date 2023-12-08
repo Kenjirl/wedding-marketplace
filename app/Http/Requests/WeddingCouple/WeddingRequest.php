@@ -28,12 +28,13 @@ class WeddingRequest extends FormRequest
             'bride'    =>'required|string|regex:/^[a-zA-Z\s]*$/',
 
             'w_event_id'  => 'required|exists:w_events,id',
-            'waktu.*'     =>'required|date_format:Y-m-d H:i:s|after:' . date('Y-m-d'),
-            'provinsi.*'  =>'required|string|regex:/^[a-zA-Z\s]*$/',
-            'kota.*'      =>'required|string|regex:/^[a-zA-Z\s]*$/',
-            'kecamatan.*' =>'required|string|regex:/^[a-zA-Z\s]*$/',
-            'kelurahan.*' =>'required|string|regex:/^[a-zA-Z\s]*$/',
-            'alamat.*'    =>'required|string|regex:/^[a-zA-Z\s.0-9]*$/',
+            // 'waktu.*'     => 'required|date_format:Y-m-d H:i:s|after:' . date(DATE_ATOM),
+            'waktu.*'     => 'required|after:' . date('Y-m-d'),
+            'provinsi.*'  => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'kota.*'      => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'kecamatan.*' => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'kelurahan.*' => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'alamat.*'    => 'required|string|regex:/^[a-zA-Z\s.0-9]*$/',
         ];
     }
 
@@ -56,7 +57,7 @@ class WeddingRequest extends FormRequest
             'w_event_id.*.required' => 'ID Event tidak boleh kosong',
             'w_event_id.*.exists'   => 'ID Event harus valid',
             'waktu.*.required'      => 'Waktu acara tidak boleh kosong',
-            'waktu.*.date_format'   => 'Waktu acara harus menggunakan format waktu dan tanggal yang benar',
+            // 'waktu.*.date_format'   => 'Waktu acara harus menggunakan format waktu dan tanggal yang benar',
             'waktu.*.after'         => 'Waktu acara tidak boleh tanggal sebelum hari ini',
             'provinsi.*.required'   => 'Provinsi acara tidak boleh kosong',
             'provinsi.*.string'     => 'Provinsi acara harus berupa karakter',
