@@ -8,7 +8,7 @@
     <div class="w-full max-w-[1200px] mx-auto p-4">
         {{-- TITLE --}}
         <div class="w-full mb-4">
-            <p class="w-full text-center text-xl">
+            <p class="w-full text-center text-3xl">
                 Cari Organizer
             </p>
         </div>
@@ -35,10 +35,10 @@
 
                         {{-- CARI KATEGORI --}}
                         <div class="w-full flex items-center justify-start">
-                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                            <div class="w-fit px-4 py-2 rounded-s border-2 border-r-0 border-pink bg-pink text-white">
                                 <i class="fa-solid fa-hashtag"></i>
                             </div>
-                            <select class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                            <select class="w-full p-2 text-gray-500 border-2 border-l-0 border-gray-200 rounded-e appearance-none outline-none focus:ring-0 focus:border-pink transition-colors"
                                 name="kategori" id="kategori">
                                 @if (!$categories->isEmpty())
                                     <option value="" selected>
@@ -65,20 +65,20 @@
 
                         {{-- CARI HARGA --}}
                         <div class="w-full flex items-center justify-start">
-                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                            <div class="w-fit px-4 py-2 rounded-s border-2 border-r-0 border-pink bg-pink text-white">
                                 <i class="fa-solid fa-rupiah-sign"></i>
                             </div>
-                            <input class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                            <input class="w-full p-2 text-gray-500 border-2 border-l-0 border-gray-200 rounded-e appearance-none outline-none focus:ring-0 focus:border-pink transition-colors"
                                 type="number" name="harga" id="harga" placeholder="Budget (Rp)" min="0"
                                 value="{{ $search_harga === null ? '' : $search_harga }}">
                         </div>
 
                         {{-- BASIS OPERASI --}}
                         <div class="w-full flex items-center justify-start">
-                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                            <div class="w-fit px-4 py-2 rounded-s border-2 border-r-0 border-pink bg-pink text-white">
                                 <i class="fa-regular fa-circle-dot"></i>
                             </div>
-                            <select class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                            <select class="w-full p-2 text-gray-500 border-2 border-l-0 border-gray-200 rounded-e appearance-none outline-none focus:ring-0 focus:border-pink transition-colors"
                                 name="basis_operasi" id="basis_operasi">
                                 <option value="" selected>
                                     Basis Operasi
@@ -95,10 +95,10 @@
                         {{-- KOTA OPERASI --}}
                         <div class="w-full items-center justify-start {{ $search_basis_operasi !== 'Hanya di Dalam Kota' ? 'hidden' : 'flex' }}"
                             id="kotaOperasiContainer">
-                            <div class="w-fit px-4 py-2 rounded-s bg-pink text-white">
+                            <div class="w-fit px-4 py-2 rounded-s border-2 border-r-0 border-pink bg-pink text-white">
                                 <i class="fa-solid fa-location-crosshairs"></i>
                             </div>
-                            <input class="w-full p-2 text-sm text-gray-500 border-y-2 border-t-transparent border-b-gray-200 appearance-none outline-none focus:ring-0 focus:border-b-pink transition-colors"
+                            <input class="w-full p-2 text-gray-500 border-2 border-l-0 border-gray-200 rounded-e appearance-none outline-none focus:ring-0 focus:border-pink transition-colors"
                                 type="text" name="kota_operasi" id="kota_operasi" placeholder="Kota Operasi"
                                 {{ $search_basis_operasi !== 'Hanya di Dalam Kota' ? 'disabled' : 'required' }}
                                 value="{{ $search_kota_operasi === null ? '' : $search_kota_operasi }}">

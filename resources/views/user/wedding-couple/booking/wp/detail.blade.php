@@ -6,6 +6,13 @@
 
 @section('content')
     <div class="w-full">
+        {{-- TITLE --}}
+        <div class="w-full mb-4 mt-4">
+            <p class="w-full text-center text-3xl">
+                Detail Organizer
+            </p>
+        </div>
+
         {{-- container a --}}
         <div class="w-full px-8 py-4 flex items-start justify-start gap-8">
             {{-- container kiri --}}
@@ -110,6 +117,12 @@
             {{-- container kanan --}}
             @if ($portofolio_detail)
                 <div class="w-1/2 bg-slate-100 rounded-lg">
+                    <div class="w-full mt-2 text-center text-xl">
+                        <span>
+                            Detail Portofolio
+                        </span>
+                    </div>
+
                     {{-- detail foto portofolio --}}
                     <div class="w-full p-2">
                         {{-- foto besar --}}
@@ -163,6 +176,7 @@
             @endif
         </div>
 
+        {{-- form ganti portofolio --}}
         <div class="hidden">
             <form action="{{ route('wedding-couple.search.wo.ke_detail', $photographer->id) }}" method="get" id="portofolioForm">
                 @csrf
@@ -171,146 +185,154 @@
         </div>
 
         {{-- container b --}}
-        <div class="w-full p-8 flex items-start justify-start gap-8 border-t-4 border-slate-100">
-            {{-- list paket layanan kiri --}}
-            <div class="w-2/3 grid grid-cols-4 gap-4">
-                @forelse ($plans as $plan)
-                    <button class="w-full p-4 rounded text-start outline-none bg-white border-2 border-slate-100 shadow hover:shadow-lg hover:-translate-y-2 focus:shadow-lg focus:-translate-y-2 active:shadow active:translate-y-0 transition-all paket-layanan-button"
-                        type="button" data-plan-id="{{ $plan->id }}" id="planBtn-{{ $plan->id }}">
-                        <div class="w-full mb-4 flex items-center justify-start gap-2">
-                            <i class="fa-solid fa-gift text-3xl text-pink"></i>
-                            <span class="flex-1 w-full line-clamp-1 text-lg">
-                                {{ $plan->nama }}
-                            </span>
-                        </div>
-
-                        <div class="w-full text-end">
-                            <i class="fa-solid fa-rupiah-sign"></i>
-                            {{ number_format($plan->harga, 0, ',', '.') }}
-                        </div>
-                    </button>
-                @empty
-                    Tidak ada paket layanan
-                @endforelse
+        <div class="w-full border-t-4 border-slate-100">
+            <div class="w-full mt-8">
+                <p class="w-full text-center text-3xl">
+                    Paket Layanan
+                </p>
             </div>
 
-            {{-- detail paket layanan kanan --}}
-            @if (!$plans->isEmpty())
-                <div class="w-1/3 shadow rounded-lg border-2 border-slate-100">
+            <div class="w-full p-8 flex items-start justify-start gap-8">
+                {{-- list paket layanan kiri --}}
+                <div class="w-2/3 grid grid-cols-4 gap-4">
                     @forelse ($plans as $plan)
-                        <div class="w-full px-4 pt-2 mb-4 hidden detail-layanan"
-                            id="detailLayanan-{{ $plan->id }}">
-                            {{-- nama --}}
-                            <div class="w-full">
-                                <span class="text-4xl font-semibold">
+                        <button class="w-full p-4 rounded text-start outline-none bg-white border-2 border-slate-100 shadow hover:shadow-lg hover:-translate-y-2 focus:shadow-lg focus:-translate-y-2 active:shadow active:translate-y-0 transition-all paket-layanan-button"
+                            type="button" data-plan-id="{{ $plan->id }}" id="planBtn-{{ $plan->id }}">
+                            <div class="w-full mb-4 flex items-center justify-start gap-2">
+                                <i class="fa-solid fa-gift text-3xl text-pink"></i>
+                                <span class="flex-1 w-full line-clamp-1 text-lg">
                                     {{ $plan->nama }}
                                 </span>
                             </div>
 
-                            {{-- fitur --}}
-                            <div class="w-full p-4">
-                                <ul class="list-disc">
-                                    @forelse ($plan->fitur as $fitur)
-                                        <li>{{ $fitur->isi }}</li>
-                                    @empty
-                                        <li>Tidak ada fitur</li>
-                                    @endforelse
-                                </ul>
+                            <div class="w-full text-end">
+                                <i class="fa-solid fa-rupiah-sign"></i>
+                                {{ number_format($plan->harga, 0, ',', '.') }}
                             </div>
-
-                            {{-- harga --}}
-                            <div class="w-full flex items-start justify-end gap-2">
-                                <i class="fa-solid fa-rupiah-sign text-2xl"></i>
-                                <span class="text-xl">
-                                    {{ number_format($plan->harga, 0, ',', '.') }}
-                                </span>
-                            </div>
-                        </div>
+                        </button>
                     @empty
-
+                        Tidak ada paket layanan
                     @endforelse
-
-                    {{-- form booking --}}
-                    <div class="w-full px-4 py-2 border-t-2 border-slate-100">
-                        <form action="{{ route('wedding-couple.search.wp.pesan') }}" method="post" id="bookingForm">
-                            @csrf
-                            <input class="hidden" type="text" name="plan_id" id="plan_id" value="{{ old('plan_id', '') }}">
-
-                            <div class="w-full flex flex-col items-end justify-start gap-4">
-                                @if (!$weddings->isEmpty())
-                                    {{-- PERNIKAHAN --}}
-                                    <div class="w-full mb-4">
-                                        <div class="w-full flex">
-                                            <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
-                                                <i class="fa-solid fa-dove"></i>
-                                            </div>
-                                            <select class="w-full p-2 text-sm appearance-none outline-none text-slate-500 border-2 border-s-0 focus:border-pink rounded-e"
-                                                name="wedding_id" id="wedding_id">
-                                                <option value="" selected>
-                                                    Pilih Pernikahan
-                                                </option>
-
-                                                @foreach ($weddings as $wedding)
-                                                    @if ($wedding->w_p_booking->isEmpty())
-                                                        <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
-                                                            {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
-                                                        </option>
-                                                    @else
-                                                        @foreach ($wedding->w_p_booking as $wpb)
-                                                            @if ($wpb->plan->w_photographer_id !== $photographer->id)
-                                                                <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
-                                                                    {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('wedding_id')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- TANGGAL --}}
-                                    <div class="w-full mb-4">
-                                        <div class="w-full flex">
-                                            <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
-                                                <i class="fa-regular fa-calendar"></i>
-                                            </div>
-                                            <input class="w-full p-2 flex-1 text-sm border-y-2 border-e-2 rounded-e focus:border-pink focus:outline-none"
-                                                type="date" name="tanggal" id="tanggal" placeholder="tanggal"
-                                                required
-                                                value="{{ old('tanggal') }}">
-                                        </div>
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                            @error('tanggal')
-                                                <i class="fa-solid fa-circle-info"></i>
-                                                <span>{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    {{-- Button Submit --}}
-                                    <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                                        type="button" id="bookingBtn">
-                                        Pesan
-                                    </button>
-                                @else
-                                    <a class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-                                        href="{{ route('wedding-couple.pernikahan.ke_tambah') }}">
-                                        <i class="fa-regular fa-envelope"></i>
-                                        Buat Pernikahan untuk memesan
-                                    </a>
-                                @endif
-                            </div>
-                        </form>
-                    </div>
                 </div>
-            @endif
+
+                {{-- detail paket layanan kanan --}}
+                @if (!$plans->isEmpty())
+                    <div class="w-1/3 shadow rounded-lg border-2 border-slate-100">
+                        @forelse ($plans as $plan)
+                            <div class="w-full px-4 pt-2 mb-4 hidden detail-layanan"
+                                id="detailLayanan-{{ $plan->id }}">
+                                {{-- nama --}}
+                                <div class="w-full">
+                                    <span class="text-4xl font-semibold">
+                                        {{ $plan->nama }}
+                                    </span>
+                                </div>
+
+                                {{-- fitur --}}
+                                <div class="w-full p-4">
+                                    <ul class="list-disc">
+                                        @forelse ($plan->fitur as $fitur)
+                                            <li>{{ $fitur->isi }}</li>
+                                        @empty
+                                            <li>Tidak ada fitur</li>
+                                        @endforelse
+                                    </ul>
+                                </div>
+
+                                {{-- harga --}}
+                                <div class="w-full flex items-start justify-end gap-2">
+                                    <i class="fa-solid fa-rupiah-sign text-2xl"></i>
+                                    <span class="text-xl">
+                                        {{ number_format($plan->harga, 0, ',', '.') }}
+                                    </span>
+                                </div>
+                            </div>
+                        @empty
+
+                        @endforelse
+
+                        {{-- form booking --}}
+                        <div class="w-full px-4 py-2 border-t-2 border-slate-100">
+                            <form action="{{ route('wedding-couple.search.wp.pesan') }}" method="post" id="bookingForm">
+                                @csrf
+                                <input class="hidden" type="text" name="plan_id" id="plan_id" value="{{ old('plan_id', '') }}">
+
+                                <div class="w-full flex flex-col items-end justify-start gap-4">
+                                    @if (!$weddings->isEmpty())
+                                        {{-- PERNIKAHAN --}}
+                                        <div class="w-full mb-4">
+                                            <div class="w-full flex">
+                                                <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
+                                                    <i class="fa-solid fa-dove"></i>
+                                                </div>
+                                                <select class="w-full p-2 text-sm appearance-none outline-none text-slate-500 border-2 border-s-0 focus:border-pink rounded-e"
+                                                    name="wedding_id" id="wedding_id">
+                                                    <option value="" selected>
+                                                        Pilih Pernikahan
+                                                    </option>
+
+                                                    @foreach ($weddings as $wedding)
+                                                        @if ($wedding->w_p_booking->isEmpty())
+                                                            <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
+                                                                {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
+                                                            </option>
+                                                        @else
+                                                            @foreach ($wedding->w_p_booking as $wpb)
+                                                                @if ($wpb->plan->w_photographer_id !== $photographer->id)
+                                                                    <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
+                                                                        {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                                @error('wedding_id')
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                    <span>{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- TANGGAL --}}
+                                        <div class="w-full mb-4">
+                                            <div class="w-full flex">
+                                                <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
+                                                    <i class="fa-regular fa-calendar"></i>
+                                                </div>
+                                                <input class="w-full p-2 flex-1 text-sm border-y-2 border-e-2 rounded-e focus:border-pink focus:outline-none"
+                                                    type="date" name="tanggal" id="tanggal" placeholder="tanggal"
+                                                    required
+                                                    value="{{ old('tanggal') }}">
+                                            </div>
+                                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                                @error('tanggal')
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                    <span>{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        {{-- Button Submit --}}
+                                        <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                            type="button" id="bookingBtn">
+                                            Pesan
+                                        </button>
+                                    @else
+                                        <a class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                            href="{{ route('wedding-couple.pernikahan.ke_tambah') }}">
+                                            <i class="fa-regular fa-envelope"></i>
+                                            Buat Pernikahan untuk memesan
+                                        </a>
+                                    @endif
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 @endsection

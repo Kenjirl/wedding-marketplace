@@ -94,17 +94,38 @@
         $(document).ready(function() {
             // HAPUS PESANAN WO
             $('#hapusWOBtn').on('click', function () {
-                if (confirm('Apakah Anda yakin ingin membatalkan pesanan organizer ini?')) {
-                    $('#hapusWOForm').submit();
-                }
+                Swal.fire({
+                    title: 'Batalkan pesanan organizer ini?',
+                    text: "Data tidak akan dapat dikembalikan lagi",
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#hapusWOForm').submit();
+                    }
+                });
             });
 
             // HAPUS PESANAN WP
-            $('.hapus-wp-btn').click(function () {
+            $('.hapusWPBtn').click(function () {
                 let form = $('#hapusWPForm-' + $(this).data('id'));
-                if (confirm('Apakah Anda yakin ingin membatalkan pesanan photographer ini?')) {
-                    form.submit();
-                }
+
+                Swal.fire({
+                    title: 'Batalkan pesanan fotografer ini?',
+                    text: "Data tidak akan dapat dikembalikan lagi",
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
 
             // UP BUKTI BAYAR WO
@@ -125,6 +146,22 @@
                 }
 
                 $('#submitBuktiBayarOrgBtn').attr('disabled', false);
+            });
+            // SUBMIT BUKTI BAYAR WO
+            $('#submitBuktiBayarOrgBtn').on('click', function () {
+                Swal.fire({
+                    title: 'Upload bukti bayar?',
+                    text: "Anda tidak akan dapat mengganti bukti pembayaran setelah konfirmasi",
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#buktiBayarOrgForm').submit();
+                    }
+                });
             });
 
             // UP BUKTI BAYAR WP
@@ -147,6 +184,24 @@
                 }
 
                 $(`#submitBuktiBayarFtgBtn-${id}`).attr('disabled', false);
+            });
+            // SUBMIT BUKTI BAYAR WP
+            $('.submitBuktiBayarFtgBtn').on('click', function () {
+                let form = $('#upBuktiBayarFtgForm-' + $(this).data('id'));
+
+                Swal.fire({
+                    title: 'Upload bukti bayar?',
+                    text: "Anda tidak akan dapat mengganti bukti pembayaran setelah konfirmasi",
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
 
             // ORGANIZER TOGGLE MODAL

@@ -181,33 +181,38 @@
                             </div>
 
                             {{-- gambar / input gambar bukti bayar --}}
-                            @if ($bookedOrganizer->bukti_bayar)
-                                <div class="w-full max-w-[400px] aspect-square mb-4 flex items-center justify-center rounded border-2 overflow-hidden"
-                                    id="upBuktiBayarOrgContainer">
-                                    <img class="h-full object-contain"
-                                        src="{{ asset($bookedOrganizer->bukti_bayar) }}" alt="Bukti bayar organizer">
+                            <div class="w-full max-w-[400px] mx-auto">
+                                <div class="w-full p-2 text-center bg-slate-300 rounded-t">
+                                    Bukti Pembayaran
                                 </div>
-                            @else
-                                <form action="{{ route('wedding-couple.pernikahan.upload_bukti_bayar_wo', $bookedOrganizer->id) }}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="w-full max-w-[400px] aspect-square mb-4 flex items-center justify-center rounded border-2 overflow-hidden"
+                                @if ($bookedOrganizer->bukti_bayar)
+                                    <div class="w-full aspect-square mx-auto mb-4 flex items-center justify-center rounded-b border-2 border-t-0 border-slate-300 overflow-hidden"
                                         id="upBuktiBayarOrgContainer">
-                                        {{-- Nanti diisi dengan JS --}}
-                                        Belum ada bukti pembayaran
+                                        <img class="h-full object-contain"
+                                            src="{{ asset($bookedOrganizer->bukti_bayar) }}" alt="Bukti bayar organizer">
                                     </div>
-                                    <input class="hidden" type="file" name="bukti_bayar" id="bukti_bayar_org" accept="image/*" value="" tabindex="-1">
-                                    <div class="w-full flex items-center justify-center gap-2">
-                                        <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-2 bg-white text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-                                            type="button" id="upBuktiBayarOrgBtn">
-                                            Pilih Gambar
-                                        </button>
-                                        <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-2 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:outline-slate-200 disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed transition-colors"
-                                            type="submit" id="submitBuktiBayarOrgBtn" disabled>
-                                            Unggah Gambar
-                                        </button>
-                                    </div>
-                                </form>
-                            @endif
+                                @else
+                                    <form action="{{ route('wedding-couple.pernikahan.upload_bukti_bayar_wo', $bookedOrganizer->id) }}" method="post" enctype="multipart/form-data" id="buktiBayarOrgForm">
+                                        @csrf
+                                        <div class="w-full aspect-square mx-auto mb-4 flex items-center justify-center rounded-b border-2 border-t-0 border-slate-300 overflow-hidden"
+                                            id="upBuktiBayarOrgContainer">
+                                            {{-- Nanti diisi dengan JS --}}
+                                            Belum ada bukti pembayaran
+                                        </div>
+                                        <input class="hidden" type="file" name="bukti_bayar" id="bukti_bayar_org" accept="image/*" value="" tabindex="-1">
+                                        <div class="w-full flex items-center justify-center gap-2">
+                                            <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-2 bg-white text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                                type="button" id="upBuktiBayarOrgBtn">
+                                                Pilih Gambar
+                                            </button>
+                                            <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-2 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:outline-slate-200 disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed transition-colors"
+                                                type="button" id="submitBuktiBayarOrgBtn" disabled>
+                                                Unggah Gambar
+                                            </button>
+                                        </div>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

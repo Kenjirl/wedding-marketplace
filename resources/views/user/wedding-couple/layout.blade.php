@@ -69,21 +69,21 @@
 
         {{-- FOOTER --}}
         <div class="w-full bg-pink text-white">
-            <div class="w-full max-w-[1200px] min-h-[25vh] mx-auto px-4 py-8 flex items-start justify-between gap-8">
+            <div class="w-full max-w-[1200px] mx-auto px-4 py-8 flex items-center justify-between gap-8">
                 <div class="w-fit flex flex-col items-center justify-start">
                     <div class="w-fit">
                         <img class="w-[100px] aspect-square rounded-full bg-white"
                             src="{{ asset('img/Logo.png') }}" alt="Logo">
                     </div>
 
-                    <div>
+                    {{-- <div>
                         <p class="font-great-vibes text-xl text-center">
                             Wedding <br> Marketplace
                         </p>
-                    </div>
+                    </div> --}}
                 </div>
 
-                <div class="flex-1 w-full mt-8 text-base">
+                <div class="flex-1 w-full text-base">
                     <table class="table-fixed">
                         <tbody>
                             <tr>

@@ -94,12 +94,15 @@ class WCWeddingController extends Controller
         //             'status' => 'batal',
         //         ]);
         $booking = WOBooking::find($id);
+        if ($booking->bukti_bayar) {
+            unlink(public_path($booking->bukti_bayar));
+        }
         $data = $booking->delete();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menghapus Pesanan Wedding Organizer');
+            return redirect()->back()->with('sukses', 'Membatalkan Pesanan Wedding Organizer');
         }
-        return redirect()->back()->with('gagal', 'Menghapus Pesanan Wedding Organizer');
+        return redirect()->back()->with('gagal', 'Membatalkan Pesanan Wedding Organizer');
     }
 
     public function hapus_wp($id) {
@@ -108,6 +111,9 @@ class WCWeddingController extends Controller
         //             'status' => 'batal',
         //         ]);
         $booking = WPBooking::find($id);
+        if ($booking->bukti_bayar) {
+            unlink(public_path($booking->bukti_bayar));
+        }
         $data = $booking->delete();
 
         if ($data) {

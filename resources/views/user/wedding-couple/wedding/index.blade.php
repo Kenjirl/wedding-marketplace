@@ -8,7 +8,7 @@
     <div class="w-full max-w-[1200px] mx-auto p-4">
         {{-- TITLE --}}
         <div class="w-full mb-4">
-            <p class="w-full text-center">
+            <p class="w-full text-center text-3xl">
                 Pernikahan Anda
             </p>
         </div>
