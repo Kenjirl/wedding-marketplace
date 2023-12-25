@@ -41,7 +41,7 @@
                                 <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-s">
                                     <i class="fa-solid fa-lock"></i>
                                 </div>
-                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink focus:outline-none"
+                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink outline-none"
                                     type="password" name="password" id="password" placeholder="password" onkeyup="validatePassword()" value="{{ old('password') }}" required>
                                 <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-e"></div>
                             </div>
@@ -59,9 +59,9 @@
                                 <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-s">
                                     <i class="fa-solid fa-lock"></i>
                                 </div>
-                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink focus:outline-none"
+                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink outline-none"
                                     type="password" name="vPassword" id="vPassword" placeholder="validasi password" onkeyup="validatePassword()" value="{{ old('vPassword') }}" required>
-                                <button class="w-10 aspect-square p-2 bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors text-white flex items-center justify-center rounded-e"
+                                <button class="w-10 aspect-square p-2 bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active outline-pink-hover outline-offset-4 transition-colors text-white flex items-center justify-center rounded-e"
                                     type="button" id="toggle-password-btn" onclick="togglePassword()">
                                     <i class="fa-regular fa-eye"></i>
                                 </button>
@@ -75,7 +75,7 @@
                         </div>
 
                     {{-- SUBMIT BTN --}}
-                    <button class="w-full p-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors rounded"
+                    <button class="w-full p-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active outline-pink-hover outline-offset-4 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors rounded"
                         id="btnSubmit" type="submit" disabled>Ubah Password</button>
                 </form>
             </div>

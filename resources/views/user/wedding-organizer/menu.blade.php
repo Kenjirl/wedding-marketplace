@@ -28,8 +28,8 @@ $currentUrl = Request::url();
         Pesanan
     </a>
     <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
-        "
-        href="#">
+        {{ Str::contains($currentUrl, '/jadwal') ? 'bg-pink text-white' : '' }}"
+        href="{{ route('wedding-organizer.jadwal.index') }}">
         <i class="fa-regular fa-calendar"></i>
         Jadwal
     </a>

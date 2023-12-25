@@ -29,7 +29,7 @@
 
                 {{-- TOMBOL PROFIL --}}
                 <div class="relative w-fit">
-                    <button class="flex items-center justify-center gap-4 px-4 py-2 hover:bg-slate-200 focus:outline-none focus:bg-slate-200 active:bg-slate-400 transition-colors rounded-md"
+                    <button class="flex items-center justify-center gap-4 px-4 py-2 hover:bg-slate-200 outline-pink outline-offset-4 focus:bg-slate-200 active:bg-slate-400 transition-colors rounded-md"
                         type="button" onclick="openProfile()">
                         <span>{{ auth()->user()->name }}</span>
 
@@ -44,7 +44,7 @@
 
                         <form class="w-full" action="{{ route('keluar') }}" method="post" id="logoutForm">
                             @csrf
-                            <button class="w-full text-start p-2 hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                            <button class="w-full text-start p-2 hover:bg-pink hover:text-white outline-pink outline-offset-4 focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
                                 type="button" id="logoutBtn">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 Keluar

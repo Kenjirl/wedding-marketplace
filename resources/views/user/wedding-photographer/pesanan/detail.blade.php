@@ -1,4 +1,4 @@
-@extends('user.wedding-organizer.layout')
+@extends('user.wedding-photographer.layout')
 
 @section('title')
     <title>Detail Pesanan | Wedding Marketplace</title>
@@ -84,7 +84,7 @@
             </div>
 
             {{-- FORM SUBMIT --}}
-            <form action="{{ route('wedding-organizer.pesanan.respon', $booking->id) }}" method="post" id="pesananForm">
+            <form action="{{ route('wedding-photographer.pesanan.respon', $booking->id) }}" method="post" id="pesananForm">
                 @csrf
                 {{-- STATUS --}}
                 <div class="hidden">
@@ -93,7 +93,7 @@
 
                 <div class="w-full p-2 flex items-center justify-end gap-4">
                     <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        href="{{ route('wedding-organizer.pesanan.index') }}">
+                        href="{{ route('wedding-photographer.pesanan.index') }}">
                         <i class="fa-solid fa-arrow-left-long"></i>
                         <span>Kembali</span>
                     </a>

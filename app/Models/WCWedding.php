@@ -16,10 +16,6 @@ class WCWedding extends Model
         'w_couple_id',
         'groom',
         'bride',
-        'waktu_pemberkatan',
-        'waktu_perayaan',
-        'lokasi_pemberkatan',
-        'lokasi_perayaan',
     ];
 
     public function w_couple(): BelongsTo {
@@ -27,7 +23,7 @@ class WCWedding extends Model
     }
 
     public function w_detail(): HasMany {
-        return $this->hasMany(WeddingDetail::class, 'w_c_wedding_id');
+        return $this->hasMany(WCWeddingDetail::class, 'w_c_wedding_id');
     }
 
     public function w_o_booking(): HasOne {

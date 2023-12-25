@@ -38,7 +38,7 @@
                             <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-s">
                                 <i class="fa-solid fa-at"></i>
                             </div>
-                            <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink focus:outline-none"
+                            <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink outline-none"
                                 type="email" name="email" id="email" placeholder="email@gmail.com" value="{{ old('email') }}" required autofocus>
                             <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-e"></div>
                         </div>
@@ -51,11 +51,10 @@
                     </div>
 
                     {{-- LOGIN BTN --}}
-                    <button class="w-full p-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors rounded"
+                    <button class="w-full p-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active outline-pink-hover outline-offset-4 transition-colors rounded"
                         type="submit">Kirim Email</button>
                 </form>
             </div>
         </div>
     </div>
 @endsection
-

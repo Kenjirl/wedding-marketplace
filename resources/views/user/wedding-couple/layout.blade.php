@@ -75,49 +75,39 @@
                         <img class="w-[100px] aspect-square rounded-full bg-white"
                             src="{{ asset('img/Logo.png') }}" alt="Logo">
                     </div>
-
-                    {{-- <div>
-                        <p class="font-great-vibes text-xl text-center">
-                            Wedding <br> Marketplace
-                        </p>
-                    </div> --}}
                 </div>
 
                 <div class="flex-1 w-full text-base">
                     <table class="table-fixed">
                         <tbody>
                             <tr>
-                                <td><i class="fa-brands fa-whatsapp"></i></td>
+                                <td class="text-center"><i class="fa-brands fa-whatsapp"></i></td>
                                 <td>:</td>
                                 <td>
-                                    <a class="outline-none hover:underline"
+                                    <a class="outline-white outline-offset-2 hover:underline"
                                         href="https://wa.me/6281246007474" target="_blank" rel="noopener noreferrer">
                                         (+62) 081246007474
                                     </a>
                                 </td>
                             </tr>
                             <tr>
-                                <td><i class="fa-regular fa-envelope"></i></td>
+                                <td class="text-center"><i class="fa-regular fa-envelope"></i></td>
                                 <td>:</td>
                                 <td>
-                                    <a class="outline-none hover:underline"
+                                    <a class="outline-white outline-offset-2 hover:underline"
                                         href="mailto:taweddingmarketplace@gmail.com" target="_blank" rel="noopener noreferrer">
                                         taweddingmarketplace@gmail.com
                                     </a>
                                 </td>
                             </tr>
                             <tr>
-                                <td><i class="fa-solid fa-location-dot"></i></td>
+                                <td class="text-center"><i class="fa-solid fa-location-dot"></i></td>
                                 <td>:</td>
                                 <td id="location_map"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
-                {{-- <div class="w-fit flex flex-col items-start justify-start">
-                    @include('user.wedding-couple.menu')
-                </div> --}}
             </div>
         </div>
 
@@ -144,7 +134,7 @@
         $(document).ready(function() {
             let location_text = 'Jl. Puri Gading blok F2/no.5, Jimbaran, Badung, Bali';
             let location_tag = `
-                <a class="outline-none hover:underline"
+                <a class="outline-white outline-offset-2 hover:underline"
                     href="http://maps.google.com/maps?q=${encodeURIComponent(location_text)}" target="_blank">
                     ${location_text}
                 </a>

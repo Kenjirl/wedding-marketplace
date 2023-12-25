@@ -16,12 +16,15 @@ use App\Http\Controllers\WeddingCouple\WCWeddingController;
 use App\Http\Controllers\WeddingCouple\WOBookingController;
 use App\Http\Controllers\WeddingCouple\WPBookingController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
+use App\Http\Controllers\WeddingOrganizer\WOJadwalController;
 use App\Http\Controllers\WeddingOrganizer\WOLayananController;
 use App\Http\Controllers\WeddingOrganizer\WOPesananController;
 use App\Http\Controllers\WeddingOrganizer\WOPortofolioController;
 use App\Http\Controllers\WeddingOrganizer\WOProfilController;
 use App\Http\Controllers\WeddingPhotographer\WPController;
+use App\Http\Controllers\WeddingPhotographer\WPJadwalController;
 use App\Http\Controllers\WeddingPhotographer\WPLayananController;
+use App\Http\Controllers\WeddingPhotographer\WPPesananController;
 use App\Http\Controllers\WeddingPhotographer\WPPortofolioController;
 use App\Http\Controllers\WeddingPhotographer\WPProfilController;
 use Illuminate\Support\Facades\Route;
@@ -268,6 +271,13 @@ Route::name('wedding-organizer.')
             Route::post('/respon/{id}', 'respon')   ->name('respon');
         });
 
+        Route::name('jadwal.')->prefix('/jadwal')
+            ->controller(WOJadwalController::class)->group(function() {
+            Route::get ('/',            'index')    ->name('index');
+            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
+            Route::post('/batal/{id}',  'batal')    ->name('batal');
+        });
+
     });
 
 });
@@ -313,6 +323,20 @@ Route::name('wedding-photographer.')
             Route::get ('/ubah/{id}',  'ke_ubah')    ->name('ke_ubah');
             Route::post('/ubah/{id}',  'ubah')       ->name('ubah');
             Route::post('/hapus/{id}', 'hapus')      ->name('hapus');
+        });
+
+        Route::name('pesanan.')->prefix('/pesanan')
+            ->controller(WPPesananController::class)->group(function() {
+            Route::get ('/',            'index')    ->name('index');
+            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
+            Route::post('/respon/{id}', 'respon')   ->name('respon');
+        });
+
+        Route::name('jadwal.')->prefix('/jadwal')
+            ->controller(WPJadwalController::class)->group(function() {
+            Route::get ('/',            'index')    ->name('index');
+            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
+            Route::post('/batal/{id}',  'batal')    ->name('batal');
         });
 
     });

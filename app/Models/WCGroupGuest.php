@@ -15,6 +15,7 @@ class WCGroupGuest extends Model
         'nama',
         'link_grup',
         'link',
+        'status',
     ];
 
     public function wedding(): BelongsTo {

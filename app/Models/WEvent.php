@@ -16,6 +16,7 @@ class WEvent extends Model
         'nama',
         'keterangan',
         'jenis',
+        'deleted',
     ];
 
     public function admin(): BelongsTo {

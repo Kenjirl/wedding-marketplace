@@ -1,10 +1,10 @@
 @extends('user.wedding-organizer.layout')
 
 @section('title')
-    <title>Detail Pesanan | Wedding Marketplace</title>
+    <title>Jadwal | Wedding Marketplace</title>
 @endsection
 
-@section('h1', 'Detail Pesanan')
+@section('h1', 'Jadwal > Detail Jadwal')
 
 @section('content')
     {{-- JUDUL --}}
@@ -84,31 +84,27 @@
             </div>
 
             {{-- FORM SUBMIT --}}
-            <form action="{{ route('wedding-organizer.pesanan.respon', $booking->id) }}" method="post" id="pesananForm">
+            <form action="{{ route('wedding-organizer.jadwal.batal', $booking->id) }}" method="post" id="pesananForm">
                 @csrf
                 {{-- STATUS --}}
                 <div class="hidden">
                     <input type="text" name="status" id="status" value="">
                 </div>
 
-                <div class="w-full p-2 flex items-center justify-end gap-4">
+                <div class="w-full p-2 flex items-center justify-end gap-2">
                     <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        href="{{ route('wedding-organizer.pesanan.index') }}">
+                        href="{{ route('wedding-organizer.jadwal.index') }}">
                         <i class="fa-solid fa-arrow-left-long"></i>
                         <span>Kembali</span>
                     </a>
 
-                    <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
-                        id="rejectBtn" type="button" onclick="respon('ditolak')">
-                        <i class="fa-solid fa-ban"></i>
-                        <span>Tolak</span>
-                    </button>
-
-                    <button class="w-fit px-4 py-2 font-semibold outline-none text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
-                        id="acceptBtn" type="button" onclick="respon('diterima')">
-                        <i class="fa-regular fa-circle-check"></i>
-                        <span>Terima</span>
-                    </button>
+                    @if (!$booking->bukti_bayar)
+                        <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
+                            id="rejectBtn" type="button" onclick="respon('ditolak')">
+                            <i class="fa-solid fa-ban"></i>
+                            <span>Batalkan</span>
+                        </button>
+                    @endif
                 </div>
             </form>
         </div>
@@ -181,17 +177,9 @@
 @push('child-js')
     <script>
         function respon(status) {
-            let title = 'menolak';
-            let text = 'Anda tidak akan dapat menerima pesanan ini jika sudah ditolak'
-
-            if (status === 'diterima') {
-                title = 'menerima';
-                text = 'Pastikan anda tidak memiliki jadwal yang bertabrakan';
-            }
-
             Swal.fire({
-                title: `Ingin ${title} pesanan ini?`,
-                text: `${text}`,
+                title: `Ingin membatalkan pesanan ini?`,
+                text: 'Anda tidak akan dapat menerima pesanan ini jika sudah ditolak',
                 icon: "warning",
                 iconColor: "#F78CA2",
                 showCloseButton: true,

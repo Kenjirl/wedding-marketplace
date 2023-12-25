@@ -33,7 +33,7 @@
                                 <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-s">
                                     <i class="fa-solid fa-at"></i>
                                 </div>
-                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink focus:outline-none"
+                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink outline-none"
                                     type="email" name="email" id="email" placeholder="email@gmail.com" value="{{ old('email') }}" required autofocus>
                                 <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-e"></div>
                             </div>
@@ -45,9 +45,9 @@
                                 <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-s">
                                     <i class="fa-solid fa-lock"></i>
                                 </div>
-                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink focus:outline-none"
+                                <input class="w-100 p-2 flex-1 border-y-2 border-white focus:border-pink outline-none"
                                     type="password" name="password" id="password" placeholder="password" value="{{ old('password') }}" required>
-                                <button class="w-10 aspect-square p-2 bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors text-white flex items-center justify-center rounded-e"
+                                <button class="w-10 aspect-square p-2 bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active outline-pink-hover outline-offset-4 transition-colors text-white flex items-center justify-center rounded-e"
                                     type="button" id="toggle-password-btn" onclick="togglePassword()">
                                     <i class="fa-regular fa-eye"></i>
                                 </button>
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="flex-1 text-end">
-                                    <a class="text-pink font-semibold text-sm hover:text-pink-hover focus:text-pink-hover focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                                    <a class="text-pink font-semibold text-sm hover:text-pink-hover focus:text-pink-hover outline-pink-hover outline-offset-4 transition-colors"
                                         href="{{ route('ke_lupa_password') }}">
                                         Lupa password?
                                     </a>
@@ -71,14 +71,14 @@
                         </div>
 
                         {{-- LOGIN BTN --}}
-                        <button class="w-full p-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors rounded"
+                        <button class="w-full p-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active outline-pink-hover outline-offset-4 transition-colors rounded"
                             type="submit">Masuk</button>
                     </form>
                 </div>
 
                 {{-- LOGIN WITH GOOGLE --}}
                 <div class="w-full mt-4">
-                    <a class="w-full block text-center p-2 text-gray-700 font-semibold bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-400 focus:outline-gray-300 focus:outline-offset-2 transition-colors rounded"
+                    <a class="w-full block text-center p-2 text-gray-700 font-semibold bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-400 focus:outline-gray-300 outline-offset-4 transition-colors rounded"
                         href="{{ route('google_login') }}">
                         <i class="fa-brands fa-google text-red-500"></i>
                         Masuk dengan Akun Google
@@ -90,7 +90,7 @@
             <div>
                 <span class="font-varela">
                     Belum punya akun?
-                    <a class="text-pink font-semibold hover:text-pink-hover focus:text-pink-hover focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                    <a class="text-pink font-semibold hover:text-pink-hover focus:text-pink-hover outline-pink-hover outline-offset-4 transition-colors"
                         href="{{ route('ke_daftar') }}">
                         Daftar Sekarang
                     </a>

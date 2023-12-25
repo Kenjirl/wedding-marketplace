@@ -2,8 +2,16 @@
 <div class="flex-1 w-full text-center">
     @if ($bookedOrganizer)
         {{-- BOOKED WO CARD --}}
-        <div class="w-3/4 mx-auto p-4 rounded border-2 border-slate-100">
-            <div class="w-full pb-4 flex items-center justify-start gap-2 border-b-2 border-slate-100">
+        @if ($bookedOrganizer->status == 'ditolak')
+            <div class="w-3/4 mx-auto rounded-md border-l-8 border-red-400">
+        @elseif ($bookedOrganizer->status == 'diterima')
+            <div class="w-3/4 mx-auto rounded-md border-l-8 border-blue-400">
+        @elseif ($bookedOrganizer->status == 'selesai')
+            <div class="w-3/4 mx-auto rounded-md border-l-8 border-green-400">
+        @else
+            <div class="w-3/4 mx-auto rounded-md border-l-8 border-yellow-400">
+        @endif
+            <div class="w-full p-4 flex items-center justify-start gap-2 border-2 border-l-0 border-slate-100 rounded-tr-md">
                 {{-- GAMBAR --}}
                 <div>
                     @if ($bookedOrganizer->plan->w_organizer->foto_profil)
@@ -19,15 +27,15 @@
 
                 {{-- NAMA PERUSH --}}
                 <div class="text-xl font-semibold">
-                    <a class="w-fit outline-none underline"
-                        href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer->plan->w_organizer->id) }}">
+                    <a class="w-fit outline-pink outline-offset-4 underline"
+                        href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer->plan->w_organizer->id) }}" target="_blank">
                         {{ $bookedOrganizer->plan->w_organizer->nama_perusahaan }}
                     </a>
                 </div>
             </div>
 
             {{-- NAMA PLAN --}}
-            <div class="w-full mx-auto py-4 px-2">
+            <div class="w-full mx-auto py-4 px-6 border-e-2 border-slate-100">
                 <div class="w-full flex items-center justify-start gap-2">
                     <i class="fa-solid fa-gift text-3xl text-pink"></i>
                     <span>
@@ -37,9 +45,9 @@
             </div>
 
             {{-- BAWAH --}}
-            <div class="w-full pt-4 flex items-center justify-between border-t-2 border-slate-100">
+            <div class="w-full p-4 flex items-center justify-between border-2 border-l-0 border-slate-100 rounded-br-md">
                 {{-- STATUS --}}
-                <div class="flex items-center justify-start gap-2 text-[.8em]">
+                <div class="flex items-center justify-start gap-2 text-[.9em]">
                     @if ($bookedOrganizer->status == 'ditolak')
                         <div class="w-fit aspect-square rounded-full text-red-500">
                             <i class="fa-solid fa-circle-xmark"></i>
@@ -64,7 +72,7 @@
 
                 {{-- TOMBOL OPEN MODAL --}}
                 <div class="flex-1 w-full text-end">
-                    <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                    <button class="w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                         type="button" id="openOrgModalBtn">
                         Detail
                     </button>
@@ -86,7 +94,7 @@
 
                     {{-- TOMBOL CLOSE MODAL --}}
                     <div>
-                        <button class="w-fit px-4 aspect-square rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                        <button class="w-fit px-4 aspect-square rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                             type="button" id="closeOrgModalBtn" tabindex="-1">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
@@ -105,8 +113,8 @@
                                     <i class="fa-solid fa-building"></i>
                                 </span>
 
-                                <a class="block text-2xl font-semibold outline-none underline"
-                                    href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer->plan->w_organizer->id) }}" tabindex="-1">
+                                <a class="block text-2xl font-semibold outline-pink outline-offset-4 underline"
+                                    href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer->plan->w_organizer->id) }}" tabindex="-1" target="_blank">
                                     {{ $bookedOrganizer->plan->w_organizer->nama_perusahaan }}
                                 </a>
                             </div>
@@ -156,8 +164,8 @@
                                             {{ implode('-', str_split($bookedOrganizer->plan->w_organizer->no_rekening, 4)) }}
                                         </div>
 
-                                        <button class="copyToClipBtn w-10 aspect-square p-2 rounded-e outline-none bg-slate-300 hover:bg-slate-200 focus:bg-slate-200 transition-colors"
-                                            data-value="{{ $bookedOrganizer->plan->w_organizer->no_rekening }}">
+                                        <button class="copyToClipBtn w-10 aspect-square p-2 rounded-e outline-pink outline-offset-4 bg-slate-300 hover:bg-slate-200 focus:bg-slate-200 transition-colors"
+                                            data-value="{{ $bookedOrganizer->plan->w_organizer->no_rekening }}" tabindex="-1">
                                             <i class="fa-regular fa-copy"></i>
                                         </button>
                                     </div>
@@ -172,8 +180,8 @@
                                             Rp {{ number_format($bookedOrganizer->plan->harga, 0, ',', '.') }}
                                         </div>
 
-                                        <button class="copyToClipBtn w-10 aspect-square p-2 rounded-e outline-none bg-slate-300 hover:bg-slate-200 focus:bg-slate-200 transition-colors"
-                                            data-value="{{ $bookedOrganizer->plan->harga }}">
+                                        <button class="copyToClipBtn w-10 aspect-square p-2 rounded-e outline-pink outline-offset-4 bg-slate-300 hover:bg-slate-200 focus:bg-slate-200 transition-colors"
+                                            data-value="{{ $bookedOrganizer->plan->harga }}" tabindex="-1">
                                             <i class="fa-regular fa-copy"></i>
                                         </button>
                                     </div>
@@ -201,12 +209,12 @@
                                         </div>
                                         <input class="hidden" type="file" name="bukti_bayar" id="bukti_bayar_org" accept="image/*" value="" tabindex="-1">
                                         <div class="w-full flex items-center justify-center gap-2">
-                                            <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-2 bg-white text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-                                                type="button" id="upBuktiBayarOrgBtn">
+                                            <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-4 bg-white text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+                                                type="button" id="upBuktiBayarOrgBtn" tabindex="-1">
                                                 Pilih Gambar
                                             </button>
-                                            <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-2 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:outline-slate-200 disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed transition-colors"
-                                                type="button" id="submitBuktiBayarOrgBtn" disabled>
+                                            <button class="flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:outline-slate-200 disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed transition-colors"
+                                                type="button" id="submitBuktiBayarOrgBtn" disabled tabindex="-1">
                                                 Unggah Gambar
                                             </button>
                                         </div>
@@ -249,7 +257,7 @@
                         @if ($bookedOrganizer->status != 'selesai')
                             <form action="{{ route('wedding-couple.pernikahan.hapus_wo', $bookedOrganizer->id) }}" method="post" id="hapusWOForm">
                                 @csrf
-                                <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                <button class="w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                                     type="button" id="hapusWOBtn" tabindex="-1">
                                     Batalkan Pesanan
                                 </button>
@@ -260,7 +268,7 @@
             </div>
         </div>
     @else
-        <a class="w-fit px-4 py-2 bg-pink text-white outline-none hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+        <a class="block w-fit mx-auto px-4 py-2 bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
             href="{{ route('wedding-couple.search.wo.index') }}">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 Cari Wedding Organizer

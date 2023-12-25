@@ -14,7 +14,7 @@
         </div>
 
         <div class="w-full">
-            <form action="{{ route('wedding-couple.pernikahan.tambah') }}" method="post">
+            <form action="{{ route('wedding-couple.pernikahan.tambah') }}" method="post" id="weddingForm">
                 @csrf
                 <div class="w-full">
                     {{-- GROOM & BRIDE --}}
@@ -413,17 +413,19 @@
                     </div>
 
                     <div class="flex-1 w-full flex items-center justify-end gap-4">
-                        <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                        <a class="block w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                             href="{{ route('wedding-couple.pernikahan.index') }}">
                             <i class="fa-solid fa-arrow-left-long"></i>
                             <span>Kembali</span>
                         </a>
 
                         <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                            type="submit">
+                            type="button" id="addWeddingButton">
                             <i class="fa-regular fa-floppy-disk"></i>
                             <span>Simpan</span>
                         </button>
+
+                        <button type="submit" id="submitWeddingBtn"></button>
                     </div>
                 </div>
             </form>
@@ -486,6 +488,22 @@
                     $("#infoContainer").removeClass("right-0").addClass("-right-[400px]");
                     $(this).data("toggle", false);
                 }
+            });
+
+            $('#addWeddingButton').on('click', function () {
+                Swal.fire({
+                    title: 'Yakin ingin membuat pernikahan ini?',
+                    text: "Pastikan bahwa data yang anda masukan sudah sesuai",
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#submitWeddingBtn').click();
+                    }
+                });
             });
         });
         </script>

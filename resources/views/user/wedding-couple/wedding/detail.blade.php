@@ -7,6 +7,35 @@
 @section('content')
     <div class="w-full max-w-[1200px] mx-auto">
         <div class="w-full">
+            {{-- BUTTONS --}}
+            <div class="w-full mt-4 px-4 flex items-center justify-between">
+                <div class="w-fit">
+                    <a class="block w-fit px-4 py-2 font-semibold outline-pink outline-offset-4 text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                        href="{{ route('wedding-couple.pernikahan.index') }}">
+                        <i class="fa-solid fa-arrow-left-long"></i>
+                        <span>Kembali</span>
+                    </a>
+                </div>
+
+                <div class="relative w-fit">
+                    <button class="w-fit px-4 aspect-square flex items-center justify-center font-semibold outline-pink outline-offset-4 text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded-full"
+                        type="button" id="toggleDeleteWeddingContainer">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+
+                    <div class="absolute top-[calc(100%+5px)] right-0 w-fit p-1 hidden rounded-lg bg-slate-200"
+                        id="deleteWeddingContainer">
+                        <form action="{{ route('wedding-couple.pernikahan.hapus', $wedding->id) }}" method="post" id="deleteWeddingForm">
+                            @csrf
+                            <button class="w-fit px-2 py-1 whitespace-nowrap font-semibold text-sm outline-pink outline-offset-4 text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                                type="button" id="deleteWeddingBtn" tabindex="-1">
+                                Hapus Pernikahan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             {{-- JUDUL --}}
             <div class="w-full p-4 flex items-center justify-start gap-8">
                 <div class="w-fit aspect-square p-4 bg-pink rounded text-4xl text-white">
@@ -92,6 +121,40 @@
 @push('child-js')
     <script>
         $(document).ready(function() {
+            // TOGGLE CONTAINER DELETE WEDDING
+            $("#toggleDeleteWeddingContainer").click(function () {
+                $("#deleteWeddingContainer").toggleClass("hidden");
+                $("#deleteWeddingContainer button").attr("tabindex", 0);
+            });
+
+            // HAPUS WEDDING
+            $('#deleteWeddingBtn').on('click', function () {
+                Swal.fire({
+                    title: 'Yakin ingin menghapus pernikahan ini?',
+                    html: `
+                        <div class="w-full text-start">
+                            <p>Data yang akan terhapus</p>
+                            <ul class="px-8 list-disc">
+                                <li>Data pernikahan</li>
+                                <li>Data pemesanan organizer</li>
+                                <li>Data pemesanan fotografer</li>
+                                <li>Bukti-bukti pembayaran</li>
+                            </ul>
+                            <p>Data tidak akan dapat dikembalikan lagi</p>
+                        </div>
+                    `,
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#deleteWeddingForm').submit();
+                    }
+                });
+            });
+
             // HAPUS PESANAN WO
             $('#hapusWOBtn').on('click', function () {
                 Swal.fire({
@@ -207,27 +270,27 @@
             // ORGANIZER TOGGLE MODAL
             $("#openOrgModalBtn").on('click', function() {
                 $('#bookingOrgModal').removeClass('top-full').addClass('top-0');
+                $('#bookingOrgModal button').attr('tabindex', 0);
+                $('#bookingOrgModal a').attr('tabindex', 0);
             });
             $("#closeOrgModalBtn").on('click', function() {
                 $('#bookingOrgModal').removeClass('top-0').addClass('top-full');
+                $('#bookingOrgModal button').attr('tabindex', -1);
+                $('#bookingOrgModal a').attr('tabindex', -1);
             });
 
             // FOTOGRAFER TOGGLE MODAL
             $('.openFtgModalBtn').on('click', function() {
                 const modalId = $(this).data('ftg-modal');
-                const modal = $(`#bookingFtgModal-${modalId}`);
-
-                if (modal) {
-                    modal.removeClass('top-full').addClass('top-0');
-                }
+                $(`#bookingFtgModal-${modalId}`).removeClass('top-full').addClass('top-0');
+                $(`#bookingFtgModal-${modalId} button`).attr('tabindex', 0);
+                $(`#bookingFtgModal-${modalId} a`).attr('tabindex', 0);
             });
             $('.closeFtgModalBtn').on('click', function() {
                 const modalId = $(this).data('ftg-modal');
-                const modal = $(`#bookingFtgModal-${modalId}`);
-
-                if (modal) {
-                    modal.removeClass('top-0').addClass('top-full');
-                }
+                $(`#bookingFtgModal-${modalId}`).removeClass('top-0').addClass('top-full');
+                $(`#bookingFtgModal-${modalId} button`).attr('tabindex', -1);
+                $(`#bookingFtgModal-${modalId} a`).attr('tabindex', -1);
             });
 
             // COPY TO CLIPBOARD

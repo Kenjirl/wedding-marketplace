@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('link_grup');
             $table->string('link')->nullable();
+            $table->enum('status', ['Terkirim', 'Belum Terkirim'])->default('Belum Terkirim');
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');

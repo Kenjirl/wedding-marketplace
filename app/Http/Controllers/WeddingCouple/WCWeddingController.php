@@ -88,6 +88,43 @@ class WCWeddingController extends Controller
         ));
     }
 
+    public function hapus($id) {
+        $wedding = WCWedding::find($id);
+
+        if ($wedding->w_detail) {
+            foreach ($wedding->w_detail as $event) {
+                $event->delete();
+            }
+        }
+
+        if ($wedding->w_o_booking) {
+            foreach ($wedding->w_o_booking as $bookedOrganizer) {
+                $bookedOrganizer->delete();
+
+                if ($bookedOrganizer->bukti_bayar) {
+                    unlink(public_path($bookedOrganizer->bukti_bayar));
+                }
+            }
+        }
+
+        if ($wedding->w_p_booking) {
+            foreach ($wedding->w_p_booking as $bookedPhotographer) {
+                $bookedPhotographer->delete();
+
+                if ($bookedPhotographer->bukti_bayar) {
+                    unlink(public_path($bookedPhotographer->bukti_bayar));
+                }
+            }
+        }
+
+        $data = $wedding->delete();
+
+        if ($data) {
+            return redirect()->route('wedding-couple.pernikahan.index')->with('sukses', 'Menghapus Pernikahan');
+        }
+        return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'Menghapus Pernikahan');
+    }
+
     public function hapus_wo($id) {
         // $data = WOBooking::find($id)
         //         ->update([

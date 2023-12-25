@@ -133,6 +133,9 @@
         </script>
     @endif
 
+    {{-- FULL CALENDAR JS CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
     @stack('child-js')
 </body>
 </html>
