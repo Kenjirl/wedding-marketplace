@@ -36,6 +36,9 @@
                 </div>
 
                 {{-- TANGGAL --}}
+                @php
+                    $yesdate = date('Y-m-d', strtotime("-1 days"));
+                @endphp
                 <div class="w-100 mb-4">
                     <div class="w-100">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('tanggal') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
@@ -45,7 +48,7 @@
                             </span>
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('tanggal') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="date" name="tanggal" id="tanggal"
+                            type="date" name="tanggal" id="tanggal" max="{{ $yesdate }}"
                             required
                             value="{{ old('tanggal', '') }}">
                     </div>

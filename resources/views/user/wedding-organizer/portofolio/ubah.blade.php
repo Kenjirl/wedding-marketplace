@@ -351,9 +351,19 @@
         });
 
         $('#deleteBtn').on("click", function () {
-            if(confirm('Yakin ingin menghapus portofolio ini?')) {
-                $('#submitDeleteBtn').click();
-            }
+            Swal.fire({
+                title: 'Hapus portofolio ini?',
+                text: "Data tidak akan dapat dikembalikan lagi",
+                icon: "warning",
+                iconColor: "#F78CA2",
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "Konfirmasi"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#submitDeleteBtn').click();
+                }
+            });
         });
 
         $('#foto').on('change', function() {

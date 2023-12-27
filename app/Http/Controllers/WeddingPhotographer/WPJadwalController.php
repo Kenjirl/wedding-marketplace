@@ -16,7 +16,7 @@ class WPJadwalController extends Controller
         $bookings = WPBooking::join('w_p_plans', 'w_p_bookings.w_p_plan_id', '=', 'w_p_plans.id')
                 ->join('w_photographers', 'w_p_plans.w_photographer_id', '=', 'w_photographers.id')
                 ->where('w_photographers.id', auth()->user()->w_photographer->id)
-                ->where('w_p_bookings.status', 'diproses')
+                ->where('w_p_bookings.status', 'diterima')
                 ->select('w_p_bookings.*')
                 ->get();
 

@@ -66,6 +66,7 @@
                         </div>
                     </div>
 
+                    {{-- INFO --}}
                     <div class="fixed top-0 -right-[400px] w-[400px] bg-white border-l-2 border-pink z-10 transition-all"
                         id="infoContainer">
                         <div class="relative w-full min-h-screen mt-20 p-4">
@@ -172,6 +173,9 @@
                                             type="number" name="w_event_id[]" id="w_event_id" value="{{ $event->id }}" disabled>
 
                                         {{-- TANGGAL --}}
+                                        @php
+                                            $tomDate = new DateTime('tomorrow');
+                                        @endphp
                                         <div class="w-100 mb-4">
                                             <div class="w-100">
                                                 <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('waktu[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
@@ -181,7 +185,7 @@
                                                     </span>
                                                 </div>
                                                 <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
-                                                    type="datetime-local" name="waktu[]" id="waktu"
+                                                    type="datetime-local" name="waktu[]" id="waktu" min="{{ $tomDate->format('Y-m-d H:i:s') }}"
                                                     disabled
                                                     value="{{ old('waktu[]') }}">
                                             </div>
@@ -302,7 +306,7 @@
                                                     </span>
                                                 </div>
                                                 <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                                    type="datetime-local" name="waktu[]" id="waktu"
+                                                    type="datetime-local" name="waktu[]" id="waktu" min="{{ $tomDate->format('Y-m-d H:i:s') }}"
                                                     required
                                                     value="{{ old('waktu[]', '') }}">
                                             </div>

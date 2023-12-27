@@ -110,7 +110,7 @@
                             {{-- nama --}}
                             <div class="w-full mb-4 flex items-center justify-start gap-4">
                                 <span class="w-fit px-4 flex items-center justify-center aspect-square bg-pink rounded text-xl text-white">
-                                    <i class="fa-solid fa-building"></i>
+                                    <i class="fa-solid fa-camera-retro"></i>
                                 </span>
 
                                 <a class="block text-2xl font-semibold outline-pink outline-offset-4 underline"
