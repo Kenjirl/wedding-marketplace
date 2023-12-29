@@ -50,7 +50,11 @@ class SAAdminController extends Controller
     }
 
     public function ke_ubah($id) {
-        $admin = Admin::where('id', $id)->first();
+        $admin = Admin::find($id);
+
+        if (!$admin) {
+            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'ID Invalid');
+        }
 
         $alamatArray = explode(', ', $admin->alamat);
         list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
@@ -117,6 +121,10 @@ class SAAdminController extends Controller
     public function hapus($id) {
         $admin = Admin::where('id', $id)->first();
         $user = User::where('id', $admin->user_id)->first();
+
+        if (!$admin || !$user) {
+            return redirect()->route('super-admin.daftar-admin.ke_daftar')->with('gagal', 'ID Invalid');
+        }
 
         $data1 = $user->delete();
         $data2 = $admin->delete();

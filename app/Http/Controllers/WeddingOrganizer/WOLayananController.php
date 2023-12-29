@@ -63,7 +63,12 @@ class WOLayananController extends Controller
     }
 
     public function ke_ubah($id) {
-        $plan = WOPlan::where('id', $id)->first();
+        $plan = WOPlan::find($id);
+
+        if (!$plan) {
+            return redirect()->route('wedding-organizer.layanan.index')->with('gagal', 'ID Invalid');
+        }
+
         $fitur_tambahan = WOPlanDetail::where('w_o_plan_id', $id)->get();
         $fitur_tambahan->shift();
 

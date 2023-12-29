@@ -63,7 +63,12 @@ class WPLayananController extends Controller
     }
 
     public function ke_ubah($id) {
-        $plan = WPPlan::where('id', $id)->first();
+        $plan = WPPlan::find($id);
+
+        if (!$plan) {
+            return redirect()->route('wedding-photographer.layanan.index')->with('gagal', 'ID Invalid');
+        }
+
         $fitur_tambahan = WPPlanDetail::where('w_p_plan_id', $id)->get();
         $fitur_tambahan->shift();
 

@@ -65,7 +65,12 @@ class WCWeddingController extends Controller
     }
 
     public function ke_detail($id) {
-        $wedding             = WCWedding::find($id);
+        $wedding = WCWedding::find($id);
+
+        if (!$wedding) {
+            return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'ID Invalid');
+        }
+
         $weddingEvents       = WCWeddingDetail::where('w_c_wedding_id', $id)
                                 ->orderBy('waktu', 'asc')
                                 ->get();
@@ -126,10 +131,6 @@ class WCWeddingController extends Controller
     }
 
     public function hapus_wo($id) {
-        // $data = WOBooking::find($id)
-        //         ->update([
-        //             'status' => 'batal',
-        //         ]);
         $booking = WOBooking::find($id);
         if ($booking->bukti_bayar) {
             unlink(public_path($booking->bukti_bayar));
@@ -143,10 +144,6 @@ class WCWeddingController extends Controller
     }
 
     public function hapus_wp($id) {
-        // $data = WPBooking::find($id)
-        //         ->update([
-        //             'status' => 'batal',
-        //         ]);
         $booking = WPBooking::find($id);
         if ($booking->bukti_bayar) {
             unlink(public_path($booking->bukti_bayar));

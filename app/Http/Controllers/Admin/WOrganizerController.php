@@ -50,6 +50,10 @@ class WOrganizerController extends Controller
     public function ke_validasi($id) {
         $portofolio = WOPortofolio::find($id);
 
+        if (!$portofolio) {
+            return redirect()->route('admin.wo.portofolio.index')->with('gagal', 'ID Invalid');
+        }
+
         return view('user.admin.portofolio.w-organizer.validasi', compact('portofolio'));
     }
 

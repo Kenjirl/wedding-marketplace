@@ -42,10 +42,10 @@
 
                         <div class="w-full h-[2px] bg-slate-200"></div>
 
-                        <form class="w-full" action="{{ route('keluar') }}" method="post">
+                        <form class="w-full" action="{{ route('keluar') }}" method="post" id="logoutForm">
                             @csrf
                             <button class="w-full text-start p-2 hover:bg-pink hover:text-white outline-pink outline-offset-4 focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-                                type="submit">
+                                type="button" id="logoutBtn">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 Keluar
                             </button>
@@ -130,6 +130,19 @@
                 $('#profileLayout').removeClass("flex").addClass("hidden");
             }
         }
+
+        $('#logoutBtn').on("click", function () {
+            Swal.fire({
+                title: "Yakin ingin keluar?",
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "Konfirmasi"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#logoutForm").submit();
+                }
+            });
+        });
 
         $(document).ready(function() {
             let location_text = 'Jl. Puri Gading blok F2/no.5, Jimbaran, Badung, Bali';

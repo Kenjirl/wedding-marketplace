@@ -26,6 +26,11 @@ class WOPesananController extends Controller
 
     public function ke_detail($id) {
         $booking  = WOBooking::find($id);
+
+        if (!$booking) {
+            return redirect()->route('wedding-organizer.pesanan.index')->with('gagal', 'ID Invalid');
+        }
+
         $plan     = WOPlan::find($booking->w_o_plan_id);
         $features = WOPlanDetail::where('w_o_plan_id', $booking->w_o_plan_id)->get();
         $wedding  = WCWedding::find($booking->w_c_wedding_id);

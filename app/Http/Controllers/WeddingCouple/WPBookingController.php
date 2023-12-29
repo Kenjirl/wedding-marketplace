@@ -85,6 +85,11 @@ class WPBookingController extends Controller
 
     public function ke_detail(Request $req, $id) {
         $photographer = WPhotographer::find($id);
+
+        if (!$photographer) {
+            return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'ID Invalid');
+        }
+
         $portofolios = WPPortofolio::where('w_photographer_id', $photographer->id)
                         ->where('status', 'diterima')
                         ->orderBy('tanggal', 'asc')

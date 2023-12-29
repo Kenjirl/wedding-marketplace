@@ -111,6 +111,11 @@ class WOBookingController extends Controller
 
     public function ke_detail(Request $req, $id) {
         $organizer = WOrganizer::find($id);
+
+        if (!$organizer) {
+            return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'ID Invalid');
+        }
+
         $categories = WOCategories::where('w_organizer_id', $organizer->id)
                         ->join('w_categories', 'w_o_categories.w_categories_id', '=', 'w_categories.id')
                         ->orderBy('w_categories.nama', 'asc')

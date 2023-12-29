@@ -50,6 +50,10 @@ class WPhotographerController extends Controller
     public function ke_validasi($id) {
         $portofolio = WPPortofolio::find($id);
 
+        if (!$portofolio) {
+            return redirect()->route('admin.wp.portofolio.index')->with('gagal', 'ID Invalid');
+        }
+
         return view('user.admin.portofolio.w-photographer.validasi', compact('portofolio'));
     }
 

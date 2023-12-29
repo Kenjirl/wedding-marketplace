@@ -52,7 +52,11 @@ class AEventController extends Controller
     }
 
     public function ke_ubah($id) {
-        $event = WEvent::where('id', $id)->first();
+        $event = WEvent::find($id);
+
+        if (!$event) {
+            return redirect()->route('admin.event-pernikahan.index')->with('gagal', 'ID Invalid');
+        }
 
         return view('user.admin.master.event.ubah', compact('event'));
     }
@@ -89,7 +93,12 @@ class AEventController extends Controller
     }
 
     public function hapus($id) {
-        $event = WEvent::where('id', $id)->first();
+        $event = WEvent::find($id);
+
+        if (!$event) {
+            return redirect()->route('admin.event-pernikahan.index')->with('gagal', 'ID Invalid');
+        }
+
         $event->deleted = true;
         $data = $event->save();
 

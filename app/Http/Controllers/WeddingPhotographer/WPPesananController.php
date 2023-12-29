@@ -25,6 +25,11 @@ class WPPesananController extends Controller
 
     public function ke_detail($id) {
         $booking  = WPBooking::find($id);
+
+        if (!$booking) {
+            return redirect()->route('wedding-photographer.pesanan.index')->with('gagal', 'ID Invalid');
+        }
+
         $plan     = WPPlan::find($booking->w_p_plan_id);
         $features = WPPlanDetail::where('w_p_plan_id', $booking->w_p_plan_id)->get();
         $wedding  = WCWedding::find($booking->w_c_wedding_id);

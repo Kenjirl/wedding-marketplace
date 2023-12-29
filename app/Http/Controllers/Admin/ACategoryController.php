@@ -47,6 +47,9 @@ class ACategoryController extends Controller
     public function ke_ubah($id) {
         $wkg = WCategories::find($id);
 
+        if (!$wkg) {
+            return redirect()->route('admin.kategori-pernikahan.index')->with('gagal', 'ID Invalid');
+        }
         return view('user.admin.master.kategori.ubah', compact('wkg'));
     }
 
@@ -78,8 +81,13 @@ class ACategoryController extends Controller
     }
 
     public function hapus($id) {
-        $kategori = WCategories::where('id', $id)->first();
-        $data = $kategori->delete();
+        $wkg = WCategories::find($id);
+
+        if (!$wkg) {
+            return redirect()->route('admin.kategori-pernikahan.index')->with('gagal', 'ID Invalid');
+        }
+
+        $data = $wkg->delete();
 
         if ($data) {
             return redirect()->route('admin.kategori-pernikahan.index')->with('sukses', 'Menghapus Kategori Pernikahan');
