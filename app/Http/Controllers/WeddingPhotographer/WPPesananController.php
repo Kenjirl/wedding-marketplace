@@ -18,6 +18,7 @@ class WPPesananController extends Controller
                 ->where('w_photographers.id', auth()->user()->w_photographer->id)
                 ->where('w_p_bookings.status', 'diproses')
                 ->select('w_p_bookings.*')
+                ->orderBy('w_p_bookings.created_at', 'desc')
                 ->get();
 
         return view('user.wedding-photographer.pesanan.index', compact('bookings'));

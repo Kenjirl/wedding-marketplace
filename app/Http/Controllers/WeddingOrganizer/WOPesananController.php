@@ -19,6 +19,7 @@ class WOPesananController extends Controller
                 ->where('w_organizers.id', auth()->user()->w_organizer->id)
                 ->where('w_o_bookings.status', 'diproses')
                 ->select('w_o_bookings.*')
+                ->orderBy('w_o_bookings.created_at', 'desc')
                 ->get();
 
         return view('user.wedding-organizer.pesanan.index', compact('bookings'));

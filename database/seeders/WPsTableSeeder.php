@@ -32,7 +32,7 @@ class WPsTableSeeder extends Seeder
             [
                 'user_id'        => 7,
                 'nama'           => 'Aniana',
-                'gender'         => 'Pria',
+                'gender'         => 'Wanita',
                 'no_telp'        => '081212341234',
                 'basis_operasi'  => 'Bisa ke Luar Kota',
                 'status'         => 'Individu',
