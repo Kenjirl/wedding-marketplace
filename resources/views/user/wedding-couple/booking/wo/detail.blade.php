@@ -261,14 +261,9 @@
                                     </div>
 
                                     {{-- fitur --}}
-                                    <div class="w-full p-4">
-                                        <ul class="list-disc">
-                                            @forelse ($plan->fitur as $fitur)
-                                                <li>{{ $fitur->isi }}</li>
-                                            @empty
-                                                <li>Tidak ada fitur</li>
-                                            @endforelse
-                                        </ul>
+                                    <div class="w-full max-h-[200px] overflow-y-auto px-4 my-2"
+                                        id="detailPlan">
+                                        {!! $plan->detail !!}
                                     </div>
 
                                     {{-- harga --}}
@@ -407,6 +402,8 @@
                 // KLIK BUTTON PERTAMA
                 $('.paket-layanan-button:first').click();
             }
+
+            $('#detailPlan ul').addClass('list-disc px-4');
 
             $('#bookingBtn').on('click', function() {
                 let organizer = $('#namaOrganizer').text();

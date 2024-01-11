@@ -27,14 +27,9 @@
                             </span>
                         </div>
 
-                        <div class="w-full px-8 my-2 text-sm">
-                            <ul class="list-disc">
-                                @forelse ($plan->fitur as $fitur)
-                                    <li>{{ $fitur->isi }}</li>
-                                @empty
-                                    <li>Tidak ada fitur</li>
-                                @endforelse
-                            </ul>
+                        <div class="w-full px-4 my-2 text-sm line-clamp-6"
+                            id="detailPlan">
+                            {!! $plan->detail !!}
                         </div>
                     </div>
 
@@ -59,3 +54,11 @@
         </div>
     </div>
 @endsection
+
+@push('child-js')
+    <script>
+        $('document').ready(function () {
+            $('#detailPlan ul').addClass('list-disc px-4');
+        });
+    </script>
+@endpush

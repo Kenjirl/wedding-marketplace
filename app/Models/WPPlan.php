@@ -14,6 +14,7 @@ class WPPlan extends Model
     protected $fillable = [
         'w_photographer_id',
         'nama',
+        'detail',
         'harga',
     ];
 
@@ -21,7 +22,7 @@ class WPPlan extends Model
         return $this->belongsTo(WPhotographer::class, 'w_photographer_id');
     }
 
-    public function fitur(): HasMany {
-        return $this->hasMany(WPPlanDetail::class, 'w_p_plan_id');
+    public function bookings(): HasMany {
+        return $this->hasMany(WPBooking::class, 'w_p_plan_id');
     }
 }

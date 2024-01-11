@@ -70,10 +70,10 @@
     <script>
     tinymce.init({
         selector: 'textarea#input',
-        plugins: 'visualblocks wordcount',
-        // plugins: 'lists advlist visualblocks wordcount checklist powerpaste',
-        toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | indent outdent',
-        // toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | checklist numlist bullist indent outdent',
+        // plugins: 'visualblocks wordcount',
+        plugins: 'lists advlist visualblocks wordcount',
+        // toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | indent outdent',
+        toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | checklist numlist bullist indent outdent',
         menu: {
             format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat' },
         }

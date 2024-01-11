@@ -19,66 +19,26 @@ class WPPlansTableSeeder extends Seeder
             [
                 'w_photographer_id' => 1,
                 'nama'           => 'Murah',
+                'detail'         => 'Ini detail',
                 'harga'          => 1000000,
             ],
             [
                 'w_photographer_id' => 1,
                 'nama'           => 'Mahal',
+                'detail'         => 'Ini detail',
                 'harga'          => 12000000,
             ],
             [
                 'w_photographer_id' => 2,
                 'nama'           => 'Murah',
+                'detail'         => 'Ini detail',
                 'harga'          => 1000000,
             ],
             [
                 'w_photographer_id' => 2,
                 'nama'           => 'Mahal',
+                'detail'         => 'Ini detail',
                 'harga'          => 12000000,
-            ],
-        ]);
-
-
-        DB::table('w_p_plan_details')->insert([
-            [
-                'w_p_plan_id' => 1,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_p_plan_id' => 1,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_p_plan_id' => 2,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_p_plan_id' => 2,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_p_plan_id' => 2,
-                'isi'         => 'Fitur C',
-            ],
-            [
-                'w_p_plan_id' => 3,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_p_plan_id' => 3,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_p_plan_id' => 4,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_p_plan_id' => 4,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_p_plan_id' => 4,
-                'isi'         => 'Fitur C',
             ],
         ]);
     }

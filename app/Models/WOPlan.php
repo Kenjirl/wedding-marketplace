@@ -14,15 +14,12 @@ class WOPlan extends Model
     protected $fillable = [
         'w_organizer_id',
         'nama',
+        'detail',
         'harga',
     ];
 
     public function w_organizer(): BelongsTo {
         return $this->belongsTo(WOrganizer::class, 'w_organizer_id');
-    }
-
-    public function fitur(): HasMany {
-        return $this->hasMany(WOPlanDetail::class, 'w_o_plan_id');
     }
 
     public function bookings(): HasMany {

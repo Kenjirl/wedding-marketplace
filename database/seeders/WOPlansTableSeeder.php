@@ -19,66 +19,26 @@ class WOPlansTableSeeder extends Seeder
             [
                 'w_organizer_id' => 1,
                 'nama'           => 'Murah',
+                'detail'         => 'Ini detail',
                 'harga'          => 1000000,
             ],
             [
                 'w_organizer_id' => 1,
                 'nama'           => 'Mahal',
+                'detail'         => 'Ini detail',
                 'harga'          => 12000000,
             ],
             [
                 'w_organizer_id' => 2,
                 'nama'           => 'Murah',
+                'detail'         => 'Ini detail',
                 'harga'          => 1000000,
             ],
             [
                 'w_organizer_id' => 2,
                 'nama'           => 'Mahal',
+                'detail'         => 'Ini detail',
                 'harga'          => 12000000,
-            ],
-        ]);
-
-
-        DB::table('w_o_plan_details')->insert([
-            [
-                'w_o_plan_id' => 1,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_o_plan_id' => 1,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_o_plan_id' => 2,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_o_plan_id' => 2,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_o_plan_id' => 2,
-                'isi'         => 'Fitur C',
-            ],
-            [
-                'w_o_plan_id' => 3,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_o_plan_id' => 3,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_o_plan_id' => 4,
-                'isi'         => 'Fitur A',
-            ],
-            [
-                'w_o_plan_id' => 4,
-                'isi'         => 'Fitur B',
-            ],
-            [
-                'w_o_plan_id' => 4,
-                'isi'         => 'Fitur C',
             ],
         ]);
     }
