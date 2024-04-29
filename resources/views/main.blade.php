@@ -43,6 +43,9 @@
     {{-- MAGNIFIC LIGHTBOX CSS --}}
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
 
+    {{-- INTERNATIONAL TEL INPUT CSS --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+
     @yield('title')
 
     {{-- GOOGLE FONT --}}

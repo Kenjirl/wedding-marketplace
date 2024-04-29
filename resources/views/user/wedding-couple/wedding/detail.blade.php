@@ -305,6 +305,8 @@
 
                 toastr.success("Berhasil menyalin ke clipboard", "Sukses");
             });
+
+            $('.detail-plan ul').addClass('list-disc px-4');
         });
     </script>
 @endpush

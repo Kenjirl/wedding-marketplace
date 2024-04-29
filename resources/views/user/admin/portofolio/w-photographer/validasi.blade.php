@@ -124,13 +124,13 @@
 
                     <div class="w-full max-h-[400px] grid grid-cols-2 p-2 gap-2 overflow-y-auto"
                         id="image-preview">
-                        @foreach ($portofolio->photo as $foto)
+                        @foreach ($portofolio->foto as $index => $foto)
                             <div class="relative flex items-center justify-center rounded bg-slate-100">
                                 <img class="h-[300px] object-contain"
-                                    src="{{ asset($foto->url) }}" alt="Foto Portofolio">
+                                    src="{{ asset($foto['url']) }}" alt="Foto Portofolio">
 
-                                <input class="absolute top-0 right-0 w-6 aspect-square accent-pink border border-pink rounded"
-                                    type="checkbox" name="rejected[]" value="{{ $foto->id }}" {{ $foto->rejected ? 'checked' : '' }}>
+                                <input class="absolute top-0 right-0 w-6 aspect-square"
+                                    type="checkbox" name="rejected[]" value="{{ $index }}" {{ $foto['rejected'] ? 'checked' : '' }}>
                             </div>
                         @endforeach
                     </div>

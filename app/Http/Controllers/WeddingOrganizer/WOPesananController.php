@@ -7,8 +7,6 @@ use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
 use App\Models\WOBooking;
 use App\Models\WOPlan;
-use App\Models\WOPlanDetail;
-use App\Models\WOrganizer;
 use Illuminate\Http\Request;
 
 class WOPesananController extends Controller
@@ -33,7 +31,6 @@ class WOPesananController extends Controller
         }
 
         $plan     = WOPlan::find($booking->w_o_plan_id);
-        $features = WOPlanDetail::where('w_o_plan_id', $booking->w_o_plan_id)->get();
         $wedding  = WCWedding::find($booking->w_c_wedding_id);
         $events   = WCWeddingDetail::where('w_c_wedding_id', $booking->w_c_wedding_id)
                         ->orderBy('waktu', 'asc')
@@ -42,7 +39,6 @@ class WOPesananController extends Controller
         return view('user.wedding-organizer.pesanan.detail', compact(
             'booking',
             'plan',
-            'features',
             'wedding',
             'events',
         ));

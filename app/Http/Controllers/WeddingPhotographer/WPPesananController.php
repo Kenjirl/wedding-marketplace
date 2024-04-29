@@ -7,7 +7,6 @@ use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
 use App\Models\WPBooking;
 use App\Models\WPPlan;
-use App\Models\WPPlanDetail;
 use Illuminate\Http\Request;
 
 class WPPesananController extends Controller
@@ -32,7 +31,6 @@ class WPPesananController extends Controller
         }
 
         $plan     = WPPlan::find($booking->w_p_plan_id);
-        $features = WPPlanDetail::where('w_p_plan_id', $booking->w_p_plan_id)->get();
         $wedding  = WCWedding::find($booking->w_c_wedding_id);
         $events   = WCWeddingDetail::where('w_c_wedding_id', $booking->w_c_wedding_id)
                         ->orderBy('waktu', 'asc')
@@ -41,7 +39,6 @@ class WPPesananController extends Controller
         return view('user.wedding-photographer.pesanan.detail', compact(
             'booking',
             'plan',
-            'features',
             'wedding',
             'events',
         ));

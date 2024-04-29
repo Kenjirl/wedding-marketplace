@@ -51,7 +51,7 @@ class WPhotographerController extends Controller
         $portofolio = WPPortofolio::find($id);
 
         if (!$portofolio) {
-            return redirect()->route('admin.wp.portofolio.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID Invalid');
         }
 
         return view('user.admin.portofolio.w-photographer.validasi', compact('portofolio'));
@@ -62,30 +62,28 @@ class WPhotographerController extends Controller
             'status' => 'required'
         ]);
 
-        // SET FOTO JADI FALSE
-        $fotos = WPPortofolioPhoto::where('w_p_portofolio_id', $id)->get();
-        foreach ($fotos as $foto) {
-            WPPortofolioPhoto::where('id', $foto->id)->update([
-                'rejected' => false,
-            ]);
-        }
+        $portofolio = WPPortofolio::findOrFail($id);
 
-        if ($req->status == 'ditolak') {
-            // SET FOTO DICENTANG JADI TRUE
+        // Set all 'rejected' statuses to false by default
+        $currentFoto = $portofolio->foto;
+        foreach ($currentFoto as &$photo) {
+            $photo['rejected'] = false;
+        }
+        unset($photo);
+
+        // If 'status' is 'ditolak', update 'rejected' statuses based on input
+        if ($req->status === 'ditolak') {
             $rejectedPhotoIds = $req->input('rejected', []);
-            foreach ($rejectedPhotoIds as $photoId) {
-                WPPortofolioPhoto::where('id', $photoId)->update([
-                    'rejected' => true,
-                ]);
+            foreach ($rejectedPhotoIds as $index) {
+                if (isset($currentFoto[$index])) {
+                    $currentFoto[$index]['rejected'] = true;
+                }
             }
         }
-
-        // UPDATE STATUS PORTOFOLIO
-        $data = WPPortofolio::where('id', $id)
-                ->update([
-                    'admin_id' => auth()->user()->admin->id,
-                    'status'   => $req->status,
-                ]);
+        $portofolio->admin_id = auth()->user()->admin->id;
+        $portofolio->status = $req->status;
+        $portofolio->foto = $currentFoto;
+        $data = $portofolio->save();
 
         if ($data) {
             return redirect()->route('admin.wp.portofolio.index', $req->status)->with('sukses', 'Mengubah Validasi Portofolio');

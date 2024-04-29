@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AConfiguration;
 use App\Models\WOPortofolio;
-use App\Models\WOPortofolioPhoto;
 use Illuminate\Http\Request;
 
 class WOrganizerController extends Controller
@@ -51,7 +50,7 @@ class WOrganizerController extends Controller
         $portofolio = WOPortofolio::find($id);
 
         if (!$portofolio) {
-            return redirect()->route('admin.wo.portofolio.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID Invalid');
         }
 
         return view('user.admin.portofolio.w-organizer.validasi', compact('portofolio'));
@@ -62,29 +61,28 @@ class WOrganizerController extends Controller
             'status' => 'required'
         ]);
 
-        // SET FOTO JADI FALSE
-        $fotos = WOPortofolioPhoto::where('w_o_portofolio_id', $id)->get();
-        foreach ($fotos as $foto) {
-            WOPortofolioPhoto::where('id', $foto->id)->update([
-                'rejected' => false,
-            ]);
-        }
+        $portofolio = WOPortofolio::findOrFail($id);
 
-        if ($req->status == 'ditolak') {
-            // SET FOTO DICENTANG JADI TRUE
+        // Set all 'rejected' statuses to false by default
+        $currentFoto = $portofolio->foto;
+        foreach ($currentFoto as &$photo) {
+            $photo['rejected'] = false;
+        }
+        unset($photo);
+
+        // If 'status' is 'ditolak', update 'rejected' statuses based on input
+        if ($req->status === 'ditolak') {
             $rejectedPhotoIds = $req->input('rejected', []);
-            foreach ($rejectedPhotoIds as $photoId) {
-                WOPortofolioPhoto::where('id', $photoId)->update([
-                    'rejected' => true,
-                ]);
+            foreach ($rejectedPhotoIds as $index) {
+                if (isset($currentFoto[$index])) {
+                    $currentFoto[$index]['rejected'] = true;
+                }
             }
         }
-
-        $data = WOPortofolio::where('id', $id)
-                ->update([
-                    'admin_id' => auth()->user()->admin->id,
-                    'status'   => $req->status,
-                ]);
+        $portofolio->admin_id = auth()->user()->admin->id;
+        $portofolio->status = $req->status;
+        $portofolio->foto = $currentFoto;
+        $data = $portofolio->save();
 
         if ($data) {
             return redirect()->route('admin.wo.portofolio.index', $req->status)->with('sukses', 'Mengubah Validasi Portofolio Organizer');

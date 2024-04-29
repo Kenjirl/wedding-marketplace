@@ -13,8 +13,8 @@
             {{-- KIRI --}}
             <div class="flex-1">
                 {{-- NAMA ADMIN --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100">
+                <div class="w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Nama Lengkap
                         </div>
@@ -35,8 +35,8 @@
                 {{-- EMAIL AND PASSWORD CONTAINER --}}
                 <div class="grid grid-cols-2 gap-4">
                     {{-- EMAIL --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100">
+                    <div class="w-full mb-4">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('email') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Email
                             </div>
@@ -55,8 +55,8 @@
                     </div>
 
                     {{-- PASSWORD --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100">
+                    <div class="w-full mb-4">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                                 Password
                             </div>
@@ -71,8 +71,8 @@
                 {{-- NAMA PENGGUNA & NO TELP CONTAINER --}}
                 <div class="grid grid-cols-2 gap-4">
                     {{-- NAMA PENGGUNA --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100">
+                    <div class="w-full mb-4">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('username') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Nama Pengguna
                             </div>
@@ -91,8 +91,8 @@
                     </div>
 
                     {{-- TELEPON --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100">
+                    <div class="w-full mb-4">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('no_telp') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 Telepon
                             </div>
@@ -112,8 +112,8 @@
                 </div>
 
                 {{-- GENDER --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
+                <div class="relative w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('gender') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Gender
                         </div>
@@ -137,8 +137,8 @@
             {{-- KANAN --}}
             <div class="flex-1">
                 {{-- PROVINSI --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
+                <div class="relative w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Provinsi
                         </div>
@@ -157,8 +157,8 @@
                 </div>
 
                 {{-- KOTA --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
+                <div class="relative w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kota') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kota/Kabupaten
                         </div>
@@ -177,8 +177,8 @@
                 </div>
 
                 {{-- KECAMATAN --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
+                <div class="relative w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kecamatan
                         </div>
@@ -197,8 +197,8 @@
                 </div>
 
                 {{-- KELURAHAN --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
+                <div class="relative w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Kelurahan
                         </div>
@@ -217,8 +217,8 @@
                 </div>
 
                 {{-- ALAMAT --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
+                <div class="relative w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat_detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             Alamat Detail
                         </div>
@@ -239,7 +239,7 @@
         </div>
 
         {{-- BUTTON --}}
-        <div class="w-100 mt-4 flex items-center justify-end gap-4">
+        <div class="w-full mt-4 flex items-center justify-end gap-4">
             <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                 href="{{ route('super-admin.daftar-admin.ke_daftar') }}">
                 <i class="fa-solid fa-arrow-left-long"></i>
@@ -263,4 +263,21 @@
             populateSelect(provinsiData, 'provinsi', 'Pilih Provinsi', 'name');
         });
     </script>
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <script>
+        const no_telp = document.querySelector("#no_telp");
+        window.intlTelInput(no_telp, {
+            initialCountry: "auto",
+            geoIpLookup: function(callback) {
+                fetch("https://ipapi.co/json")
+                .then(function(res) { return res.json(); })
+                .then(function(data) { callback(data.country_code); })
+                .catch(function() { callback("id"); });
+            },
+            separateDialCode: true,
+            onlyCountries: ['id'],
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+        });
+    </script> --}}
 @endpush

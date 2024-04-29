@@ -245,13 +245,13 @@ Route::name('wedding-organizer.')
 
         Route::name('portofolio.')->prefix('/portofolio')
             ->controller(WOPortofolioController::class)->group(function() {
-            Route::get ('/',                'index')     ->name('index');
-            Route::get ('/tambah',          'ke_tambah') ->name('ke_tambah');
-            Route::post('/tambah',          'tambah')    ->name('tambah');
-            Route::get ('/ubah/{id}',       'ke_ubah')   ->name('ke_ubah');
-            Route::post('/ubah/{id}',       'ubah')      ->name('ubah');
-            Route::post('/hapus/{id}',      'hapus')     ->name('hapus');
-            Route::post('/hapus-foto/{id}', 'hapus_foto')->name('hapus-foto');
+            Route::get ('/',                        'index')     ->name('index');
+            Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
+            Route::post('/tambah',                  'tambah')    ->name('tambah');
+            Route::get ('/ubah/{id}',               'ke_ubah')   ->name('ke_ubah');
+            Route::post('/ubah/{id}',               'ubah')      ->name('ubah');
+            Route::post('/hapus/{id}',              'hapus')     ->name('hapus');
+            Route::post('/hapus-foto/{id}/{index}', 'hapus_foto')->name('hapus-foto');
         });
 
         Route::name('layanan.')->prefix('/layanan')
@@ -306,13 +306,13 @@ Route::name('wedding-photographer.')
 
         Route::name('portofolio.')->prefix('/portofolio')
             ->controller(WPPortofolioController::class)->group(function() {
-            Route::get ('/',                'index')     ->name('index');
-            Route::get ('/tambah',          'ke_tambah') ->name('ke_tambah');
-            Route::post('/tambah',          'tambah')    ->name('tambah');
-            Route::get ('/ubah/{id}',       'ke_ubah')   ->name('ke_ubah');
-            Route::post('/ubah/{id}',       'ubah')      ->name('ubah');
-            Route::post('/hapus/{id}',      'hapus')     ->name('hapus');
-            Route::post('/hapus-foto/{id}', 'hapus_foto')->name('hapus-foto');
+            Route::get ('/',                        'index')     ->name('index');
+            Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
+            Route::post('/tambah',                  'tambah')    ->name('tambah');
+            Route::get ('/ubah/{id}',               'ke_ubah')   ->name('ke_ubah');
+            Route::post('/ubah/{id}',               'ubah')      ->name('ubah');
+            Route::post('/hapus/{id}',              'hapus')     ->name('hapus');
+            Route::post('/hapus-foto/{id}/{index}', 'hapus_foto')->name('hapus-foto');
         });
 
         Route::name('layanan.')->prefix('/layanan')

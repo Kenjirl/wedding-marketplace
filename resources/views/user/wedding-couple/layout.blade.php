@@ -5,7 +5,7 @@
         {{-- NAVBAR --}}
         <div class="w-full px-4 py-2 flex items-center justify-between gap-4 bg-white shadow hover:shadow-md transition-shadow">
             {{-- MENU --}}
-            <div class="w-1/3 m-4 flex items-center justify-start gap-4 text-sm">
+            <div class="w-1/3 px-4 flex items-center justify-start gap-4 text-sm">
                 @include('user.wedding-couple.menu')
             </div>
 
@@ -69,15 +69,15 @@
 
         {{-- FOOTER --}}
         <div class="w-full bg-pink text-white">
-            <div class="w-full max-w-[1200px] mx-auto px-4 py-8 flex items-center justify-between gap-8">
+            <div class="w-full max-w-[1200px] min-h-[30vh] mx-auto px-4 flex items-center justify-center gap-8">
                 <div class="w-fit flex flex-col items-center justify-start">
                     <div class="w-fit">
-                        <img class="w-[100px] aspect-square rounded-full bg-white"
+                        <img class="w-[150px] aspect-square rounded-full bg-white"
                             src="{{ asset('img/Logo.png') }}" alt="Logo">
                     </div>
                 </div>
 
-                <div class="flex-1 w-full text-base">
+                <div class="w-fit text-base">
                     <table class="table-fixed">
                         <tbody>
                             <tr>
@@ -112,8 +112,8 @@
         </div>
 
         <div class="w-full">
-            <div class="w-full max-w-[1200px] mx-auto py-4">
-                <span class="text-sm">
+            <div class="w-full max-w-[1200px] mx-auto py-2">
+                <span class="text-xs">
                     @2023 Wedding Marketplace
                 </span>
             </div>

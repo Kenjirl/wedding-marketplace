@@ -11,6 +11,10 @@ class WPPortofolio extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'foto' => 'array',
+    ];
+
     protected $fillable = [
         'w_photographer_id',
         'admin_id',
@@ -27,9 +31,5 @@ class WPPortofolio extends Model
 
     public function admin(): BelongsTo {
         return $this->belongsTo(Admin::class, 'admin_id');
-    }
-
-    public function photo(): HasMany {
-        return $this->hasMany(WPPortofolioPhoto::class, 'w_p_portofolio_id');
     }
 }

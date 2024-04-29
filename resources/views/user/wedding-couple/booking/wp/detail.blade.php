@@ -109,16 +109,16 @@
                                 <div class="w-full aspect-video max-h-[400px] flex items-center justify-center"
                                     id="foto_besar">
                                     <img class="w-full max-h-full object-contain rounded-md bg-white"
-                                        src="{{ asset($portofolio_detail->photo->first()->url) }}" alt="">
+                                        src="{{ asset($portofolio_detail->foto[0]['url']) }}" alt="">
                                 </div>
 
                                 {{-- foto kecil --}}
                                 <div class="w-full mt-2 flex items-start justify-center gap-2 overflow-y-auto">
-                                    @foreach ($portofolio_detail->photo as $foto)
+                                    @foreach ($portofolio_detail->foto as $index => $foto)
                                         <button class="w-[50px] p-1 flex items-center justify-center rounded outline-none bg-white hover:bg-slate-500 focus:bg-slate-500 active:bg-slate-300 transition-colors foto-kecil"
                                             type="button">
                                             <img class="w-full aspect-square object-contain"
-                                                src="{{ asset($foto->url) }}" alt="">
+                                                src="{{ asset($foto['url']) }}" alt="">
                                         </button>
                                     @endforeach
                                 </div>
@@ -171,7 +171,7 @@
                                         <div class="w-full">
                                             <div class="w-full">
                                                 <img class="w-full rounded-t-lg aspect-video object-cover object-center"
-                                                    src="{{ asset($portofolio->photo->first()->url) }}" alt="">
+                                                    src="{{ asset($portofolio->foto[0]['url']) }}" alt="">
                                             </div>
 
                                             <div class="w-full p-2">

@@ -46,7 +46,7 @@
                         <div class="w-fit mx-auto p-4">
                             <table>
                                 <tbody>
-                                    <tr>
+                                    <tr class="align-top">
                                         <td class="pr-2 text-center">
                                             <i class="fa-solid fa-calendar-day text-xl text-pink"></i>
                                         </td>
@@ -56,7 +56,7 @@
                                             {{ \Carbon\Carbon::parse($event->waktu)->format('Y-m-d') }}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="align-top">
                                         <td class="pr-2 text-center">
                                             <i class="fa-regular fa-clock text-xl text-pink"></i>
                                         </td>
@@ -66,7 +66,7 @@
                                             {{ \Carbon\Carbon::parse($event->waktu)->format('H:i') }}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="align-top">
                                         <td class="pr-2 text-center">
                                             <i class="fa-solid fa-place-of-worship text-xl text-pink"></i>
                                         </td>
@@ -124,14 +124,9 @@
                 </div>
 
                 {{-- fitur --}}
-                <div class="w-full max-h-[100px] p-4 overflow-y-auto">
-                    <ul class="list-disc">
-                        @forelse ($features as $fitur)
-                            <li>{{ $fitur->isi }}</li>
-                        @empty
-                            <li>Tidak ada fitur</li>
-                        @endforelse
-                    </ul>
+                <div class="w-full max-h-[200px] overflow-y-auto px-4 my-2"
+                    id="detailPlan">
+                    {!! $plan->detail !!}
                 </div>
 
                 {{-- harga --}}
@@ -208,5 +203,7 @@
         $('#bukti_bayar_img').magnificPopup({
             type: 'image'
         });
+
+        $('#detailPlan ul').addClass('list-disc px-4');
     </script>
 @endpush

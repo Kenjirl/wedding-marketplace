@@ -11,6 +11,10 @@ class WOPortofolio extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'foto' => 'array',
+    ];
+
     protected $fillable = [
         'w_organizer_id',
         'admin_id',
@@ -27,9 +31,5 @@ class WOPortofolio extends Model
 
     public function admin(): BelongsTo {
         return $this->belongsTo(Admin::class, 'admin_id');
-    }
-
-    public function photo(): HasMany {
-        return $this->hasMany(WOPortofolioPhoto::class, 'w_o_portofolio_id');
     }
 }

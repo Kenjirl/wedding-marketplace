@@ -93,7 +93,7 @@
     </div>
 
     {{-- ITEM 4 --}}
-    <div class="w-full min-h-[95vh] mb-20 p-8 flex flex-col items-center justify-end bg-[url('/public/img/bg/wave-top.svg')] bg-top bg-no-repeat bg-cover"
+    <div class="w-full min-h-[95vh] p-8 flex flex-col items-center justify-center bg-[url('/public/img/bg/wave-top.svg')] bg-top bg-no-repeat bg-cover"
         id="penyedia-layanan">
         <div class="w-full my-8">
             <p class="text-center text-2xl">
@@ -101,16 +101,16 @@
             </p>
         </div>
 
-        <div class="w-full max-w-[1200px] grid grid-cols-2 gap-8">
-            <div class="w-2/3 mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
+        <div class="w-full max-w-[900px] grid grid-cols-2 gap-8">
+            <div class="w-full mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
                 <div class="w-full flex flex-col items-center justify-start gap-8">
                     <p class="text-3xl font-semibold text-center">
                         Organizer
                     </p>
                     <i class="fa-solid fa-building-user text-[5em] text-pink"></i>
-                    <p class="text-center font-semibold">
+                    {{-- <p class="text-center font-semibold">
                         Temukan Organizer yang dapat mewujudkan setiap detail impian pernikahanmu, menciptakan momen istimewa yang abadi dan tak terlupakan
-                    </p>
+                    </p> --}}
                 </div>
 
                 <div class="w-full flex items-center justify-center">
@@ -130,15 +130,15 @@
                 </div>
             </div>
 
-            <div class="w-2/3 mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
+            <div class="w-full mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
                 <div class="w-full flex flex-col items-center justify-start gap-8">
                     <p class="text-3xl font-semibold text-center">
                         Fotografer
                     </p>
                     <i class="fa-solid fa-camera-retro text-[5em] text-pink"></i>
-                    <p class="text-center font-semibold">
+                    {{-- <p class="text-center font-semibold">
                         Temukan Fotografer yang dapat menangkap kisah cinta dalam setiap bidikan, mengabadikan keindahan pernikahanmu menjadi kenangan abadi yang tiada tara
-                    </p>
+                    </p> --}}
                 </div>
 
                 <div class="w-full flex items-center justify-center">

@@ -23,7 +23,7 @@
                     {{-- IMG --}}
                     <div class="w-full pt-4 px-4 flex items-end justify-center rounded-t-xl">
                         <img class="w-[200px] aspect-square object-cover object-center rounded-t-lg"
-                            src="{{ asset($l_portofolio->photo->first()->url) }}" alt="Gambar Portofolio">
+                            src="{{ asset($l_portofolio->foto[0]['url']) }}" alt="Gambar Portofolio">
                     </div>
 
                     {{-- DETAIL --}}
@@ -53,7 +53,7 @@
                     {{-- IMG --}}
                     <div class="w-full pt-4 px-4 flex items-end justify-center rounded-t-xl">
                         <img class="w-[200px] aspect-square object-cover object-center rounded-t-lg"
-                            src="{{ asset($pfolio->photo->first()->url) }}" alt="Gambar Portofolio">
+                            src="{{ asset($pfolio->foto[0]['url']) }}" alt="Gambar Portofolio">
                     </div>
 
                     {{-- DETAIL --}}

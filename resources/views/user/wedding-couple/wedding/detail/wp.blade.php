@@ -131,15 +131,9 @@
                                     </span>
                                 </div>
 
-                                {{-- FITUR --}}
-                                <div class="w-full pl-8">
-                                    <ul class="list-disc grid grid-cols-2 gap-2">
-                                        @forelse ($bp->plan->fitur as $fitur)
-                                            <li>{{ $fitur->isi }}</li>
-                                        @empty
-                                            <li>Tidak ada fitur</li>
-                                        @endforelse
-                                    </ul>
+                                {{-- fitur --}}
+                                <div class="w-full max-h-[200px] overflow-y-auto px-4 my-2 detail-plan">
+                                    {!! $bp->plan->detail !!}
                                 </div>
                             </div>
 

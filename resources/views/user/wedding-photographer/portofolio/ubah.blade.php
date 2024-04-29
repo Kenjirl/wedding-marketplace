@@ -287,16 +287,16 @@
                             id="image-preview">
                             <div class="relative hidden items-center justify-center rounded bg-slate-100" id="new-image"></div>
 
-                            @foreach ($portofolio->photo as $foto)
-                                <div class="relative flex items-center justify-center rounded {{ $foto->rejected ? 'bg-red-500' : 'bg-slate-100' }}">
+                            @foreach ($portofolio->foto as $index => $foto)
+                                <div class="relative flex items-center justify-center rounded {{ $foto['rejected'] ? 'bg-red-500' : 'bg-slate-100' }} ">
                                     <img class="h-[300px] object-contain"
-                                        src="{{ asset($foto->url) }}" alt="Foto Portofolio">
+                                        src="{{ asset($foto['url']) }}" alt="Foto Portofolio">
 
-                                    @if ($count > 1)
-                                        <button class="absolute top-0 right-0 w-8 aspect-square bg-pink rounded text-white"
-                                            type="button" onclick="deleteImage({{ $foto->id }})">
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </button>
+                                    @if (count($portofolio->foto) > 1)
+                                            <button class="absolute top-0 right-0 w-8 aspect-square bg-pink rounded text-white"
+                                                type="button" onclick="deleteImage({{ $index }})">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
                                     @endif
                                 </div>
                             @endforeach
@@ -335,8 +335,8 @@
     </form>
 
     {{-- FORM HAPUS FOTO PORTOFOLIO --}}
-    @foreach ($portofolio->photo as $foto)
-        <form id="deleteImageForm-{{ $foto->id }}" action="{{ route('wedding-photographer.portofolio.hapus-foto', $foto->id) }}" method="post">
+    @foreach ($portofolio->foto as $index => $foto)
+        <form id="deleteImageForm-{{ $index }}" action="{{ route('wedding-photographer.portofolio.hapus-foto', ['id' => $portofolio->id, 'index' => $index]) }}" method="post">
             @csrf
         </form>
     @endforeach
@@ -386,14 +386,24 @@
         });
 
         function deleteImage(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
-                const formId = 'deleteImageForm-' + id;
-                const imageForm = document.getElementById(formId);
+            Swal.fire({
+                title: 'Hapus Foto',
+                text: "Apakah Anda yakin ingin menghapus gambar ini?",
+                icon: "warning",
+                iconColor: "#F78CA2",
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "Konfirmasi"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formId = 'deleteImageForm-' + id;
+                    const imageForm = document.getElementById(formId);
 
-                if (imageForm) {
-                    imageForm.submit();
+                    if (imageForm) {
+                        imageForm.submit();
+                    }
                 }
-            }
+            });
         }
 
         function deleteNewImage() {

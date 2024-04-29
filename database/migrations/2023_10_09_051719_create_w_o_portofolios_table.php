@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->text('detail');
             $table->string('lokasi');
+            $table->json('foto')->nullable();
             $table->enum('status', ['diterima', 'menunggu konfirmasi', 'ditolak'])->default('menunggu konfirmasi');
             $table->timestamps();
 
