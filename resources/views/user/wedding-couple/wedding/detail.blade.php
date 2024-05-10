@@ -45,11 +45,11 @@
                 <div class="flex-1 w-full text-3xl text-slate-600 font-semibold">
                     Pernikahan
                     <span class="text-blue-400">
-                        Tn. {{ $wedding->groom }}
+                        Tn. {{ $wedding->p_lengkap }}
                     </span>
                     &
                     <span class="text-red-400">
-                        Nn. {{ $wedding->bride }}
+                        Nn. {{ $wedding->w_lengkap }}
                     </span>
                 </div>
             </div>

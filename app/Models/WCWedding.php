@@ -14,8 +14,14 @@ class WCWedding extends Model
 
     protected $fillable = [
         'w_couple_id',
-        'groom',
-        'bride',
+        'p_lengkap',
+        'p_sapaan',
+        'p_ayah',
+        'p_ibu',
+        'w_lengkap',
+        'w_sapaan',
+        'w_ayah',
+        'w_ibu',
     ];
 
     public function w_couple(): BelongsTo {

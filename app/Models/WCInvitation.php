@@ -10,10 +10,27 @@ class WCInvitation extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        't_gallery' => 'array',
+        'c_profile' => 'array',
+        'c_gallery' => 'array',
+        'c_qr'      => 'array',
+    ];
+
     protected $fillable = [
         'w_c_wedding_id',
-        'tema',
-        'template',
+        't_header',
+        't_quote',
+        't_profile',
+        't_gallery',
+        't_wish',
+        't_qr',
+        't_footer',
+
+        'c_quote',
+        'c_profile',
+        'c_gallery',
+        'c_qr',
     ];
 
     public function wedding(): BelongsTo {

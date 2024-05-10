@@ -57,6 +57,8 @@ Route::controller(UserController::class)->group(function() {
         Route::post('/keluar',      'keluar')        ->name('keluar');
     });
 
+    Route::get ('/undangan', 'undangan')->name('undangan');
+
 });
 
 Route::name('super-admin.')

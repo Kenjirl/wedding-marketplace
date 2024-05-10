@@ -17,7 +17,7 @@ class WCWeddingController extends Controller
     public function index() {
         $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
                     ->orderBy('created_at', 'asc')
-                    ->orderBy('groom', 'asc')
+                    ->orderBy('p_lengkap', 'asc')
                     ->get();
 
         return view('user.wedding-couple.wedding.index', compact('weddings'));
@@ -43,8 +43,14 @@ class WCWeddingController extends Controller
 
         $wedding = new WCWedding();
         $wedding->w_couple_id = auth()->user()->w_couple->id;
-        $wedding->groom = $req->groom;
-        $wedding->bride = $req->bride;
+        $wedding->p_lengkap = $req->p_lengkap;
+        $wedding->p_sapaan  = $req->p_sapaan;
+        $wedding->p_ayah    = $req->p_ayah;
+        $wedding->p_ibu     = $req->p_ibu;
+        $wedding->w_lengkap = $req->w_lengkap;
+        $wedding->w_sapaan  = $req->w_sapaan;
+        $wedding->w_ayah    = $req->w_ayah;
+        $wedding->w_ibu     = $req->w_ibu;
         $data1 = $wedding->save();
 
         $reqData = $req->all();

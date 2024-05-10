@@ -24,8 +24,14 @@ class WeddingRequest extends FormRequest
     public function rules()
     {
         return [
-            'groom'    =>'required|string|regex:/^[a-zA-Z\s]*$/',
-            'bride'    =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'p_lengkap' =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'p_sapaan'  =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'p_ayah'    =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'p_ibu'     =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'w_lengkap' =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'w_sapaan'  =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'w_ayah'    =>'required|string|regex:/^[a-zA-Z\s]*$/',
+            'w_ibu'     =>'required|string|regex:/^[a-zA-Z\s]*$/',
 
             'w_event_id'  => 'required|exists:w_events,id',
             // 'waktu.*'     => 'required|date_format:Y-m-d H:i:s|after:' . date(DATE_ATOM),
@@ -46,13 +52,31 @@ class WeddingRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'groom.required'   => 'Nama pengantin pria tidak boleh kosong',
-            'groom.string'     => 'Nama pengantin pria harus berupa karakter',
-            'groom.regex'      => 'Nama pengantin pria tidak boleh memuat angka dan/atau tanda baca',
+            'p_lengkap.required' => 'Nama lengkap pengantin pria tidak boleh kosong',
+            'p_lengkap.string'   => 'Nama lengkap pengantin pria harus berupa karakter',
+            'p_lengkap.regex'    => 'Nama lengkap pengantin pria tidak boleh memuat angka dan/atau tanda baca',
+            'p_sapaan.required'  => 'Nama sapaan pengantin pria tidak boleh kosong',
+            'p_sapaan.string'    => 'Nama sapaan pengantin pria harus berupa karakter',
+            'p_sapaan.regex'     => 'Nama sapaan pengantin pria tidak boleh memuat angka dan/atau tanda baca',
+            'p_ayah.required'    => 'Nama ayah pengantin pria tidak boleh kosong',
+            'p_ayah.string'      => 'Nama ayah pengantin pria harus berupa karakter',
+            'p_ayah.regex'       => 'Nama ayah pengantin pria tidak boleh memuat angka dan/atau tanda baca',
+            'p_ibu.required'     => 'Nama ibu pengantin pria tidak boleh kosong',
+            'p_ibu.string'       => 'Nama ibu pengantin pria harus berupa karakter',
+            'p_ibu.regex'        => 'Nama ibu pengantin pria tidak boleh memuat angka dan/atau tanda baca',
 
-            'bride.required'   => 'Nama pengantin wanita tidak boleh kosong',
-            'bride.string'     => 'Nama pengantin wanita harus berupa karakter',
-            'bride.regex'      => 'Nama pengantin wanita tidak boleh memuat angka dan/atau tanda baca',
+            'w_lengkap.required' => 'Nama lengkap pengantin wanita tidak boleh kosong',
+            'w_lengkap.string'   => 'Nama lengkap pengantin wanita harus berupa karakter',
+            'w_lengkap.regex'    => 'Nama lengkap pengantin wanita tidak boleh memuat angka dan/atau tanda baca',
+            'w_sapaan.required'  => 'Nama sapaan pengantin wanita tidak boleh kosong',
+            'w_sapaan.string'    => 'Nama sapaan pengantin wanita harus berupa karakter',
+            'w_sapaan.regex'     => 'Nama sapaan pengantin wanita tidak boleh memuat angka dan/atau tanda baca',
+            'w_ayah.required'    => 'Nama ayah pengantin wanita tidak boleh kosong',
+            'w_ayah.string'      => 'Nama ayah pengantin wanita harus berupa karakter',
+            'w_ayah.regex'       => 'Nama ayah pengantin wanita tidak boleh memuat angka dan/atau tanda baca',
+            'w_ibu.required'     => 'Nama ibu pengantin wanita tidak boleh kosong',
+            'w_ibu.string'       => 'Nama ibu pengantin wanita harus berupa karakter',
+            'w_ibu.regex'        => 'Nama ibu pengantin wanita tidak boleh memuat angka dan/atau tanda baca',
 
             'w_event_id.*.required' => 'ID Event tidak boleh kosong',
             'w_event_id.*.exists'   => 'ID Event harus valid',

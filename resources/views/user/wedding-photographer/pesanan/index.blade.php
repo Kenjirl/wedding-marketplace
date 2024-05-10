@@ -26,7 +26,7 @@
                         </td>
                         <td class="px-2">
                             <div class="line-clamp-1">
-                                {{ 'Tn. ' . $booking->wedding->groom . ' & Nn. ' . $booking->wedding->bride}}
+                                {{ 'Tn. ' . $booking->wedding->p_lengkap . ' & Nn. ' . $booking->wedding->w_lengkap}}
                             </div>
                         </td>
                         <td class="px-2 text-end">

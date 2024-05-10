@@ -30,7 +30,7 @@
                     <div class="w-full flex flex-col items-end justify-center gap-4">
                         {{-- Judul --}}
                         <div class="w-full text-center text-xl">
-                            <span>Filter</span>
+                            <span>Pencarian</span>
                         </div>
 
                         {{-- CARI KATEGORI --}}

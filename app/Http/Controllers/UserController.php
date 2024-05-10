@@ -234,4 +234,8 @@ class UserController extends Controller
 
         return view('user.pilih-peran');
     }
+
+    public function undangan() {
+        return view('invitation.index');
+    }
 }
