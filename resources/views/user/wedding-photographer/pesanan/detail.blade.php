@@ -98,24 +98,52 @@
                         <span>Kembali</span>
                     </a>
 
-                    <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
-                        id="rejectBtn" type="button" onclick="respon('ditolak')">
-                        <i class="fa-solid fa-ban"></i>
-                        <span>Tolak</span>
-                    </button>
+                    @if ($booking->status == 'diproses')
+                        <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
+                            id="rejectBtn" type="button" onclick="respon('ditolak')">
+                            <i class="fa-solid fa-ban"></i>
+                            <span>Tolak</span>
+                        </button>
 
-                    <button class="w-fit px-4 py-2 font-semibold outline-none text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
-                        id="acceptBtn" type="button" onclick="respon('diterima')">
-                        <i class="fa-regular fa-circle-check"></i>
-                        <span>Terima</span>
-                    </button>
+                        <button class="w-fit px-4 py-2 font-semibold outline-none text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
+                            id="acceptBtn" type="button" onclick="respon('diterima')">
+                            <i class="fa-regular fa-circle-check"></i>
+                            <span>Terima</span>
+                        </button>
+                    @endif
                 </div>
             </form>
         </div>
 
         {{-- KANAN --}}
-        <div class="w-full h-fit rounded-lg rounded-tl-none border-2 border-slate-100">
-            <div class="w-full p-2">
+        <div class="w-full h-fit">
+            {{-- STATUS --}}
+            <div class="w-full px-4 py-2 text-white font-semibold rounded-tr-lg border-2 text-end
+                {{ $booking->status == 'diproses' ? 'bg-yellow-500 border-yellow-500' : 'bg-blue-500 border-blue-500' }}
+                ">
+                {{ $booking->status }}
+            </div>
+
+            {{-- PEMESAN --}}
+            <div class="w-full p-2 text-sm border-2 border-slate-100">
+                <table>
+                    <tr>
+                        <td class="pr-2"><i class="fa-solid fa-user text-pink"></i></td>
+                        <td class="pr-2">Pelanggan</td>
+                        <td class="pr-2">:</td>
+                        <td>{{ $booking->wedding->w_couple->nama }}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-phone text-pink"></i></td>
+                        <td>Kontak</td>
+                        <td>:</td>
+                        <td>{{ $booking->wedding->w_couple->no_telp }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            {{-- DETAIL PAKET --}}
+            <div class="w-full p-2 border-2 border-t-0 border-slate-100">
                 {{-- nama --}}
                 <div class="w-full">
                     <span class="text-2xl font-semibold">
@@ -138,35 +166,37 @@
                 </div>
             </div>
 
-            <div class="w-full p-2 border-y-2 border-slate-100">
+            {{-- TANGGAL PESAN --}}
+            <div class="w-full p-2 border-2 border-t-0 border-slate-100">
                 <p>
                     Dipesan untuk tanggal : {{ $booking->untuk_tanggal }}
                 </p>
             </div>
 
-            <div class="w-full p-2">
-                @if ($booking->bukti_bayar)
-                    <div class="w-full flex items-center justify-center overflow-hidden bg-slate-200 rounded-lg">
-                        <a class="cursor-zoom-in"
-                            id="bukti_bayar_img" href="{{ asset($booking->bukti_bayar) }}">
-                            <img class="max-h-[300px] object-contain object-center"
-                                src="{{ asset($booking->bukti_bayar) }}" alt="Bukti Bayar">
-                        </a>
-                    </div>
+            {{-- BUKTI BAYAR --}}
+            <div class="w-full p-2 border-2 border-t-0 border-slate-100 rounded-b-lg">
+                @if ($booking->status == 'diterima')
+                    @if ($booking->bukti_bayar)
+                        <div class="w-full flex items-center justify-center overflow-hidden bg-slate-200 rounded-lg">
+                            <a class="cursor-zoom-in"
+                                id="bukti_bayar_img" href="{{ asset($booking->bukti_bayar) }}">
+                                <img class="max-h-[300px] object-contain object-center"
+                                    src="{{ asset($booking->bukti_bayar) }}" alt="Bukti Bayar">
+                            </a>
+                        </div>
 
-                    <div class="w-full mt-2">
-                        <a class="w-full block px-4 py-2 text-center font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                            href="{{ asset($booking->bukti_bayar) }}" download>
-                            <i class="fa-solid fa-download"></i>
-                            Unduh Gambar
-                        </a>
-                    </div>
-                @else
-                    <div class="w-full bg-slate-200 rounded-lg">
-                        <div class="w-full p-4 text-center">
+                        <div class="w-full mt-2">
+                            <a class="w-full block px-4 py-2 text-center font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                                href="{{ asset($booking->bukti_bayar) }}" download>
+                                <i class="fa-solid fa-download"></i>
+                                Unduh Gambar
+                            </a>
+                        </div>
+                    @else
+                        <div class="w-full p-2 bg-slate-200 rounded-lg text-center">
                             Belum ada bukti bayar
                         </div>
-                    </div>
+                    @endif
                 @endif
             </div>
         </div>

@@ -16,7 +16,7 @@ class hasWOProfil
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->w_organizer) {
+        if (auth()->user()->w_vendor) {
             return $next($request);
         }
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('gender', ['Pria', 'Wanita'])->nullable();
             $table->string('no_telp');
             $table->string('alamat');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

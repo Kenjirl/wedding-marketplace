@@ -9,12 +9,13 @@
 @section('content')
     <form action="{{ route('wedding-organizer.portofolio.tambah') }}" method="post" enctype="multipart/form-data">
         @csrf
+        {{-- INPUTS --}}
         <div class="w-full flex items-start justify-between gap-8">
             {{-- KIRI --}}
             <div class="flex-1">
                 {{-- JUDUL --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100">
+                <div class="w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('judul') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             <i class="fa-solid fa-heading"></i>
                             <span class="ml-2">
@@ -39,8 +40,8 @@
                 @php
                     $yesdate = date('Y-m-d', strtotime("-1 days"));
                 @endphp
-                <div class="w-100 mb-4">
-                    <div class="w-100">
+                <div class="w-full mb-4">
+                    <div class="w-full">
                         <div class="w-full p-2 text-xs font-bold bg-pink @error('tanggal') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                             <i class="fa-regular fa-calendar"></i>
                             <span class="ml-2">
@@ -61,32 +62,11 @@
                     </div>
                 </div>
 
-                {{-- DETAIL --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span class="ml-2">
-                                Detail
-                            </span>
-                        </div>
-                        <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            name="detail" id="input" rows="3" placeholder="masukan detail acara ini"
-                            >{{ old('detail', '') }}</textarea>
-                    </div>
-
-                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                        @error('detail')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
+                {{-- LOKASI --}}
                 <div class="grid grid-cols-2 gap-4">
                     {{-- PROVINSI --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
@@ -108,8 +88,8 @@
                     </div>
 
                     {{-- KOTA --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kota') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
@@ -131,8 +111,8 @@
                     </div>
 
                     {{-- KECAMATAN --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
@@ -154,8 +134,8 @@
                     </div>
 
                     {{-- KELURAHAN --}}
-                    <div class="relative w-100">
-                        <div class="w-100">
+                    <div class="relative w-full">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
@@ -177,8 +157,8 @@
                     </div>
 
                     {{-- ALAMAT --}}
-                    <div class="relative w-100 mb-4 col-span-2">
-                        <div class="w-100">
+                    <div class="relative w-full mb-4 col-span-2">
+                        <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat_detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <span class="ml-2">
@@ -201,40 +181,83 @@
                 </div>
             </div>
 
-            <div class="hidden">
-                <input type="text" name="form-info" id="form-info" value="add">
-            </div>
-
             {{-- KANAN --}}
             <div class="flex-1">
-                {{-- UPLOAD MULTI FOTO --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100 mb-4">
-                        <button class="w-full px-4 py-2 rounded text-white font-semibold text-sm bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                            type="button" id="unggahFotoBtn">
-                            <i class="fa-solid fa-plus"></i>
-                            Unggah Foto Sampul
-                        </button>
-
-                        <input class="hidden" type="file" name="foto" id="foto" accept="image/*" value="{{ old('foto', '') }}" tabindex="-1">
-
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                            @error('foto')
-                                <i class="fa-solid fa-circle-info"></i>
-                                <span>{{ $message }}</span>
-                            @enderror
+                {{-- DETAIL --}}
+                <div class="w-full mb-4">
+                    <div class="w-full">
+                        <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span class="ml-2">
+                                Detail
+                            </span>
                         </div>
+                        <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            name="detail" id="input" rows="3" placeholder="masukan detail acara ini"
+                            >{{ old('detail', '') }}</textarea>
+                    </div>
+
+                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        @error('detail')
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="w-full mt-4"
-                    id="image-preview">
+        {{-- TIPE INPUT --}}
+        <div class="hidden">
+            <input type="text" name="form-info" id="form-info" value="add">
+        </div>
+
+        {{-- FOTO --}}
+        <div class="w-full rounded shadow">
+            {{-- ATAS --}}
+            <div class="w-full px-4 py-2 flex items-center justify-between gap-2 rounded-t bg-slate-100 border-2 border-slate-100">
+                <div class="p-2 font-semibold">
+                    <i class="fa-solid fa-images"></i>
+                    <span class="ml-2">
+                        Galeri
+                    </span>
+                </div>
+
+                <div class="w-fit">
+                    <button class="w-full px-4 py-2 rounded text-white font-semibold text-sm bg-pink
+                            hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active
+                            disabled:bg-slate-400 disabled:cursor-not-allowed
+                            transition-colors"
+                            type="button" id="unggahFotoBtn">
+                        <i class="fa-solid fa-plus"></i>
+                        Tambah Gambar
+                    </button>
+                </div>
+            </div>
+
+            {{-- INPUT --}}
+            <input class="hidden" type="file" name="foto[]" id="foto" accept="image/*" multiple value="{{ old('foto', '') }}" tabindex="-1" required>
+
+            {{-- PREVIEW --}}
+            <div id="image-preview" class="w-full h-[350px] p-2 flex items-center justify-start gap-2 border-x-2 border-slate-100"></div>
+
+            {{-- BAWAH --}}
+            <div class="w-full px-4 py-2 flex items-center justify-between text-sm rounded-b border-2 border-slate-100">
+                <div class="text-red-500 flex items-center justify-start gap-2">
+                    @error('foto')
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div id="jumlahFoto">
+                    <span>0/5</span>
                 </div>
             </div>
         </div>
 
         {{-- BUTTON --}}
-        <div class="w-100 mt-4 flex items-center justify-end gap-4">
+        <div class="w-full mt-4 flex items-center justify-end gap-4">
             <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                 href="{{ route('wedding-organizer.portofolio.index') }}">
                 <i class="fa-solid fa-arrow-left-long"></i>
@@ -251,6 +274,7 @@
 @endsection
 
 @push('child-js')
+    {{-- SCRIPT LOKASI --}}
     <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -259,24 +283,75 @@
         });
     </script>
 
+    {{-- SCRIPT FOTO --}}
     <script>
-        $("#unggahFotoBtn").on("click", function () {
-            $("#foto").click();
-        });
+        $(document).ready(function () {
+            const $unggahFotoBtn = $('#unggahFotoBtn');
+            const $fotoInput = $('#foto');
+            const $imagePreview = $('#image-preview');
+            const $jumlahFoto = $('#jumlahFoto');
 
-        $('#foto').on('change', function() {
-            let files = this.files;
-            console.log(files)
-            $('#image-preview').empty();
+            let fileArray = [];
 
-            for (let i = 0; i < files.length; i++) {
-                if (i < 1) { // Hanya tampilkan maksimal 1 gambar
-                    let img = $('<img>');
-                    img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-contain');
+            function updateFotoJson() {
+                const dataTransfer = new DataTransfer();
+                fileArray.forEach(file => {
+                    dataTransfer.items.add(file);
+                });
+                $fotoInput[0].files = dataTransfer.files;
 
-                    $('#image-preview').append(img);
+                if (fileArray.length >= 5) {
+                    $unggahFotoBtn.prop('disabled', true);
+                } else {
+                    $unggahFotoBtn.prop('disabled', false);
                 }
+
+                $jumlahFoto.text(fileArray.length + '/5');
             }
+
+            $unggahFotoBtn.on('click', function () {
+                $fotoInput.click();
+            });
+
+            $fotoInput.on('change', function () {
+                const files = Array.from(this.files);
+                const maxFiles = 5 - fileArray.length;
+
+                if (files.length > maxFiles) {
+                    Swal.fire({
+                        title: "Eitssssss!",
+                        text: "Maksimal 5 gambar saja ya!",
+                        icon: "warning"
+                    });
+                    return;
+                }
+
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const $imgWrapper = $('<div>').addClass('relative w-1/5 h-full bg-slate-100 rounded');
+                        const $img = $('<img>').attr('src', e.target.result).addClass('w-full h-full object-contain');
+                        const $deleteBtn = $('<button type="button"><i class="fa-solid fa-xmark"></i></button>').addClass('absolute top-0 right-0 w-8 aspect-square bg-pink rounded text-white');
+
+                        $deleteBtn.on('click', function () {
+                            const index = fileArray.findIndex(f => f.name === file.name);
+                            if (index !== -1) {
+                                fileArray.splice(index, 1);
+                                $imgWrapper.remove();
+                                updateFotoJson();
+                            }
+                        });
+
+                        $imgWrapper.append($img).append($deleteBtn);
+                        $imagePreview.append($imgWrapper);
+                        fileArray.push(file);
+                        updateFotoJson();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            updateFotoJson();  // Initialize foto count on page load
         });
     </script>
 @endpush

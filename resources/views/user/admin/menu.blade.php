@@ -17,11 +17,11 @@ $currentUrl = Request::url();
     </button>
     <div class="w-full mt-2 {{ Str::contains($currentUrl, 'pernikahan') ? 'grid' : 'hidden' }} p-2 grid-cols-1 gap-2 bg-slate-100 rounded-lg"
         id="masterMenuContainer">
-        <a class="w-full p-2 rounded {{ Str::contains($currentUrl, '/kategori-pernikahan') ? 'bg-pink text-white' : '' }} hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
+        {{-- <a class="w-full p-2 rounded {{ Str::contains($currentUrl, '/kategori-pernikahan') ? 'bg-pink text-white' : '' }} hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
             href="{{ route('admin.kategori-pernikahan.index') }}">
             <i class="fa-solid fa-minus"></i>
             Kategori Pernikahan
-        </a>
+        </a> --}}
         <a class="w-full p-2 rounded {{ Str::contains($currentUrl, '/event-pernikahan') ? 'bg-pink text-white' : '' }} hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
             href="{{ route('admin.event-pernikahan.index') }}">
             <i class="fa-solid fa-minus"></i>

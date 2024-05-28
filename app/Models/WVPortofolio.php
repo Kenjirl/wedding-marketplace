@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class WPPortofolio extends Model
+class WVPortofolio extends Model
 {
     use HasFactory;
 
@@ -16,7 +15,7 @@ class WPPortofolio extends Model
     ];
 
     protected $fillable = [
-        'w_photographer_id',
+        'w_vendor_id',
         'admin_id',
         'judul',
         'tanggal',
@@ -25,8 +24,8 @@ class WPPortofolio extends Model
         'status',
     ];
 
-    public function w_photographer(): BelongsTo {
-        return $this->belongsTo(WPhotographer::class, 'w_photographer_id');
+    public function w_vendor(): BelongsTo {
+        return $this->belongsTo(WVendor::class, 'w_vendor_id');
     }
 
     public function admin(): BelongsTo {

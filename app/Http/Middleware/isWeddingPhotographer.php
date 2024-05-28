@@ -16,7 +16,7 @@ class isWeddingPhotographer
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || auth()->user()->role !== 'wedding-photographer') {
+        if (!auth()->check() || auth()->user()->role !== 'photographer') {
             abort(403);
         }
         return $next($request);

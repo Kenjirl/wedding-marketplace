@@ -16,11 +16,11 @@
         <div class="flex-1 w-full text-lg text-slate-600 font-semibold">
             Pernikahan
             <span class="text-blue-400">
-                Tn. {{ $wedding->groom }}
+                Tn. {{ $wedding->p_lengkap }}
             </span>
             &
             <span class="text-red-400">
-                Nn. {{ $wedding->bride }}
+                Nn. {{ $wedding->w_lengkap }}
             </span>
         </div>
     </div>
@@ -53,7 +53,7 @@
                                         <td>Tanggal</td>
                                         <td class="px-2 text-center">:</td>
                                         <td>
-                                            {{ \Carbon\Carbon::parse($event->waktu)->format('Y-m-d') }}
+                                            {{ \Carbon\Carbon::parse($event->waktu)->format('d/m/Y') }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -93,7 +93,7 @@
 
                 <div class="w-full p-2 flex items-center justify-end gap-2">
                     <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        href="{{ route('wedding-organizer.jadwal.index') }}">
+                        href="{{ url()->previous() }}">
                         <i class="fa-solid fa-arrow-left-long"></i>
                         <span>Kembali</span>
                     </a>
@@ -110,42 +110,90 @@
         </div>
 
         {{-- KANAN --}}
-        <div class="w-full h-fit rounded-lg rounded-tl-none border-2 border-slate-100">
-            <div class="w-full p-2">
-                {{-- nama --}}
-                <div class="w-full">
-                    <span class="text-2xl font-semibold">
-                        {{ $plan->nama }}
-                    </span>
-                </div>
-
-                {{-- fitur --}}
-                <div class="w-full max-h-[100px] p-4 overflow-y-auto">
-                    <ul class="list-disc">
-                        @forelse ($features as $fitur)
-                            <li>{{ $fitur->isi }}</li>
-                        @empty
-                            <li>Tidak ada fitur</li>
-                        @endforelse
-                    </ul>
-                </div>
-
-                {{-- harga --}}
-                <div class="w-full flex items-start justify-end gap-2">
-                    <i class="fa-solid fa-rupiah-sign text-xl"></i>
-                    <span class="text-xl">
-                        {{ number_format($plan->harga, 0, ',', '.') }}
-                    </span>
-                </div>
+        <div class="w-full h-fit">
+            {{-- STATUS --}}
+            <div class="w-full px-4 py-2 bg-green-400 text-white font-semibold rounded-tr-lg border-2 border-green-400 text-end">
+                {{ $booking->status }}
             </div>
 
-            <div class="w-full p-2 border-y-2 border-slate-100">
+            {{-- PEMESAN --}}
+            <div class="w-full p-2 text-sm border-2 border-slate-100">
+                <table>
+                    <tr>
+                        <td class="pr-2"><i class="fa-solid fa-user text-pink"></i></td>
+                        <td class="pr-2">Pelanggan</td>
+                        <td class="pr-2">:</td>
+                        <td>{{ $booking->wedding->w_couple->nama }}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-phone text-pink"></i></td>
+                        <td>Kontak</td>
+                        <td>:</td>
+                        <td>{{ $booking->wedding->w_couple->no_telp }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            {{-- DETAIL PAKET & ULASAN --}}
+            @if ($booking->status == 'dibayar')
+                {{-- DETAIL PAKET --}}
+                <div class="w-full p-2 border-2 border-t-0 border-slate-100">
+                    {{-- nama --}}
+                    <div class="w-full">
+                        <span class="text-2xl font-semibold">
+                            {{ $plan->nama }}
+                        </span>
+                    </div>
+
+                    {{-- detail --}}
+                    <div class="w-full max-h-[100px] p-4 overflow-y-auto">
+                        <p>
+                            {!! $plan->detail !!}
+                        </p>
+                    </div>
+
+                    {{-- harga --}}
+                    <div class="w-full flex items-start justify-end gap-2">
+                        <i class="fa-solid fa-rupiah-sign text-xl"></i>
+                        <span class="text-xl">
+                            {{ number_format($plan->harga, 0, ',', '.') }}
+                        </span>
+                    </div>
+                </div>
+            @else
+                {{-- ULASAN --}}
+                <div class="w-full p-4 border-2 border-t-0 border-slate-100 text-sm">
+                    @if ($booking->rating)
+                        <div class="w-full flex items-center justify-start gap-2 mb-4">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fa-solid fa-star {{ $booking->rating->rating >= $i ? 'text-pink' : '' }}"></i>
+                            @endfor
+                        </div>
+                        <div class="w-full text-justify">
+                            Komentar : <br> {{ $booking->rating->komentar }}
+                        </div>
+                    @else
+                        <div class="w-full flex items-center justify-start gap-2 mb-4">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fa-solid fa-star"></i>
+                            @endfor
+                        </div>
+                        <div class="w-full text-justify">
+                            Belum ada ulasan
+                        </div>
+                    @endif
+                </div>
+            @endif
+
+            {{-- TANGGAL PESAN --}}
+            <div class="w-full p-2 border-2 border-t-0 border-slate-100">
                 <p>
-                    Dipesan untuk tanggal : {{ $booking->untuk_tanggal }}
+                    Dipesan untuk tanggal : {{ $booking->untuk_tanggal->format('d/m/Y') }}
                 </p>
             </div>
 
-            <div class="w-full p-2">
+            {{-- BUKTI BAYAR --}}
+            <div class="w-full p-2 border-2 border-t-0 border-slate-100 rounded-b-lg">
                 @if ($booking->bukti_bayar)
                     <div class="w-full flex items-center justify-center overflow-hidden bg-slate-200 rounded-lg">
                         <a class="cursor-zoom-in"

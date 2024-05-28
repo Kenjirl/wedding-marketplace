@@ -40,7 +40,7 @@
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" readonly disabled
-                            value="{{ $portofolio->w_photographer->nama }}">
+                            value="{{ $portofolio->w_vendor->nama }}">
                     </div>
                 </div>
 
@@ -75,9 +75,9 @@
                             <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                                 Lokasi
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                                type="text" readonly disabled
-                                value="{{ $portofolio->lokasi }}">
+                            <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
+                                {{ $portofolio->lokasi }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,5 +179,9 @@
                 }
             });
         }
+
+        $(document).ready(function() {
+            $('ul').addClass('list-disc pl-8');
+        });
     </script>
 @endpush

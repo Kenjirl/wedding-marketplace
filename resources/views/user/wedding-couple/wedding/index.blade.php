@@ -24,7 +24,7 @@
                 <div class="w-full flex flex-col items-center justify-end gap-2 shadow rounded-lg border-2 border-slate-100 bg-white hover:shadow-lg transition-shadow">
                     <div class="w-full h-full p-4 flex flex-col items-center justify-center">
                         <p class="text-center text-blue-500">
-                            {{ 'Tn. ' . $wedding->groom }}
+                            {{ 'Tn. ' . $wedding->p_sapaan }}
                         </p>
 
                         <p class="text-xl font-semibold">
@@ -32,7 +32,7 @@
                         </p>
 
                         <p class="text-center text-red-500">
-                            {{ 'Nn. ' . $wedding->bride }}
+                            {{ 'Nn. ' . $wedding->w_sapaan }}
                         </p>
                     </div>
 

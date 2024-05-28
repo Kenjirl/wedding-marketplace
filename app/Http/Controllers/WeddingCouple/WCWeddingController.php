@@ -7,8 +7,7 @@ use App\Http\Requests\WeddingCouple\WeddingRequest;
 use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
 use App\Models\WEvent;
-use App\Models\WOBooking;
-use App\Models\WPBooking;
+use App\Models\WVBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,8 +23,7 @@ class WCWeddingController extends Controller
     }
 
     public function ke_tambah() {
-        $events = WEvent::where('deleted', 0)
-                    ->orderBy('jenis', 'asc')
+        $events = WEvent::orderBy('jenis', 'asc')
                     ->orderBy('nama', 'asc')
                     ->get();
 
@@ -77,19 +75,20 @@ class WCWeddingController extends Controller
             return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'ID Invalid');
         }
 
-        $weddingEvents       = WCWeddingDetail::where('w_c_wedding_id', $id)
-                                ->orderBy('waktu', 'asc')
-                                ->get();
-        $bookedOrganizer     = WOBooking::where('w_c_wedding_id', $id)
-                                ->where('status', '!=', 'batal')
-                                ->first();
-        $bookedPhotographers = WPBooking::where('w_p_bookings.w_c_wedding_id', $id)
-                                ->join('w_p_plans', 'w_p_bookings.w_p_plan_id', '=', 'w_p_plans.id')
-                                ->join('w_photographers', 'w_p_plans.w_photographer_id', '=', 'w_photographers.id')
-                                ->orderBy('w_photographers.nama', 'asc')
-                                ->select('w_p_bookings.*')
-                                ->where('w_p_bookings.status', '!=', 'batal')
-                                ->get();
+        $weddingEvents = WCWeddingDetail::where('w_c_wedding_id', $id)
+                            ->orderBy('waktu', 'asc')
+                            ->get();
+
+        $bookedVendor = WVBooking::with(['plan.w_vendor'])
+                        ->where('w_c_wedding_id', $id)
+                        ->where('status', '!=', 'batal')
+                        ->get()
+                        ->groupBy(function ($booking) {
+                            return $booking->plan->w_vendor->jenis;
+                        });
+
+        $bookedOrganizer = $bookedVendor->get('wedding-organizer', collect());
+        $bookedPhotographers = $bookedVendor->get('photographer', collect());
 
         return view('user.wedding-couple.wedding.detail', compact(
             'wedding',
@@ -137,7 +136,7 @@ class WCWeddingController extends Controller
     }
 
     public function hapus_wo($id) {
-        $booking = WOBooking::find($id);
+        $booking = WVBooking::find($id);
         if ($booking->bukti_bayar) {
             unlink(public_path($booking->bukti_bayar));
         }
@@ -150,7 +149,7 @@ class WCWeddingController extends Controller
     }
 
     public function hapus_wp($id) {
-        $booking = WPBooking::find($id);
+        $booking = WVBooking::find($id);
         if ($booking->bukti_bayar) {
             unlink(public_path($booking->bukti_bayar));
         }
@@ -179,8 +178,9 @@ class WCWeddingController extends Controller
                 'WC/bukti-bayar/WO/' . str()->uuid() . '.' . $foto->extension()
             );
 
-            $data = WOBooking::find($id)
+            $data = WVBooking::find($id)
                     ->update([
+                        'status' => 'dibayar',
                         'bukti_bayar' => $url
                     ]);
         }
@@ -208,8 +208,9 @@ class WCWeddingController extends Controller
                 'WC/bukti-bayar/WP/' . str()->uuid() . '.' . $foto->extension()
             );
 
-            $data = WPBooking::find($id)
+            $data = WVBooking::find($id)
                     ->update([
+                        'status' => 'dibayar',
                         'bukti_bayar' => $url
                     ]);
         }
@@ -218,5 +219,52 @@ class WCWeddingController extends Controller
             return redirect()->back()->with('sukses', 'Mengunggah bukti bayar');
         }
         return redirect()->back()->with('gagal', 'Mengunggah bukti bayar');
+    }
+
+    public function selesai(Request $req) {
+        $booking = WVBooking::find($req->id_booking);
+        $booking->status = 'selesai';
+        $data = $booking->save();
+
+        if ($data) {
+            return redirect()->back()->with('sukses', 'Menyelesaikan Pesanan Wedding Organizer');
+        }
+        return redirect()->back()->with('gagal', 'Menyelesaikan Pesanan Wedding Organizer');
+    }
+
+    public function ulasan(Request $req, $id) {
+        $req->validate([
+            'rating' => 'required|min:1|max:5',
+            'komentar' => 'required',
+        ],[
+            'rating.required'   => 'Rating tidak boleh kosong',
+            'rating.min'        => 'Rating minimal bernilai 1 (satu)',
+            'rating.max'        => 'Rating maksimal bernilai 5 (lima)',
+            'komentar.required' => 'Komentar tidak boleh kosong',
+        ]);
+
+        $booking = WVBooking::find($id);
+
+        if (!$booking) {
+            return back()->with('gagal', 'ID Pemesanan tidak valid');
+        }
+
+        $data = null;
+        if (!$booking->rating) {
+            $data = $booking->rating()->create([
+                'rating' => $req->rating,
+                'komentar' => $req->komentar,
+            ]);
+        } else {
+            $data = $booking->rating()->update([
+                'rating' => $req->rating,
+                'komentar' => $req->komentar,
+            ]);
+        }
+
+        if ($data) {
+            return redirect()->back()->with('sukses', 'Memberikan Ulasan pada Wedding Organizer');
+        }
+        return redirect()->back()->with('gagal', 'Memberikan Ulasan pada Wedding Organizer');
     }
 }

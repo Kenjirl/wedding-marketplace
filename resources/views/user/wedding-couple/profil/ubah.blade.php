@@ -27,107 +27,72 @@
                 {{-- ATAS --}}
                 <div class="w-full flex items-start justify-between gap-8">
                     <div class="w-full">
-                        {{-- NAMA & NAMA PENGGUNA CONTAINER --}}
-                        <div class="grid grid-cols-2 gap-4">
-                            {{-- NAMA --}}
-                            <div class="w-100 mb-4">
-                                <div class="w-100">
-                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                        <i class="fa-solid fa-user"></i>
-                                        <span class="ml-2">
-                                            Nama
-                                        </span>
-                                    </div>
-                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                        type="text" name="nama" id="nama" placeholder="Budi Pekerti"
-                                        required
-                                        value="{{ old('nama', auth()->user()->w_couple ? auth()->user()->w_couple->nama : '') }}">
+                        {{-- NAMA --}}
+                        <div class="w-100 mb-4">
+                            <div class="w-100">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                    <i class="fa-solid fa-user"></i>
+                                    <span class="ml-2">
+                                        Nama
+                                    </span>
                                 </div>
-
-                                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                    @error('nama')
-                                        <i class="fa-solid fa-circle-info"></i>
-                                        <span>{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                    type="text" name="nama" id="nama" placeholder="Budi Pekerti"
+                                    required
+                                    value="{{ old('nama', auth()->user()->w_couple ? auth()->user()->w_couple->nama : '') }}">
                             </div>
 
-                            {{-- NAMA PENGGUNA --}}
-                            <div class="w-100 mb-4">
-                                <div class="w-100">
-                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('username') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                        <i class="fa-solid fa-user-tag"></i>
-                                        <span class="ml-2">
-                                            Nama Pengguna
-                                        </span>
-                                    </div>
-                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('username') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                        type="text" name="username" id="username" placeholder="Budi123"
-                                        required
-                                        value="{{ old('username', auth()->user()->name) }}">
-                                </div>
-
-                                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                    @error('username')
-                                        <i class="fa-solid fa-circle-info"></i>
-                                        <span>{{ $message }}</span>
-                                    @enderror
-                                </div>
+                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                @error('nama')
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <span>{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
-                        {{-- TELEPON & GENDER CONTAINER --}}
-                        <div class="grid grid-cols-2 gap-4">
-                            {{-- TELEPON --}}
-                            <div class="w-100 mb-4">
-                                <div class="w-100">
-                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('no_telp') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                        <i class="fa-solid fa-phone"></i>
-                                        <span class="ml-2">
-                                            Telepon
-                                        </span>
-                                    </div>
-                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_telp') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                        type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0"
-                                        required
-                                        value="{{ old('no_telp', auth()->user()->w_couple ? auth()->user()->w_couple->no_telp : '') }}">
+                        {{-- NAMA PENGGUNA --}}
+                        <div class="w-100 mb-4">
+                            <div class="w-100">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('username') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                    <i class="fa-solid fa-user-tag"></i>
+                                    <span class="ml-2">
+                                        Nama Pengguna
+                                    </span>
                                 </div>
-
-                                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                    @error('no_telp')
-                                        <i class="fa-solid fa-circle-info"></i>
-                                        <span>{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('username') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                    type="text" name="username" id="username" placeholder="Budi123"
+                                    required
+                                    value="{{ old('username', auth()->user()->name) }}">
                             </div>
 
-                            {{-- GENDER --}}
-                            <div class="relative w-100 mb-4" id="genderContainer">
-                                <div class="w-100">
-                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('gender') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                        <i class="fa-solid fa-venus-mars"></i>
-                                        <span class="ml-2">
-                                            Gender
-                                        </span>
-                                    </div>
-                                    <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink outline-none"
-                                        name="gender" id="gender" required>
-                                        <option value="" selected>Pilih Gender</option>
-                                        <option value="Pria" {{ old('gender', auth()->user()->w_couple ? auth()->user()->w_couple->gender : '') == 'Pria' ? 'selected' : '' }}>
-                                            Pria
-                                        </option>
-                                        <option value="Wanita" {{ old('gender', auth()->user()->w_couple ? auth()->user()->w_couple->gender : '') == 'Wanita' ? 'selected' : '' }}>
-                                            Wanita
-                                        </option>
-                                    </select>
-                                </div>
+                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                @error('username')
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <span>{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
-                                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                    @error('gender')
-                                        <i class="fa-solid fa-circle-info"></i>
-                                        <span>{{ $message }}</span>
-                                    @enderror
+                        {{-- TELEPON --}}
+                        <div class="w-100 mb-4">
+                            <div class="w-100">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('no_telp') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <span class="ml-2">
+                                        Telepon
+                                    </span>
                                 </div>
+                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_telp') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                    type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0"
+                                    required
+                                    value="{{ old('no_telp', auth()->user()->w_couple ? auth()->user()->w_couple->no_telp : '') }}">
+                            </div>
+
+                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                @error('no_telp')
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <span>{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>

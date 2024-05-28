@@ -18,12 +18,10 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             AdminsTableSeeder::class,
             AConfigTableSeeder::class,
-            WCategoriesTableSeeder::class,
             WEventsTableSeeder::class,
-            WOsTableSeeder::class,
-            WPsTableSeeder::class,
-            WOPlansTableSeeder::class,
-            WPPlansTableSeeder::class,
+            WVsTableSeeder::class,
+            WVPlansSeeder::class,
+            WCsTableSeeder::class,
         ]);
     }
 }

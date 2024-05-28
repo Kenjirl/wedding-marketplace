@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('w_event_id');
             $table->dateTime('waktu');
             $table->string('lokasi');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');

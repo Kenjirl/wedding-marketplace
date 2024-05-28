@@ -10,9 +10,9 @@
     {{-- DATA DIRI --}}
     <div class="w-100 flex gap-8">
         <div class="w-fit flex flex-col items-center justify-start gap-4">
-            @if (auth()->user()->w_photographer && auth()->user()->w_photographer->foto_profil)
+            @if (auth()->user()->w_vendor && auth()->user()->w_vendor->foto_profil)
                 <img class="w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
-                    src="{{ asset(auth()->user()->w_photographer->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
+                    src="{{ asset(auth()->user()->w_vendor->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
             @else
                 <span class="w-[200px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
                     id="fotoProfilText">
@@ -20,7 +20,7 @@
                 </span>
             @endif
 
-            @if (auth()->user()->w_photographer)
+            @if (auth()->user()->w_vendor)
                 <a class="w-full py-2 font-semibold outline-none text-center text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                     href="{{ route('wedding-photographer.profil.ke_ubah_foto') }}" id="gantiFotoBtn">
                     <i class="fa-regular fa-image"></i>
@@ -44,7 +44,7 @@
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="nama" id="nama" placeholder="Budi Pekerti"
-                            value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->nama : 'Belum Terdata'  }}"
+                            value="{{ auth()->user()->w_vendor ? auth()->user()->w_vendor->nama : 'Belum Terdata'  }}"
                             disabled>
                     </div>
 
@@ -58,7 +58,7 @@
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0"
-                            value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->no_telp : '0800000000'  }}"
+                            value="{{ auth()->user()->w_vendor ? auth()->user()->w_vendor->no_telp : '0800000000'  }}"
                             disabled>
                     </div>
 
@@ -73,22 +73,6 @@
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="email" name="email" id="email" placeholder="email@gmai.com" value="{{ auth()->user()->email }}" disabled>
                     </div>
-
-                    @if (auth()->user()->w_photographer && auth()->user()->w_photographer->status == 'Individu')
-                        {{-- GENDER --}}
-                        <div class="w-100 mb-4">
-                            <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                                <i class="fa-solid fa-venus-mars"></i>
-                                <span class="ml-2">
-                                    Gender
-                                </span>
-                            </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="gender" id="gender" placeholder="Pria/Wanita"
-                                value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->gender : 'Belum Terdata'  }}"
-                                disabled>
-                        </div>
-                    @endif
                 </div>
 
                 {{-- KANAN --}}
@@ -103,11 +87,11 @@
                         </div>
                         <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                             type="text" name="basis_operasi" id="basis_operasi" placeholder="Dalam/Luar Kota"
-                            value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->basis_operasi : 'Belum Terdata'  }}"
+                            value="{{ auth()->user()->w_vendor ? auth()->user()->w_vendor->basis_operasi : 'Belum Terdata'  }}"
                             disabled>
                     </div>
 
-                    @if (auth()->user()->w_photographer && auth()->user()->w_photographer->basis_operasi == 'Hanya di Dalam Kota')
+                    @if (auth()->user()->w_vendor && auth()->user()->w_vendor->basis_operasi == 'Hanya di Dalam Kota')
                         {{-- KOTA OPERASI --}}
                         <div class="w-100 mb-4">
                             <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
@@ -118,41 +102,53 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="kota_operasi" id="kota_operasi" placeholder="Badung"
-                                value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->kota_operasi : 'Belum Terdata'  }}"
+                                value="{{ auth()->user()->w_vendor ? auth()->user()->w_vendor->kota_operasi : 'Belum Terdata'  }}"
                                 disabled>
                         </div>
                     @endif
-
-                    {{-- STATUS --}}
-                    <div class="w-100 mb-4">
-                        <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                            <i class="fa-solid fa-briefcase"></i>
-                            <span class="ml-2">
-                                Status
-                            </span>
-                        </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="status" id="status" placeholder="Individu/Organisasi"
-                            value="{{ auth()->user()->w_photographer ? auth()->user()->w_photographer->status : 'Belum Terdata'  }}"
-                            disabled>
-                    </div>
                 </div>
             </div>
 
-            {{-- BAWAH --}}
-            @if (auth()->user()->w_photographer && auth()->user()->w_photographer->status == 'Organisasi')
-                <div class="w-100 mb-4">
-                    <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span class="ml-2">
-                            Alamat
-                        </span>
-                    </div>
-                    <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
-                        {{ auth()->user()->w_photographer ? auth()->user()->w_photographer->alamat : 'Belum Terdata'  }}
-                    </div>
+            {{-- ALAMAT --}}
+            <div class="w-100 mb-4">
+                <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="ml-2">
+                        Alamat
+                    </span>
                 </div>
-            @endif
+                <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
+                    {{ auth()->user()->w_vendor ? auth()->user()->w_vendor->alamat : 'Belum Terdata'  }}
+                </div>
+            </div>
+
+            {{-- REKENING --}}
+            <div class="w-full mb-4">
+                <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span class="ml-2">
+                        Rekening
+                    </span>
+                </div>
+                <div class="w-full p-2 flex items-stretch justify-start gap-2 border-x-2 border-b-2 text-sm rounded-b">
+                    @if (auth()->user()->w_vendor)
+                        @forelse (auth()->user()->w_vendor->rekening as $rekening)
+                            <div class="w-fit flex rounded-sm shadow">
+                                <div class="w-fit py-1 px-2 bg-slate-300 rounded-s-sm font-semibold">
+                                    {{ $rekening['jenis'] }}
+                                </div>
+                                <div class="w-fit py-1 px-2">
+                                    {{ $rekening['nomor'] }}
+                                </div>
+                            </div>
+                        @empty
+                            Belum ada rekening terdaftar
+                        @endforelse
+                    @else
+                        Belum Terdata
+                    @endif
+                </div>
+            </div>
 
             {{-- BUTTON --}}
             <div class="w-100 mt-4 flex items-center justify-end gap-4">

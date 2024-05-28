@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['wedding-couple','wedding-organizer','wedding-photographer', 'admin', 'super-admin'])->nullable();
+            $table->enum('role', ['wedding-couple','wedding-organizer','photographer', 'catering', 'venue', 'admin', 'super-admin'])->nullable();
             $table->string('verification_code')->nullable();
             $table->string('google_id')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

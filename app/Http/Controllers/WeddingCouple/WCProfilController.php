@@ -18,27 +18,7 @@ class WCProfilController extends Controller
     }
 
     public function ke_ubah() {
-        $provinsi       = '';
-        $kota           = '';
-        $kecamatan      = '';
-        $kelurahan      = '';
-        $alamat_detail  = '';
-
-        if (auth()->user()->w_couple) {
-            if (auth()->user()->w_couple->alamat) {
-                $alamatArray = explode(', ', auth()->user()->w_couple->alamat);
-                list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
-            }
-        }
-
-        return view('user.wedding-couple.profil.ubah',
-                    compact(
-                        'provinsi',
-                        'kota',
-                        'kecamatan',
-                        'kelurahan',
-                        'alamat_detail'
-                    ));
+        return view('user.wedding-couple.profil.ubah');
     }
 
     public function ubah(ProfilRequest $req) {
@@ -55,7 +35,6 @@ class WCProfilController extends Controller
                 ->update([
                     'nama'    => $req->nama,
                     'no_telp' => $req->no_telp,
-                    'gender'  => $req->gender,
                 ]);
         } else {
             # Make New
@@ -63,7 +42,6 @@ class WCProfilController extends Controller
             $couple->user_id = auth()->user()->id;
             $couple->nama    = $req->nama;
             $couple->no_telp = $req->no_telp;
-            $couple->gender  = $req->gender;
             $data = $couple->save();
         }
 

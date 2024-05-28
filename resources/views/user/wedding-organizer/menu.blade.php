@@ -8,7 +8,7 @@ $currentUrl = Request::url();
     Dashboard
 </a>
 
-@if (auth()->user()->w_organizer)
+@if (auth()->user()->w_vendor)
     <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
         {{ Str::contains($currentUrl, '/portofolio') ? 'bg-pink text-white' : '' }}"
         href="{{ route('wedding-organizer.portofolio.index') }}">
@@ -34,8 +34,8 @@ $currentUrl = Request::url();
         Jadwal
     </a>
     <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
-        "
-        href="#">
+        {{ Str::contains($currentUrl, '/ulasan') ? 'bg-pink text-white' : '' }}"
+        href="{{ route('wedding-organizer.ulasan.index') }}">
         <i class="fa-regular fa-comment"></i>
         Ulasan
     </a>

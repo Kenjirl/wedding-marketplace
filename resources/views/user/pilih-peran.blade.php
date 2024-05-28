@@ -43,7 +43,7 @@
 
                         {{-- WEDDING PHOTOGRAPHER ROLE BTN --}}
                         <button class="w-full sm:h-[300px] p-2 flex-1 flex flex-col items-center justify-evenly gap-2 sm:gap-0 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
-                            id="wedding-photographer" type="button" onclick="selectRole('wedding-photographer')">
+                            id="wedding-photographer" type="button" onclick="selectRole('photographer')">
                             <p class="font-semibold">Wedding</p>
                             <i class="fa-solid fa-camera-retro text-[2em] sm:text-[5em]"></i>
                             <p class="font-semibold">Photographer</p>

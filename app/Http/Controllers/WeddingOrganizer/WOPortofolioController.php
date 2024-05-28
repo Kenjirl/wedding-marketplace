@@ -5,18 +5,18 @@ namespace App\Http\Controllers\WeddingOrganizer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PortofolioRequest;
 use App\Models\AConfiguration;
-use App\Models\WOPortofolio;
+use App\Models\WVPortofolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class WOPortofolioController extends Controller
 {
     public function index() {
-        $latest_portofolio = WOPortofolio::where('w_organizer_id', auth()->user()->w_organizer->id)
+        $latest_portofolio = WVPortofolio::where('w_vendor_id', auth()->user()->w_vendor->id)
                         ->orderBy('updated_at', 'desc')
                         ->take(4)
                         ->get();
-        $portofolio = WOPortofolio::where('w_organizer_id', auth()->user()->w_organizer->id)
+        $portofolio = WVPortofolio::where('w_vendor_id', auth()->user()->w_vendor->id)
                         ->orderBy('judul', 'asc')
                         ->get();
 
@@ -30,32 +30,45 @@ class WOPortofolioController extends Controller
     public function tambah(PortofolioRequest $req) {
         $req->validated();
 
-        $config = AConfiguration::where('nama', 'portofolio_wo')->first();
+        $config = AConfiguration::where('nama', 'portofolio-automation')->first();
 
         $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
-        $portofolio = new WOPortofolio();
-        $portofolio->w_organizer_id = auth()->user()->w_organizer->id;
+        $portofolio = new WVPortofolio();
+        $portofolio->w_vendor_id = auth()->user()->w_vendor->id;
         $portofolio->judul = $req->judul;
         $portofolio->tanggal = $req->tanggal;
         $portofolio->detail = $req->detail;
         $portofolio->lokasi = $lokasi;
 
-        if ($config->automation == 1) {
-            $portofolio->admin_id = $config->admin_id;
-            $portofolio->status = 'diterima';
+        if ($config->value) {
+            $woConfig = null;
+            foreach ($config->value as $item) {
+                if (isset($item['vendor']) && $item['vendor'] === 'wedding-organizer') {
+                    $woConfig = $item;
+                    break;
+                }
+            }
+
+            if ($woConfig) {
+                $portofolio->admin_id = $woConfig['admin_id'];
+                $portofolio->status = 'diterima';
+            }
         }
 
         if ($req->hasFile('foto')) {
-            $foto = $req->file('foto');
-            $filename = 'WO/portofolio/' . str()->uuid() . '.' . $foto->extension();
-            $url = Storage::disk('public')->putFileAs('/', $foto, $filename);
-
+            $fotos = $req->file('foto');
             $arrFoto = $portofolio->foto ?? [];
-            $arrFoto[] = [
-                'url' => $url,
-                'rejected' => false
-            ];
+
+            foreach ($fotos as $foto) {
+                $filename = 'WO/portofolio/' . str()->uuid() . '.' . $foto->extension();
+                $url = Storage::disk('public')->putFileAs('/', $foto, $filename);
+
+                $arrFoto[] = [
+                    'url' => $url,
+                    'rejected' => false,
+                ];
+            }
             $portofolio->foto = $arrFoto;
         }
 
@@ -68,7 +81,7 @@ class WOPortofolioController extends Controller
     }
 
     public function ke_ubah($id) {
-        $portofolio = WOPortofolio::find($id);
+        $portofolio = WVPortofolio::find($id);
 
         if (!$portofolio) {
             return redirect()->route('wedding-organizer.portofolio.index')->with('gagal', 'Portofolio tidak ditemukan');
@@ -132,9 +145,9 @@ class WOPortofolioController extends Controller
     public function ubah(PortofolioRequest $req, $id) {
         $req->validated();
 
-        $portofolio = WOPortofolio::find($id);
+        $portofolio = WVPortofolio::find($id);
 
-        $config = AConfiguration::where('nama', 'portofolio_wo')->first();
+        $config = AConfiguration::where('nama', 'portofolio-automation')->first();
 
         $currentPhotos = $portofolio->foto ?? [];
         $count = count($currentPhotos);
@@ -148,24 +161,39 @@ class WOPortofolioController extends Controller
         $portofolio->detail = $req->detail;
         $portofolio->lokasi = $lokasi;
 
-        if ($config->automation) {
-            $portofolio->admin_id = $config->admin_id;
-            $portofolio->status = 'diterima';
+        if ($config->value) {
+            $woConfig = null;
+            foreach ($config->value as $item) {
+                if (isset($item['vendor']) && $item['vendor'] === 'wedding-organizer') {
+                    $woConfig = $item;
+                    break;
+                }
+            }
+            if ($woConfig) {
+                $portofolio->admin_id = $woConfig['admin_id'];
+                $portofolio->status = 'diterima';
+            } else {
+                $portofolio->admin_id = null;
+                $portofolio->status = 'menunggu konfirmasi';
+            }
         } else {
             $portofolio->admin_id = null;
             $portofolio->status = 'menunggu konfirmasi';
         }
 
         if ($req->hasFile('foto')) {
-            $foto = $req->file('foto');
-            $filename = 'WO/portofolio/' . str()->uuid() . '.' . $foto->extension();
-            $url = Storage::disk('public')->putFileAs('/', $foto, $filename);
-
+            $fotos = $req->file('foto');
             $arrFoto = $portofolio->foto ?? [];
-            $arrFoto[] = [
-                'url' => $url,
-                'rejected' => false
-            ];
+
+            foreach ($fotos as $foto) {
+                $filename = 'WO/portofolio/' . str()->uuid() . '.' . $foto->extension();
+                $url = Storage::disk('public')->putFileAs('/', $foto, $filename);
+
+                $arrFoto[] = [
+                    'url' => $url,
+                    'rejected' => false,
+                ];
+            }
             $portofolio->foto = $arrFoto;
         }
         $data = $portofolio->save();
@@ -178,7 +206,7 @@ class WOPortofolioController extends Controller
     }
 
     public function hapus($id) {
-        $portofolio = WOPortofolio::findOrFail($id);
+        $portofolio = WVPortofolio::findOrFail($id);
         $photos = $portofolio->foto;
         foreach ($photos as $photo) {
             unlink(public_path($photo['url']));
@@ -192,26 +220,47 @@ class WOPortofolioController extends Controller
     }
 
     public function hapus_foto($id, $index) {
-        $portofolio = WOPortofolio::findOrFail($id);
+        $portofolio = WVPortofolio::findOrFail($id);
 
         if (isset($portofolio->foto[$index])) {
             $photo = $portofolio->foto[$index];
             $url = $photo['url'];
 
-            if ($photo['rejected']) {
-                $config = AConfiguration::where('nama', 'portofolio_wo')->first();
-                if ($config->automation) {
-                    $portofolio->admin_id = $config->admin_id;
-                    $portofolio->status = 'diterima';
+            $currentFoto = $portofolio->foto;
+            unset($currentFoto[$index]);
+            $currentFoto = array_values($currentFoto);
+
+            $rejectedPhotosExist = false;
+            foreach ($currentFoto as $foto) {
+                if ($foto['rejected']) {
+                    $rejectedPhotosExist = true;
+                    break;
+                }
+            }
+
+            if (!$rejectedPhotosExist) {
+                $config = AConfiguration::where('nama', 'portofolio-automation')->first();
+                if ($config && $config->value) {
+                    $wpConfig = null;
+                    foreach ($config->value as $item) {
+                        if (isset($item['vendor']) && $item['vendor'] === 'wedding-organizer') {
+                            $wpConfig = $item;
+                            break;
+                        }
+                    }
+                    if ($wpConfig) {
+                        $portofolio->admin_id = $wpConfig['admin_id'];
+                        $portofolio->status = 'diterima';
+                    } else {
+                        $portofolio->admin_id = null;
+                        $portofolio->status = 'menunggu konfirmasi';
+                    }
                 } else {
                     $portofolio->admin_id = null;
                     $portofolio->status = 'menunggu konfirmasi';
                 }
             }
 
-            $currentFoto = $portofolio->foto;
-            unset($currentFoto[$index]);
-            $currentFoto = array_values($currentFoto);
             $portofolio->foto = $currentFoto;
             $portofolio->save();
 

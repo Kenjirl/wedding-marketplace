@@ -33,7 +33,8 @@ class PortofolioRequest extends FormRequest
             'kelurahan'     => 'required|string|regex:/^[a-zA-Z\s()]*$/',
             'alamat_detail' => 'required|string|regex:/^[a-zA-Z\s.0-9]*$/',
             'form-info'     => 'required|in:add,edit',
-            'foto'          => 'required_if:form-info,add|image',
+            'foto'          => 'required_if:form-info,add|array|min:1|max:5',
+            'foto.*'        => 'image',
         ];
     }
 
@@ -62,8 +63,11 @@ class PortofolioRequest extends FormRequest
             'alamat_detail.required'  => 'Alamat Detail tidak boleh kosong',
             'alamat_detail.string'    => 'Alamat Detail harus berupa karakter',
             'alamat_detail.regex'     => 'Alamat Detail tidak boleh memuat tanda baca selain titik',
-            'foto.required_if'        => 'Foto tidak boleh kosong',
-            'foto.image'              => 'Foto harus berupa gambar',
+            'foto.required_if'        => 'Minimal satu gambar harus diunggah.',
+            'foto.array'              => 'Foto harus berupa array.',
+            'foto.min'                => 'Minimal satu gambar harus diunggah asdasd.',
+            'foto.max'                => 'Maksimal lima gambar yang boleh diunggah.',
+            'foto.*.image'            => 'Setiap file harus berupa gambar.',
         ];
     }
 }

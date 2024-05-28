@@ -33,36 +33,6 @@
                             <span>Pencarian</span>
                         </div>
 
-                        {{-- CARI KATEGORI --}}
-                        <div class="w-full flex items-center justify-start">
-                            <div class="w-fit px-4 py-2 rounded-s border-2 border-r-0 border-pink bg-pink text-white">
-                                <i class="fa-solid fa-hashtag"></i>
-                            </div>
-                            <select class="w-full p-2 text-gray-500 border-2 border-l-0 border-gray-200 rounded-e appearance-none outline-none focus:ring-0 focus:border-pink transition-colors"
-                                name="kategori" id="kategori">
-                                @if (!$categories->isEmpty())
-                                    <option value="" selected>
-                                        Pilih Kategori
-                                    </option>
-                                    @foreach ($categories as $kategori)
-                                        @if ($search_kategori !== null && (int)$search_kategori === $kategori->id))
-                                            <option value="{{ $kategori->id }}" selected>
-                                                {{ $kategori->nama }}
-                                            </option>
-                                        @else
-                                            <option value="{{ $kategori->id }}">
-                                                {{ $kategori->nama }}
-                                            </option>
-                                        @endif
-                                    @endforeach
-                                @else
-                                    <option value="" selected>
-                                        Tidak ada kategori
-                                    </option>
-                                @endif
-                            </select>
-                        </div>
-
                         {{-- CARI HARGA --}}
                         <div class="w-full flex items-center justify-start">
                             <div class="w-fit px-4 py-2 rounded-s border-2 border-r-0 border-pink bg-pink text-white">
@@ -104,19 +74,22 @@
                                 value="{{ $search_kota_operasi === null ? '' : $search_kota_operasi }}">
                         </div>
 
-                        {{-- SUBMIT --}}
-                        <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                            type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+                        {{-- TOMBOL --}}
+                        <div class="w-full flex items-start justify-end gap-2">
+                            {{-- HAPUS FILTER --}}
+                            @if ($search_harga !== null || $search_basis_operasi !== null || $search_kota_operasi !== null)
+                                <a class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
+                                    href="{{ route('wedding-couple.search.wo.index') }}">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                            @endif
 
-                        {{-- HAPUS FILTER --}}
-                        @if ($search_kategori !== null || $search_harga !== null || $search_basis_operasi !== null || $search_kota_operasi !== null)
-                            <a class="w-fit px-4 py-2 rounded outline-none text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
-                                href="{{ route('wedding-couple.search.wo.index') }}">
-                                <i class="fa-solid fa-xmark"></i>
-                            </a>
-                        @endif
+                            {{-- SUBMIT --}}
+                            <button class="w-fit px-4 py-2 rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -135,7 +108,7 @@
                                     src="{{ asset($organizer->foto_profil) }}" alt="">
                             @else
                                 <span class="w-full aspect-video bg-pink flex items-center justify-center text-[5em] font-bold text-white rounded-t-lg">
-                                    {{ substr($organizer->nama_perusahaan, 0, 1) }}
+                                    {{ substr($organizer->nama, 0, 1) }}
                                 </span>
                             @endif
                         </div>
@@ -144,7 +117,7 @@
                             {{-- NAMA ORGANIZER --}}
                             <div>
                                 <span class="text-xl font-semibold line-clamp-1">
-                                    {{ $organizer->nama_perusahaan }}
+                                    {{ $organizer->nama }}
                                 </span>
                             </div>
 
@@ -176,25 +149,6 @@
                                         </span>
                                     </div>
                                 @endif
-                            </div>
-
-                            {{-- KATEGORI --}}
-                            <div class="w-full overflow-x-auto pb-1 flex items-start justify-start gap-2">
-                                @forelse ($organizer->categories as $ktg)
-                                    <div class="w-fit px-2 py-1 text-xs border border-pink rounded-full whitespace-nowrap">
-                                        <i class="fa-solid fa-hashtag text-pink"></i>
-                                        <span>
-                                            {{ $ktg->w_categories->nama }}
-                                        </span>
-                                    </div>
-                                @empty
-                                    <div class="w-fit px-2 py-1 text-xs border border-pink rounded-full">
-                                        <i class="fa-solid fa-hashtag text-pink"></i>
-                                        <span>
-                                            tidak ada kategori
-                                        </span>
-                                    </div>
-                                @endforelse
                             </div>
                         </div>
                     </div>

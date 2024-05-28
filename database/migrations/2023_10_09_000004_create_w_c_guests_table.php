@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('alasan', ['-', 'Sakit', 'Urusan Pekerjaan', 'Urusan Keluarga', 'Kendala Lainnya'])->default('-');
             $table->unsignedInteger('jumlah')->default(0);
             $table->text('pesan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');

@@ -1,7 +1,7 @@
 @extends('user.wedding-couple.layout')
 
 @section('title')
-    <title>{{ $organizer->nama_perusahaan }} | Wedding Marketplace</title>
+    <title>{{ $organizer->nama }} | Wedding Marketplace</title>
 @endsection
 
 @section('content')
@@ -17,29 +17,20 @@
                             src="{{ asset($organizer->foto_profil) }}" alt="">
                     @else
                         <span class="w-full aspect-video bg-pink flex items-center justify-center text-[5em] font-bold text-white rounded-t-lg">
-                            {{ substr($organizer->nama_perusahaan, 0, 1) }}
+                            {{ substr($organizer->nama, 0, 1) }}
                         </span>
                     @endif
                 </div>
 
                 {{-- data lengkap --}}
                 <div class="w-full p-2 text-sm">
-                    <div class="w-full mb-2"> {{-- Pemilik --}}
+                    <div class="w-full mb-2"> {{-- Nama --}}
                         <div class="w-full flex items-center justify-start gap-2">
                             <i class="fa-solid fa-user-tie text-pink"></i>
-                            <p>Pemilik</p>
+                            <p>Nama</p>
                         </div>
                         <div class="w-full px-6" id="namaOrganizer">
-                            {{ $organizer->nama_pemilik }}
-                        </div>
-                    </div>
-                    <div class="w-full mb-2"> {{-- Perusahaan --}}
-                        <div class="w-full flex items-center justify-start gap-2">
-                            <i class="fa-solid fa-building text-pink"></i>
-                            <p>Perusahaan</p>
-                        </div>
-                        <div class="w-full px-6">
-                            {{ $organizer->nama_perusahaan }}
+                            {{ $organizer->nama }}
                         </div>
                     </div>
                     <div class="w-full mb-2"> {{-- Telepon --}}
@@ -80,21 +71,6 @@
                             </div>
                         </div>
                     @endif
-                    <div class="w-full mb-2"> {{-- Kategori --}}
-                        <div class="w-full flex items-center justify-start gap-2">
-                            <i class="fa-solid fa-hashtag text-pink"></i>
-                            <p>Kategori</p>
-                        </div>
-                        <div class="w-full px-6 py-2">
-                            @forelse ($categories as $kategori)
-                                <span class="w-fit mr-1 px-2 py-1 text-xs border border-pink rounded-full whitespace-nowrap">
-                                    {{ $kategori->nama }}
-                                </span>
-                            @empty
-                                Tidak ada kategori
-                            @endforelse
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -297,11 +273,9 @@
                                                         </option>
 
                                                         @foreach ($weddings as $wedding)
-                                                            @if (!$wedding->w_o_booking)
-                                                                <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
-                                                                    {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
-                                                                </option>
-                                                            @endif
+                                                            <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
+                                                                {{ 'Tn. ' . $wedding->p_sapaan . ' & Ny. ' . $wedding->w_sapaan }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -314,13 +288,16 @@
                                             </div>
 
                                             {{-- TANGGAL --}}
+                                            @php
+                                                $tomDate = new DateTime('tomorrow');
+                                            @endphp
                                             <div class="w-full mb-4">
                                                 <div class="w-full flex">
                                                     <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
                                                         <i class="fa-regular fa-calendar"></i>
                                                     </div>
                                                     <input class="w-full p-2 flex-1 text-sm border-y-2 border-e-2 rounded-e focus:border-pink focus:outline-none"
-                                                        type="date" name="tanggal" id="tanggal" placeholder="tanggal"
+                                                        type="date" name="tanggal" id="tanggal" placeholder="tanggal" min="{{ $tomDate->format('Y-m-d') }}"
                                                         required
                                                         value="{{ old('tanggal') }}">
                                                 </div>
@@ -368,6 +345,8 @@
         }
 
         $(document).ready(function() {
+            $('ul').addClass('list-disc pl-8');
+
             // Ganti Foto Portofolio
             $('.foto-kecil').on('click', function() {
                 let photoUrl = $(this).find('img').attr('src');

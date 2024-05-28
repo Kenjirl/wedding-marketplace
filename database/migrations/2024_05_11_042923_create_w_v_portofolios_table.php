@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('w_o_portofolios', function (Blueprint $table) {
+        Schema::create('w_v_portofolios', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('w_organizer_id');
+            $table->unsignedBigInteger('w_vendor_id');
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->string('judul');
             $table->date('tanggal');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('status', ['diterima', 'menunggu konfirmasi', 'ditolak'])->default('menunggu konfirmasi');
             $table->timestamps();
 
-            $table->foreign('w_organizer_id')->references('id')->on('w_organizers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_vendor_id')->references('id')->on('w_vendors')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('w_o_portofolios');
+        Schema::dropIfExists('w_v_portofolios');
     }
 };

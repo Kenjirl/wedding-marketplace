@@ -25,8 +25,7 @@ class ProfilRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_pemilik'   =>'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
-            'nama_perusahaan'=>'required|string|regex:/^[a-zA-Z\s.0-9]*$/|max:50',
+            'nama'   =>'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
             'username'       =>[
                 'required',
                 Rule::unique('users', 'name')->ignore(auth()->id()),
@@ -34,6 +33,15 @@ class ProfilRequest extends FormRequest
             'no_telp'        =>'required|string|min:8|max:12',
             'basis_operasi'  =>'required|string|regex:/^[a-zA-Z\s]*$/|in:Hanya di Dalam Kota,Bisa ke Luar Kota',
             'kota_operasi'   =>'string|regex:/^[a-zA-Z\s]*$/',
+            'rekening' => ['required', 'array', function ($attribute, $value, $fail) {
+                $filled = array_filter($value, function($item) {
+                    return !empty($item);
+                });
+                if (count($filled) < 1) {
+                    $fail('Minimal harus memiliki satu nomor rekening.');
+                }
+            }],
+            'rekening.*'     => ['nullable'],
             'provinsi'       =>'required|string|regex:/^[a-zA-Z\s()]*$/',
             'kota'           =>'required|string|regex:/^[a-zA-Z\s()]*$/',
             'kecamatan'      =>'required|string|regex:/^[a-zA-Z\s()]*$/',
@@ -50,14 +58,10 @@ class ProfilRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nama_pemilik.required'   => 'Nama Pemilik tidak boleh kosong',
-            'nama_pemilik.string'     => 'Nama Pemilik harus berupa karakter',
-            'nama_pemilik.regex'      => 'Nama Pemilik tidak boleh memuat angka dan/atau tanda baca',
-            'nama_pemilik.max'        => 'Nama Pemilik tidak boleh lebih dari 50 karakter',
-            'nama_perusahaan.required'=> 'Nama Perusahaan tidak boleh kosong',
-            'nama_perusahaan.string'  => 'Nama Perusahaan harus berupa karakter',
-            'nama_perusahaan.regex'   => 'Nama Perusahaan tidak boleh memuat tanda baca selain titik',
-            'nama_perusahaan.max'     => 'Nama Perusahaan tidak boleh lebih dari 50 karakter',
+            'nama.required'           => 'Nama tidak boleh kosong',
+            'nama.string'             => 'Nama harus berupa karakter',
+            'nama.regex'              => 'Nama tidak boleh memuat angka dan/atau tanda baca',
+            'nama.max'                => 'Nama tidak boleh lebih dari 50 karakter',
             'username.required'       => 'Username tidak boleh kosong',
             'username.unique'         => 'Username sudah digunakan',
             'no_telp.required'        => 'Nomor Telepon tidak boleh kosong',
@@ -70,6 +74,8 @@ class ProfilRequest extends FormRequest
             'basis_operasi.in'        => 'Basis Operasi harus dipilih dari pilihan yang tersedia',
             'kota_operasi.string'     => 'Kota Operasi harus berupa karakter',
             'kota_operasi.regex'      => 'Kota Operasi harus dipilih dari pilihan yang tersedia',
+            'rekening.required'       => 'Harus memiliki minimal 1 informasi rekening',
+            'rekening.array'          => 'Rekening harus berupa array',
             'provinsi.required'       => 'Provinsi tidak boleh kosong',
             'provinsi.string'         => 'Provinsi harus berupa karakter',
             'provinsi.regex'          => 'Provinsi harus dipilih dari pilihan yang tersedia',

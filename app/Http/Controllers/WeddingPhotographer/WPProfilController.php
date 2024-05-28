@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UbahPasswordRequest;
 use App\Http\Requests\WeddingPhotographer\ProfilRequest;
 use App\Models\User;
-use App\Models\WPhotographer;
+use App\Models\WVendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -25,8 +25,8 @@ class WPProfilController extends Controller
         $kelurahan      = '';
         $alamat_detail  = '';
 
-        if (auth()->user()->w_photographer && auth()->user()->w_photographer->alamat) {
-            $alamatArray = explode(', ', auth()->user()->w_photographer->alamat);
+        if (auth()->user()->w_vendor && auth()->user()->w_vendor->alamat) {
+            $alamatArray = explode(', ', auth()->user()->w_vendor->alamat);
             list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
         }
 
@@ -76,20 +76,23 @@ class WPProfilController extends Controller
     public function ubah(ProfilRequest $req) {
         $req->validated();
 
-        $gender = null;
         $kota_operasi = null;
-        $alamat = null;
+        $alamat = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
         if ($req->basis_operasi == 'Hanya di Dalam Kota') {
-            # Perlu Data Kota Operasi
-            $kota_operasi = $req->kota_operasi;
+            $kota_operasi = $req->kota;
         }
 
-        if ($req->status == 'Organisasi') {
-            # Perlu Data Alamat Detail
-            $alamat = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
-        } else {
-            $gender = $req->gender;
+        $filteredRekening = array_filter($req->rekening, function ($value) {
+            return !is_null($value);
+        });
+
+        $arrRekening = [];
+        foreach ($filteredRekening as $bank => $nomorRekening) {
+            $arrRekening[] = [
+                'jenis' => $bank,
+                'nomor' => $nomorRekening
+            ];
         }
 
         User::where('id', auth()->user()->id)
@@ -97,33 +100,28 @@ class WPProfilController extends Controller
                 'name' => $req->username,
             ]);
 
-        if (auth()->user()->w_photographer) {
+        if (auth()->user()->w_vendor) {
             # Update
-            $data = WPhotographer::where('id', auth()->user()->w_photographer->id)
+            $data = WVendor::where('id', auth()->user()->w_vendor->id)
                 ->update([
                     'nama'           => $req->nama,
                     'no_telp'        => $req->no_telp,
-                    'gender'         => $gender,
                     'basis_operasi'  => $req->basis_operasi,
-                    'status'         => $req->status,
                     'kota_operasi'   => $kota_operasi,
                     'alamat'         => $alamat,
-                    'jenis_rekening' => $req->jenis_rekening,
-                    'no_rekening'    => $req->no_rekening,
+                    'rekening'      => $arrRekening,
                 ]);
         } else {
             # Make New
-            $photographer = new WPhotographer();
+            $photographer = new WVendor();
             $photographer->user_id        = auth()->user()->id;
             $photographer->nama           = $req->nama;
             $photographer->no_telp        = $req->no_telp;
-            $photographer->gender         = $gender;
             $photographer->basis_operasi  = $req->basis_operasi;
-            $photographer->status         = $req->status;
             $photographer->kota_operasi   = $kota_operasi;
             $photographer->alamat         = $alamat;
-            $photographer->jenis_rekening = $req->jenis_rekening;
-            $photographer->no_rekening    = $req->no_rekening;
+            $photographer->jenis          = auth()->user()->role;
+            $photographer->rekening       = $arrRekening;
             $data = $photographer->save();
         }
 
@@ -161,7 +159,7 @@ class WPProfilController extends Controller
             'foto_profil' => 'required|image'
         ]);
 
-        $foto_profil_lama = auth()->user()->w_photographer->foto_profil;
+        $foto_profil_lama = auth()->user()->w_vendor->foto_profil;
         if ($foto_profil_lama) {
             unlink(public_path($foto_profil_lama));
         }
@@ -174,7 +172,7 @@ class WPProfilController extends Controller
                 'WP/profil/'.str()->uuid() . '.' . $foto_profil->extension()
             );
 
-            $data = WPhotographer::where('user_id', auth()->user()->id)
+            $data = WVendor::where('user_id', auth()->user()->id)
                 ->update([
                     'foto_profil' => $foto_profil,
                 ]);

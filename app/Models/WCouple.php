@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WCouple extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
         'nama',
         'no_telp',
-        'gender',
         'foto_profil',
     ];
 
@@ -25,13 +25,5 @@ class WCouple extends Model
 
     public function wedding(): HasMany {
         return $this->hasMany(WCWedding::class, 'w_couple_id');
-    }
-
-    public function w_o_rating(): HasMany {
-        return $this->hasMany(WORating::class, 'w_couple_id');
-    }
-
-    public function w_p_rating(): HasMany {
-        return $this->hasMany(WPRating::class, 'w_couple_id');
     }
 }

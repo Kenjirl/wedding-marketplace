@@ -13,17 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('w_o_bookings', function (Blueprint $table) {
+        Schema::create('w_v_bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('w_c_wedding_id');
-            $table->unsignedBigInteger('w_o_plan_id');
-            $table->enum('status', ['batal', 'diproses', 'diterima', 'ditolak', 'selesai'])->default('diproses');
-            $table->string('bukti_bayar')->nullable();
+            $table->unsignedBigInteger('w_v_plan_id');
+            $table->unsignedInteger('qty');
+            $table->enum('status', ['batal', 'diproses', 'diterima', 'ditolak', 'dibayar', 'selesai'])->default('diproses');
             $table->date('untuk_tanggal');
+            $table->unsignedBigInteger('total_bayar');
+            $table->string('bukti_bayar')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('w_o_plan_id')->references('id')->on('w_o_plans')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_v_plan_id')->references('id')->on('w_v_plans')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -34,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('w_o_bookings');
+        Schema::dropIfExists('w_v_bookings');
     }
 };

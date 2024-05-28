@@ -7,84 +7,112 @@
 @section('h1', 'Layanan > Ubah Layanan')
 
 @section('content')
-    <div class="flex-1 w-full px-4 mb-2">
-        <ol class="list-decimal text-sm">
-            <li>Silahkan ubah detail layanan Anda</li>
-            <li>Untuk fitur tambahan tidak dapat diubah, namun dapat dihapus</li>
-            <li>Jika ingin mengubah fitur tambahan, silahkan hapus kemudian tambahkan fitur tambahan baru</li>
-            <li>Jika status layanan nonaktif, maka pelanggan tidak akan dapat memilih layanan ini</li>
-        </ol>
-    </div>
-
     <form action="{{ route('wedding-organizer.layanan.ubah', $plan->id) }}" method="post" autocomplete="off">
         @csrf
-        <div class="w-1/2">
-            <div class="w-full">
-                {{-- NAMA --}}
-                <div class="w-full mb-4">
-                    <div class="w-full">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            <i class="fa-solid fa-gift"></i>
-                            <span class="ml-2">
-                                Nama Paket
-                            </span>
+        <div class="w-full">
+            {{-- INPUT --}}
+            <div class="w-full flex items-start justify-center gap-8">
+                <div class="w-full">
+                    {{-- NAMA --}}
+                    <div class="w-full mb-4">
+                        <div class="w-full">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <i class="fa-solid fa-gift"></i>
+                                <span class="ml-2">
+                                    Nama Paket
+                                </span>
+                            </div>
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                type="text" name="nama" id="nama" placeholder="nama"
+                                value="{{ old('nama', $plan->nama) }}"
+                                required>
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="nama" id="nama" placeholder="nama"
-                            value="{{ old('nama', $plan->nama) }}"
-                            required>
+
+                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            @error('nama')
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                        @error('nama')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
+                    {{-- HARGA --}}
+                    <div class="w-full mb-4">
+                        <div class="w-full">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('harga') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <i class="fa-solid fa-rupiah-sign"></i>
+                                <span class="ml-2">
+                                    Harga Paket
+                                </span>
+                            </div>
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('harga') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                type="number" name="harga" id="harga" placeholder="tanpa Rp" min="0"
+                                value="{{ old('harga', $plan->harga) }}"
+                                required>
+                        </div>
+
+                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            @error('harga')
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    {{-- SATUAN --}}
+                    <div class="w-full mb-4">
+                        <div class="w-full">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('satuan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <i class="fa-regular fa-circle-dot"></i>
+                                <span class="ml-2">
+                                    Satuan Harga
+                                </span>
+                            </div>
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                                name="satuan" id="satuan" required>
+                                <option value="" selected>Pilih Satuan Harga</option>
+                                <option value="acara" {{ old('satuan', $plan->satuan) == 'acara' ? 'selected' : '' }}>
+                                    Acara
+                                </option>
+                                <option value="hari" {{ old('satuan', $plan->satuan) == 'hari' ? 'selected' : '' }}>
+                                    Hari
+                                </option>
+                                <option value="jam" {{ old('satuan', $plan->satuan) == 'jam' ? 'selected' : '' }}>
+                                    Jam
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            @error('satuan')
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 
-                {{-- DETAIL --}}
-                <div class="w-100 mb-4">
-                    <div class="w-100">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span class="ml-2">
-                                Detail
-                            </span>
+                <div class="w-full">
+                    {{-- DETAIL --}}
+                    <div class="w-100 mb-4">
+                        <div class="w-100">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="ml-2">
+                                    Detail
+                                </span>
+                            </div>
+                            <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                name="detail" id="input" rows="3" placeholder="masukan detail acara ini"
+                                >{{ old('detail', $plan->detail) }}</textarea>
                         </div>
-                        <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            name="detail" id="input" rows="3" placeholder="masukan detail acara ini"
-                            >{{ old('detail', $plan->detail) }}</textarea>
-                    </div>
 
-                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                        @error('detail')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                {{-- HARGA --}}
-                <div class="w-full mb-4">
-                    <div class="w-full">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('harga') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                            <i class="fa-solid fa-rupiah-sign"></i>
-                            <span class="ml-2">
-                                Harga Paket
-                            </span>
+                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            @error('detail')
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>{{ $message }}</span>
+                            @enderror
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('harga') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="number" name="harga" id="harga" placeholder="tanpa Rp" min="0"
-                            value="{{ old('harga', $plan->harga) }}"
-                            required>
-                    </div>
-
-                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                        @error('harga')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
                     </div>
                 </div>
             </div>

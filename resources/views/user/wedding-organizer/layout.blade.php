@@ -5,9 +5,9 @@
 @endsection
 
 @section('tombol-profil')
-    @if (auth()->user()->w_organizer && auth()->user()->w_organizer->foto_profil)
+    @if (auth()->user()->w_vendor && auth()->user()->w_vendor->foto_profil)
         <img class="w-[40px] aspect-square object-cover object-center rounded-full"
-            src="{{ asset(auth()->user()->w_organizer->foto_profil) }}" alt="Foto Profil">
+            src="{{ asset(auth()->user()->w_vendor->foto_profil) }}" alt="Foto Profil">
     @else
         <span class="w-[40px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white">
             {{ substr(auth()->user()->name, 0, 1) }}

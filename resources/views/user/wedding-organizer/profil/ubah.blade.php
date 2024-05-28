@@ -22,46 +22,23 @@
             <div class="w-full flex items-start justify-between gap-8">
                 {{-- KIRI --}}
                 <div class="w-[50%]" id="formKiri">
-                    {{-- NAMA PEMILIK --}}
+                    {{-- NAMA --}}
                     <div class="w-full mb-4">
                         <div class="w-full">
-                            <div class="w-full p-2 text-xs font-bold bg-pink @error('nama_pemilik') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-building-user"></i>
                                 <span class="ml-2">
-                                    Nama Pemilik
+                                    Nama
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama_pemilik') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="nama_pemilik" id="nama_pemilik" placeholder="Budi Pekerti"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                type="text" name="nama" id="nama" placeholder="Nama PT/Penyedia Layanan"
                                 required
-                                value="{{ old('nama_pemilik', auth()->user()->w_organizer ? auth()->user()->w_organizer->nama_pemilik : '') }}">
+                                value="{{ old('nama', auth()->user()->w_vendor ? auth()->user()->w_vendor->nama : '') }}">
                         </div>
 
                         <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                            @error('nama_pemilik')
-                                <i class="fa-solid fa-circle-info"></i>
-                                <span>{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    {{-- NAMA PERUSAHAAN --}}
-                    <div class="w-full mb-4">
-                        <div class="w-full">
-                            <div class="w-full p-2 text-xs font-bold bg-pink @error('nama_perusahaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                <i class="fa-solid fa-building"></i>
-                                <span class="ml-2">
-                                    Nama Perusahaan
-                                </span>
-                            </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama_perusahaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="nama_perusahaan" id="nama_perusahaan" placeholder="PT. Ayo Nikah"
-                                required
-                                value="{{ old('nama_perusahaan', auth()->user()->w_organizer ? auth()->user()->w_organizer->nama_perusahaan : '') }}">
-                        </div>
-
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                            @error('nama_perusahaan')
+                            @error('nama')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>
                             @enderror
@@ -105,7 +82,7 @@
                                 <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_telp') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                                     type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0"
                                     required
-                                    value="{{ old('no_telp', auth()->user()->w_organizer ? auth()->user()->w_organizer->no_telp : '') }}">
+                                    value="{{ old('no_telp', auth()->user()->w_vendor ? auth()->user()->w_vendor->no_telp : '') }}">
                             </div>
 
                             <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -131,10 +108,10 @@
                                 <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink outline-none"
                                     name="basis_operasi" id="basis_operasi" required>
                                     <option value="" selected>Pilih Basis Operasi</option>
-                                    <option value="Hanya di Dalam Kota" {{ old('basis_operasi', auth()->user()->w_organizer ? auth()->user()->w_organizer->basis_operasi : '') == 'Hanya di Dalam Kota' ? 'selected' : '' }}>
+                                    <option value="Hanya di Dalam Kota" {{ old('basis_operasi', auth()->user()->w_vendor ? auth()->user()->w_vendor->basis_operasi : '') == 'Hanya di Dalam Kota' ? 'selected' : '' }}>
                                         Hanya di Dalam Kota
                                     </option>
-                                    <option value="Bisa ke Luar Kota" {{ old('basis_operasi', auth()->user()->w_organizer ? auth()->user()->w_organizer->basis_operasi : '') == 'Bisa ke Luar Kota' ? 'selected' : '' }}>
+                                    <option value="Bisa ke Luar Kota" {{ old('basis_operasi', auth()->user()->w_vendor ? auth()->user()->w_vendor->basis_operasi : '') == 'Bisa ke Luar Kota' ? 'selected' : '' }}>
                                         Bisa ke Luar Kota
                                     </option>
                                 </select>
@@ -160,7 +137,7 @@
                                 <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota_operasi') border-red-500 @enderror rounded-b outline-none"
                                     type="text" name="kota_operasi" id="kota_operasi" placeholder="Mengikuti Kota/Kabupaten Perusahaan"
                                     disabled readonly
-                                    value="{{ old('kota_operasi', auth()->user()->w_organizer && auth()->user()->w_organizer->kota_operasi ? $kota : '') }}">
+                                    value="{{ old('kota_operasi', auth()->user()->w_vendor && auth()->user()->w_vendor->kota_operasi ? $kota : '') }}">
                             </div>
 
                             <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
@@ -173,63 +150,50 @@
                     </div>
 
                     {{-- REKENING CONTAINER --}}
-                    <div class="grid grid-cols-2 gap-4">
-                        {{-- JENIS REKENING --}}
-                        <div class="relative w-100 mb-4">
-                            <div class="w-100">
-                                <div class="w-full p-2 text-xs font-bold bg-pink @error('jenis_rekening') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                    <i class="fa-solid fa-building-columns"></i>
-                                    <span class="ml-2">
-                                        Jenis Rekening
-                                    </span>
-                                </div>
-                                <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('jenis_rekening') border-red-500 @enderror rounded-b focus:border-pink outline-none"
-                                    name="jenis_rekening" id="jenis_rekening" required>
-                                    <option value="" selected>Pilih Jenis Rekening</option>
-                                    <option value="BCA" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'BCA' ? 'selected' : '' }}>
-                                        Bank BCA
-                                    </option>
-                                    <option value="BNI" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'BNI' ? 'selected' : '' }}>
-                                        Bank BNI
-                                    </option>
-                                    <option value="BRI" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'BRI' ? 'selected' : '' }}>
-                                        Bank BRI
-                                    </option>
-                                    <option value="Mandiri" {{ old('jenis_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->jenis_rekening : '') == 'Mandiri' ? 'selected' : '' }}>
-                                        Bank Mandiri
-                                    </option>
-                                </select>
+                    <div class="w-full mb-4" id="rekeningContainer">
+                        <div class="w-full">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('rekening') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span class="ml-2">Rekening</span>
                             </div>
+                            <div class="w-full p-2 border-x-2 border-b-2 text-sm @error('rekening') border-red-500 @enderror rounded-b outline-none">
+                                @php
+                                    // JENIS REKENING
+                                    $banks = ['BRI', 'BNI', 'BCA', 'Mandiri'];
+                                @endphp
+                                @foreach($banks as $bank)
+                                    @php
+                                        // OLD VALUE REKENING
+                                        $oldRekening = old('rekening');
+                                        $rekeningData = null;
 
-                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                @error('jenis_rekening')
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <span>{{ $message }}</span>
-                                @enderror
+                                        if (is_array($oldRekening) && isset($oldRekening[$bank])) {
+                                            $rekeningData = ['jenis' => $bank, 'nomor' => $oldRekening[$bank]];
+                                        } elseif (auth()->user()->w_vendor && auth()->user()->w_vendor->rekening) {
+                                            $rekeningData = collect(auth()->user()->w_vendor->rekening)->where('jenis', $bank)->first();
+                                        }
+
+                                        $rekeningValue = $rekeningData ? $rekeningData['nomor'] : '';
+                                    @endphp
+                                    <div class="w-full mb-2 flex rounded">
+                                        <span class="w-1/4 py-1 px-4 border border-slate-300 rounded-s-lg bg-slate-300 font-semibold">{{ $bank }}</span>
+                                        <input class="w-3/4 p-1 px-2 border border-slate-300 outline-none focus:border-pink
+                                            rekening-input"
+                                            type="number" name="rekening[{{ $bank }}]" id="rekening_{{ $bank }}" value="{{ $rekeningValue }}"
+                                            min="0" placeholder="0123456789" required>
+                                    </div>
+                                @endforeach
+                                <div class="text-end">
+                                    <span class="text-sm italic text-slate-400">*minimal harus memiliki 1 nomor rekening</span>
+                                </div>
                             </div>
                         </div>
 
-                        {{-- NOMOR REKENING --}}
-                        <div class="relative w-100 mb-4">
-                            <div class="w-100">
-                                <div class="w-full p-2 text-xs font-bold bg-pink @error('no_rekening') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
-                                    <i class="fa-solid fa-money-check"></i>
-                                    <span class="ml-2">
-                                        Nomor Rekening
-                                    </span>
-                                </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_rekening') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                    type="number" name="no_rekening" id="no_rekening" placeholder="tanpa tanda baca" min="0" minlength="10"
-                                    required
-                                    value="{{ old('no_rekening', auth()->user()->w_photographer ? auth()->user()->w_photographer->no_rekening : '') }}">
-                            </div>
-
-                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
-                                @error('no_rekening')
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <span>{{ $message }}</span>
-                                @enderror
-                            </div>
+                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            @error('rekening')
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -416,6 +380,51 @@
         $('#kota').change(function () {
             $('#kota_operasi').val($(this).val());
         });
+    </script>
+
+    <script>
+        window.onload = function() {
+            // BASIS OPERASI
+            if ($('#basis_operasi').val() === 'Hanya di Dalam Kota') {
+                $('#kota_operasi').prop({ disabled: false, required: true });
+                $('#kotaOperasiContainer').removeClass('hidden');
+            } else {
+                $('#kota_operasi').prop({ disabled: true, required: false });
+                $('#kotaOperasiContainer').addClass('hidden');
+            }
+        }
+    </script>
+
+    <script>
+        // REKENING INPUT SCRIPT
+        document.addEventListener('DOMContentLoaded', function() {
+            const rekeningInputs = document.querySelectorAll('.rekening-input');
+
+            function checkRequired() {
+                let hasValue = false;
+
+                rekeningInputs.forEach(input => {
+                    if (input.value.trim() !== '') {
+                        hasValue = true;
+                    }
+                });
+
+                rekeningInputs.forEach(input => {
+                    if (hasValue) {
+                        input.removeAttribute('required');
+                    } else {
+                        input.setAttribute('required', 'required');
+                    }
+                });
+            }
+
+            rekeningInputs.forEach(input => {
+                input.addEventListener('input', checkRequired);
+            });
+
+            checkRequired();
+        });
+
     </script>
 
     <script src="{{ asset('js/input-select-wilayah.js') }}"></script>

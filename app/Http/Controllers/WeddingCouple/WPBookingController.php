@@ -4,20 +4,21 @@ namespace App\Http\Controllers\WeddingCouple;
 
 use App\Http\Controllers\Controller;
 use App\Models\WCWedding;
-use App\Models\WPBooking;
-use App\Models\WPhotographer;
-use App\Models\WPPlan;
-use App\Models\WPPortofolio;
+use App\Models\WVBooking;
+use App\Models\WVendor;
+use App\Models\WVPlan;
+use App\Models\WVPortofolio;
 use Illuminate\Http\Request;
 
 class WPBookingController extends Controller
 {
     public function index(Request $req) {
-        $photographers = WPhotographer::orderBy('nama', 'asc')->get();
+        $photographers = WVendor::where('jenis', 'photographer')
+                    ->orderBy('nama', 'asc')
+                    ->get();
 
         foreach ($photographers as $photographer) {
-            $plans = WPPlan::where('w_photographer_id', $photographer->id)
-                    ->get();
+            $plans = WVPlan::where('w_vendor_id', $photographer->id)->get();
 
             $photographer->harga_terendah = null;
             $photographer->harga_tertinggi = null;
@@ -84,25 +85,27 @@ class WPBookingController extends Controller
     }
 
     public function ke_detail(Request $req, $id) {
-        $photographer = WPhotographer::find($id);
+        $photographer = WVendor::find($id);
 
         if (!$photographer) {
-            return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID Invalid');
         }
 
-        $portofolios = WPPortofolio::where('w_photographer_id', $photographer->id)
+        $portofolios = WVPortofolio::where('w_vendor_id', $photographer->id)
                         ->where('status', 'diterima')
                         ->orderBy('tanggal', 'asc')
                         ->orderBy('judul', 'asc')
                         ->get();
-        $plans = WPPlan::where('w_photographer_id', $photographer->id)
-                        ->where('deleted', 0)
+        $plans = WVPlan::where('w_vendor_id', $photographer->id)
                         ->orderBy('harga', 'asc')
                         ->get();
 
         $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
-            ->orderBy('groom', 'asc')
+            ->orderBy('p_sapaan', 'asc')
             ->get();
+        $plan_ids = $plans->pluck('id');
+        $booked_wedding_ids = WVBooking::whereIn('w_v_plan_id', $plan_ids)->pluck('w_c_wedding_id');
+        $weddings = $weddings->whereNotIn('id', $booked_wedding_ids);
 
         $portofolio_detail = null;
 
@@ -111,7 +114,7 @@ class WPBookingController extends Controller
         }
 
         if ($req->has('portofolio_id')) {
-            $portofolio_detail = WPPortofolio::where('id', $req->portofolio_id)->first();
+            $portofolio_detail = WVPortofolio::where('id', $req->portofolio_id)->first();
         }
 
         return view('user.wedding-couple.booking.wp.detail', compact(
@@ -136,15 +139,19 @@ class WPBookingController extends Controller
             'tanggal.after'       => 'Tanggal Pernikahan harus setelah tanggal hari ini',
         ]);
 
-        $booking = new WPBooking();
+        $plan = WVPlan::find($req->plan_id);
+
+        $booking = new WVBooking();
         $booking->w_c_wedding_id = $req->wedding_id;
-        $booking->w_p_plan_id    = $req->plan_id;
+        $booking->w_v_plan_id    = $req->plan_id;
         $booking->untuk_tanggal  = $req->tanggal;
+        $booking->qty            = 1;
+        $booking->total_bayar    = $plan->harga * 1;
         $data = $booking->save();
 
         if ($data) {
-            return redirect()->route('wedding-couple.pernikahan.ke_detail', $req->wedding_id)->with('sukses', 'Memesan Wedding Organizer');
+            return redirect()->route('wedding-couple.pernikahan.ke_detail', $req->wedding_id)->with('sukses', 'Memesan Fotografer');
         }
-        return redirect()->route('wedding-couple.pernikahan.ke_detail', $req->wedding_id)->with('gagal', 'Memesan Wedding Organizer');
+        return redirect()->route('wedding-couple.pernikahan.ke_detail', $req->wedding_id)->with('gagal', 'Memesan Fotografer');
     }
 }

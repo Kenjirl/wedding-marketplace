@@ -5,26 +5,25 @@ namespace App\Http\Controllers\WeddingPhotographer;
 use App\Http\Controllers\Controller;
 use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
-use App\Models\WPBooking;
-use App\Models\WPPlan;
-use App\Models\WPPlanDetail;
+use App\Models\WVBooking;
+use App\Models\WVPlan;
 use Illuminate\Http\Request;
 
 class WPJadwalController extends Controller
 {
     public function index() {
-        $bookings = WPBooking::join('w_p_plans', 'w_p_bookings.w_p_plan_id', '=', 'w_p_plans.id')
-                ->join('w_photographers', 'w_p_plans.w_photographer_id', '=', 'w_photographers.id')
-                ->where('w_photographers.id', auth()->user()->w_photographer->id)
-                ->where('w_p_bookings.status', 'diterima')
-                ->select('w_p_bookings.*')
+        $bookings = WVBooking::join('w_v_plans', 'w_v_bookings.w_v_plan_id', '=', 'w_v_plans.id')
+                ->join('w_vendors', 'w_v_plans.w_vendor_id', '=', 'w_vendors.id')
+                ->where('w_vendors.id', auth()->user()->w_vendor->id)
+                ->whereIn('w_v_bookings.status', ['dibayar', 'selesai'])
+                ->select('w_v_bookings.*')
                 ->get();
 
         $events = [];
 
         foreach ($bookings as $booking) {
             $events[] = [
-                'title'  => 'Tn.'.$booking->wedding->groom.' & Ny. '.$booking->wedding->bride,
+                'title'  => 'Tn.'.$booking->wedding->p_sapaan.' & Ny. '.$booking->wedding->w_sapaan,
                 'allDay' => true,
                 'url'    => route('wedding-photographer.jadwal.ke_detail', $booking->id),
                 'start' => $booking->untuk_tanggal,
@@ -35,14 +34,13 @@ class WPJadwalController extends Controller
     }
 
     public function ke_detail($id) {
-        $booking  = WPBooking::find($id);
+        $booking  = WVBooking::find($id);
 
         if (!$booking) {
             return redirect()->route('wedding-photographer.jadwal.index')->with('gagal', 'ID Invalid');
         }
 
-        $plan     = WPPlan::find($booking->w_p_plan_id);
-        $features = WPPlanDetail::where('w_p_plan_id', $booking->w_p_plan_id)->get();
+        $plan     = WVPlan::find($booking->w_v_plan_id);
         $wedding  = WCWedding::find($booking->w_c_wedding_id);
         $events   = WCWeddingDetail::where('w_c_wedding_id', $booking->w_c_wedding_id)
                         ->orderBy('waktu', 'asc')
@@ -51,7 +49,6 @@ class WPJadwalController extends Controller
         return view('user.wedding-photographer.jadwal.detail', compact(
             'booking',
             'plan',
-            'features',
             'wedding',
             'events',
         ));
@@ -64,7 +61,7 @@ class WPJadwalController extends Controller
             'status.required' => 'Status tidak boleh kosong',
         ]);
 
-        $data = WPBooking::find($id)
+        $data = WVBooking::find($id)
                 ->update([
                     'status' => $req->status,
                 ]);

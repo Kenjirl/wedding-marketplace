@@ -31,7 +31,6 @@ class ProfilRequest extends FormRequest
                 Rule::unique('users', 'name')->ignore(auth()->id()),
             ],
             'no_telp' =>'required|string|min:8|max:12',
-            'gender'  =>'string|regex:/^[a-zA-Z\s]*$/|in:Pria,Wanita',
         ];
     }
 
@@ -53,10 +52,6 @@ class ProfilRequest extends FormRequest
             'no_telp.string'         => 'Nomor Telepon harus berupa angka',
             'no_telp.min'            => 'Nomor Telepon minimal 8 karakter',
             'no_telp.max'            => 'Nomor Telepon maksimal 12 karakter',
-            'gender.required'        => 'Gender tidak boleh kosong',
-            'gender.string'          => 'Gender harus berupa karakter',
-            'gender.regex'           => 'Gender tidak boleh memuat angka dan/atau tanda baca',
-            'gender.in'              => 'Gender harus dipilih dari pilihan yang tersedia',
         ];
     }
 }

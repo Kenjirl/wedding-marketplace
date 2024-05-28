@@ -21,12 +21,14 @@ use App\Http\Controllers\WeddingOrganizer\WOLayananController;
 use App\Http\Controllers\WeddingOrganizer\WOPesananController;
 use App\Http\Controllers\WeddingOrganizer\WOPortofolioController;
 use App\Http\Controllers\WeddingOrganizer\WOProfilController;
+use App\Http\Controllers\WeddingOrganizer\WOUlasanController;
 use App\Http\Controllers\WeddingPhotographer\WPController;
 use App\Http\Controllers\WeddingPhotographer\WPJadwalController;
 use App\Http\Controllers\WeddingPhotographer\WPLayananController;
 use App\Http\Controllers\WeddingPhotographer\WPPesananController;
 use App\Http\Controllers\WeddingPhotographer\WPPortofolioController;
 use App\Http\Controllers\WeddingPhotographer\WPProfilController;
+use App\Http\Controllers\WeddingPhotographer\WPUlasanController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(UserController::class)->group(function() {
@@ -171,6 +173,8 @@ Route::name('wedding-couple.')
             Route::post('/hapus-wp/{id}',              'hapus_wp')              ->name('pernikahan.hapus_wp');
             Route::post('/upload-bukti-bayar-wo/{id}', 'upload_bukti_bayar_wo') ->name('pernikahan.upload_bukti_bayar_wo');
             Route::post('/upload-bukti-bayar-wp/{id}', 'upload_bukti_bayar_wp') ->name('pernikahan.upload_bukti_bayar_wp');
+            Route::post('/selesai',                    'selesai')               ->name('pernikahan.selesai');
+            Route::post('/ulasan/{id}',                'ulasan')                ->name('pernikahan.ulasan');
 
             Route::name('undangan.')->prefix('/undangan')
                 ->controller(WCInvitationController::class)->group(function() {
@@ -280,6 +284,11 @@ Route::name('wedding-organizer.')
             Route::post('/batal/{id}',  'batal')    ->name('batal');
         });
 
+        Route::name('ulasan.')->prefix('/ulasan')
+            ->controller(WOUlasanController::class)->group(function() {
+            Route::get ('/', 'index')->name('index');
+        });
+
     });
 
 });
@@ -339,6 +348,11 @@ Route::name('wedding-photographer.')
             Route::get ('/',            'index')    ->name('index');
             Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
             Route::post('/batal/{id}',  'batal')    ->name('batal');
+        });
+
+        Route::name('ulasan.')->prefix('/ulasan')
+            ->controller(WPUlasanController::class)->group(function() {
+            Route::get ('/', 'index')->name('index');
         });
 
     });

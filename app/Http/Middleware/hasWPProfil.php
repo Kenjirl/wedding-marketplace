@@ -16,7 +16,7 @@ class hasWPProfil
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->w_photographer) {
+        if (auth()->user()->w_vendor) {
             return $next($request);
         }
 

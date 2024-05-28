@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('wedding-photographer', function(User $user) {
-            return $user->role === 'wedding-photographer';
+            return $user->role === 'photographer';
         });
 
         Gate::define('admin', function(User $user) {

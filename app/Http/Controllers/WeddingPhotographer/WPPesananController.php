@@ -5,32 +5,32 @@ namespace App\Http\Controllers\WeddingPhotographer;
 use App\Http\Controllers\Controller;
 use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
-use App\Models\WPBooking;
-use App\Models\WPPlan;
+use App\Models\WVBooking;
+use App\Models\WVPlan;
 use Illuminate\Http\Request;
 
 class WPPesananController extends Controller
 {
     public function index() {
-        $bookings = WPBooking::join('w_p_plans', 'w_p_bookings.w_p_plan_id', '=', 'w_p_plans.id')
-                ->join('w_photographers', 'w_p_plans.w_photographer_id', '=', 'w_photographers.id')
-                ->where('w_photographers.id', auth()->user()->w_photographer->id)
-                ->where('w_p_bookings.status', 'diproses')
-                ->select('w_p_bookings.*')
-                ->orderBy('w_p_bookings.created_at', 'desc')
+        $bookings = WVBooking::join('w_v_plans', 'w_v_bookings.w_v_plan_id', '=', 'w_v_plans.id')
+                ->join('w_vendors', 'w_v_plans.w_vendor_id', '=', 'w_vendors.id')
+                ->where('w_vendors.id', auth()->user()->w_vendor->id)
+                ->whereIn('w_v_bookings.status', ['diterima', 'diproses'])
+                ->select('w_v_bookings.*')
+                ->orderBy('w_v_bookings.created_at', 'desc')
                 ->get();
 
         return view('user.wedding-photographer.pesanan.index', compact('bookings'));
     }
 
     public function ke_detail($id) {
-        $booking  = WPBooking::find($id);
+        $booking  = WVBooking::find($id);
 
         if (!$booking) {
             return redirect()->route('wedding-photographer.pesanan.index')->with('gagal', 'ID Invalid');
         }
 
-        $plan     = WPPlan::find($booking->w_p_plan_id);
+        $plan     = WVPlan::find($booking->w_v_plan_id);
         $wedding  = WCWedding::find($booking->w_c_wedding_id);
         $events   = WCWeddingDetail::where('w_c_wedding_id', $booking->w_c_wedding_id)
                         ->orderBy('waktu', 'asc')
@@ -51,7 +51,7 @@ class WPPesananController extends Controller
             'status.required' => 'Status tidak boleh kosong',
         ]);
 
-        $data = WPBooking::find($id)
+        $data = WVBooking::find($id)
                 ->update([
                     'status' => $req->status,
                 ]);

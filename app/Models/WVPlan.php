@@ -6,23 +6,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class WOPlan extends Model
+class WVPlan extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $casts = [
+        'foto' => 'array',
+    ];
 
     protected $fillable = [
-        'w_organizer_id',
+        'w_vendor_id',
         'nama',
         'detail',
         'harga',
+        'satuan',
     ];
 
-    public function w_organizer(): BelongsTo {
-        return $this->belongsTo(WOrganizer::class, 'w_organizer_id');
+    public function w_vendor(): BelongsTo {
+        return $this->belongsTo(WVendor::class, 'w_vendor_id');
     }
 
     public function bookings(): HasMany {
-        return $this->hasMany(WOBooking::class, 'w_o_plan_id');
+        return $this->hasMany(WVBooking::class, 'w_v_plan_id');
     }
 }

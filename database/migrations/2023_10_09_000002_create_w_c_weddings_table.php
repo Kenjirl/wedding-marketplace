@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('w_sapaan');
             $table->string('w_ayah');
             $table->string('w_ibu');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('w_couple_id')->references('id')->on('w_couples')->onUpdate('cascade')->onDelete('cascade');

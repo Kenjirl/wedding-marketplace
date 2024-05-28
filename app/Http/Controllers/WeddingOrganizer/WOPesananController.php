@@ -5,32 +5,33 @@ namespace App\Http\Controllers\WeddingOrganizer;
 use App\Http\Controllers\Controller;
 use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
-use App\Models\WOBooking;
 use App\Models\WOPlan;
+use App\Models\WVBooking;
+use App\Models\WVPlan;
 use Illuminate\Http\Request;
 
 class WOPesananController extends Controller
 {
     public function index() {
-        $bookings = WOBooking::join('w_o_plans', 'w_o_bookings.w_o_plan_id', '=', 'w_o_plans.id')
-                ->join('w_organizers', 'w_o_plans.w_organizer_id', '=', 'w_organizers.id')
-                ->where('w_organizers.id', auth()->user()->w_organizer->id)
-                ->where('w_o_bookings.status', 'diproses')
-                ->select('w_o_bookings.*')
-                ->orderBy('w_o_bookings.created_at', 'desc')
+        $bookings = WVBooking::join('w_v_plans', 'w_v_bookings.w_v_plan_id', '=', 'w_v_plans.id')
+                ->join('w_vendors', 'w_v_plans.w_vendor_id', '=', 'w_vendors.id')
+                ->where('w_vendors.id', auth()->user()->w_vendor->id)
+                ->whereIn('w_v_bookings.status', ['diterima', 'diproses'])
+                ->select('w_v_bookings.*')
+                ->orderBy('w_v_bookings.created_at', 'desc')
                 ->get();
 
         return view('user.wedding-organizer.pesanan.index', compact('bookings'));
     }
 
     public function ke_detail($id) {
-        $booking  = WOBooking::find($id);
+        $booking  = WVBooking::find($id);
 
         if (!$booking) {
             return redirect()->route('wedding-organizer.pesanan.index')->with('gagal', 'ID Invalid');
         }
 
-        $plan     = WOPlan::find($booking->w_o_plan_id);
+        $plan     = WVPlan::find($booking->w_v_plan_id);
         $wedding  = WCWedding::find($booking->w_c_wedding_id);
         $events   = WCWeddingDetail::where('w_c_wedding_id', $booking->w_c_wedding_id)
                         ->orderBy('waktu', 'asc')
@@ -51,7 +52,7 @@ class WOPesananController extends Controller
             'status.required' => 'Status tidak boleh kosong',
         ]);
 
-        $data = WOBooking::find($id)
+        $data = WVBooking::find($id)
                 ->update([
                     'status' => $req->status,
                 ]);

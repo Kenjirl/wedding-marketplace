@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\WeddingCouple;
 
 use App\Http\Controllers\Controller;
-use App\Models\WCategories;
 use App\Models\WCWedding;
-use App\Models\WOBooking;
-use App\Models\WOCategories;
-use App\Models\WOPlan;
-use App\Models\WOPortofolio;
-use App\Models\WOrganizer;
+use App\Models\WVBooking;
+use App\Models\WVendor;
+use App\Models\WVPlan;
+use App\Models\WVPortofolio;
 use Illuminate\Http\Request;
 
 class WOBookingController extends Controller
 {
     public function index(Request $req) {
-        $organizers = WOrganizer::orderBy('nama_perusahaan', 'asc')
+        $organizers = WVendor::where('jenis', 'wedding-organizer')
+                    ->orderBy('nama', 'asc')
                     ->get();
 
         foreach ($organizers as $organizer) {
-            $plans = WOPlan::where('w_organizer_id', $organizer->id)->get();
+            $plans = WVPlan::where('w_vendor_id', $organizer->id)->get();
 
             $organizer->harga_terendah = null;
             $organizer->harga_tertinggi = null;
@@ -33,11 +32,6 @@ class WOBookingController extends Controller
                     $organizer->harga_tertinggi = $plan->harga;
                 }
             }
-        }
-
-        $search_kategori = null;
-        if ($req->has('kategori') && $req->kategori !== null) {
-            $search_kategori = $req->kategori;
         }
 
         $search_harga = null;
@@ -57,22 +51,6 @@ class WOBookingController extends Controller
 
         $filteredOrganizers = [];
         foreach ($organizers as $organizer) {
-            // Filter berdasarkan kategori
-            if ($search_kategori !== null) {
-                $kategoriMatch = false;
-
-                foreach ($organizer->categories as $kategori) {
-                    if ($kategori->id === (int)$search_kategori) {
-                        $kategoriMatch = true;
-                        break;
-                    }
-                }
-
-                if (!$kategoriMatch) {
-                    continue;
-                }
-            }
-
             // Filter berdasarkan harga
             if ($search_harga !== null) {
                 if ($organizer->harga_terendah > $search_harga) {
@@ -97,12 +75,8 @@ class WOBookingController extends Controller
             $filteredOrganizers[] = $organizer;
         }
 
-        $categories = WCategories::orderBy('nama', 'asc')->get();
-
         return view('user.wedding-couple.booking.wo.index', compact(
             'filteredOrganizers',
-            'categories',
-            'search_kategori',
             'search_harga',
             'search_basis_operasi',
             'search_kota_operasi',
@@ -110,30 +84,25 @@ class WOBookingController extends Controller
     }
 
     public function ke_detail(Request $req, $id) {
-        $organizer = WOrganizer::find($id);
+        $organizer = WVendor::find($id);
 
         if (!$organizer) {
-            return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID Invalid');
         }
 
-        $categories = WOCategories::where('w_organizer_id', $organizer->id)
-                        ->join('w_categories', 'w_o_categories.w_categories_id', '=', 'w_categories.id')
-                        ->orderBy('w_categories.nama', 'asc')
-                        ->get();
-        $portofolios = WOPortofolio::where('w_organizer_id', $organizer->id)
+        $portofolios = WVPortofolio::where('w_vendor_id', $organizer->id)
                         ->where('status', 'diterima')
                         ->orderBy('tanggal', 'asc')
                         ->orderBy('judul', 'asc')
                         ->get();
-        $plans = WOPlan::where('w_organizer_id', $organizer->id)
-                        ->where('deleted', 0)
+        $plans = WVPlan::where('w_vendor_id', $organizer->id)
                         ->orderBy('harga', 'asc')
                         ->get();
 
-        $bookedWeddingIds = WOBooking::pluck('w_c_wedding_id');
+        $bookedWeddingIds = WVBooking::pluck('w_c_wedding_id');
         $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
             ->whereNotIn('id', $bookedWeddingIds)
-            ->orderBy('groom', 'asc')
+            ->orderBy('p_lengkap', 'asc')
             ->get();
 
         $portofolio_detail = null;
@@ -143,12 +112,11 @@ class WOBookingController extends Controller
         }
 
         if ($req->has('portofolio_id')) {
-            $portofolio_detail = WOPortofolio::where('id', $req->portofolio_id)->first();
+            $portofolio_detail = WVPortofolio::where('id', $req->portofolio_id)->first();
         }
 
         return view('user.wedding-couple.booking.wo.detail', compact(
             'organizer',
-            'categories',
             'portofolios',
             'plans',
             'weddings',
@@ -169,10 +137,14 @@ class WOBookingController extends Controller
             'tanggal.after'       => 'Tanggal Pernikahan harus setelah tanggal hari ini',
         ]);
 
-        $booking = new WOBooking();
+        $plan = WVPlan::find($req->plan_id);
+
+        $booking = new WVBooking();
         $booking->w_c_wedding_id = $req->wedding_id;
-        $booking->w_o_plan_id    = $req->plan_id;
+        $booking->w_v_plan_id    = $req->plan_id;
         $booking->untuk_tanggal  = $req->tanggal;
+        $booking->qty            = 1;
+        $booking->total_bayar    = $plan->harga * 1;
         $data = $booking->save();
 
         if ($data) {

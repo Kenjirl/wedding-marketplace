@@ -20,7 +20,7 @@ class UserController extends Controller
         'super-admin' => 'super-admin.index',
         'wedding-couple' => 'wedding-couple.index',
         'wedding-organizer' => 'wedding-organizer.index',
-        'wedding-photographer' => 'wedding-photographer.index',
+        'photographer' => 'wedding-photographer.index',
     ];
 
     public function ke_masuk() {
@@ -229,7 +229,7 @@ class UserController extends Controller
             $user->role = $req->role;
             $user->save();
 
-            return redirect()->route($this->allowedRoles[$req->role]);
+            return redirect()->route($this->allowedRoles[$req->role])->with('sukses', 'Silahkan lengkapi profil anda');
         }
 
         return view('user.pilih-peran');

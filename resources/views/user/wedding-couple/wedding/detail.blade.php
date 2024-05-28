@@ -116,6 +116,11 @@
             @include('user.wedding-couple.wedding.detail.wp')
         </div>
     </div>
+
+    <form hidden action="{{ route('wedding-couple.pernikahan.selesai') }}" method="post" id="selesaiForm">
+        @csrf
+        <input hidden type="number" name="id_booking" id="id_booking">
+    </form>
 @endsection
 
 @push('child-js')
@@ -291,6 +296,42 @@
                 $(`#bookingFtgModal-${modalId}`).removeClass('top-0').addClass('top-full');
                 $(`#bookingFtgModal-${modalId} button`).attr('tabindex', -1);
                 $(`#bookingFtgModal-${modalId} a`).attr('tabindex', -1);
+            });
+
+            // SELESAIKAN PESANAN
+            $('#selesaiBtn').on('click', function () {
+                let bookingId = $(this).data('id_booking');
+                $('#id_booking').val(bookingId);
+
+                Swal.fire({
+                    title: 'Selesaikan pesanan ini?',
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "Konfirmasi"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#selesaiForm').submit();
+                    }
+                });
+            });
+
+            // ATUR NILAI RATING
+            $('.starBtn').on('click', function () {
+                let ratingValue = $(this).data('value');
+                let parentForm = $(this).closest('form');
+                let ratingInput = parentForm.find('.ratingInput');
+
+                ratingInput.val(ratingValue);
+
+                parentForm.find('.starBtn i').removeClass('text-pink');
+
+                parentForm.find('.starBtn').each(function(index) {
+                    if (index < ratingValue) {
+                        $(this).find('i').addClass('text-pink');
+                    }
+                });
             });
 
             // COPY TO CLIPBOARD

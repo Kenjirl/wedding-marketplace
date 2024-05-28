@@ -6,23 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class WPhotographer extends Model
+class WVendor extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $casts = [
+        'rekening' => 'array',
+    ];
 
     protected $fillable = [
         'user_id',
         'nama',
         'no_telp',
-        'gender',
+        'alamat',
         'basis_operasi',
         'kota_operasi',
-        'status',
-        'alamat',
         'foto_profil',
-        'jenis_rekening',
-        'no_rekening',
     ];
 
     public function user(): BelongsTo {
@@ -30,14 +31,14 @@ class WPhotographer extends Model
     }
 
     public function portofolio(): HasMany {
-        return $this->hasMany(WPPortofolio::class, 'w_photographer_id');
+        return $this->hasMany(WVPortofolio::class, 'w_vendor_id');
     }
 
     public function plan(): HasMany {
-        return $this->hasMany(WPPlan::class, 'w_photographer_id');
+        return $this->hasMany(WVPlan::class, 'w_vendor_id');
     }
 
     public function rating(): HasMany {
-        return $this->hasMany(WPRating::class, 'w_photographer_id');
+        return $this->hasMany(WVRating::class, 'w_vendor_id');
     }
 }

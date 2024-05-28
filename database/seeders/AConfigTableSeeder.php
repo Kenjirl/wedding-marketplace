@@ -17,12 +17,7 @@ class AConfigTableSeeder extends Seeder
     {
         DB::table('a_configurations')->insert([
             [
-                'nama' => 'portofolio_wo',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama' => 'portofolio_wp',
+                'nama' => 'portofolio-automation',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->json('c_profile');
             $table->json('c_gallery');
             $table->json('c_qr');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');

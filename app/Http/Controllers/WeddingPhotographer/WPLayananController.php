@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\WeddingPhotographer;
 
 use App\Http\Controllers\Controller;
-use App\Models\WPPlan;
+use App\Models\WVPlan;
 use Illuminate\Http\Request;
 
 class WPLayananController extends Controller
 {
     public function index() {
-        $plans = WPPlan::where('w_photographer_id', auth()->user()->w_photographer->id)
-                ->where('deleted', 0)
+        $plans = WVPlan::where('w_vendor_id', auth()->user()->w_vendor->id)
                 ->orderBy('harga', 'asc')
                 ->get();
         return view('user.wedding-photographer.layanan.index', compact('plans'));
@@ -22,22 +21,25 @@ class WPLayananController extends Controller
 
     public function tambah(Request $req) {
         $req->validate([
-            'nama'        => 'required|max:20',
-            'detail'      => 'required',
-            'harga'       => 'required|numeric',
+            'nama'   => 'required|max:20',
+            'detail' => 'required',
+            'harga'  => 'required|numeric',
+            'satuan' => 'required',
         ],[
-            'nama.required'        => 'Nama Layanan tidak boleh kosong',
-            'nama.max'             => 'Nama tidak boleh lebih dari 20 karakter',
-            'detail.required'      => 'Detail Layanan tidak boleh kosong',
-            'harga.required'       => 'Harga tidak boleh kosong',
-            'harga.numeric'        => 'Harga harus berupa numerik',
+            'nama.required'   => 'Nama Layanan tidak boleh kosong',
+            'nama.max'        => 'Nama tidak boleh lebih dari 20 karakter',
+            'detail.required' => 'Detail Layanan tidak boleh kosong',
+            'harga.required'  => 'Harga tidak boleh kosong',
+            'harga.numeric'   => 'Harga harus berupa numerik',
+            'satuan.required' => 'Satuan tidak boleh kosong',
         ]);
 
-        $plan = new WPPlan();
-        $plan->w_photographer_id = auth()->user()->w_photographer->id;
-        $plan->nama = $req->nama;
-        $plan->detail = $req->detail;
-        $plan->harga = $req->harga;
+        $plan = new WVPlan();
+        $plan->w_vendor_id = auth()->user()->w_vendor->id;
+        $plan->nama        = $req->nama;
+        $plan->detail      = $req->detail;
+        $plan->harga       = $req->harga;
+        $plan->satuan      = $req->satuan;
         $data1 = $plan->save();
 
         if ($data1) {
@@ -47,7 +49,7 @@ class WPLayananController extends Controller
     }
 
     public function ke_ubah($id) {
-        $plan = WPPlan::find($id);
+        $plan = WVPlan::find($id);
 
         if (!$plan) {
             return redirect()->route('wedding-photographer.layanan.index')->with('gagal', 'ID Invalid');
@@ -69,7 +71,7 @@ class WPLayananController extends Controller
             'harga.numeric'        => 'Harga harus berupa numerik',
         ]);
 
-        $data1 = WPPlan::where('id', $id)
+        $data1 = WVPlan::where('id', $id)
                     ->update([
                         'nama' => $req->nama,
                         'detail' => $req->detail,
@@ -83,9 +85,8 @@ class WPLayananController extends Controller
     }
 
     public function hapus($id) {
-        $plan = WPPlan::where('id', $id)->first();
-        $plan->deleted = true;
-        $data = $plan->save();
+        $plan = WVPlan::where('id', $id)->first();
+        $data = $plan->delete();
 
         if ($data) {
             return redirect()->route('wedding-photographer.layanan.index')->with('sukses', 'Menghapus Paket Layanan');

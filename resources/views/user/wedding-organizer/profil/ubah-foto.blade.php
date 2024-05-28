@@ -11,10 +11,10 @@
         @csrf
         <div class="w-full p-4 flex item-center justify-evenly">
             {{-- KIRI --}}
-            <div class="relative w-fit p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                @if (auth()->user()->w_organizer && auth()->user()->w_organizer->foto_profil)
+            <div class="relative w-fit p-4">
+                @if (auth()->user()->w_vendor && auth()->user()->w_vendor->foto_profil)
                     <img class="w-[400px] aspect-square mb-4 object-cover object-center rounded-full border-4 border-pink"
-                        src="{{ asset(auth()->user()->w_organizer->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
+                        src="{{ asset(auth()->user()->w_vendor->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
                 @else
                     <span class="w-[400px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
                         id="fotoProfilText">
@@ -39,7 +39,7 @@
             </div>
 
             {{-- KANAN --}}
-            <div class="w-fit hidden p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            <div class="w-fit hidden p-4"
                 id="kananContainer">
                 <img class="w-[400px] aspect-square mb-4 object-cover object-center rounded-full border-4 border-pink"
                     src="" alt="Foto Profil Baru" id="fotoProfilBaru">

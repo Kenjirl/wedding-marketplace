@@ -13,18 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('w_organizers', function (Blueprint $table) {
+        Schema::create('w_vendors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('nama_pemilik');
-            $table->string('nama_perusahaan');
+            $table->string('nama');
             $table->string('no_telp');
             $table->string('alamat');
             $table->enum('basis_operasi', ['Hanya di Dalam Kota', 'Bisa ke Luar Kota']);
             $table->string('kota_operasi')->nullable();
             $table->string('foto_profil')->nullable();
-            $table->enum('jenis_rekening', ['BCA', 'BNI', 'BRI', 'Mandiri']);
-            $table->unsignedBigInteger('no_rekening');
+            $table->json('rekening')->nullable();
+            $table->string('jenis');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('w_organizers');
+        Schema::dropIfExists('w_vendors');
     }
 };

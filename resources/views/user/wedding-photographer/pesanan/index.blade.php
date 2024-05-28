@@ -15,6 +15,7 @@
                     <th>Pernikahan</th>
                     <th>Dipesan Tanggal</th>
                     <th>Untuk Tanggal</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -34,6 +35,17 @@
                         </td>
                         <td class="px-2 text-end">
                             {{ $booking->untuk_tanggal }}
+                        </td>
+                        <td class="px-2 text-end">
+                            @if ($booking->status == 'diproses')
+                            <div class="w-fit mx-auto text-sm rounded-full text-white font-semibold py-1 px-2 bg-yellow-500">
+                                menunggu konfirmasi
+                            </div>
+                            @else
+                            <div class="w-fit mx-auto text-sm rounded-full text-white font-semibold py-1 px-2 bg-green-500">
+                                menunggu pembayaran
+                            </div>
+                            @endif
                         </td>
                         <td class="p-2">
                             <a class="block text-center text-sm font-semibold p-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"

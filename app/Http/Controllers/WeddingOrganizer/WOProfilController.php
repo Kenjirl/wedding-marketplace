@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UbahPasswordRequest;
 use App\Http\Requests\WeddingOrganizer\ProfilRequest;
 use App\Models\User;
-use App\Models\WCategories;
-use App\Models\WOCategories;
-use App\Models\WOrganizer;
+use App\Models\WVendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -26,9 +24,9 @@ class WOProfilController extends Controller
         $kelurahan      = '';
         $alamat_detail  = '';
 
-        if (auth()->user()->w_organizer) {
-            if (auth()->user()->w_organizer->alamat) {
-                $alamatArray = explode(', ', auth()->user()->w_organizer->alamat);
+        if (auth()->user()->w_vendor) {
+            if (auth()->user()->w_vendor->alamat) {
+                $alamatArray = explode(', ', auth()->user()->w_vendor->alamat);
                 list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
             }
         }
@@ -81,8 +79,19 @@ class WOProfilController extends Controller
         $alamat = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
 
         if ($req->basis_operasi == 'Hanya di Dalam Kota') {
-            # Perlu Data Kota Operasi
-            $kota_operasi = $req->kota_operasi;
+            $kota_operasi = $req->kota;
+        }
+
+        $filteredRekening = array_filter($req->rekening, function ($value) {
+            return !is_null($value);
+        });
+
+        $arrRekening = [];
+        foreach ($filteredRekening as $bank => $nomorRekening) {
+            $arrRekening[] = [
+                'jenis' => $bank,
+                'nomor' => $nomorRekening
+            ];
         }
 
         User::where('id', auth()->user()->id)
@@ -90,31 +99,28 @@ class WOProfilController extends Controller
                 'name' => $req->username,
             ]);
 
-        if (auth()->user()->w_organizer) {
+        if (auth()->user()->w_vendor) {
             # Update
-            $data = WOrganizer::where('id', auth()->user()->w_organizer->id)
+            $data = WVendor::where('id', auth()->user()->w_vendor->id)
                 ->update([
-                    'nama_pemilik'    => $req->nama_pemilik,
-                    'nama_perusahaan' => $req->nama_perusahaan,
-                    'no_telp'         => $req->no_telp,
-                    'basis_operasi'   => $req->basis_operasi,
-                    'kota_operasi'    => $kota_operasi,
-                    'alamat'          => $alamat,
-                    'jenis_rekening'  => $req->jenis_rekening,
-                    'no_rekening'     => $req->no_rekening,
+                    'nama'          => $req->nama,
+                    'no_telp'       => $req->no_telp,
+                    'basis_operasi' => $req->basis_operasi,
+                    'kota_operasi'  => $kota_operasi,
+                    'alamat'        => $alamat,
+                    'rekening'      => $arrRekening,
                 ]);
         } else {
             # Make New
-            $organizer = new WOrganizer();
+            $organizer = new WVendor();
             $organizer->user_id         = auth()->user()->id;
-            $organizer->nama_pemilik    = $req->nama_pemilik;
-            $organizer->nama_perusahaan = $req->nama_perusahaan;
+            $organizer->nama            = $req->nama;
             $organizer->no_telp         = $req->no_telp;
             $organizer->basis_operasi   = $req->basis_operasi;
             $organizer->kota_operasi    = $kota_operasi;
             $organizer->alamat          = $alamat;
-            $organizer->jenis_rekening  = $req->jenis_rekening;
-            $organizer->no_rekening     = $req->no_rekening;
+            $organizer->jenis           = auth()->user()->role;
+            $organizer->rekening        = $arrRekening;
             $data = $organizer->save();
         }
 
@@ -154,7 +160,7 @@ class WOProfilController extends Controller
             'foto_profil' => 'required|image'
         ]);
 
-        $foto_profil_lama = auth()->user()->w_organizer->foto_profil;
+        $foto_profil_lama = auth()->user()->w_vendor->foto_profil;
         if ($foto_profil_lama) {
             unlink(public_path($foto_profil_lama));
         }
@@ -167,7 +173,7 @@ class WOProfilController extends Controller
                 'WO/profil/'.str()->uuid() . '.' . $foto_profil->extension()
             );
 
-            $data = WOrganizer::where('user_id', auth()->user()->id)
+            $data = WVendor::where('user_id', auth()->user()->id)
                 ->update([
                     'foto_profil' => $foto_profil,
                 ]);
@@ -178,50 +184,5 @@ class WOProfilController extends Controller
         }
 
         return redirect()->route('wedding-organizer.profil.index')->with('gagal', 'Mengubah Foto Profil');
-    }
-
-    public function ke_ubah_kategori() {
-        $categories = WCategories::all();
-
-        $woCategories = WOCategories::where('w_organizer_id', auth()->user()->w_organizer->id)->get();
-        $woCategoriesIds = $woCategories->pluck('w_categories_id')->all();
-
-        $categories = $categories->reject(function ($category) use ($woCategoriesIds) {
-            return in_array($category->id, $woCategoriesIds);
-        })->sortBy('nama');
-
-        // dd($categories);
-
-        return view('user.wedding-organizer.profil.kategori', compact('categories', 'woCategories'));
-    }
-
-    public function tambah_kategori(Request $req) {
-        $req->validate([
-            'kategori' => 'required',
-        ],[
-            'kategori.required' => 'Kategori tidak boleh kosong',
-        ]);
-
-        // dd($req->kategori);
-
-        $kategori = new WOCategories();
-        $kategori->w_organizer_id = auth()->user()->w_organizer->id;
-        $kategori->w_categories_id = $req->kategori;
-        $data = $kategori->save();
-
-        if ($data) {
-            return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('sukses', 'Menambah Kategori');
-        }
-        return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('gagal', 'Menambah Kategori');
-    }
-
-    public function hapus_kategori($id) {
-        $kategori = WOCategories::find($id);
-        $data = $kategori->delete();
-
-        if ($data) {
-            return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('sukses', 'Menghapus Kategori');
-        }
-        return redirect()->route('wedding-organizer.profil.ke_ubah_kategori')->with('gagal', 'Menghapus Kategori');
     }
 }

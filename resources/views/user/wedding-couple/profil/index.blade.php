@@ -17,10 +17,10 @@
         <div class="w-full flex gap-8">
             <div class="w-fit flex flex-col items-center justify-start gap-4">
                 @if (auth()->user()->w_couple && auth()->user()->w_couple->foto_profil)
-                    <img class="w-[300px] aspect-square object-cover object-center rounded-full border-4 border-pink"
+                    <img class="w-[200px] aspect-square object-cover object-center rounded-full border-4 border-pink"
                         src="{{ asset(auth()->user()->w_couple->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
                 @else
-                    <span class="w-[300px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
+                    <span class="w-[200px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
                         id="fotoProfilText">
                         {{ substr(auth()->user()->name, 0, 1) }}
                     </span>
@@ -78,20 +78,6 @@
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
                                 type="email" name="email" id="email" placeholder="email@gmai.com" value="{{ auth()->user()->email }}" disabled>
-                        </div>
-
-                        {{-- GENDER --}}
-                        <div class="w-100 mb-4">
-                            <div class="w-100 p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                                <i class="fa-solid fa-venus-mars"></i>
-                                <span class="ml-2">
-                                    Gender
-                                </span>
-                            </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="gender" id="gender" placeholder="Pria/Wanita"
-                                value="{{ auth()->user()->w_couple ? auth()->user()->w_couple->gender : 'Belum Terdata'  }}"
-                                disabled>
                         </div>
                     </div>
                 </div>

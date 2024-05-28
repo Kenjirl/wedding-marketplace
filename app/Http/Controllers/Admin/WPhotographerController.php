@@ -4,51 +4,59 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AConfiguration;
-use App\Models\WPPortofolio;
-use App\Models\WPPortofolioPhoto;
+use App\Models\WVPortofolio;
 use Illuminate\Http\Request;
 
 class WPhotographerController extends Controller
 {
     public function index($tab) {
-        if ($tab == 'diterima') {
-            $tab = 'accept';
-        }
-        if ($tab == 'ditolak') {
-            $tab = 'reject';
-        }
+        $tabMap = [
+            'diterima' => 'accept',
+            'ditolak' => 'reject',
+            'menunggu' => 'pending'
+        ];
 
-        if ($tab != 'pending' && $tab != 'accept' && $tab != 'reject') {
+        $tab = $tabMap[$tab] ?? $tab;
+
+        if (!in_array($tab, ['accept', 'reject', 'pending'])) {
             return redirect()->route('admin.wp.portofolio.index', 'pending');
         }
 
-        $portofolio = [];
+        $statusMap = [
+            'accept' => 'diterima',
+            'reject' => 'ditolak',
+            'pending' => 'menunggu konfirmasi'
+        ];
 
-        if ($tab == 'accept') {
-            $portofolio = WPPortofolio::where('status', 'diterima')
+        $status = $statusMap[$tab];
+
+        $portofolio = WVPortofolio::where('status', $status)
+                        ->whereHas('w_vendor', function($query) {
+                            $query->where('jenis', 'photographer');
+                        })
                         ->orderBy('updated_at', 'asc')
                         ->get();
-        } else if ($tab == 'reject') {
-            $portofolio = WPPortofolio::where('status', 'ditolak')
-                        ->orderBy('updated_at', 'asc')
-                        ->get();
-        } else if ($tab == 'pending') {
-            $portofolio = WPPortofolio::where('status', 'menunggu konfirmasi')
-                        ->orderBy('updated_at', 'asc')
-                        ->get();
+
+        $wpConfig = null;
+        $config = AConfiguration::where('nama', 'portofolio-automation')->first();
+        if ($config->value) {
+            foreach ($config->value as $item) {
+                if (isset($item['vendor']) && $item['vendor'] === 'photographer') {
+                    $wpConfig = $item;
+                    break;
+                }
+            }
         }
-
-        $config = AConfiguration::where('nama', 'portofolio_wp')->first();
 
         return view('user.admin.portofolio.w-photographer.index', compact(
             'portofolio',
-            'config',
+            'wpConfig',
             'tab',
         ));
     }
 
     public function ke_validasi($id) {
-        $portofolio = WPPortofolio::find($id);
+        $portofolio = WVPortofolio::find($id);
 
         if (!$portofolio) {
             return back()->with('gagal', 'ID Invalid');
@@ -62,7 +70,7 @@ class WPhotographerController extends Controller
             'status' => 'required'
         ]);
 
-        $portofolio = WPPortofolio::findOrFail($id);
+        $portofolio = WVPortofolio::findOrFail($id);
 
         // Set all 'rejected' statuses to false by default
         $currentFoto = $portofolio->foto;
@@ -92,22 +100,34 @@ class WPhotographerController extends Controller
     }
 
     public function config(Request $req) {
-        $config = AConfiguration::where('nama', 'portofolio_wp')->first();
+        $config = AConfiguration::where('nama', 'portofolio-automation')->first();
 
-        $data = null;
-        if ($req->config == 'on') {
-            $config->admin_id   = auth()->user()->admin->id;
-            $config->automation = true;
-            $data = $config->save();
-        } else {
-            $config->admin_id   = null;
-            $config->automation = false;
-            $data = $config->save();
+        $value = $config->value ?: [];
+        $vendorExists = false;
+
+        foreach ($value as $key => $item) {
+            if (isset($item['vendor']) && $item['vendor'] === 'photographer') {
+                $vendorExists = true;
+                if ($req->config != 'on') {
+                    unset($value[$key]);
+                }
+                break;
+            }
         }
+
+        if (!$vendorExists && $req->config == 'on') {
+            $value[] = [
+                'vendor' => 'photographer',
+                'admin_id' => auth()->user()->admin->id
+            ];
+        }
+
+        $config->value = array_values($value);
+        $data = $config->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengubah Konfigurasi Portofolio Photographer');
+            return redirect()->back()->with('sukses', 'Mengubah Konfigurasi Portofolio Organizer');
         }
-        return redirect()->back()->with('gagal', 'Mengubah Konfigurasi Portofolio Photographer');
+        return redirect()->back()->with('gagal', 'Mengubah Konfigurasi Portofolio Organizer');
     }
 }

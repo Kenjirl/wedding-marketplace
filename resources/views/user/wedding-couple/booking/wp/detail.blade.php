@@ -204,7 +204,7 @@
 
             {{-- form ganti portofolio --}}
             <div class="hidden">
-                <form action="{{ route('wedding-couple.search.wo.ke_detail', $photographer->id) }}" method="get" id="portofolioForm">
+                <form action="{{ route('wedding-couple.search.wp.ke_detail', $photographer->id) }}" method="get" id="portofolioForm">
                     @csrf
                     <input type="text" name="portofolio_id" id="portofolio_id">
                 </form>
@@ -291,19 +291,9 @@
                                                         </option>
 
                                                         @foreach ($weddings as $wedding)
-                                                            @if ($wedding->w_p_booking->isEmpty())
-                                                                <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
-                                                                    {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
-                                                                </option>
-                                                            @else
-                                                                @foreach ($wedding->w_p_booking as $wpb)
-                                                                    @if ($wpb->plan->w_photographer_id !== $photographer->id)
-                                                                        <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
-                                                                            {{ 'Tn. ' . $wedding->groom . ' & Ny. ' . $wedding->bride }}
-                                                                        </option>
-                                                                    @endif
-                                                                @endforeach
-                                                            @endif
+                                                            <option value="{{ $wedding->id }}" {{ old('wedding_id') == $wedding->id ? 'selected' : '' }}>
+                                                                {{ 'Tn. ' . $wedding->p_sapaan . ' & Ny. ' . $wedding->w_sapaan }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -316,13 +306,16 @@
                                             </div>
 
                                             {{-- TANGGAL --}}
+                                            @php
+                                                $tomDate = new DateTime('tomorrow');
+                                            @endphp
                                             <div class="w-full mb-4">
                                                 <div class="w-full flex">
                                                     <div class="w-10 aspect-square p-2 bg-pink text-white text-sm flex items-center justify-center rounded-s">
                                                         <i class="fa-regular fa-calendar"></i>
                                                     </div>
                                                     <input class="w-full p-2 flex-1 text-sm border-y-2 border-e-2 rounded-e focus:border-pink focus:outline-none"
-                                                        type="date" name="tanggal" id="tanggal" placeholder="tanggal"
+                                                        type="date" name="tanggal" id="tanggal" placeholder="tanggal" min="{{ $tomDate->format('Y-m-d') }}"
                                                         required
                                                         value="{{ old('tanggal') }}">
                                                 </div>
@@ -370,6 +363,8 @@
         }
 
         $(document).ready(function() {
+            $('ul').addClass('list-disc pl-8');
+
             // Ganti Foto Portofolio
             $('.foto-kecil').on('click', function() {
                 let photoUrl = $(this).find('img').attr('src');

@@ -13,14 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('w_categories', function (Blueprint $table) {
+        Schema::create('w_v_plans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('admin_id');
+            $table->unsignedBigInteger('w_vendor_id');
             $table->string('nama');
-            $table->text('keterangan');
+            $table->text('detail');
+            $table->unsignedBigInteger('harga');
+            $table->string('satuan');
+            $table->json('foto')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_vendor_id')->references('id')->on('w_vendors')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('w_categories');
+        Schema::dropIfExists('w_v_plans');
     }
 };

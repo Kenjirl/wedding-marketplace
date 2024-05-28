@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 class AEventController extends Controller
 {
     public function index() {
-        $events = WEvent::where('deleted', 0)
-                    ->orderBy('jenis', 'asc')
+        $events = WEvent::orderBy('jenis', 'asc')
                     ->orderBy('nama', 'asc')
                     ->get();
 

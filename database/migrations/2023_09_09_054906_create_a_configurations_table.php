@@ -15,12 +15,9 @@ return new class extends Migration
     {
         Schema::create('a_configurations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('admin_id')->nullable();
             $table->string('nama');
-            $table->boolean('automation')->default(false);
+            $table->json('value')->nullable();
             $table->timestamps();
-
-            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

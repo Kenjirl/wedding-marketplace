@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama');
             $table->text('keterangan');
             $table->enum('jenis', ['Buddha', 'Hindu', 'Islam', 'Katolik', 'Khonghucu', 'Protestan', 'Umum']);
-            $table->boolean('deleted')->default(false);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
