@@ -20,6 +20,8 @@ class WCsTableSeeder extends Seeder
                 'user_id' => 12,
                 'nama' => 'Couple',
                 'no_telp' => '123123123123',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }

@@ -60,6 +60,14 @@
                     </div>
 
                     {{-- SATUAN --}}
+                    @php
+                        $satuanFotografer = [
+                            'Layanan' => ['acara', 'jam', 'sesi'],
+                            'Paket' => ['paket'],
+                            'Hasil Akhir' => ['album', 'foto'],
+                            'Lain-lain' => ['item'],
+                        ];
+                    @endphp
                     <div class="w-full mb-4">
                         <div class="w-full">
                             <div class="w-full p-2 text-xs font-bold bg-pink @error('satuan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
@@ -68,18 +76,18 @@
                                     Satuan Harga
                                 </span>
                             </div>
-                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('gender') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('satuan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
                                 name="satuan" id="satuan" required>
                                 <option value="" selected>Pilih Satuan Harga</option>
-                                <option value="acara" {{ old('satuan') == 'acara' ? 'selected' : '' }}>
-                                    Acara
-                                </option>
-                                <option value="hari" {{ old('satuan') == 'hari' ? 'selected' : '' }}>
-                                    Hari
-                                </option>
-                                <option value="jam" {{ old('satuan') == 'jam' ? 'selected' : '' }}>
-                                    Jam
-                                </option>
+                                @foreach ($satuanFotografer as $category => $options)
+                                    <optgroup label="{{ $category }}">
+                                        @foreach ($options as $option)
+                                            <option value="{{ $option }}" {{ old('satuan') == $option ? 'selected' : '' }}>
+                                                {{ $option }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
                             </select>
                         </div>
 

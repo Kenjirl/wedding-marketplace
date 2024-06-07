@@ -125,15 +125,15 @@
                             <div class="my-2">
                                 <p>
                                     {{
-                                        'Rp ' . number_format($organizer->harga_terendah, 0, ',', '.') .
+                                        'Rp ' . $organizer->harga_terendah .
                                         ' ~ ' .
-                                        'Rp ' . number_format($organizer->harga_tertinggi, 0, ',', '.')
+                                        'Rp ' . $organizer->harga_tertinggi
                                     }}
                                 </p>
                             </div>
 
                             {{-- BASIS/KOTA OPERASI --}}
-                            <div class="w-full mb-3">
+                            <div class="w-full mb-2">
                                 @if ($organizer->basis_operasi == 'Hanya di Dalam Kota')
                                     <div class="w-fit px-2 py-1 text-xs border border-pink rounded">
                                         <i class="fa-solid fa-location-dot text-pink"></i>
@@ -149,6 +149,17 @@
                                         </span>
                                     </div>
                                 @endif
+                            </div>
+
+                            {{-- RATING --}}
+                            <div class="w-full">
+                                <p class="text-sm">
+                                    <i class="fa-solid fa-star text-pink"></i>
+                                    {{ $organizer->rate > 0 ? number_format($organizer->rate, 1, ',') : '-' }}/5
+                                    @if ($organizer->bookedCount > 0)
+                                        | {{ $organizer->bookedCount }} dipesan
+                                    @endif
+                                </p>
                             </div>
                         </div>
                     </div>

@@ -122,15 +122,15 @@
                             <div class="my-2">
                                 <p>
                                     {{
-                                        'Rp ' . number_format($photographer->harga_terendah, 0, ',', '.') .
+                                        'Rp ' . $photographer->harga_terendah .
                                         ' ~ ' .
-                                        'Rp ' . number_format($photographer->harga_tertinggi, 0, ',', '.')
+                                        'Rp ' . $photographer->harga_tertinggi
                                     }}
                                 </p>
                             </div>
 
                             {{-- BASIS/KOTA OPERASI --}}
-                            <div class="w-full mb-3">
+                            <div class="w-full mb-2">
                                 @if ($photographer->basis_operasi == 'Hanya di Dalam Kota')
                                     <div class="w-fit px-2 py-1 text-xs border border-pink rounded">
                                         <i class="fa-solid fa-location-dot text-pink"></i>
@@ -146,6 +146,17 @@
                                         </span>
                                     </div>
                                 @endif
+                            </div>
+
+                            {{-- RATING --}}
+                            <div class="w-full">
+                                <p class="text-sm">
+                                    <i class="fa-solid fa-star text-pink"></i>
+                                    {{ $photographer->rate > 0 ? number_format($photographer->rate, 1, ',') : '-' }}/5
+                                    @if ($photographer->bookedCount > 0)
+                                        | {{ $photographer->bookedCount }} dipesan
+                                    @endif
+                                </p>
                             </div>
                         </div>
                     </div>

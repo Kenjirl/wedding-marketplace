@@ -9,7 +9,7 @@
 @section('content')
     {{-- INFO ATAS --}}
     @if (!$reviews->isEmpty())
-        <div class="w-full mb-8 grid grid-cols-4 gap-4">
+        <div class="w-full mb-16 grid grid-cols-4 gap-4">
             {{-- JUMLAH ULASAN --}}
             <div class="w-full rounded shadow-lg">
                 <div class="w-full p-2 rounded-t bg-pink text-white font-semibold">
@@ -90,6 +90,7 @@
                     <th>No</th>
                     <th>Oleh</th>
                     <th>Komentar</th>
+                    <th class="whitespace-nowrap">Nama Layanan</th>
                     <th>Nilai</th>
                     <th class="whitespace-nowrap">Pada Tanggal</th>
                     <th>Aksi</th>
@@ -107,6 +108,11 @@
                         <td class="w-full px-2">
                             <div class="line-clamp-1">
                                 {{ $review->komentar }}
+                            </div>
+                        </td>
+                        <td class="w-full px-2">
+                            <div class="line-clamp-1">
+                                {{ $review->plan->nama }}
                             </div>
                         </td>
                         <td class="px-2 text-center">

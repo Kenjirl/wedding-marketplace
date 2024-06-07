@@ -16,11 +16,13 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
     private $allowedRoles = [
-        'admin' => 'admin.index',
-        'super-admin' => 'super-admin.index',
-        'wedding-couple' => 'wedding-couple.index',
+        'admin'             => 'admin.index',
+        'super-admin'       => 'super-admin.index',
+        'wedding-couple'    => 'wedding-couple.index',
         'wedding-organizer' => 'wedding-organizer.index',
-        'photographer' => 'wedding-photographer.index',
+        'photographer'      => 'wedding-photographer.index',
+        'catering'          => 'catering.index',
+        'venue'             => 'venue.index',
     ];
 
     public function ke_masuk() {

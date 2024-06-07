@@ -4,6 +4,18 @@
     <title>Detail Pernikahan | Wedding Marketplace</title>
 @endsection
 
+@php
+    $statusClasses = [
+        'ditolak'  => ['red-400', 'fa-circle-xmark'],
+        'diterima' => ['blue-400', 'fa-circle-check'],
+        'selesai'  => ['green-400', 'fa-circle-check'],
+        'dibayar'  => ['green-400', 'fa-circle-check'],
+    ];
+    $defaultClasses = ['yellow-400', 'fa-clock'];
+
+    $today = now()->toDateString();
+@endphp
+
 @section('content')
     <div class="w-full max-w-[1200px] mx-auto">
         <div class="w-full">
@@ -37,12 +49,12 @@
             </div>
 
             {{-- JUDUL --}}
-            <div class="w-full p-4 flex items-center justify-start gap-8">
-                <div class="w-fit aspect-square p-4 bg-pink rounded text-4xl text-white">
+            <div class="w-full p-4 flex items-center justify-start gap-2">
+                <div class="w-[50px] aspect-square flex items-center justify-center bg-pink rounded text-2xl text-white">
                     <i class="fa-solid fa-dove"></i>
                 </div>
 
-                <div class="flex-1 w-full text-3xl text-slate-600 font-semibold">
+                <div class="flex-1 w-full text-2xl text-slate-600 font-semibold">
                     Pernikahan
                     <span class="text-blue-400">
                         Tn. {{ $wedding->p_lengkap }}
@@ -53,67 +65,104 @@
                     </span>
                 </div>
             </div>
-
-            {{-- EVENTS --}}
-            <div class="w-full p-4 grid grid-cols-2 gap-4 border-t-2 border-slate-100">
-                @foreach ($weddingEvents as $w_event)
-                    {{-- EVENT --}}
-                    <div class="flex-1 w-full">
-                        <div class="w-full p-4 flex items-center justify-center gap-2 text-2xl border-b-2 border-pink font-semibold">
-                            <span>
-                                Tempat & Waktu {{ $w_event->event->nama }}
-                            </span>
-                            <div class="w-4 aspect-square flex items-center justify-end text-sm cursor-pointer"
-                                data-tippy-content="{{ $w_event->event->keterangan }}">
-                                <i class="fa-regular fa-circle-question"></i>
-                            </div>
-                        </div>
-
-                        <div class="w-fit mx-auto p-4">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td class="pr-2 text-center">
-                                            <i class="fa-solid fa-calendar-day text-3xl text-pink"></i>
-                                        </td>
-                                        <td>Tanggal</td>
-                                        <td class="px-2 text-center">:</td>
-                                        <td>
-                                            {{ \Carbon\Carbon::parse($w_event->waktu)->format('Y-m-d') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pr-2 text-center">
-                                            <i class="fa-regular fa-clock text-3xl text-pink"></i>
-                                        </td>
-                                        <td>Jam</td>
-                                        <td class="px-2 text-center">:</td>
-                                        <td>
-                                            {{ \Carbon\Carbon::parse($w_event->waktu)->format('H:i') }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="pr-2 text-center">
-                                            <i class="fa-solid fa-place-of-worship text-3xl text-pink"></i>
-                                        </td>
-                                        <td>Tempat</td>
-                                        <td class="px-2 text-center">:</td>
-                                        <td>
-                                            {{ $w_event->lokasi }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
         </div>
 
-        <div class="w-full p-4 flex items-start justify-between gap-2 border-t-2 border-slate-100">
-            @include('user.wedding-couple.wedding.detail.wo')
+        <div class="w-full flex items-start justify-center">
+            <div class="flex-1 w-full">
+                {{-- EVENTS --}}
+                <div class="w-full max-h-[600px] p-4 overflow-y-auto">
+                    @foreach ($weddingEvents as $w_event)
+                        {{-- EVENT --}}
+                        <div class="w-full mb-4 flex items-center justify-center gap-4">
+                            {{-- NUMBER --}}
+                            <div class="w-[50px] aspect-square flex items-center justify-center text-2xl italic bg-pink text-white font-semibold rounded">
+                                {{ $loop->iteration }}
+                            </div>
 
-            @include('user.wedding-couple.wedding.detail.wp')
+                            {{-- RIGHT --}}
+                            <div class="flex-1 w-full">
+                                {{-- TOP --}}
+                                <div class="w-full flex">
+                                    <div class="flex-1 w-full text-lg font-semibold">
+                                        {{ $w_event->event->nama }}
+                                    </div>
+
+                                    <div class="w-4 aspect-square flex items-center justify-end text-sm cursor-pointer"
+                                        data-tippy-content="{{ $w_event->event->keterangan }}">
+                                        <i class="fa-regular fa-circle-question"></i>
+                                    </div>
+                                </div>
+
+                                <div class="w-full h-[2px] my-1 bg-pink"></div>
+
+                                {{-- BOTTOM --}}
+                                <div class="w-full text-sm text-gray-400 italic">
+                                    <div>
+                                        Pada {{ \Carbon\Carbon::parse($w_event->waktu)->format('d/m/Y') }}
+                                        pukul {{ \Carbon\Carbon::parse($w_event->waktu)->format('H:i') }}
+                                    </div>
+                                    <div>
+                                        {{ $w_event->lokasi }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="flex-1 w-full">
+                {{-- FILTER BUTTON --}}
+                <div class="w-3/4 mx-auto p-4 flex items-center justify-start gap-2 overflow-x-auto">
+                    @php
+                        $buttons = [
+                            ['icon' => 'fa-building', 'div_id' => 'include-wo', 'title' => 'organizer'],
+                            ['icon' => 'fa-camera-retro', 'div_id' => 'include-wp', 'title' => 'fotografer'],
+                            ['icon' => 'fa-utensils', 'div_id' => 'include-ct', 'title' => 'catering'],
+                            ['icon' => 'fa-place-of-worship', 'div_id' => 'include-v', 'title' => 'venue'],
+                        ];
+                    @endphp
+                    <button class="w-[40px] aspect-square flex items-center justify-center rounded shadow bg-pink text-white
+                        outline-pink outline-offset-4
+                        hover:bg-pink hover:text-white
+                        focus:bg-pink focus:text-white
+                        active:bg-pink-active active:text-white
+                        transition-colors"
+                        id="filter-btn" title="hapus filter">
+                        <i class="fa-solid fa-filter"></i>
+                    </button>
+                    @foreach ($buttons as $index => $button)
+                        <button class="w-[40px] aspect-square flex items-center justify-center rounded shadow text-pink
+                            outline-pink outline-offset-4
+                            hover:bg-pink hover:text-white
+                            focus:bg-pink focus:text-white
+                            active:bg-pink-active active:text-white
+                            transition-colors"
+                            {{-- data-tippy-content="{{ $button['title'] }}" --}}
+                            data-target="{{ $button['div_id'] }}" title="{{ $button['title'] }}">
+                            <i class="fa-solid {{ $button['icon'] }}"></i>
+                        </button>
+                    @endforeach
+                </div>
+
+                <div class="w-3/4 mx-auto max-h-[600px] px-4 grid grid-cols-1 gap-4 overflow-y-auto">
+                    @include('user.wedding-couple.wedding.detail.wo')
+
+                    @include('user.wedding-couple.wedding.detail.wp')
+
+                    @include('user.wedding-couple.wedding.detail.ct')
+
+                    @include('user.wedding-couple.wedding.detail.v')
+                </div>
+
+                <div class="w-full mt-4">
+                    <a class="block w-fit mx-auto px-4 py-2 text-sm bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                        href="{{ route('wedding-couple.search.index') }}">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Cari Vendor
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -160,10 +209,32 @@
                 });
             });
 
+            // FILTER BOOKED VENDOR
+            const buttons = $('button[data-target]');
+            const sections = $('div[id^="include-"]');
+            const filterBtn = $('#filter-btn');
+
+            buttons.on('click', function() {
+                let targetId = $(this).data('target');
+
+                buttons.removeClass('bg-pink text-white').addClass('text-pink');
+                filterBtn.removeClass('bg-pink text-white').addClass('text-pink');
+
+                $(this).removeClass('text-pink').addClass('bg-pink text-white');
+                sections.addClass('hidden');
+                $('#' + targetId).removeClass('hidden');
+            });
+
+            filterBtn.on('click', function() {
+                buttons.removeClass('bg-pink text-white').addClass('text-pink');
+                $(this).removeClass('text-pink').addClass('bg-pink text-white');
+                sections.removeClass('hidden');
+            });
+
             // HAPUS PESANAN WO
             $('#hapusWOBtn').on('click', function () {
                 Swal.fire({
-                    title: 'Batalkan pesanan organizer ini?',
+                    title: 'Batalkan pesanan vendor ini?',
                     text: "Data tidak akan dapat dikembalikan lagi",
                     icon: "warning",
                     iconColor: "#F78CA2",
@@ -182,7 +253,7 @@
                 let form = $('#hapusWPForm-' + $(this).data('id'));
 
                 Swal.fire({
-                    title: 'Batalkan pesanan fotografer ini?',
+                    title: 'Batalkan pesanan vendor ini?',
                     text: "Data tidak akan dapat dikembalikan lagi",
                     icon: "warning",
                     iconColor: "#F78CA2",

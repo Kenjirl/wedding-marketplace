@@ -76,10 +76,15 @@ class WCWeddingController extends Controller
         }
 
         $weddingEvents = WCWeddingDetail::where('w_c_wedding_id', $id)
+                            ->with(['event' => function ($query) {
+                                $query->withTrashed();
+                            }])
                             ->orderBy('waktu', 'asc')
                             ->get();
 
-        $bookedVendor = WVBooking::with(['plan.w_vendor'])
+        $bookedVendor = WVBooking::with(['plan' => function ($query) {
+                            $query->withTrashed();
+                        }, 'plan.w_vendor'])
                         ->where('w_c_wedding_id', $id)
                         ->where('status', '!=', 'batal')
                         ->get()
@@ -89,12 +94,16 @@ class WCWeddingController extends Controller
 
         $bookedOrganizer = $bookedVendor->get('wedding-organizer', collect());
         $bookedPhotographers = $bookedVendor->get('photographer', collect());
+        $bookedCatering = $bookedVendor->get('catering', collect());
+        $bookedVenue = $bookedVendor->get('venue', collect());
 
         return view('user.wedding-couple.wedding.detail', compact(
             'wedding',
             'weddingEvents',
             'bookedOrganizer',
-            'bookedPhotographers'
+            'bookedPhotographers',
+            'bookedCatering',
+            'bookedVenue',
         ));
     }
 
@@ -140,6 +149,8 @@ class WCWeddingController extends Controller
         if ($booking->bukti_bayar) {
             unlink(public_path($booking->bukti_bayar));
         }
+        $booking->status = 'batal';
+        $booking->save();
         $data = $booking->delete();
 
         if ($data) {
@@ -153,6 +164,8 @@ class WCWeddingController extends Controller
         if ($booking->bukti_bayar) {
             unlink(public_path($booking->bukti_bayar));
         }
+        $booking->status = 'batal';
+        $booking->save();
         $data = $booking->delete();
 
         if ($data) {

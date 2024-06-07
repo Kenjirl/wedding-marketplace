@@ -10,8 +10,15 @@ class WOLayananController extends Controller
 {
     public function index() {
         $plans = WVPlan::where('w_vendor_id', auth()->user()->w_vendor->id)
-                ->orderBy('harga', 'asc')
+                ->with(['ratings'])
                 ->get();
+
+        foreach ($plans as $plan) {
+            $totalRating = $plan->ratings->sum('rating');
+            $ratingCount = $plan->ratings->count();
+            $plan->rate = $ratingCount > 0 ? $totalRating / $ratingCount : null;
+        }
+
         return view('user.wedding-organizer.layanan.index', compact('plans'));
     }
 

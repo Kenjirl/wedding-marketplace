@@ -25,59 +25,45 @@
         </div>
     </div>
 
-    <div class="w-full grid grid-cols-3">
+    <div class="w-full grid grid-cols-3 gap-4">
         {{-- KIRI --}}
         <div class="w-full h-fit col-span-2">
             {{-- EVENTS --}}
-            <div class="w-full p-2 grid grid-cols-2 gap-2 border-t-2 border-slate-100">
+            <div class="w-full p-2 grid grid-cols-2 gap-8 border-t-2 border-slate-100">
                 @foreach ($events as $event)
                     {{-- EVENT --}}
-                    <div class="flex-1 w-full">
-                        <div class="w-full p-2 flex items-center justify-center gap-2 text-lg border-b-2 border-pink font-semibold">
-                            <span>
-                                Tempat & Waktu {{ $event->event->nama }}
-                            </span>
-                            <div class="w-4 aspect-square flex items-center justify-end text-sm cursor-pointer"
-                                data-tippy-content="{{ $event->event->keterangan }}">
-                                <i class="fa-regular fa-circle-question"></i>
-                            </div>
+                    <div class="w-full mb-4 flex items-center justify-center gap-4">
+                        {{-- NUMBER --}}
+                        <div class="w-[50px] aspect-square flex items-center justify-center text-2xl italic bg-pink text-white font-semibold rounded">
+                            {{ $loop->iteration }}
                         </div>
 
-                        <div class="w-fit mx-auto p-4">
-                            <table>
-                                <tbody>
-                                    <tr class="align-top">
-                                        <td class="pr-2 text-center">
-                                            <i class="fa-solid fa-calendar-day text-xl text-pink"></i>
-                                        </td>
-                                        <td>Tanggal</td>
-                                        <td class="px-2 text-center">:</td>
-                                        <td>
-                                            {{ \Carbon\Carbon::parse($event->waktu)->format('Y-m-d') }}
-                                        </td>
-                                    </tr>
-                                    <tr class="align-top">
-                                        <td class="pr-2 text-center">
-                                            <i class="fa-regular fa-clock text-xl text-pink"></i>
-                                        </td>
-                                        <td>Jam</td>
-                                        <td class="px-2 text-center">:</td>
-                                        <td>
-                                            {{ \Carbon\Carbon::parse($event->waktu)->format('H:i') }}
-                                        </td>
-                                    </tr>
-                                    <tr class="align-top">
-                                        <td class="pr-2 text-center">
-                                            <i class="fa-solid fa-place-of-worship text-xl text-pink"></i>
-                                        </td>
-                                        <td>Tempat</td>
-                                        <td class="px-2 text-center">:</td>
-                                        <td>
-                                            {{ $event->lokasi }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        {{-- RIGHT --}}
+                        <div class="flex-1 w-full">
+                            {{-- TOP --}}
+                            <div class="w-full flex">
+                                <div class="flex-1 w-full text-lg font-semibold">
+                                    {{ $event->event->nama }}
+                                </div>
+
+                                <div class="w-4 aspect-square flex items-center justify-end text-sm cursor-pointer"
+                                    data-tippy-content="{{ $event->event->keterangan }}">
+                                    <i class="fa-regular fa-circle-question"></i>
+                                </div>
+                            </div>
+
+                            <div class="w-full h-[2px] my-1 bg-pink"></div>
+
+                            {{-- BOTTOM --}}
+                            <div class="w-full text-sm text-gray-400 italic">
+                                <div>
+                                    Pada {{ \Carbon\Carbon::parse($event->waktu)->format('d/m/Y') }}
+                                    pukul {{ \Carbon\Carbon::parse($event->waktu)->format('H:i') }}
+                                </div>
+                                <div>
+                                    {{ $event->lokasi }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach

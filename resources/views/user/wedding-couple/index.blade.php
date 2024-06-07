@@ -86,8 +86,8 @@
     {{-- ITEM 3 --}}
     <div class="w-full bg-pink">
         <div class="w-2/3 mx-auto">
-            <p class="text-white text-center">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat animi similique sunt ullam esse corporis molestias illo asperiores, modi explicabo quibusdam voluptatibus vero nisi quisquam iusto harum natus laborum doloremque facere doloribus! Perspiciatis qui voluptates amet, ullam animi quo inventore nisi libero adipisci voluptatem eaque veritatis odit? Cum, autem exercitationem.
+            <p class="text-white text-[2em] text-center">
+                Penyedia Layanan yang dapat membantu mewujudkan pernikahan impianmu!
             </p>
         </div>
     </div>
@@ -95,68 +95,58 @@
     {{-- ITEM 4 --}}
     <div class="w-full min-h-[95vh] p-8 flex flex-col items-center justify-center bg-[url('/public/img/bg/wave-top.svg')] bg-top bg-no-repeat bg-cover"
         id="penyedia-layanan">
-        <div class="w-full my-8">
-            <p class="text-center text-2xl">
-                Penyedia Layanan yang dapat membantu mewujudkan pernikahan impianmu!
-            </p>
-        </div>
+        <div class="w-full max-w-[900px] mt-[10em] grid grid-cols-2 gap-8">
+            @php
+                $services = [
+                    [
+                        'title' => 'Organizer',
+                        'icon' => 'fa-building-user',
+                        'route' => 'wedding-couple.search.wo.index'
+                    ],
+                    [
+                        'title' => 'Fotografer',
+                        'icon' => 'fa-camera-retro',
+                        'route' => 'wedding-couple.search.wp.index'
+                    ],
+                    [
+                        'title' => 'Caterer',
+                        'icon' => 'fa-utensils',
+                        'route' => 'wedding-couple.search.ct.index'
+                    ],
+                    [
+                        'title' => 'Venue',
+                        'icon' => 'fa-place-of-worship',
+                        'route' => 'wedding-couple.search.v.index'
+                    ]
+                ];
+            @endphp
 
-        <div class="w-full max-w-[900px] grid grid-cols-2 gap-8">
-            <div class="w-full mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
-                <div class="w-full flex flex-col items-center justify-start gap-8">
-                    <p class="text-3xl font-semibold text-center">
-                        Organizer
-                    </p>
-                    <i class="fa-solid fa-building-user text-[5em] text-pink"></i>
-                    {{-- <p class="text-center font-semibold">
-                        Temukan Organizer yang dapat mewujudkan setiap detail impian pernikahanmu, menciptakan momen istimewa yang abadi dan tak terlupakan
-                    </p> --}}
-                </div>
+            @foreach ($services as $service)
+                <div class="w-full mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
+                    <div class="w-full flex flex-col items-center justify-start gap-8">
+                        <p class="text-3xl font-semibold text-center">
+                            {{ $service['title'] }}
+                        </p>
+                        <i class="fa-solid {{ $service['icon'] }} text-[5em] text-pink"></i>
+                    </div>
 
-                <div class="w-full flex items-center justify-center">
-                    @if (auth()->user() && auth()->user()->w_couple)
-                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                            href="{{ route('wedding-couple.search.wo.index') }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Cari
-                        </a>
-                    @else
-                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                            href="{{ route('ke_masuk') }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Masuk untuk Mencari
-                        </a>
-                    @endif
+                    <div class="w-full flex items-center justify-center">
+                        @if (auth()->user() && auth()->user()->w_couple)
+                            <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                                href="{{ route($service['route']) }}">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Cari
+                            </a>
+                        @else
+                            <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                                href="{{ route('ke_masuk') }}">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Masuk untuk Mencari
+                            </a>
+                        @endif
+                    </div>
                 </div>
-            </div>
-
-            <div class="w-full mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
-                <div class="w-full flex flex-col items-center justify-start gap-8">
-                    <p class="text-3xl font-semibold text-center">
-                        Fotografer
-                    </p>
-                    <i class="fa-solid fa-camera-retro text-[5em] text-pink"></i>
-                    {{-- <p class="text-center font-semibold">
-                        Temukan Fotografer yang dapat menangkap kisah cinta dalam setiap bidikan, mengabadikan keindahan pernikahanmu menjadi kenangan abadi yang tiada tara
-                    </p> --}}
-                </div>
-
-                <div class="w-full flex items-center justify-center">
-                    @if (auth()->user() && auth()->user()->w_couple)
-                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                            href="{{ route('wedding-couple.search.wp.index') }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Cari
-                        </a>
-                    @else
-                        <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                            href="{{ route('ke_masuk') }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Masuk untuk Mencari
-                        </a>
-                    @endif
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection

@@ -66,10 +66,14 @@ class Kernel extends HttpKernel
         'wedding-couple' => \App\Http\Middleware\isWeddingCouple::class,
         'wedding-organizer' => \App\Http\Middleware\isWeddingOrganizer::class,
         'wedding-photographer' => \App\Http\Middleware\isWeddingPhotographer::class,
+        'catering' => \App\Http\Middleware\isCatering::class,
+        'venue' => \App\Http\Middleware\isVenue::class,
         'admin' => \App\Http\Middleware\isAdmin::class,
         'super-admin' => \App\Http\Middleware\isSuperAdmin::class,
         'wc-profil' => \App\Http\Middleware\hasWCProfil::class,
         'wo-profil' => \App\Http\Middleware\hasWOProfil::class,
         'wp-profil' => \App\Http\Middleware\hasWPProfil::class,
+        'ct-profil' => \App\Http\Middleware\hasCtProfil::class,
+        'v-profil' => \App\Http\Middleware\hasVProfil::class,
     ];
 }

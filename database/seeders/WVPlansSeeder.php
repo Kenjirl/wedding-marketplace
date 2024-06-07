@@ -22,6 +22,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 1000000,
                 'satuan'      => 'acara',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
                 'w_vendor_id' => 1,
@@ -29,6 +31,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 12000000,
                 'satuan'      => 'acara',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
                 'w_vendor_id' => 2,
@@ -36,6 +40,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 1000000,
                 'satuan'      => 'acara',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
                 'w_vendor_id' => 2,
@@ -43,6 +49,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 12000000,
                 'satuan'      => 'acara',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
                 'w_vendor_id' => 3,
@@ -50,6 +58,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 1000000,
                 'satuan'      => 'pack',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
                 'w_vendor_id' => 3,
@@ -57,6 +67,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 12000000,
                 'satuan'      => 'pack',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
                 'w_vendor_id' => 4,
@@ -64,6 +76,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 1000000,
                 'satuan'      => 'hari',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
                 'w_vendor_id' => 4,
@@ -71,6 +85,8 @@ class WVPlansSeeder extends Seeder
                 'detail'      => 'Ini detail',
                 'harga'       => 12000000,
                 'satuan'      => 'hari',
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
         ]);
     }

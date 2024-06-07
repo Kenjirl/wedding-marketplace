@@ -458,9 +458,7 @@
                 confirmButtonColor: "#F78CA2",
                 confirmButtonText: "OK"
             }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#submitDeleteBtn').click();
-                }
+                return;
             });
         });
 

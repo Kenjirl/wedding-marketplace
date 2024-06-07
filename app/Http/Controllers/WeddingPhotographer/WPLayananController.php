@@ -11,7 +11,15 @@ class WPLayananController extends Controller
     public function index() {
         $plans = WVPlan::where('w_vendor_id', auth()->user()->w_vendor->id)
                 ->orderBy('harga', 'asc')
+                ->with(['ratings'])
                 ->get();
+
+        foreach ($plans as $plan) {
+            $totalRating = $plan->ratings->sum('rating');
+            $ratingCount = $plan->ratings->count();
+            $plan->rate = $ratingCount > 0 ? $totalRating / $ratingCount : null;
+        }
+
         return view('user.wedding-photographer.layanan.index', compact('plans'));
     }
 
@@ -60,22 +68,25 @@ class WPLayananController extends Controller
 
     public function ubah(Request $req, $id) {
         $req->validate([
-            'nama'        => 'required|max:20',
-            'detail'      => 'required',
-            'harga'       => 'required|numeric',
+            'nama'   => 'required|max:20',
+            'detail' => 'required',
+            'harga'  => 'required|numeric',
+            'satuan' => 'required',
         ],[
-            'nama.required'        => 'Nama Layanan tidak boleh kosong',
-            'nama.max'             => 'Nama tidak boleh lebih dari 20 karakter',
-            'detail.required'      => 'Detail Layanan tidak boleh kosong',
-            'harga.required'       => 'Harga tidak boleh kosong',
-            'harga.numeric'        => 'Harga harus berupa numerik',
+            'nama.required'   => 'Nama Layanan tidak boleh kosong',
+            'nama.max'        => 'Nama tidak boleh lebih dari 20 karakter',
+            'detail.required' => 'Detail Layanan tidak boleh kosong',
+            'harga.required'  => 'Harga tidak boleh kosong',
+            'harga.numeric'   => 'Harga harus berupa numerik',
+            'satuan.required' => 'Satuan tidak boleh kosong',
         ]);
 
         $data1 = WVPlan::where('id', $id)
                     ->update([
-                        'nama' => $req->nama,
+                        'nama'   => $req->nama,
                         'detail' => $req->detail,
-                        'harga' => $req->harga,
+                        'harga'  => $req->harga,
+                        'satuan' => $req->satuan,
                     ]);
 
         if ($data1) {

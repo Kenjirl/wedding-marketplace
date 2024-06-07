@@ -1,76 +1,40 @@
 {{-- PHOTOGRAPHER --}}
-@php
-    $today = now()->toDateString();
-@endphp
-
-<div class="flex-1 w-full text-center">
+<div id="include-wp">
     @forelse ($bookedPhotographers as $bp)
-        {{-- BOOKED WP CARD --}}
-        @if ($bp->status == 'ditolak')
-            <div class="w-3/4 mx-auto mb-4 rounded-md border-l-8 border-red-400">
-        @elseif ($bp->status == 'diterima')
-            <div class="w-3/4 mx-auto mb-4 rounded-md border-l-8 border-blue-400">
-        @elseif ($bp->status == 'selesai' || $bp->status == 'dibayar')
-            <div class="w-3/4 mx-auto mb-4 rounded-md border-l-8 border-green-400">
-        @else
-            <div class="w-3/4 mx-auto mb-4 rounded-md border-l-8 border-yellow-400">
-        @endif
-            <div class="w-full p-4 flex items-center justify-start gap-2 border-2 border-l-0 border-slate-100 rounded-tr-md">
-                {{-- GAMBAR --}}
-                <div>
-                    @if ($bp->plan->w_vendor->foto_profil)
-                        <img class="w-[50px] aspect-square object-cover object-center rounded-full border-2 border-pink"
-                            src="{{ asset($bp->plan->w_vendor->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
-                    @else
-                        <span class="w-[50px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white border-4 border-pink"
-                            id="fotoProfilText">
-                            {{ substr($bp->plan->w_vendor->nama, 0, 1) }}
-                        </span>
-                    @endif
-                </div>
+        @php
+            $classes = $statusClasses[$bp->status] ?? $defaultClasses;
+        @endphp
 
+        {{-- BOOKED WP CARD --}}
+        <div class="w-full flex items-center justify-between gap-4 rounded-md border-l-8 border-{{ $classes[0] }}">
+            {{-- NAMA --}}
+            <div class="w-full p-2 flex items-center justify-start gap-2">
+                <span class="flex-shrink-0 w-[50px] aspect-square flex items-center justify-center bg-pink rounded text-white">
+                    <i class="fa-solid fa-camera-retro"></i>
+                </span>
                 {{-- NAMA --}}
-                <div class="text-xl font-semibold">
-                    <a class="w-fit outline-pink outline-offset-4 hover:underline focus:underline"
-                        href="{{ route('wedding-couple.search.wp.ke_detail', $bp->plan->w_vendor->id) }}" target="_blank">
-                        {{ $bp->plan->w_vendor->nama }}
-                    </a>
-                </div>
+                <a class="w-fit text-start text-lg line-clamp-1 font-semibold outline-pink outline-offset-4 hover:underline focus:underline"
+                    href="{{ route('wedding-couple.search.wp.ke_detail', $bp->plan->w_vendor->id) }}" target="_blank">
+                    {{ $bp->plan->w_vendor->nama }}
+                </a>
             </div>
 
-            {{-- BAWAH --}}
-            <div class="w-full p-4 flex items-center justify-between border-2 border-t-0 border-l-0 border-slate-100 rounded-br-md">
-                {{-- STATUS --}}
-                <div class="flex items-center justify-start gap-2 text-[.9em]">
-                    @if ($bp->status == 'ditolak')
-                        <div class="w-fit aspect-square rounded-full text-red-500">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </div>
-                    @elseif ($bp->status == 'diterima')
-                        <div class="w-fit aspect-square rounded-full text-blue-500">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                    @elseif ($bp->status == 'selesai' || $bp->status == 'dibayar')
-                        <div class="w-fit aspect-square rounded-full text-green-500">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                    @else
-                        <div class="w-fit aspect-square rounded-full text-yellow-400">
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-                    @endif
-                    <span>
-                        {{ $bp->status }}
-                    </span>
+            {{-- STATUS --}}
+            <div class="flex items-center justify-start gap-2 text-sm italic">
+                <div class="w-fit aspect-square rounded-full text-{{ $classes[0] }}">
+                    <i class="fa-solid {{ $classes[1] }}"></i>
                 </div>
+                <span class="text-gray-400">
+                    {{ $bp->status }}
+                </span>
+            </div>
 
-                {{-- TOMBOL OPEN MODAL --}}
-                <div class="flex-1 w-full flex items-center justify-end gap-4">
-                    <button class="openFtgModalBtn w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                        type="button" data-ftg-modal="{{ $bp->id }}">
-                        {{ $bp->status == 'selesai' ? $bp->rating ? 'Lihat Ulasan' : 'Buat Ulasan' : 'Detail' }}
-                    </button>
-                </div>
+            {{-- TOMBOL OPEN MODAL --}}
+            <div class="w-fit text-end">
+                <button class="openFtgModalBtn w-fit px-2 py-1 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                    type="button" data-ftg-modal="{{ $bp->id }}">
+                    <i class="fa-solid fa-{{ $bp->status == 'selesai' ? 'star' : 'magnifying-glass' }}"></i>
+                </button>
             </div>
         </div>
 
@@ -88,7 +52,7 @@
 
                     {{-- TOMBOL CLOSE MODAL --}}
                     <div>
-                        <button class="closeFtgModalBtn w-fit px-4 aspect-square rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                        <button class="closeFtgModalBtn w-fit px-2 aspect-square rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                             type="button" tabindex="-1" data-ftg-modal="{{ $bp->id }}">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
@@ -103,9 +67,18 @@
                         <div class="w-full">
                             {{-- nama --}}
                             <div class="w-full mb-4 flex items-center justify-start gap-4">
-                                <span class="w-fit px-4 flex items-center justify-center aspect-square bg-pink rounded text-xl text-white">
-                                    <i class="fa-solid fa-camera-retro"></i>
-                                </span>
+                                {{-- GAMBAR --}}
+                                <div>
+                                    @if ($bp->plan->w_vendor->foto_profil)
+                                        <img class="w-[50px] aspect-square object-cover object-center rounded-full border-2 border-pink"
+                                            src="{{ asset($bp->plan->w_vendor->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
+                                    @else
+                                        <span class="w-[50px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white border-4 border-pink"
+                                            id="fotoProfilText">
+                                            {{ substr($bp->plan->w_vendor->nama, 0, 1) }}
+                                        </span>
+                                    @endif
+                                </div>
 
                                 <a class="block text-2xl font-semibold outline-pink outline-offset-4 hover:underline focus:underline"
                                     href="{{ route('wedding-couple.search.wp.ke_detail', $bp->plan->w_vendor->id) }}" tabindex="-1" target="_blank">
@@ -134,7 +107,7 @@
                             {{-- tanggal --}}
                             <div class="w-full">
                                 <span>
-                                    Dipesan untuk tanggal {{ date('d-m-Y', strtotime($bp->untuk_tanggal)) }}
+                                    Dipesan untuk tanggal {{ date('d/m/Y', strtotime($bp->untuk_tanggal)) }}
                                 </span>
                             </div>
                         </div>
@@ -174,11 +147,11 @@
                                             </span>
                                             <div class="w-full flex items-stretch justify-center rounded-md border-2 border-slate-300">
                                                 <div class="flex-1 w-full p-2">
-                                                    Rp {{ number_format($bp->plan->harga, 0, ',', '.') }}
+                                                    Rp {{ number_format($bp->total_bayar, 0, ',', '.') }}
                                                 </div>
 
                                                 <button class="copyToClipBtn w-10 aspect-square p-2 rounded-e outline-pink outline-offset-4 bg-slate-300 hover:bg-slate-200 focus:bg-slate-200 transition-colors"
-                                                    data-value="{{ $bp->plan->harga }}" tabindex="-1">
+                                                    data-value="{{ $bp->total_bayar }}" tabindex="-1">
                                                     <i class="fa-regular fa-copy"></i>
                                                 </button>
                                             </div>
@@ -281,26 +254,12 @@
                 </div>
 
                 {{-- bawah --}}
-                <div class="w-full p-4 flex items-center justify-between">
+                <div class="w-full px-4 py-2 flex items-center justify-between">
                     {{-- status --}}
                     <div class="flex items-center justify-start gap-2 text-[.9em]">
-                        @if ($bp->status == 'ditolak')
-                            <div class="w-fit aspect-square rounded-full text-red-500">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </div>
-                        @elseif ($bp->status == 'diterima')
-                            <div class="w-fit aspect-square rounded-full text-blue-500">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </div>
-                        @elseif ($bp->status == 'selesai' || $bp->status == 'dibayar')
-                            <div class="w-fit aspect-square rounded-full text-green-500">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </div>
-                        @else
-                            <div class="w-fit aspect-square rounded-full text-yellow-400">
-                                <i class="fa-solid fa-clock"></i>
-                            </div>
-                        @endif
+                        <div class="w-fit aspect-square rounded-full text-{{ $classes[0] }}">
+                            <i class="fa-solid {{ $classes[1] }}"></i>
+                        </div>
                         <span>
                             {{ $bp->status }}
                         </span>
@@ -317,7 +276,7 @@
                                 </button>
                             </form>
                         @endif
-                        @if ($bp->untuk_tanggal >= $today && $bp->status == 'dibayar')
+                        @if ($bp->untuk_tanggal <= $today && $bp->status == 'dibayar')
                             <button class="w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                                 type="button" id="selesaiBtn" tabindex="-1" data-id_booking="{{ $bp->id }}">
                                 Selesaikan Pesanan
@@ -331,11 +290,9 @@
 
     @endforelse
 
-    @if ($bookedPhotographers->isEmpty() || $bookedPhotographers->last()->untuk_tanggal < $today)
-        <a class="block w-fit mx-auto px-4 py-2 bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-            href="{{ route('wedding-couple.search.wp.index') }}">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Cari Wedding Photographer
-        </a>
-    @endif
+    {{-- <a class="block w-fit mx-auto px-4 py-2 text-sm bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+        href="{{ route('wedding-couple.search.wp.index') }}">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Cari Fotografer
+    </a> --}}
 </div>

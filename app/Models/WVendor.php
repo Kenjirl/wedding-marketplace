@@ -37,8 +37,4 @@ class WVendor extends Model
     public function plan(): HasMany {
         return $this->hasMany(WVPlan::class, 'w_vendor_id');
     }
-
-    public function rating(): HasMany {
-        return $this->hasMany(WVRating::class, 'w_vendor_id');
-    }
 }

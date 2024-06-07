@@ -236,7 +236,7 @@
             </div>
 
             {{-- INPUT --}}
-            <input class="hidden" type="file" name="foto[]" id="foto" accept="image/*" multiple value="{{ old('foto', '') }}" tabindex="-1" required>
+            <input class="hidden" type="file" name="foto[]" id="foto" accept="image/*" multiple value="{{ old('foto[]', '') }}" tabindex="-1">
 
             {{-- PREVIEW --}}
             <div id="image-preview" class="w-full h-[350px] p-2 flex items-center justify-start gap-2 border-x-2 border-slate-100"></div>

@@ -1,72 +1,40 @@
 {{-- ORGANIZER --}}
-<div class="flex-1 w-full text-center">
+<div id="include-wo">
     @if (!$bookedOrganizer->isEmpty())
-        {{-- BOOKED WO CARD --}}
-        @if ($bookedOrganizer[0]->status == 'ditolak')
-            <div class="w-3/4 mx-auto rounded-md border-l-8 border-red-400">
-        @elseif ($bookedOrganizer[0]->status == 'diterima')
-            <div class="w-3/4 mx-auto rounded-md border-l-8 border-blue-400">
-        @elseif ($bookedOrganizer[0]->status == 'selesai' || $bookedOrganizer[0]->status == 'dibayar')
-            <div class="w-3/4 mx-auto rounded-md border-l-8 border-green-400">
-        @else
-            <div class="w-3/4 mx-auto rounded-md border-l-8 border-yellow-400">
-        @endif
-            <div class="w-full p-4 flex items-center justify-start gap-2 border-2 border-l-0 border-slate-100 rounded-tr-md">
-                {{-- GAMBAR --}}
-                <div>
-                    @if ($bookedOrganizer[0]->plan->w_vendor->foto_profil)
-                        <img class="w-[50px] aspect-square object-cover object-center rounded-full border-2 border-pink"
-                            src="{{ asset($bookedOrganizer[0]->plan->w_vendor->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
-                    @else
-                        <span class="w-[50px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white border-4 border-pink"
-                            id="fotoProfilText">
-                            {{ substr($bookedOrganizer[0]->plan->w_vendor->nama, 0, 1) }}
-                        </span>
-                    @endif
-                </div>
+        @php
+            $classes = $statusClasses[$bookedOrganizer[0]->status] ?? $defaultClasses;
+        @endphp
 
+        {{-- BOOKED WO CARD --}}
+        <div class="w-full flex items-center justify-between gap-4 rounded-md border-l-8 border-{{ $classes[0] }}">
+            {{-- NAMA --}}
+            <div class="w-full p-2 flex items-center justify-start gap-2">
+                <span class="flex-shrink-0 w-[50px] aspect-square flex items-center justify-center bg-pink rounded text-white">
+                    <i class="fa-solid fa-building"></i>
+                </span>
                 {{-- NAMA --}}
-                <div class="text-xl font-semibold">
-                    <a class="w-fit outline-pink outline-offset-4 hover:underline focus:underline"
-                        href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer[0]->plan->w_vendor->id) }}" target="_blank">
-                        {{ $bookedOrganizer[0]->plan->w_vendor->nama }}
-                    </a>
-                </div>
+                <a class="w-fit text-start text-lg line-clamp-1 font-semibold outline-pink outline-offset-4 hover:underline focus:underline"
+                    href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer[0]->plan->w_vendor->id) }}" target="_blank">
+                    {{ $bookedOrganizer[0]->plan->w_vendor->nama }}
+                </a>
             </div>
 
-            {{-- BAWAH --}}
-            <div class="w-full p-4 flex items-center justify-between border-2 border-t-0 border-l-0 border-slate-100 rounded-br-md">
-                {{-- STATUS --}}
-                <div class="flex items-center justify-start gap-2 text-[.9em]">
-                    @if ($bookedOrganizer[0]->status == 'ditolak')
-                        <div class="w-fit aspect-square rounded-full text-red-500">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </div>
-                    @elseif ($bookedOrganizer[0]->status == 'diterima')
-                        <div class="w-fit aspect-square rounded-full text-blue-500">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                    @elseif ($bookedOrganizer[0]->status == 'selesai' || $bookedOrganizer[0]->status == 'dibayar')
-                        <div class="w-fit aspect-square rounded-full text-green-500">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                    @else
-                        <div class="w-fit aspect-square rounded-full text-yellow-400">
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-                    @endif
-                    <span>
-                        {{ $bookedOrganizer[0]->status }}
-                    </span>
+            {{-- STATUS --}}
+            <div class="flex items-center justify-start gap-2 text-sm italic">
+                <div class="w-fit aspect-square rounded-full text-{{ $classes[0] }}">
+                    <i class="fa-solid {{ $classes[1] }}"></i>
                 </div>
+                <span class="text-gray-400">
+                    {{ $bookedOrganizer[0]->status }}
+                </span>
+            </div>
 
-                {{-- TOMBOL OPEN MODAL --}}
-                <div class="flex-1 w-full text-end">
-                    <button class="w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                        type="button" id="openOrgModalBtn">
-                        {{ $bookedOrganizer[0]->status == 'selesai' ? $bookedOrganizer[0]->rating ? 'Lihat Ulasan' : 'Buat Ulasan' : 'Detail' }}
-                    </button>
-                </div>
+            {{-- TOMBOL OPEN MODAL --}}
+            <div class="w-fit text-end">
+                <button class="openFtgModalBtn w-fit px-2 py-1 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                    type="button" id="openOrgModalBtn">
+                    <i class="fa-solid fa-{{ $bookedOrganizer[0]->status == 'selesai' ? 'star' : 'magnifying-glass' }}"></i>
+                </button>
             </div>
         </div>
 
@@ -84,7 +52,7 @@
 
                     {{-- TOMBOL CLOSE MODAL --}}
                     <div>
-                        <button class="w-fit px-4 aspect-square rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                        <button class="w-fit px-2 aspect-square rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                             type="button" id="closeOrgModalBtn" tabindex="-1">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
@@ -99,9 +67,18 @@
                         <div class="w-full">
                             {{-- nama --}}
                             <div class="w-full mb-4 flex items-center justify-start gap-4">
-                                <span class="w-fit px-4 flex items-center justify-center aspect-square bg-pink rounded text-xl text-white">
-                                    <i class="fa-solid fa-building"></i>
-                                </span>
+                                {{-- GAMBAR --}}
+                                <div>
+                                    @if ($bookedOrganizer[0]->plan->w_vendor->foto_profil)
+                                        <img class="w-[50px] aspect-square object-cover object-center rounded-full border-2 border-pink"
+                                            src="{{ asset($bookedOrganizer[0]->plan->w_vendor->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
+                                    @else
+                                        <span class="w-[50px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white border-4 border-pink"
+                                            id="fotoProfilText">
+                                            {{ substr($bookedOrganizer[0]->plan->w_vendor->nama, 0, 1) }}
+                                        </span>
+                                    @endif
+                                </div>
 
                                 <a class="block text-2xl font-semibold outline-pink outline-offset-4 hover:underline focus:underline"
                                     href="{{ route('wedding-couple.search.wo.ke_detail', $bookedOrganizer[0]->plan->w_vendor->id) }}" tabindex="-1" target="_blank">
@@ -130,7 +107,7 @@
                             {{-- tanggal --}}
                             <div class="w-full">
                                 <span>
-                                    Dipesan untuk tanggal {{ date('d-m-Y', strtotime($bookedOrganizer[0]->untuk_tanggal)) }}
+                                    Dipesan untuk tanggal {{ date('d/m/Y', strtotime($bookedOrganizer[0]->untuk_tanggal)) }}
                                 </span>
                             </div>
                         </div>
@@ -277,33 +254,19 @@
                 </div>
 
                 {{-- bawah --}}
-                <div class="w-full p-4 flex items-center justify-between">
+                <div class="w-full px-4 py-2 flex items-center justify-between text-[.9em]">
                     {{-- status --}}
-                    <div class="flex items-center justify-start gap-2 text-[.9em]">
-                        @if ($bookedOrganizer[0]->status == 'ditolak')
-                            <div class="w-fit aspect-square rounded-full text-red-500">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </div>
-                        @elseif ($bookedOrganizer[0]->status == 'diterima')
-                            <div class="w-fit aspect-square rounded-full text-blue-500">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </div>
-                        @elseif ($bookedOrganizer[0]->status == 'selesai' || $bookedOrganizer[0]->status == 'dibayar')
-                            <div class="w-fit aspect-square rounded-full text-green-500">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </div>
-                        @else
-                            <div class="w-fit aspect-square rounded-full text-yellow-400">
-                                <i class="fa-solid fa-clock"></i>
-                            </div>
-                        @endif
+                    <div class="flex items-center justify-start gap-2">
+                        <div class="w-fit aspect-square rounded-full text-{{ $classes[0] }}">
+                            <i class="fa-solid {{ $classes[1] }}"></i>
+                        </div>
                         <span>
                             {{ $bookedOrganizer[0]->status }}
                         </span>
                     </div>
 
                     {{-- buttons --}}
-                    <div class="w-fit text-sm">
+                    <div class="w-fit">
                         @if ($bookedOrganizer[0]->status == 'diproses' || $bookedOrganizer[0]->status == 'ditolak')
                             <form action="{{ route('wedding-couple.pernikahan.hapus_wo', $bookedOrganizer[0]->id) }}" method="post" id="hapusWOForm">
                                 @csrf
@@ -314,10 +277,7 @@
                             </form>
                         @endif
 
-                        @php
-                            $today = now()->toDateString();
-                        @endphp
-                        @if ($bookedOrganizer[0]->untuk_tanggal >= $today && $bookedOrganizer[0]->status == 'dibayar')
+                        @if ($bookedOrganizer[0]->untuk_tanggal <= $today && $bookedOrganizer[0]->status == 'dibayar')
                             <button class="w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                                 type="button" id="selesaiBtn" tabindex="-1" data-id_booking="{{ $bookedOrganizer[0]->id }}">
                                 Selesaikan Pesanan
@@ -328,10 +288,10 @@
             </div>
         </div>
     @else
-        <a class="block w-fit mx-auto px-4 py-2 bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+        {{-- <a class="block w-fit mx-auto px-4 py-2 text-sm bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
             href="{{ route('wedding-couple.search.wo.index') }}">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 Cari Wedding Organizer
-        </a>
+        </a> --}}
     @endif
 </div>

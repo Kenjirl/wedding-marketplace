@@ -15,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Load helper files
+        foreach (glob(app_path('Helpers') . '/*.php') as $filename) {
+            require_once $filename;
+        }
     }
 
     /**
@@ -35,6 +38,14 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('wedding-photographer', function(User $user) {
             return $user->role === 'photographer';
+        });
+
+        Gate::define('catering', function(User $user) {
+            return $user->role === 'catering';
+        });
+
+        Gate::define('venue', function(User $user) {
+            return $user->role === 'venue';
         });
 
         Gate::define('admin', function(User $user) {

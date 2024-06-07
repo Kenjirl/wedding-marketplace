@@ -21,9 +21,13 @@
                 <a class="w-[200px] rounded-lg outline-none bg-white shadow hover:bg-slate-100 hover:shadow-lg focus:bg-slate-100 focus:shadow-lg transition-all"
                     href="{{ route('wedding-photographer.portofolio.ke_ubah', $l_portofolio->id) }}">
                     {{-- IMG --}}
-                    <div class="w-full p-2 pb-0 flex items-end justify-center">
+                    <div class="relative w-full p-2 pb-0 flex items-end justify-center">
                         <img class="w-[200px] aspect-square object-cover object-center rounded-lg"
                             src="{{ asset($l_portofolio->foto[0]['url']) }}" alt="Gambar Portofolio">
+
+                        <div class="absolute bottom-2 right-4 w-fit px-2 py-1 bg-pink text-white text-sm rounded">
+                            {{ count($l_portofolio->foto) }} <i class="fa-regular fa-images"></i>
+                        </div>
                     </div>
 
                     {{-- DETAIL --}}
@@ -68,9 +72,13 @@
                     </div>
 
                     {{-- IMG --}}
-                    <div class="w-full px-2 flex items-end justify-center">
+                    <div class="relative w-full px-2 flex items-end justify-center">
                         <img class="w-full aspect-square object-cover object-center rounded-lg"
                             src="{{ asset($pfolio->foto[0]['url']) }}" alt="Gambar Portofolio">
+
+                        <div class="absolute bottom-2 right-4 w-fit px-2 py-1 bg-pink text-white text-sm rounded">
+                            {{ count($pfolio->foto) }} <i class="fa-regular fa-images"></i>
+                        </div>
                     </div>
 
                     {{-- DETAIL --}}

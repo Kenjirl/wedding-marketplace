@@ -27,6 +27,13 @@
                             </span>
                         </div>
 
+                        <div class="w-full flex items-center justify-end">
+                            {{-- RATE --}}
+                            <div class="w-fit px-2 py-1 bg-pink text-white text-sm rounded-bl">
+                                <i class="fa-solid fa-star"></i> {{ $plan->rate > 0 ? number_format($plan->rate, 1) : '-' }}
+                            </div>
+                        </div>
+
                         <div class="w-full px-4 my-2 text-sm line-clamp-6"
                             id="detailPlan">
                             {!! $plan->detail !!}

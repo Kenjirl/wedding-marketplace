@@ -79,9 +79,17 @@
         toolbar: 'undo redo | bold italic underline strikethrough | align lineheight | checklist numlist bullist indent outdent',
         menu: {
             format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat' },
-        }
+        },
+        height : "300"
     });
     </script>
+
+    {{-- FANCYBOX CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    />
 </head>
 <body>
     @yield('body')
