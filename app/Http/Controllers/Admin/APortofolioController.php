@@ -7,9 +7,15 @@ use App\Models\AConfiguration;
 use App\Models\WVPortofolio;
 use Illuminate\Http\Request;
 
-class WOrganizerController extends Controller
+class APortofolioController extends Controller
 {
-    public function index($tab) {
+    private $vendorTypes = ['wedding-organizer', 'photographer', 'catering', 'venue'];
+
+    public function index($vendor, $tab) {
+        if (!in_array($vendor, $this->vendorTypes)) {
+            abort(404, 'Vendor type not found');
+        }
+
         $tabMap = [
             'diterima' => 'accept',
             'ditolak' => 'reject',
@@ -19,7 +25,7 @@ class WOrganizerController extends Controller
         $tab = $tabMap[$tab] ?? $tab;
 
         if (!in_array($tab, ['accept', 'reject', 'pending'])) {
-            return redirect()->route('admin.wo.portofolio.index', 'pending');
+            return redirect()->route('admin.portofolio.index', ['vendor' => $vendor, 'tab' => 'pending']);
         }
 
         $statusMap = [
@@ -31,55 +37,66 @@ class WOrganizerController extends Controller
         $status = $statusMap[$tab];
 
         $portofolio = WVPortofolio::where('status', $status)
-                        ->whereHas('w_vendor', function($query) {
-                            $query->where('jenis', 'wedding-organizer');
-                        })
-                        ->orderBy('updated_at', 'asc')
-                        ->get();
+            ->whereHas('w_vendor', function($query) use ($vendor) {
+                $query->where('jenis', $vendor);
+            })
+            ->orderBy('updated_at', 'asc')
+            ->get();
 
-        $woConfig = null;
         $config = AConfiguration::where('nama', 'portofolio-automation')->first();
-        if ($config->value) {
+        $vendorConfig = null;
+
+        if ($config && $config->value) {
             foreach ($config->value as $item) {
-                if (isset($item['vendor']) && $item['vendor'] === 'wedding-organizer') {
-                    $woConfig = $item;
+                if (isset($item['vendor']) && $item['vendor'] === $vendor) {
+                    $vendorConfig = $item;
                     break;
                 }
             }
         }
 
-        return view('user.admin.portofolio.w-organizer.index', compact(
+        return view("user.admin.portofolio.index", compact(
             'portofolio',
-            'woConfig',
-            'tab',
+            'vendorConfig',
+            'vendor',
+            'tab'
         ));
     }
 
-    public function ke_validasi($id) {
+    public function ke_validasi($vendor, $id) {
+        if (!in_array($vendor, $this->vendorTypes)) {
+            abort(404, 'Vendor type not found');
+        }
+
         $portofolio = WVPortofolio::find($id);
 
         if (!$portofolio) {
             return back()->with('gagal', 'ID Invalid');
         }
 
-        return view('user.admin.portofolio.w-organizer.validasi', compact('portofolio'));
+        return view("user.admin.portofolio.validasi", compact(
+            'portofolio',
+            'vendor',
+        ));
     }
 
-    public function validasi(Request $req, $id) {
+    public function validasi(Request $req, $vendor, $id) {
+        if (!in_array($vendor, $this->vendorTypes)) {
+            abort(404, 'Vendor type not found');
+        }
+
         $req->validate([
             'status' => 'required'
         ]);
 
         $portofolio = WVPortofolio::findOrFail($id);
 
-        // Set all 'rejected' statuses to false by default
         $currentFoto = $portofolio->foto;
         foreach ($currentFoto as &$photo) {
             $photo['rejected'] = false;
         }
         unset($photo);
 
-        // If 'status' is 'ditolak', update 'rejected' statuses based on input
         if ($req->status === 'ditolak') {
             $rejectedPhotoIds = $req->input('rejected', []);
             foreach ($rejectedPhotoIds as $index) {
@@ -88,25 +105,30 @@ class WOrganizerController extends Controller
                 }
             }
         }
+
         $portofolio->admin_id = auth()->user()->admin->id;
         $portofolio->status = $req->status;
         $portofolio->foto = $currentFoto;
         $data = $portofolio->save();
 
         if ($data) {
-            return redirect()->route('admin.wo.portofolio.index', $req->status)->with('sukses', 'Mengubah Validasi Portofolio Organizer');
+            return redirect()->route('admin.portofolio.index', ['vendor' => $vendor, 'tab' => $req->status])->with('sukses', 'Mengubah Validasi Portofolio');
         }
-        return redirect()->route('admin.wo.portofolio.index', $req->status)->with('gagal', 'Mengubah Validasi Portofolio Organizer');
+        return redirect()->route('admin.portofolio.index', ['vendor' => $vendor, 'tab' => $req->status])->with('gagal', 'Mengubah Validasi Portofolio');
     }
 
-    public function config(Request $req) {
+    public function config(Request $req, $vendor) {
+        if (!in_array($vendor, $this->vendorTypes)) {
+            abort(404, 'Vendor type not found');
+        }
+
         $config = AConfiguration::where('nama', 'portofolio-automation')->first();
 
         $value = $config->value ?: [];
         $vendorExists = false;
 
         foreach ($value as $key => $item) {
-            if (isset($item['vendor']) && $item['vendor'] === 'wedding-organizer') {
+            if (isset($item['vendor']) && $item['vendor'] === $vendor) {
                 $vendorExists = true;
                 if ($req->config != 'on') {
                     unset($value[$key]);
@@ -117,7 +139,7 @@ class WOrganizerController extends Controller
 
         if (!$vendorExists && $req->config == 'on') {
             $value[] = [
-                'vendor' => 'wedding-organizer',
+                'vendor' => $vendor,
                 'admin_id' => auth()->user()->admin->id
             ];
         }
@@ -126,8 +148,8 @@ class WOrganizerController extends Controller
         $data = $config->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengubah Konfigurasi Portofolio Organizer');
+            return redirect()->back()->with('sukses', "Mengubah Konfigurasi Portofolio");
         }
-        return redirect()->back()->with('gagal', 'Mengubah Konfigurasi Portofolio Organizer');
+        return redirect()->back()->with('gagal', "Mengubah Konfigurasi Portofolio");
     }
 }

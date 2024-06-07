@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\ACategoryController;
 use App\Http\Controllers\Admin\AController;
 use App\Http\Controllers\Admin\AEventController;
+use App\Http\Controllers\Admin\APortofolioController;
 use App\Http\Controllers\Admin\AProfilController;
-use App\Http\Controllers\Admin\WOrganizerController;
-use App\Http\Controllers\Admin\WPhotographerController;
 use App\Http\Controllers\Catering\CtController;
 use App\Http\Controllers\Catering\CtJadwalController;
 use App\Http\Controllers\Catering\CtLayananController;
@@ -116,16 +114,6 @@ Route::name('admin.')
         Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
     });
 
-    Route::name('kategori-pernikahan.')->prefix('/kategori-pernikahan')
-        ->controller(ACategoryController::class)->group(function() {
-        Route::get ('/',          'index')    ->name('index');
-        Route::get ('/tambah',    'ke_tambah')->name('ke_tambah');
-        Route::post('/tambah',    'tambah')   ->name('tambah');
-        Route::get ('/ubah/{id}', 'ke_ubah')  ->name('ke_ubah');
-        Route::post('/ubah{id}',  'ubah')     ->name('ubah');
-        Route::post('/hapus{id}', 'hapus')    ->name('hapus');
-    });
-
     Route::name('event-pernikahan.')->prefix('/event-pernikahan')
         ->controller(AEventController::class)->group(function() {
         Route::get ('/',          'index')    ->name('index');
@@ -136,20 +124,12 @@ Route::name('admin.')
         Route::post('/hapus{id}', 'hapus')    ->name('hapus');
     });
 
-    Route::name('wo.portofolio.')->prefix('/wedding-organizer/portofolio')
-        ->controller(WOrganizerController::class)->group(function() {
-        Route::get ('/{tab}',         'index')      ->name('index');
-        Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
-        Route::post('/validasi{id}',  'validasi')   ->name('validasi');
-        Route::post('/config',        'config')     ->name('config');
-    });
-
-    Route::name('wp.portofolio.')->prefix('/wedding-photographer/portofolio')
-        ->controller(WPhotographerController::class)->group(function() {
-        Route::get ('/{tab}',         'index')      ->name('index');
-        Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
-        Route::post('/validasi{id}',  'validasi')   ->name('validasi');
-        Route::post('/config',        'config')     ->name('config');
+    Route::name('portofolio.')->prefix('/portofolio')
+        ->controller(APortofolioController::class)->group(function() {
+        Route::get ('/{vendor}/{tab}',         'index')      ->name('index');
+        Route::get ('/{vendor}/validasi/{id}', 'ke_validasi')->name('ke_validasi');
+        Route::post('/{vendor}/validasi/{id}', 'validasi')   ->name('validasi');
+        Route::post('/{vendor}/config',        'config')     ->name('config');
     });
 
 });

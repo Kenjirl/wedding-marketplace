@@ -11,6 +11,7 @@ use App\Models\WVendor;
 use App\Models\WVPlan;
 use App\Models\WVPortofolio;
 use App\Models\WVRating;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class WOBookingController extends Controller
@@ -94,9 +95,7 @@ class WOBookingController extends Controller
                     ->withCount(['bookings as bookings_count' => function ($query) {
                         $query->where('status', 'selesai');
                     }])
-                    ->with(['bookings' => function ($query) {
-                        $query->with('rating');
-                    }])
+                    ->with(['bookings.rating'])
                     ->get();
 
         $totalRatingAllPlans = 0;
@@ -109,14 +108,9 @@ class WOBookingController extends Controller
 
             $plan->count = BookingFormatter::format($plan->bookings_count);
 
-            $totalRating = 0;
-            $ratingCount = 0;
-            foreach ($plan->bookings as $booking) {
-                if ($booking->rating) {
-                    $totalRating += $booking->rating->rating;
-                    $ratingCount++;
-                }
-            }
+            $totalRating = $plan->bookings->sum('rating.rating');
+            $ratingCount = $plan->bookings->whereNotNull('rating.rating')->count();
+
             $plan->rate = $ratingCount ? $totalRating / $ratingCount : null;
             $plan->ulasanCount = $ratingCount;
 
@@ -147,8 +141,13 @@ class WOBookingController extends Controller
                                 ->whereNotIn('status', ['batal', 'ditolak'])
                                 ->pluck('w_c_wedding_id');
 
+            $today = Carbon::today()->startOfDay();
             $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
                 ->whereNotIn('id', $bookedWeddingIds)
+                ->whereHas('w_detail', function ($query) use ($today) {
+                    $query->whereRaw('waktu = (SELECT MAX(wd.waktu) FROM w_c_wedding_details wd WHERE wd.w_c_wedding_id = w_c_weddings.id)')
+                        ->whereDate('waktu', '>', $today);
+                })
                 ->orderBy('p_lengkap', 'asc')
                 ->get();
         }

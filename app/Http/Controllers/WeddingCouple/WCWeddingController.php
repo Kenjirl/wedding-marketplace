@@ -17,7 +17,13 @@ class WCWeddingController extends Controller
         $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
                     ->orderBy('created_at', 'asc')
                     ->orderBy('p_lengkap', 'asc')
+                    ->with(['w_detail' => function ($query) {
+                        $query->orderBy('waktu', 'asc')->limit(1);
+                    }])
                     ->get();
+        foreach ($weddings as $wedding) {
+            $wedding->limit = $wedding->w_detail->first()->waktu ?? null;
+        }
 
         return view('user.wedding-couple.wedding.index', compact('weddings'));
     }

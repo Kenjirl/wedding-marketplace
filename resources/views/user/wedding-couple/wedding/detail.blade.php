@@ -13,7 +13,8 @@
     ];
     $defaultClasses = ['yellow-400', 'fa-clock'];
 
-    $today = now()->toDateString();
+    $eventDate = \Carbon\Carbon::parse($weddingEvents[0]->waktu);
+    $today = \Carbon\Carbon::today();
 @endphp
 
 @section('content')
@@ -35,15 +36,24 @@
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </button>
 
-                    <div class="absolute top-[calc(100%+5px)] right-0 w-fit p-1 hidden rounded-lg bg-slate-200"
+                    <div class="absolute top-[calc(100%+5px)] right-0 w-fit p-1 hidden rounded bg-slate-200"
                         id="deleteWeddingContainer">
-                        <form action="{{ route('wedding-couple.pernikahan.hapus', $wedding->id) }}" method="post" id="deleteWeddingForm">
-                            @csrf
-                            <button class="w-fit px-2 py-1 whitespace-nowrap font-semibold text-sm outline-pink outline-offset-4 text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                                type="button" id="deleteWeddingBtn" tabindex="-1">
+                        @if ($today->lt($eventDate))
+                            {{-- Ini tampil jika hari ini belum mencapai tanggal $eventDate --}}
+                            <form action="{{ route('wedding-couple.pernikahan.hapus', $wedding->id) }}" method="post" id="deleteWeddingForm">
+                                @csrf
+                                <button class="w-fit px-2 py-1 whitespace-nowrap font-semibold text-sm outline-pink outline-offset-4 text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded-sm"
+                                    type="button" id="deleteWeddingBtn" tabindex="-1">
+                                    Hapus Pernikahan
+                                </button>
+                            </form>
+                        @else
+                            {{-- Ini tampil jika hari ini sudah mencapai atau melewati tanggal $eventDate --}}
+                            <button class="w-fit px-2 py-1 whitespace-nowrap font-semibold text-sm outline-pink outline-offset-4 text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded-sm"
+                                type="button" id="deleteWeddingWrn" tabindex="-1">
                                 Hapus Pernikahan
                             </button>
-                        </form>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -145,6 +155,7 @@
                     @endforeach
                 </div>
 
+                {{-- VENDORS --}}
                 <div class="w-3/4 mx-auto max-h-[600px] px-4 grid grid-cols-1 gap-4 overflow-y-auto">
                     @include('user.wedding-couple.wedding.detail.wo')
 
@@ -155,13 +166,19 @@
                     @include('user.wedding-couple.wedding.detail.v')
                 </div>
 
-                <div class="w-full mt-4">
-                    <a class="block w-fit mx-auto px-4 py-2 text-sm bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                        href="{{ route('wedding-couple.search.index') }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            Cari Vendor
-                    </a>
-                </div>
+                @if ($today->lt($eventDate))
+                    <div class="w-full mt-4">
+                        <a class="block w-fit mx-auto px-4 py-2 text-sm bg-pink text-white outline-pink outline-offset-4 hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
+                            href="{{ route('wedding-couple.search.index') }}">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Cari Vendor
+                        </a>
+                    </div>
+                @else
+                    <div class="w-full mt-4 text-center text-slate-300 italic text-sm">
+                        pemesanan hanya dapat dilakukan sebelum tanggal acara dimulai
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -206,6 +223,20 @@
                     if (result.isConfirmed) {
                         $('#deleteWeddingForm').submit();
                     }
+                });
+            });
+            $('#deleteWeddingWrn').on('click', function () {
+                Swal.fire({
+                    title: 'Tidak dapat menghapus pernikahan',
+                    text: 'Hari ini sudah memasuki/melewati tanggal pertama pada acara',
+                    icon: "warning",
+                    iconColor: "#F78CA2",
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "OK"
+                }).then((result) => {
+                    $("#toggleDeleteWeddingContainer").click();
+                    return;
                 });
             });
 

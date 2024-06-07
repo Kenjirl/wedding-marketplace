@@ -44,18 +44,19 @@
                         </div>
                     </td>
                     <td class="flex flex-nowrap items-center justify-center gap-2 p-2">
-                        <a class="flex-1 w-full text-center whitespace-nowrap text-sm font-semibold px-4 py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                        <a class="flex-1 w-full text-center whitespace-nowrap text-sm font-semibold px-4 py-2 outline-none hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active
+                            {{ $event->id === 1 ? 'text-white bg-slate-300 pointer-events-none cursor-not-allowed' : 'text-pink bg-white' }}
+                            transition-colors rounded"
                             href="{{ route('admin.event-pernikahan.ke_ubah', $event->id) }}">
                             <i class="fa-regular fa-pen-to-square"></i>
-                            {{-- Ubah --}}
                         </a>
                         <form class="flex-1 w-full"
                             action="{{ route('admin.event-pernikahan.hapus', $event->id) }}" method="post" id="deleteForm-{{ $event->id }}">
                             @csrf
-                            <button class="w-full px-4 py-2 rounded text-sm whitespace-nowrap text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                            <button class="w-full px-4 py-2 rounded text-sm whitespace-nowrap text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
+                                {{ $event->id === 1 ? 'disabled' : '' }}
                                 type="button" onclick="showDeleteConfirmation({{ $event->id }}, '{{ $event->nama }}')">
                                 <i class="fa-solid fa-trash-can"></i>
-                                {{-- Hapus --}}
                             </button>
                         </form>
                     </td>

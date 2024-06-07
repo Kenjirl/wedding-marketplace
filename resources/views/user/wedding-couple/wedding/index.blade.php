@@ -4,6 +4,10 @@
     <title>Pernikahan | Wedding Marketplace</title>
 @endsection
 
+@php
+    $today = now()->toDateString();
+@endphp
+
 @section('content')
     <div class="w-full max-w-[1200px] mx-auto p-4">
         {{-- TITLE --}}
@@ -37,7 +41,9 @@
                     </div>
 
                     <div class="w-full p-2 flex flex-col items-center justify-start gap-2 border-t-2 border-slate-100">
-                        <a class="w-full px-4 py-2 rounded outline-none text-sm text-center text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
+                        <a class="w-full px-4 py-2 rounded outline-none text-sm text-center hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors
+                            {{ $wedding->limit <= $today ? 'text-white bg-slate-300 pointer-events-none cursor-not-allowed' : 'text-pink' }}
+                            "
                             href="#">
                             Buat Undangan
                         </a>

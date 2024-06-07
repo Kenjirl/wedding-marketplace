@@ -19,7 +19,7 @@ class WEventsTableSeeder extends Seeder
             [
                 'admin_id' => 1,
                 'nama' => 'Pernikahan',
-                'keterangan' => '<p>Acara pernikahan secara umum. Wajib ada di setiap wedding yang dibuat.</p>',
+                'keterangan' => 'Acara pernikahan secara umum. Wajib ada di setiap wedding yang dibuat.',
                 'jenis' => 'Umum',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -27,7 +27,7 @@ class WEventsTableSeeder extends Seeder
             [
                 'admin_id' => 1,
                 'nama' => 'Akad',
-                'keterangan' => '<p>Pernikahan dalam Islam biasanya melibatkan akad nikah yang dilakukan oleh seorang imam atau wali (walinya, guardian)</p>',
+                'keterangan' => 'Pernikahan dalam Islam biasanya melibatkan akad nikah yang dilakukan oleh seorang imam atau wali (walinya, guardian)',
                 'jenis' => 'Islam',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -35,7 +35,7 @@ class WEventsTableSeeder extends Seeder
             [
                 'admin_id' => 1,
                 'nama' => 'Kanyadaan',
-                'keterangan' => '<p>Pemberian Putri</p>',
+                'keterangan' => 'Pemberian Putri',
                 'jenis' => 'Hindu',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -43,7 +43,7 @@ class WEventsTableSeeder extends Seeder
             [
                 'admin_id' => 1,
                 'nama' => 'Panigrahana',
-                'keterangan' => '<p>Pengambilan Tangan</p>',
+                'keterangan' => 'Pengambilan Tangan',
                 'jenis' => 'Hindu',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -51,7 +51,7 @@ class WEventsTableSeeder extends Seeder
             [
                 'admin_id' => 1,
                 'nama' => 'Pemberkatan',
-                'keterangan' => '<p>Pemberkatan mempelai di gereja</p>',
+                'keterangan' => 'Pemberkatan mempelai di gereja',
                 'jenis' => 'Katolik',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -59,7 +59,7 @@ class WEventsTableSeeder extends Seeder
             [
                 'admin_id' => 1,
                 'nama' => 'Pemberkatan',
-                'keterangan' => '<p>Pemberkatan mempelai di gereja</p>',
+                'keterangan' => 'Pemberkatan mempelai di gereja',
                 'jenis' => 'Protestan',
                 'created_at' => now(),
                 'updated_at' => now(),
