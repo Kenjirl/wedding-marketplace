@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('w_v_bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('w_c_wedding_id');
+            $table->unsignedBigInteger('w_vendor_id');
             $table->unsignedBigInteger('w_v_plan_id');
             $table->unsignedInteger('qty');
             $table->enum('status', ['batal', 'diproses', 'diterima', 'ditolak', 'dibayar', 'selesai'])->default('diproses');
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_vendor_id')->references('id')->on('w_vendors')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('w_v_plan_id')->references('id')->on('w_v_plans')->onUpdate('cascade')->onDelete('cascade');
         });
     }

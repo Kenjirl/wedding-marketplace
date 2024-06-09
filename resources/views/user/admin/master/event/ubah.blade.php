@@ -39,9 +39,6 @@
                     </div>
                     <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('jenis') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                         name="jenis" id="jenis" required>
-                        <option value="Umum" {{ old('jenis') === 'Umum' || $event->jenis === 'Umum' ? 'selected' : '' }}>
-                            Umum
-                        </option>
                         <option value="Buddha" {{ old('jenis') === 'Buddha' || $event->jenis === 'Buddha' ? 'selected' : '' }}>
                             Buddha
                         </option>

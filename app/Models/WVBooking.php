@@ -19,6 +19,7 @@ class WVBooking extends Model
 
     protected $fillable = [
         'w_c_wedding_id',
+        'w_vendor_id',
         'w_v_plan_id',
         'qty',
         'status',
@@ -29,6 +30,10 @@ class WVBooking extends Model
 
     public function wedding(): BelongsTo {
         return $this->belongsTo(WCWedding::class, 'w_c_wedding_id');
+    }
+
+    public function vendor(): BelongsTo {
+        return $this->belongsTo(WVendor::class, 'w_vendor_id');
     }
 
     public function plan(): BelongsTo {

@@ -39,10 +39,7 @@
                     </div>
                     <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('jenis') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
                         name="jenis" id="jenis" required>
-                        <option value="Umum" selected>
-                            Umum
-                        </option>
-                        <option value="Buddha" {{ old('jenis') === 'Buddha' ? 'selected' : '' }}>
+                        <option value="Buddha" selected>
                             Buddha
                         </option>
                         <option value="Hindu" {{ old('jenis') === 'Hindu' ? 'selected' : '' }}>

@@ -123,15 +123,24 @@ class WOBookingController extends Controller
         if ($tab == 'portofolio') {
             // DATA PORTOFOLIO
             $portofolios = WVPortofolio::where('w_vendor_id', $organizer->id)
-                        ->where('status', 'diterima')
-                        ->orderBy('tanggal', 'asc')
-                        ->orderBy('judul', 'asc')
-                        ->get();
+                            ->where('status', 'diterima')
+                            ->orderBy('tanggal', 'asc')
+                            ->orderBy('judul', 'asc')
+                            ->get();
 
-            $portofolio_detail = $portofolios->first();
-
+            $portofolio_detail = null;
             if ($req->has('portofolio_id')) {
                 $portofolio_detail = WVPortofolio::find($req->portofolio_id);
+            } else {
+                $portofolio_detail = $portofolios->first();
+            }
+
+            if ($portofolio_detail) {
+                $portofolios = $portofolios->filter(function($portofolio) use ($portofolio_detail) {
+                    return $portofolio->id !== $portofolio_detail->id;
+                });
+            } else {
+                $portofolios = collect();
             }
         } else {
             // DATA BOOKING
@@ -152,7 +161,7 @@ class WOBookingController extends Controller
                 ->get();
         }
 
-        return view('user.wedding-couple.booking.wo.detail', compact(
+        return view('user.wedding-couple.booking.wo.' . $tab, compact(
             'organizer',
             'portofolios',
             'plans',
@@ -183,6 +192,7 @@ class WOBookingController extends Controller
 
         $booking = new WVBooking();
         $booking->w_c_wedding_id = $req->wedding_id;
+        $booking->w_vendor_id    = $plan->w_vendor->id;
         $booking->w_v_plan_id    = $req->plan_id;
         $booking->untuk_tanggal  = $req->tanggal;
         $booking->qty            = $req->qty;

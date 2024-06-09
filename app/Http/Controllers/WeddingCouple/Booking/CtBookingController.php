@@ -127,9 +127,21 @@ class CtBookingController extends Controller
                             ->orderBy('tanggal', 'asc')
                             ->orderBy('judul', 'asc')
                             ->get();
-            $portofolio_detail = $req->has('portofolio_id') ?
-                                WVPortofolio::find($req->portofolio_id) :
-                                $portofolios->first();
+
+            $portofolio_detail = null;
+            if ($req->has('portofolio_id')) {
+                $portofolio_detail = WVPortofolio::find($req->portofolio_id);
+            } else {
+                $portofolio_detail = $portofolios->first();
+            }
+
+            if ($portofolio_detail) {
+                $portofolios = $portofolios->filter(function($portofolio) use ($portofolio_detail) {
+                    return $portofolio->id !== $portofolio_detail->id;
+                });
+            } else {
+                $portofolios = collect();
+            }
         } else {
             // DATA BOOKING
             $ctPlanIds = $plans->pluck('id');
@@ -148,7 +160,7 @@ class CtBookingController extends Controller
                 ->get();
         }
 
-        return view('user.wedding-couple.booking.ct.detail', compact(
+        return view('user.wedding-couple.booking.ct.'.$tab, compact(
             'catering',
             'portofolios',
             'plans',
@@ -179,6 +191,7 @@ class CtBookingController extends Controller
 
         $booking = new WVBooking();
         $booking->w_c_wedding_id = $req->wedding_id;
+        $booking->w_vendor_id    = $plan->w_vendor->id;
         $booking->w_v_plan_id    = $req->plan_id;
         $booking->untuk_tanggal  = $req->tanggal;
         $booking->qty            = $req->qty;
