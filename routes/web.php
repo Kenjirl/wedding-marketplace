@@ -25,10 +25,12 @@ use App\Http\Controllers\WeddingCouple\Booking\CtBookingController;
 use App\Http\Controllers\WeddingCouple\Booking\VBookingController;
 use App\Http\Controllers\WeddingCouple\WCController;
 use App\Http\Controllers\WeddingCouple\WCInvitationController;
+use App\Http\Controllers\WeddingCouple\WCGuestController;
 use App\Http\Controllers\WeddingCouple\WCProfilController;
 use App\Http\Controllers\WeddingCouple\WCWeddingController;
 use App\Http\Controllers\WeddingCouple\Booking\WOBookingController;
 use App\Http\Controllers\WeddingCouple\Booking\WPBookingController;
+use App\Http\Controllers\WeddingCouple\TemplateController;
 use App\Http\Controllers\WeddingOrganizer\WOController;
 use App\Http\Controllers\WeddingOrganizer\WOJadwalController;
 use App\Http\Controllers\WeddingOrganizer\WOLayananController;
@@ -43,6 +45,7 @@ use App\Http\Controllers\WeddingPhotographer\WPPesananController;
 use App\Http\Controllers\WeddingPhotographer\WPPortofolioController;
 use App\Http\Controllers\WeddingPhotographer\WPProfilController;
 use App\Http\Controllers\WeddingPhotographer\WPUlasanController;
+use App\Models\WCGroupGuest;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(UserController::class)->group(function() {
@@ -72,8 +75,6 @@ Route::controller(UserController::class)->group(function() {
         Route::post('/pilih-peran', 'pilih_peran')   ->name('pilih_peran');
         Route::post('/keluar',      'keluar')        ->name('keluar');
     });
-
-    Route::get ('/undangan', 'undangan')->name('undangan');
 
 });
 
@@ -174,25 +175,19 @@ Route::name('wedding-couple.')
 
             Route::name('undangan.')->prefix('/undangan')
                 ->controller(WCInvitationController::class)->group(function() {
-                Route::get ('/tambah',     'ke_tambah')->name('ke_tambah');
+                Route::get ('/ke-tambah',  'ke_tambah')->name('ke_tambah');
                 Route::post('/tambah',     'tambah')   ->name('tambah');
-                Route::get ('/ubah/{id}',  'ke_ubah')  ->name('ke_ubah');
                 Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
                 Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
             });
 
             Route::name('tamu.')->prefix('/tamu')
-                ->controller(WCInvitationController::class)->group(function() {
-                Route::get ('/',           'index')    ->name('index');
-                Route::post('/tambah',     'tambah')   ->name('tambah');
-                Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
-            });
-
-            Route::name('grup.')->prefix('/grup')
-                ->controller(WCInvitationController::class)->group(function() {
-                Route::get ('/',           'index')    ->name('index');
-                Route::post('/tambah',     'tambah')   ->name('tambah');
-                Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+                ->controller(WCGuestController::class)->group(function() {
+                Route::post('/tambah/{id}', 'tambah')->name('tambah');
+                Route::post('/kirim/{id}',  'kirim') ->name('kirim');
+                Route::post('/rsvp/{id}',   'rsvp')  ->name('rsvp');
+                Route::post('/wish/{id}',   'wish')  ->name('wish');
+                Route::post('/hapus/{id}',  'hapus') ->name('hapus');
             });
         });
 
@@ -238,6 +233,9 @@ Route::name('wedding-couple.')
     });
 
 });
+
+Route::get('/fetch-template/{type}/{value}', [TemplateController::class, 'fetchTemplate']);
+Route::get('/{pengantin}/{link}', [WCInvitationController::class, 'undangan'])->name('undangan.tamu');
 
 Route::name('wedding-organizer.')
     ->prefix('wedding-organizer')

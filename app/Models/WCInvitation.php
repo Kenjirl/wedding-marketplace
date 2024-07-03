@@ -12,26 +12,17 @@ class WCInvitation extends Model
     use HasFactory, SoftDeletes;
 
     protected $casts = [
-        't_gallery' => 'array',
+        'c_header'  => 'array',
+        'c_quote'   => 'array',
         'c_profile' => 'array',
+        'c_event' => 'array',
         'c_gallery' => 'array',
-        'c_qr'      => 'array',
+        'c_wish'    => 'array',
+        'c_footer'  => 'array',
     ];
 
-    protected $fillable = [
-        'w_c_wedding_id',
-        't_header',
-        't_quote',
-        't_profile',
-        't_gallery',
-        't_wish',
-        't_qr',
-        't_footer',
-
-        'c_quote',
-        'c_profile',
-        'c_gallery',
-        'c_qr',
+    protected $guarded = [
+        'id',
     ];
 
     public function wedding(): BelongsTo {

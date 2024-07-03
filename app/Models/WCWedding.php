@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WCWedding extends Model
@@ -29,10 +30,18 @@ class WCWedding extends Model
     }
 
     public function w_detail(): HasMany {
-        return $this->hasMany(WCWeddingDetail::class, 'w_c_wedding_id');
+        return $this->hasMany(WCWeddingDetail::class, 'w_c_wedding_id', 'id');
     }
 
     public function w_v_booking(): HasMany {
         return $this->hasMany(WVBooking::class, 'w_c_wedding_id');
+    }
+
+    public function invitation(): HasOne {
+        return $this->hasOne(WCInvitation::class, 'w_c_wedding_id');
+    }
+
+    public function guests(): HasMany {
+        return $this->hasMany(WCGuest::class, 'w_c_wedding_id');
     }
 }

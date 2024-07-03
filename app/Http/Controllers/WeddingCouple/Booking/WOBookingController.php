@@ -18,6 +18,7 @@ class WOBookingController extends Controller
 {
     public function index(Request $req) {
         $organizers = WVendor::where('jenis', 'wedding-organizer')
+                    ->whereHas('plan')
                     ->orderBy('nama', 'asc')
                     ->with('plan')
                     ->get();

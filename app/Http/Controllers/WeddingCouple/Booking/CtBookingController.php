@@ -18,6 +18,7 @@ class CtBookingController extends Controller
 {
     public function index(Request $req) {
         $caterings = WVendor::where('jenis', 'catering')
+                    ->whereHas('plan')
                     ->orderBy('nama', 'asc')
                     ->with('plan')
                     ->get();

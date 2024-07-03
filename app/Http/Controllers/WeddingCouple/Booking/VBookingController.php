@@ -18,6 +18,7 @@ class VBookingController extends Controller
 {
     public function index(Request $req) {
         $venues = WVendor::where('jenis', 'venue')
+                    ->whereHas('plan')
                     ->orderBy('nama', 'asc')
                     ->with('plan')
                     ->get();

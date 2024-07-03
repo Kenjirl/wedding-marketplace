@@ -18,6 +18,7 @@ class WPBookingController extends Controller
 {
     public function index(Request $req) {
         $photographers = WVendor::where('jenis', 'photographer')
+                    ->whereHas('plan')
                     ->orderBy('nama', 'asc')
                     ->with('plan')
                     ->get();

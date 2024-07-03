@@ -4,10 +4,12 @@ namespace App\Http\Controllers\WeddingCouple;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WeddingCouple\WeddingRequest;
+use App\Models\WCGuest;
 use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
 use App\Models\WEvent;
 use App\Models\WVBooking;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,14 +17,27 @@ class WCWeddingController extends Controller
 {
     public function index() {
         $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
-                    ->orderBy('created_at', 'asc')
-                    ->orderBy('p_lengkap', 'asc')
+                    ->orderBy('created_at', 'desc')
+                    ->orderBy('p_sapaan', 'asc')
                     ->with(['w_detail' => function ($query) {
-                        $query->orderBy('waktu', 'asc')->limit(1);
+                        $query->orderBy('waktu', 'asc');
                     }])
                     ->get();
+
         foreach ($weddings as $wedding) {
             $wedding->limit = $wedding->w_detail->first()->waktu ?? null;
+
+            if ($wedding->w_detail->isNotEmpty()) {
+                $waktuTerkecil = Carbon::parse($wedding->w_detail->first()->waktu);
+                $waktuTerbesar = Carbon::parse($wedding->w_detail->last()->waktu);
+                if ($waktuTerkecil->isSameDay($waktuTerbesar)) {
+                    $wedding->duration = $waktuTerkecil->format('d/m/Y');
+                } else {
+                    $wedding->duration = $waktuTerkecil->format('d/m/Y') . ' - ' . $waktuTerbesar->format('d/m/Y');
+                }
+            } else {
+                $wedding->duration = null;
+            }
         }
 
         return view('user.wedding-couple.wedding.index', compact('weddings'));
@@ -74,43 +89,80 @@ class WCWeddingController extends Controller
         return redirect()->route('wedding-couple.pernikahan.ke_detail', $wedding->id)->with('gagal', 'Membuat Pernikahan');
     }
 
-    public function ke_detail($id) {
+    public function ke_detail(Request $req, $id) {
         $wedding = WCWedding::find($id);
 
         if (!$wedding) {
             return redirect()->route('wedding-couple.pernikahan.index')->with('gagal', 'ID Invalid');
         }
 
+        $tab = $req->query('tab', 'detail');
+        $allowedTabs = ['detail', 'ubah-undangan', 'tamu-undangan'];
+        if (!in_array($tab, $allowedTabs)) {
+            $tab = 'detail';
+        }
+
         $weddingEvents = WCWeddingDetail::where('w_c_wedding_id', $id)
-                            ->with(['event' => function ($query) {
+                                ->with(['event' => function ($query) {
+                                    $query->withTrashed();
+                                }])
+                                ->orderBy('waktu', 'asc')
+                                ->get();
+
+        if ($tab == 'detail') {
+            $bookedVendor = WVBooking::with(['plan' => function ($query) {
                                 $query->withTrashed();
-                            }])
-                            ->orderBy('waktu', 'asc')
-                            ->get();
+                            }, 'plan.w_vendor'])
+                            ->where('w_c_wedding_id', $id)
+                            ->where('status', '!=', 'batal')
+                            ->get()
+                            ->groupBy(function ($booking) {
+                                return $booking->plan->w_vendor->jenis;
+                            });
 
-        $bookedVendor = WVBooking::with(['plan' => function ($query) {
-                            $query->withTrashed();
-                        }, 'plan.w_vendor'])
-                        ->where('w_c_wedding_id', $id)
-                        ->where('status', '!=', 'batal')
-                        ->get()
-                        ->groupBy(function ($booking) {
-                            return $booking->plan->w_vendor->jenis;
-                        });
+            $bookedOrganizer = $bookedVendor->get('wedding-organizer', collect());
+            $bookedPhotographers = $bookedVendor->get('photographer', collect());
+            $bookedCatering = $bookedVendor->get('catering', collect());
+            $bookedVenue = $bookedVendor->get('venue', collect());
 
-        $bookedOrganizer = $bookedVendor->get('wedding-organizer', collect());
-        $bookedPhotographers = $bookedVendor->get('photographer', collect());
-        $bookedCatering = $bookedVendor->get('catering', collect());
-        $bookedVenue = $bookedVendor->get('venue', collect());
-
-        return view('user.wedding-couple.wedding.detail', compact(
-            'wedding',
-            'weddingEvents',
-            'bookedOrganizer',
-            'bookedPhotographers',
-            'bookedCatering',
-            'bookedVenue',
-        ));
+            return view('user.wedding-couple.wedding.detail', compact(
+                'tab',
+                'wedding',
+                'weddingEvents',
+                'bookedOrganizer',
+                'bookedPhotographers',
+                'bookedCatering',
+                'bookedVenue',
+            ));
+        } elseif ($tab == 'ubah-undangan') {
+            $invitation = $wedding->invitation;
+            return view('user.wedding-couple.wedding.detail', compact(
+                'tab',
+                'wedding',
+                'weddingEvents',
+                'invitation',
+            ));
+        } else {
+            $guests = WCGuest::where('w_c_wedding_id', $id)->orderBy('nama')->get();
+            $counts = WCGuest::where('w_c_wedding_id', $id)
+                ->selectRaw('
+                    COUNT(*) as total,
+                    SUM(status = "Belum Terkirim") as belum_terkirim,
+                    SUM(status = "Sudah Terkirim") as terkirim,
+                    SUM(respon = "Belum Menjawab") as belum_menjawab,
+                    SUM(respon = "Hadir") as hadir,
+                    SUM(respon = "Tidak Hadir") as tidak_hadir,
+                    SUM(jumlah) as perkiraan_tamu
+                ')
+                ->first();
+            return view('user.wedding-couple.wedding.detail', compact(
+                'tab',
+                'wedding',
+                'weddingEvents',
+                'guests',
+                'counts',
+            ));
+        }
     }
 
     public function hapus($id) {

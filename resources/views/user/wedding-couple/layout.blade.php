@@ -5,28 +5,28 @@
         {{-- NAVBAR --}}
         <div class="w-full px-4 py-2 flex items-center justify-between gap-4 bg-white shadow hover:shadow-md transition-shadow">
             {{-- MENU --}}
-            <div class="w-1/3 px-4 flex items-center justify-start gap-4 text-sm">
+            <div class="w-1/3 flex items-center justify-start gap-4 text-sm">
                 @include('user.wedding-couple.menu')
             </div>
 
             {{-- LOGO --}}
             <div class="w-1/3 flex items-center justify-center">
-                <img class="w-[50px] aspect-square rounded-full"
+                <img class="w-[50px] rounded-full"
                     src="{{ asset('img/Logo.png') }}" alt="Wedding Marketplace Logo">
             </div>
 
             {{-- TOMBOL PROFIL --}}
             <div class="relative w-1/3 flex items-center justify-end">
                 @if (auth()->user() && auth()->user()->w_couple)
-                    <button class="flex items-center justify-center gap-4 px-4 py-2 hover:bg-slate-200 outline-pink outline-offset-4 focus:bg-slate-200 active:bg-slate-400 transition-colors rounded-md"
+                    <button class="flex items-center justify-center gap-2 px-4 py-2 hover:bg-slate-200 outline-pink outline-offset-4 focus:bg-slate-200 active:bg-slate-400 transition-colors rounded-md"
                         type="button" onclick="openProfile()">
                         <span>{{ auth()->user()->name }}</span>
 
                         @if (auth()->user()->w_couple && auth()->user()->w_couple->foto_profil)
-                            <img class="w-[40px] aspect-square object-cover object-center rounded-full"
+                            <img class="w-[30px] aspect-square object-cover object-center rounded-full"
                                 src="{{ asset(auth()->user()->w_couple->foto_profil) }}" alt="Foto Profil">
                         @else
-                            <span class="w-[40px] aspect-square bg-pink rounded-full flex items-center justify-center text-[1.25em] font-bold text-white">
+                            <span class="w-[30px] aspect-square bg-pink rounded-full flex items-center justify-center font-bold text-white">
                                 {{ substr(auth()->user()->name, 0, 1) }}
                             </span>
                         @endif
@@ -69,44 +69,49 @@
 
         {{-- FOOTER --}}
         <div class="w-full bg-pink text-white">
-            <div class="w-full max-w-[1200px] min-h-[30vh] mx-auto px-4 flex items-center justify-center gap-8">
-                <div class="w-fit flex flex-col items-center justify-start">
-                    <div class="w-fit">
-                        <img class="w-[150px] aspect-square rounded-full bg-white"
+            <div class="w-full mx-auto py-10">
+                <div class="w-full mb-10 flex items-center justify-center gap-10">
+                    <div class="w-full font-great-vibes text-5xl text-end">
+                        Wedding
+                    </div>
+                    <div class="flex-shrink-0 w-fit">
+                        <img class="w-[100px] aspect-square rounded-full bg-white"
                             src="{{ asset('img/Logo.png') }}" alt="Logo">
+                    </div>
+                    <div class="w-full font-great-vibes text-5xl text-start">
+                        Marketplace
                     </div>
                 </div>
 
-                <div class="w-fit text-base">
-                    <table class="table-fixed">
-                        <tbody>
-                            <tr>
-                                <td class="text-center"><i class="fa-brands fa-whatsapp"></i></td>
-                                <td>:</td>
-                                <td>
-                                    <a class="outline-white outline-offset-2 hover:underline"
-                                        href="https://wa.me/6281246007474" target="_blank" rel="noopener noreferrer">
-                                        (+62) 081246007474
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><i class="fa-regular fa-envelope"></i></td>
-                                <td>:</td>
-                                <td>
-                                    <a class="outline-white outline-offset-2 hover:underline"
-                                        href="mailto:taweddingmarketplace@gmail.com" target="_blank" rel="noopener noreferrer">
-                                        taweddingmarketplace@gmail.com
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center"><i class="fa-solid fa-location-dot"></i></td>
-                                <td>:</td>
-                                <td id="location_map"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="w-full flex items-center justify-center text-base">
+                    <div class="w-full flex items-center justify-center gap-2">
+                        <div class="w-[30px] aspect-square flex items-center justify-center bg-white rounded text-pink">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <a class="outline-white outline-offset-2 hover:underline"
+                                href="https://wa.me/6281246007474" target="_blank" rel="noopener noreferrer">
+                                (+62) 081246007474
+                            </a>
+                        </div>
+                    </div>
+                    <div class="w-full flex items-center justify-center gap-2">
+                        <div class="w-[30px] aspect-square flex items-center justify-center bg-white rounded text-pink">
+                            <i class="fa-regular fa-envelope"></i>
+                        </div>
+                        <div>
+                            <a class="outline-white outline-offset-2 hover:underline"
+                                href="mailto:taweddingmarketplace@gmail.com" target="_blank" rel="noopener noreferrer">
+                                taweddingmarketplace@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                    <div class="w-full flex items-center justify-center gap-2">
+                        <div class="w-[30px] aspect-square flex items-center justify-center bg-white rounded text-pink">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div id="location_map"></div>
+                    </div>
                 </div>
             </div>
         </div>

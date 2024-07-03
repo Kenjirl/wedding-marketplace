@@ -18,11 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('w_c_wedding_id');
             $table->string('nama');
             $table->string('no_telp');
-            $table->enum('gender', ['Pria', 'Wanita']);
             $table->string('link')->nullable();
-            $table->enum('status', ['Terkirim', 'Belum Terkirim'])->default('Belum Terkirim');
-            $table->enum('respon', ['Hadir', 'Belum Menjawab', 'Tidak Hadir'])->default('Belum Menjawab');
-            $table->enum('alasan', ['-', 'Sakit', 'Urusan Pekerjaan', 'Urusan Keluarga', 'Kendala Lainnya'])->default('-');
+            $table->enum('status', ['Belum Terkirim', 'Sudah Terkirim'])->default('Belum Terkirim');
+            $table->enum('respon', ['Belum Menjawab', 'Hadir', 'Tidak Hadir'])->default('Belum Menjawab');
             $table->unsignedInteger('jumlah')->default(0);
             $table->text('pesan')->nullable();
             $table->softDeletes();

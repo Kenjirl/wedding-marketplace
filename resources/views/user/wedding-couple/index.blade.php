@@ -95,7 +95,7 @@
     {{-- ITEM 4 --}}
     <div class="w-full min-h-[95vh] p-8 flex flex-col items-center justify-center bg-[url('/public/img/bg/wave-top.svg')] bg-top bg-no-repeat bg-cover"
         id="penyedia-layanan">
-        <div class="w-full max-w-[900px] mt-[10em] grid grid-cols-2 gap-8">
+        <div class="w-full max-w-[1200px] mt-[5em] grid grid-cols-4 gap-8">
             @php
                 $services = [
                     [
@@ -122,30 +122,18 @@
             @endphp
 
             @foreach ($services as $service)
-                <div class="w-full mx-auto p-8 flex flex-col items-center justify-between gap-8 rounded-md border-pink border-2 shadow hover:shadow-lg transition-shadow">
-                    <div class="w-full flex flex-col items-center justify-start gap-8">
-                        <p class="text-3xl font-semibold text-center">
+                @php
+                    $route = (auth()->user() && auth()->user()->w_couple) ? $service['route'] : 'ke_masuk';
+                @endphp
+                <a class="w-full mx-auto p-4 flex flex-col items-center justify-between gap-8 rounded-md border outline-pink shadow hover:shadow-lg transition-shadow"
+                    href="{{ route($route) }}">
+                    <div class="w-full flex flex-col items-center justify-start gap-4">
+                        <i class="fa-solid {{ $service['icon'] }} text-[5em] text-pink"></i>
+                        <p class="text-xl font-semibold text-center">
                             {{ $service['title'] }}
                         </p>
-                        <i class="fa-solid {{ $service['icon'] }} text-[5em] text-pink"></i>
                     </div>
-
-                    <div class="w-full flex items-center justify-center">
-                        @if (auth()->user() && auth()->user()->w_couple)
-                            <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                                href="{{ route($service['route']) }}">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                Cari
-                            </a>
-                        @else
-                            <a class="focus:outline-pink block w-fit px-4 py-2 bg-pink text-white  hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active rounded-full transition-colors"
-                                href="{{ route('ke_masuk') }}">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                Masuk untuk Mencari
-                            </a>
-                        @endif
-                    </div>
-                </div>
+                </a>
             @endforeach
         </div>
     </div>

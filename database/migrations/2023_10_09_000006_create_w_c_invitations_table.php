@@ -16,18 +16,24 @@ return new class extends Migration
         Schema::create('w_c_invitations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('w_c_wedding_id');
-            $table->string('t_header');
-            $table->string('t_quote');
-            $table->string('t_profile');
-            $table->json('t_gallery');
-            $table->string('t_wish');
-            $table->string('t_qr');
-            $table->string('t_footer');
+            $table->string('t_header')->nullable();
+            $table->string('t_quote')->nullable();
+            $table->string('t_profile')->nullable();
+            $table->string('t_event')->nullable();
+            $table->string('t_gallery')->nullable();
+            $table->string('t_wish')->nullable();
+            $table->string('t_footer')->nullable();
 
-            $table->string('c_quote');
-            $table->json('c_profile');
-            $table->json('c_gallery');
-            $table->json('c_qr');
+            $table->json('c_header')->nullable();
+            $table->json('c_quote')->nullable();
+            $table->json('c_profile')->nullable();
+            $table->json('c_event')->nullable();
+            $table->json('c_gallery')->nullable();
+            $table->json('c_wish')->nullable();
+            $table->json('c_footer')->nullable();
+
+            $table->enum('status', ['belum selesai', 'selesai'])->default('belum selesai');
+
             $table->softDeletes();
             $table->timestamps();
 
