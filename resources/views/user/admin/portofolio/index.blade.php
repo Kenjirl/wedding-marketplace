@@ -26,7 +26,7 @@
         {{-- CHANGE STATUS --}}
         <div class="w-fit flex items-stretch justify-start">
             @foreach($statuses as $key => $status)
-                <a class="block w-fit px-4 py-2 font-semibold outline-none rounded-t {{ $tab == $key ? 'bg-' . $status['color'] . '-300 text-white' : '' }} hover:bg-{{ $status['color'] }}-300 hover:text-white focus:bg-{{ $status['color'] }}-300 focus:text-white active:bg-{{ $status['color'] }}-400 transition-colors"
+                <a class="block w-fit px-4 py-2 font-semibold outline-none rounded-t {{ $tab == $key ? 'bg-' . $status['color'] . '-400 text-white' : '' }} hover:bg-{{ $status['color'] }}-400 hover:text-white focus:bg-{{ $status['color'] }}-400 focus:text-white active:bg-{{ $status['color'] }}-400 transition-colors"
                     href="{{ route('admin.portofolio.index', ['vendor' => $vendor, 'tab' => $key]) }}" data-tippy-content="{{ $status['name'] }}">
                     <i class="{{ $status['icon'] }}"></i>
                 </a>
@@ -41,14 +41,14 @@
                 <input name="config" id="config" type="checkbox" class="sr-only peer"
                     {{ $vendorConfig ? 'checked' : '' }}
                 >
-                <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-pink-hover peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink"></div>
+                <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-pink-hover peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-400 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink"></div>
                 <span class="ms-3 text-sm font-medium text-gray-900">Auto Confirm?</span>
             </label>
         </form>
     </div>
 
     {{-- BAWAH --}}
-    <div class="w-full border-t-2 border-{{ $statuses[$tab]['color'] }}-300">
+    <div class="w-full border-t-2 border-{{ $statuses[$tab]['color'] }}-400">
         <div class="p-4">
             <table class="w-full table-auto cell-border compact hover" id="dataTable">
                 <thead>

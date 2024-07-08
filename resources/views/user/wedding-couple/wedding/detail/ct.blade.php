@@ -115,83 +115,119 @@
                         {{-- kanan --}}
                         <div class="w-full p-2 text-start">
                             @if ($bct->status == 'diterima' || $bct->status == 'dibayar')
-                                @if ($bct->status == 'diterima')
-                                    {{-- nomor rekening --}}
-                                    <div class="w-full text-base">
-                                        <div class="w-full mb-4">
-                                            <span>
-                                                Silahkan transfer ke nomor rekening berikut:
-                                            </span>
+                                @php
+                                    $transaction = $bct->transaction()->latest()->first();
+                                @endphp
+                                @if (!$transaction || ($transaction && !in_array($transaction->transaction_status, ['pending', 'capture', 'settlement'])))
+                                    <button class="pay-button w-full p-2 bg-white rounded border border-pink text-pink
+                                        hover:bg-pink hover:text-white
+                                        focus:bg-pink focus:text-white
+                                        transition-colors"
+                                        data-id_booking="{{ $bct->id }}">
+                                        Buat Transaksi
+                                    </button>
+                                    <div id="snap-container-{{ $bct->id }}" class="snap-container w-full"></div>
+                                @elseif ($transaction)
+                                    <div class="w-full">
+                                        <div class="w-full mb-4 flex items-center justify-start gap-4">
+                                            @if ($transaction->transaction_status == 'pending')
+                                                <i class="fa-regular fa-clock text-yellow-400"></i>
+                                                Segera selesaikan pembayaran Anda
+                                            @else
+                                                <i class="fa-regular fa-circle-check text-green-400"></i>
+                                                Pembayaran telah berhasil!
+                                            @endif
+                                        </div>
 
-                                            @foreach ($bct->plan->w_vendor->rekening as $index => $rekening)
-                                                <div class="w-full mb-2 flex items-stretch justify-center rounded-md border-2 border-slate-300">
-                                                    <div class="min-w-[20%] p-2 bg-slate-300 text-center">
-                                                        {{ $rekening['jenis'] }}
+                                        <div class="w-full mb-16">
+                                            {{-- QRIS --}}
+                                            @if ($transaction->payment_type == 'qris')
+                                                <div class="w-full text-center mb-2">
+                                                    QRIS
+                                                </div>
+                                                <img class="w-[300px] aspect-square mx-auto"
+                                                    src="https://api.sandbox.midtrans.com/v2/qris/{{ $transaction->transaction_id }}/qr-code" alt="Qris">
+                                                @if ($transaction->transaction_status == 'pending')
+                                                    <div>
+                                                        Waktu Expired : {{ \Carbon\Carbon::parse($transaction->expiry_time)->translatedFormat('l, d F Y - H : m : s') }}
                                                     </div>
-
-                                                    <div class="flex-1 w-full p-2">
-                                                        {{ implode('-', str_split($rekening['nomor'], 4)) }}
+                                                @else
+                                                    <div>
+                                                        Diselesaikan pada : {{ \Carbon\Carbon::parse($transaction->updated_at)->translatedFormat('l, d F Y - H : m : s') }}
                                                     </div>
+                                                @endif
 
-                                                    <button class="copyToClipBtn w-10 aspect-square p-2 rounded-e outline-pink outline-offset-4 bg-slate-300 hover:bg-slate-200 focus:bg-slate-200 transition-colors"
-                                                        data-value="{{ $rekening['nomor'] }}" tabindex="-1">
-                                                        <i class="fa-regular fa-copy"></i>
+                                            {{-- BANKS & TRANSFER BANK --}}
+                                            @else
+                                                {{-- BANK NAME --}}
+                                                <div class="w-full mb-2">
+                                                    Bank : {{ $transaction->bank }}
+                                                </div>
+
+                                                {{-- VA NUMBER --}}
+                                                @if ($transaction->payment_type == 'bank_transfer')
+                                                    <div class="w-full mb-2 flex items-center justify-start gap-4">
+                                                        <div>
+                                                            Nomor Virtual Account : {{ $transaction->va_number }}
+                                                        </div>
+                                                        <button class="copyToClipBtn text-pink" data-value="{{ $transaction->va_number }}">
+                                                            <i class="fa-regular fa-clone"></i>
+                                                        </button>
+                                                    </div>
+                                                @elseif ($transaction->payment_type == 'echannel')
+                                                        <div class="w-full mb-2 flex items-center justify-start gap-4">
+                                                        <div>
+                                                            Bill Key - Biller Code : {{ $transaction->va_number }}
+                                                        </div>
+                                                        <button class="copyToClipBtn text-pink" data-value="{{ $transaction->va_number }}">
+                                                            <i class="fa-regular fa-clone"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+
+                                                {{-- NOMINAL --}}
+                                                <div class="w-full mb-2 flex items-center justify-start gap-4">
+                                                    <div>
+                                                        Nominal : {{ number_format($transaction->gross_amount) }}
+                                                    </div>
+                                                    <button class="copyToClipBtn text-pink" data-value="{{ $transaction->gross_amount }}">
+                                                        <i class="fa-regular fa-clone"></i>
                                                     </button>
                                                 </div>
-                                            @endforeach
+
+                                                {{-- WAKTU --}}
+                                                @if ($transaction->transaction_status == 'pending')
+                                                    <div>
+                                                        Waktu Expired : {{ \Carbon\Carbon::parse($transaction->expiry_time)->translatedFormat('l, d F Y - H : m : s') }}
+                                                    </div>
+                                                @else
+                                                    <div>
+                                                        Diselesaikan pada : {{ \Carbon\Carbon::parse($transaction->updated_at)->translatedFormat('l, d F Y - H : m : s') }}
+                                                    </div>
+                                                @endif
+                                            @endif
                                         </div>
 
-                                        <div class="w-full mb-4">
-                                            <span>
-                                                Dengan nominal pembayaran:
-                                            </span>
-                                            <div class="w-full flex items-stretch justify-center rounded-md border-2 border-slate-300">
-                                                <div class="flex-1 w-full p-2">
-                                                    Rp {{ number_format($bct->plan->harga, 0, ',', '.') }}
-                                                </div>
-
-                                                <button class="copyToClipBtn w-10 aspect-square p-2 rounded-e outline-pink outline-offset-4 bg-slate-300 hover:bg-slate-200 focus:bg-slate-200 transition-colors"
-                                                    data-value="{{ $bct->plan->harga }}" tabindex="-1">
-                                                    <i class="fa-regular fa-copy"></i>
-                                                </button>
+                                        @if ($transaction->transaction_status == 'pending')
+                                            <div class="w-full flex items-center justify-evenly gap-4">
+                                                <a class="cancel-transaction block w-full px-4 py-2 rounded border border-pink bg-white text-pink text-sm text-center
+                                                    hover:bg-pink hover:text-white
+                                                    focus:bg-pink focus:text-white
+                                                    active:bg-pink-active transition-colors"
+                                                    href="{{ route('wedding-couple.transaksi.batal', $transaction->order_id) }}">
+                                                    Batal
+                                                </a>
+                                                <a class="block w-full px-4 py-2 rounded border border-pink bg-pink text-white text-sm text-center
+                                                    hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                                    href="{{ route('wedding-couple.transaksi.cek_status', $transaction->order_id) }}">
+                                                    Cek Status
+                                                </a>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
+                                @else
+                                    {{ $transaction }}
                                 @endif
-
-                                {{-- gambar / input gambar bukti bayar --}}
-                                <div class="w-full max-w-[400px] mx-auto">
-                                    <div class="w-full p-2 text-center bg-slate-300 rounded-t">
-                                        Bukti Pembayaran
-                                    </div>
-                                    @if ($bct->bukti_bayar)
-                                        <div class="w-full aspect-square mb-4 flex items-center justify-center rounded-b border-2 border-t-0 border-slate-300 overflow-hidden"
-                                            id="upBuktiBayarOrgContainer">
-                                            <img class="h-full object-contain"
-                                                src="{{ asset($bct->bukti_bayar) }}" alt="Bukti catering">
-                                        </div>
-                                    @else
-                                        <form action="{{ route('wedding-couple.pernikahan.upload_bukti_bayar_wo', $bct->id) }}" method="post" enctype="multipart/form-data" id="upBuktiBayarFtgForm-{{ $bct->id }}">
-                                            @csrf
-                                            <div class="w-full aspect-square mx-auto mb-4 flex items-center justify-center rounded-b border-2 border-t-0 border-slate-300 overflow-hidden"
-                                                id="upBuktiBayarFtgContainer-{{ $bct->id }}">
-                                                {{-- Nanti diisi dengan JS --}}
-                                                Belum ada bukti pembayaran
-                                            </div>
-                                            <input class="hidden bukti_bayar_ftg" type="file" name="bukti_bayar" id="bukti_bayar_ftg-{{ $bct->id }}" data-id="{{ $bct->id }}" accept="image/*" value="" tabindex="-1">
-                                            <div class="w-full flex items-center justify-center gap-2">
-                                                <button class="upBuktiBayarFtgBtn flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-4 bg-white text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
-                                                    type="button" data-id="{{ $bct->id }}" tabindex="-1">
-                                                    Pilih Gambar
-                                                </button>
-                                                <button class="submitBuktiBayarFtgBtn flex-1 w-full px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active disabled:outline-slate-200 disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed transition-colors"
-                                                    type="button" id="submitBuktiBayarFtgBtn-{{ $bct->id }}" data-id="{{ $bct->id }}" tabindex="-1" disabled>
-                                                    Unggah Gambar
-                                                </button>
-                                            </div>
-                                        </form>
-                                    @endif
-                                </div>
                             @elseif ($bct->status == 'selesai')
                                 <div class="w-full">
                                     <form action="{{ route('wedding-couple.pernikahan.ulasan', $bct->id) }}" method="post" id="ulasWPForm-{{ $bct->id }}">
@@ -245,9 +281,9 @@
                                     </form>
                                 </div>
                             @elseif ($bct->status == 'ditolak')
-                                <p>Pesanan telah ditolak pihak catering. Silahkan batalkan pesanan dan pilih catering lainnya. </p>
+                                <p>Pesanan telah ditolak pihak fotografer. Silahkan batalkan pesanan dan pilih fotografer lainnya. </p>
                             @else
-                                <p>Menunggu pesanan diterima pihak catering.</p>
+                                <p>Menunggu pesanan diterima pihak fotografer.</p>
                             @endif
                         </div>
                     </div>

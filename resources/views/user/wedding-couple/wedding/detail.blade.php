@@ -227,79 +227,46 @@
                     });
                 });
 
-                // UP BUKTI BAYAR WO
-                $('#upBuktiBayarOrgBtn').on('click', function () {
-                    $('#bukti_bayar_org').click();
-                });
+                $('.pay-button').each(function(){
+                    $(this).on('click', function(){
+                        let bookingId = $(this).data('id_booking');
+                        let snapContainer = 'snap-container-' + bookingId;
+                        $(this).addClass('hidden');
 
-                $('#bukti_bayar_org').on('change', function () {
-                    let files = this.files;
-                    $("#upBuktiBayarOrgContainer").empty();
-
-                    for (let i = 0; i < files.length; i++) {
-                        if (i < 1) {
-                            let img = $('<img>');
-                            img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-contain');
-                            $('#upBuktiBayarOrgContainer').append(img);
-                        }
-                    }
-
-                    $('#submitBuktiBayarOrgBtn').attr('disabled', false);
-                });
-                // SUBMIT BUKTI BAYAR WO
-                $('#submitBuktiBayarOrgBtn').on('click', function () {
-                    Swal.fire({
-                        title: 'Upload bukti bayar?',
-                        text: "Anda tidak akan dapat mengganti bukti pembayaran setelah konfirmasi",
-                        icon: "warning",
-                        iconColor: "#F78CA2",
-                        showCloseButton: true,
-                        confirmButtonColor: "#F78CA2",
-                        confirmButtonText: "Konfirmasi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#buktiBayarOrgForm').submit();
-                        }
+                        $.ajax({
+                            url: '/wedding-couple/pernikahan/transaksi',
+                            method: 'GET',
+                            data: { id_booking: bookingId },
+                            dataType: 'json',
+                            success: function(data) {
+                                snap.embed(data.snap_token, {
+                                    embedId: snapContainer,
+                                });
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.error("Error fetching payment token: ", textStatus, errorThrown);
+                                $('#' + snapContainer).html('<p>Error: ' + response.error + '</p>');
+                            }
+                        });
                     });
                 });
 
-                // UP BUKTI BAYAR WP
-                $('.upBuktiBayarFtgBtn').on('click', function () {
-                    let id = $(this).data('id');
-                    $(`#bukti_bayar_ftg-${id}`).click();
-                });
+                $('.cancel-transaction').each(function() {
+                    $(this).on('click', function(event) {
+                        event.preventDefault();
 
-                $('.bukti_bayar_ftg').on('change', function () {
-                    let files = this.files;
-                    let id = $(this).data('id');
-                    $(`#upBuktiBayarFtgContainer-${id}`).empty();
-
-                    for (let i = 0; i < files.length; i++) {
-                        if (i < 1) {
-                            let img = $('<img>');
-                            img.attr('src', URL.createObjectURL(files[i])).addClass('h-full object-contain');
-                            $(`#upBuktiBayarFtgContainer-${id}`).append(img);
-                        }
-                    }
-
-                    $(`#submitBuktiBayarFtgBtn-${id}`).attr('disabled', false);
-                });
-                // SUBMIT BUKTI BAYAR WP
-                $('.submitBuktiBayarFtgBtn').on('click', function () {
-                    let form = $('#upBuktiBayarFtgForm-' + $(this).data('id'));
-
-                    Swal.fire({
-                        title: 'Upload bukti bayar?',
-                        text: "Anda tidak akan dapat mengganti bukti pembayaran setelah konfirmasi",
-                        icon: "warning",
-                        iconColor: "#F78CA2",
-                        showCloseButton: true,
-                        confirmButtonColor: "#F78CA2",
-                        confirmButtonText: "Konfirmasi"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            form.submit();
-                        }
+                        Swal.fire({
+                            title: 'Yakin ingin membatalkan transaksi ini?',
+                            icon: "warning",
+                            iconColor: "#F78CA2",
+                            showCloseButton: true,
+                            confirmButtonColor: "#F78CA2",
+                            confirmButtonText: "Ya, Batalkan"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = $(this).attr('href');
+                            }
+                        });
                     });
                 });
 

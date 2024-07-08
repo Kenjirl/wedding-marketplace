@@ -40,6 +40,10 @@ class WVBooking extends Model
         return $this->belongsTo(WVPlan::class, 'w_v_plan_id');
     }
 
+    public function transaction(): HasMany {
+        return $this->hasMany(WVTransaction::class, 'w_v_booking_id');
+    }
+
     public function rating(): HasOne {
         return $this->hasOne(WVRating::class, 'w_v_booking_id');
     }

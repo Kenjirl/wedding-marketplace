@@ -11,7 +11,6 @@ use App\Models\WEvent;
 use App\Models\WVBooking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class WCWeddingController extends Controller
 {
@@ -25,7 +24,7 @@ class WCWeddingController extends Controller
                     ->get();
 
         foreach ($weddings as $wedding) {
-            $wedding->limit = $wedding->w_detail->first()->waktu ?? null;
+            $wedding->limit = Carbon::parse($wedding->w_detail->first()->waktu)->startOfDay() ?? null;
 
             if ($wedding->w_detail->isNotEmpty()) {
                 $waktuTerkecil = Carbon::parse($wedding->w_detail->first()->waktu);
@@ -230,66 +229,6 @@ class WCWeddingController extends Controller
             return redirect()->back()->with('sukses', 'Menghapus Pesanan Wedding Photographer');
         }
         return redirect()->back()->with('gagal', 'Menghapus Pesanan Wedding Photographer');
-    }
-
-    public function upload_bukti_bayar_wo(Request $req, $id) {
-        $req->validate([
-            'bukti_bayar' => 'required|image',
-        ],[
-            'bukti_bayar.required' => 'Bukti bayar tidak boleh kosong',
-            'bukti_bayar.image'    => 'Bukti bayar harus berupa gambar',
-        ]);
-
-        $data = false;
-        if ($req->hasFile(('bukti_bayar'))) {
-            $foto = $req->file('bukti_bayar');
-
-            $url = Storage::disk('public')->putFileAs('/',
-                $foto,
-                'WC/bukti-bayar/WO/' . str()->uuid() . '.' . $foto->extension()
-            );
-
-            $data = WVBooking::find($id)
-                    ->update([
-                        'status' => 'dibayar',
-                        'bukti_bayar' => $url
-                    ]);
-        }
-
-        if ($data) {
-            return redirect()->back()->with('sukses', 'Mengunggah bukti bayar');
-        }
-        return redirect()->back()->with('gagal', 'Mengunggah bukti bayar');
-    }
-
-    public function upload_bukti_bayar_wp(Request $req, $id) {
-        $req->validate([
-            'bukti_bayar' => 'required|image',
-        ],[
-            'bukti_bayar.required' => 'Bukti bayar tidak boleh kosong',
-            'bukti_bayar.image'    => 'Bukti bayar harus berupa gambar',
-        ]);
-
-        $data = false;
-        if ($req->hasFile(('bukti_bayar'))) {
-            $foto = $req->file('bukti_bayar');
-
-            $url = Storage::disk('public')->putFileAs('/',
-                $foto,
-                'WC/bukti-bayar/WP/' . str()->uuid() . '.' . $foto->extension()
-            );
-
-            $data = WVBooking::find($id)
-                    ->update([
-                        'status' => 'dibayar',
-                        'bukti_bayar' => $url
-                    ]);
-        }
-
-        if ($data) {
-            return redirect()->back()->with('sukses', 'Mengunggah bukti bayar');
-        }
-        return redirect()->back()->with('gagal', 'Mengunggah bukti bayar');
     }
 
     public function selesai(Request $req) {

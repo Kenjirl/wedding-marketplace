@@ -49,12 +49,22 @@
             <div class="relative w-3/5 bg-slate-50">
                 <div class="absolute left-[15%] -bottom-10 w-fit max-w-[300px] h-[600px] shadow-2xl shadow-black/50 rounded-3xl overflow-hidden -rotate-3 z-20">
                     <img class="w-full h-full object-cover object-center"
-                        src="{{ asset('img/items/8.jpg') }}" alt="Item 1">
+                        @if(App::environment('local'))
+                        src="{{ asset('img/items/8.jpg') }}"
+                        @else
+                        src="https://pro-malamute-vastly.ngrok-free.app/img/items/8.jpg"
+                        @endif
+                        alt="Item 1">
                 </div>
 
                 <div class="absolute left-[48%] -bottom-20 w-fit max-w-[300px] h-[600px] shadow-2xl shadow-black/50 rounded-3xl overflow-hidden rotate-2 z-10">
                     <img class="w-full h-full object-cover"
-                        src="{{ asset('img/items/2.jpg') }}" alt="Item 2">
+                        @if(App::environment('local'))
+                        src="{{ asset('img/items/2.jpg') }}"
+                        @else
+                        src="https://pro-malamute-vastly.ngrok-free.app/img/items/2.jpg"
+                        @endif
+                        alt="Item 2">
                 </div>
             </div>
 
@@ -66,7 +76,12 @@
         <div class="flex-1 w-full flex items-center justify-center">
             <div class="w-fit bg-white rounded-full shadow-lg -rotate-6">
                 <img class="w-[400px] aspect-square"
-                    src="{{ asset('img/Logo.png') }}" alt="Logo">
+                    @if(App::environment('local'))
+                    src="{{ asset('img/Logo.png') }}"
+                    @else
+                    src="https://pro-malamute-vastly.ngrok-free.app/img/Logo.png"
+                    @endif
+                    alt="Logo">
             </div>
         </div>
 

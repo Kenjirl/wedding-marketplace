@@ -5,7 +5,7 @@
 @endsection
 
 @php
-    $today = now()->toDateString();
+    $today = \Carbon\Carbon::today();
 @endphp
 
 @section('content')
@@ -76,7 +76,7 @@
 
                         @if (!$wedding->invitation)
                             <a class="w-full px-4 py-2 rounded outline-none text-sm text-center hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors
-                                {{ $wedding->limit <= $today ? 'text-white bg-slate-300 pointer-events-none hover:cursor-not-allowed' : 'text-pink' }}
+                                {{ $today->gte($wedding->limit) ? 'text-white bg-slate-300 pointer-events-none hover:cursor-not-allowed' : 'text-pink' }}
                                 "
                                 href="{{ route('wedding-couple.undangan.ke_tambah', ['id'=>$wedding->id]) }}">
                                 Buat Undangan
