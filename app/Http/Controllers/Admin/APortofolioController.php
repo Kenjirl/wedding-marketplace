@@ -9,13 +9,7 @@ use Illuminate\Http\Request;
 
 class APortofolioController extends Controller
 {
-    private $vendorTypes = ['wedding-organizer', 'photographer', 'catering', 'venue'];
-
-    public function index($vendor, $tab) {
-        if (!in_array($vendor, $this->vendorTypes)) {
-            abort(404, 'Vendor type not found');
-        }
-
+    public function index($tab) {
         $tabMap = [
             'diterima' => 'accept',
             'ditolak' => 'reject',
@@ -25,7 +19,7 @@ class APortofolioController extends Controller
         $tab = $tabMap[$tab] ?? $tab;
 
         if (!in_array($tab, ['accept', 'reject', 'pending'])) {
-            return redirect()->route('admin.portofolio.index', ['vendor' => $vendor, 'tab' => 'pending']);
+            $tab = 'pending';
         }
 
         $statusMap = [
@@ -37,54 +31,32 @@ class APortofolioController extends Controller
         $status = $statusMap[$tab];
 
         $portofolio = WVPortofolio::where('status', $status)
-            ->whereHas('w_vendor', function($query) use ($vendor) {
-                $query->where('jenis', $vendor);
-            })
             ->orderBy('updated_at', 'asc')
             ->get();
 
         $config = AConfiguration::where('nama', 'portofolio-automation')->first();
-        $vendorConfig = null;
+        $vendorConfig = $config->value;
 
-        if ($config && $config->value) {
-            foreach ($config->value as $item) {
-                if (isset($item['vendor']) && $item['vendor'] === $vendor) {
-                    $vendorConfig = $item;
-                    break;
-                }
-            }
-        }
-
-        return view("user.admin.portofolio.index", compact(
+        return view('admin.portofolio.index', compact(
             'portofolio',
             'vendorConfig',
-            'vendor',
             'tab'
         ));
     }
 
-    public function ke_validasi($vendor, $id) {
-        if (!in_array($vendor, $this->vendorTypes)) {
-            abort(404, 'Vendor type not found');
-        }
-
+    public function ke_validasi($id) {
         $portofolio = WVPortofolio::find($id);
 
         if (!$portofolio) {
             return back()->with('gagal', 'ID Invalid');
         }
 
-        return view("user.admin.portofolio.validasi", compact(
+        return view('admin.portofolio.validasi', compact(
             'portofolio',
-            'vendor',
         ));
     }
 
-    public function validasi(Request $req, $vendor, $id) {
-        if (!in_array($vendor, $this->vendorTypes)) {
-            abort(404, 'Vendor type not found');
-        }
-
+    public function validasi(Request $req, $id) {
         $req->validate([
             'status' => 'required'
         ]);
@@ -112,44 +84,21 @@ class APortofolioController extends Controller
         $data = $portofolio->save();
 
         if ($data) {
-            return redirect()->route('admin.portofolio.index', ['vendor' => $vendor, 'tab' => $req->status])->with('sukses', 'Mengubah Validasi Portofolio');
+            return redirect()->route('admin.portofolio.index', $req->status)->with('sukses', 'Mengubah Validasi Portofolio');
         }
-        return redirect()->route('admin.portofolio.index', ['vendor' => $vendor, 'tab' => $req->status])->with('gagal', 'Mengubah Validasi Portofolio');
+        return redirect()->route('admin.portofolio.index', $req->status)->with('gagal', 'Mengubah Validasi Portofolio');
     }
 
-    public function config(Request $req, $vendor) {
-        if (!in_array($vendor, $this->vendorTypes)) {
-            abort(404, 'Vendor type not found');
-        }
-
+    public function config(Request $req) {
         $config = AConfiguration::where('nama', 'portofolio-automation')->first();
-
-        $value = $config->value ?: [];
-        $vendorExists = false;
-
-        foreach ($value as $key => $item) {
-            if (isset($item['vendor']) && $item['vendor'] === $vendor) {
-                $vendorExists = true;
-                if ($req->config != 'on') {
-                    unset($value[$key]);
-                }
-                break;
-            }
-        }
-
-        if (!$vendorExists && $req->config == 'on') {
-            $value[] = [
-                'vendor' => $vendor,
-                'admin_id' => auth()->user()->admin->id
-            ];
-        }
-
-        $config->value = array_values($value);
-        $data = $config->save();
+        $data = $config->update([
+            'value' => (int)($req->config == 'on'),
+            'admin_id' => ($req->config == 'on' ? auth()->user()->admin->id : null)
+        ]);
 
         if ($data) {
-            return redirect()->back()->with('sukses', "Mengubah Konfigurasi Portofolio");
+            return redirect()->back()->with('sukses', 'Mengubah Konfigurasi Portofolio');
         }
-        return redirect()->back()->with('gagal', "Mengubah Konfigurasi Portofolio");
+        return redirect()->back()->with('gagal', 'Mengubah Konfigurasi Portofolio');
     }
 }

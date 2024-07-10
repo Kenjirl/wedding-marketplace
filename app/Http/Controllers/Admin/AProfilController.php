@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class AProfilController extends Controller
 {
     public function index() {
-        return view('user.admin.profil.index');
+        return view('admin.profil.index');
     }
 
     public function ke_ubah() {
@@ -47,7 +47,7 @@ class AProfilController extends Controller
         // Filter data Kelurahan berdasarkan ID Kecamatan
         $filteredKelurahanData = $kelurahanData->where('kecamatan_id', $kecamatanId)->sortBy('name');
 
-        return view('user.admin.profil.ubah',
+        return view('admin.profil.ubah',
             compact(
                 'provinsi',
                 'kota',
@@ -84,7 +84,7 @@ class AProfilController extends Controller
     }
 
     public function ke_ubah_password() {
-        return view('user.admin.profil.ubah-password');
+        return view('admin.profil.ubah-password');
     }
 
     public function ubah_password(UbahPasswordRequest $req) {

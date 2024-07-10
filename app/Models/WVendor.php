@@ -34,6 +34,10 @@ class WVendor extends Model
         return $this->hasMany(WVPortofolio::class, 'w_vendor_id');
     }
 
+    public function jenis(): HasMany {
+        return $this->hasMany(WVJenis::class, 'w_vendor_id');
+    }
+
     public function plan(): HasMany {
         return $this->hasMany(WVPlan::class, 'w_vendor_id');
     }

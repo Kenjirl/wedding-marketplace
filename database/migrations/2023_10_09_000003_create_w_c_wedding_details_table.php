@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('w_c_wedding_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('w_c_wedding_id');
-            $table->unsignedBigInteger('w_event_id');
+            $table->unsignedBigInteger('m_event_id');
             $table->dateTime('waktu');
             $table->string('lokasi');
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('w_c_wedding_id')->references('id')->on('w_c_weddings')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('w_event_id')->references('id')->on('w_events')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('m_event_id')->references('id')->on('m_events')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

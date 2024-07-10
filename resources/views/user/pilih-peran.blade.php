@@ -24,7 +24,7 @@
                     @csrf
                     <input type="hidden" id="role" name="role" value="">
 
-                    <div class="w-full flex items-start justify-evenly gap-4 p-4">
+                    <div class="w-full flex items-start justify-center gap-4 p-4">
                         {{-- BRIDE --}}
                         <div class="flex-1 w-full text-center">
                             <div class="w-full mb-4 text-center">
@@ -33,50 +33,26 @@
                                 </h3>
                             </div>
                             {{-- BRIDES ROLE BTN --}}
-                            <button class="w-1/2 aspect-video p-2 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
-                                id="wedding-couple" type="button" onclick="selectRole('wedding-couple')">
+                            <button class="w-[300px] aspect-video p-2 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
+                                id="user" type="button" onclick="selectRole('user')">
                                 <i class="fa-solid fa-dove text-[3em]"></i>
-                                <p class="font-semibold">Couple</p>
+                                <p class="font-semibold">Pasangan Pernikahan</p>
                             </button>
                         </div>
 
                         {{-- VENDOR --}}
-                        <div class="flex-1 w-full">
+                        <div class="flex-1 w-full text-center">
                             <div class="w-full mb-4 text-center">
                                 <h3 class="text-lg text-pink font-semibold">
                                     Sebagai Vendor Pernikahan
                                 </h3>
                             </div>
-
-                            <div class="w-full grid grid-cols-2 gap-4">
-                                {{-- WEDDING ORGANIZER ROLE BTN --}}
-                                <button class="w-full aspect-video p-2 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
-                                    id="wedding-organizer" type="button" onclick="selectRole('wedding-organizer')">
-                                    <i class="fa-solid fa-building-user text-[3em]"></i>
-                                    <p class="font-semibold">Organizer</p>
-                                </button>
-
-                                {{-- WEDDING PHOTOGRAPHER ROLE BTN --}}
-                                <button class="w-full aspect-video p-2 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
-                                    id="wedding-photographer" type="button" onclick="selectRole('photographer')">
-                                    <i class="fa-solid fa-camera-retro text-[3em]"></i>
-                                    <p class="font-semibold">Photographer</p>
-                                </button>
-
-                                {{-- WEDDING PHOTOGRAPHER ROLE BTN --}}
-                                <button class="w-full aspect-video p-2 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
-                                    id="wedding-photographer" type="button" onclick="selectRole('catering')">
-                                    <i class="fa-solid fa-utensils text-[3em]"></i>
-                                    <p class="font-semibold">Catering</p>
-                                </button>
-
-                                {{-- WEDDING PHOTOGRAPHER ROLE BTN --}}
-                                <button class="w-full aspect-video p-2 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
-                                    id="wedding-photographer" type="button" onclick="selectRole('venue')">
-                                    <i class="fa-solid fa-place-of-worship text-[3em]"></i>
-                                    <p class="font-semibold">Venue</p>
-                                </button>
-                            </div>
+                            {{-- VENDOR ROLE BTN --}}
+                            <button class="w-[300px] aspect-video p-2 rounded-md border-pink border-2 outline-2 outline-offset-4 text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active active:border-pink-active active:text-white focus:outline-pink transition-all"
+                                id="vendor" type="button" onclick="selectRole('vendor')">
+                                <i class="fa-solid fa-user-tie text-[3em]"></i>
+                                <p class="font-semibold">Vendor Pernikahan</p>
+                            </button>
                         </div>
                     </div>
 
@@ -102,34 +78,16 @@
             $('#role').val(role);
             $('#btnSubmit').prop('disabled', role === '');
 
-            if (role === 'wedding-couple') {
+            if (role === 'user') {
                 $('#keterangan').html(`
-                    Sebagai <b class="text-pink">Wedding Couple</b>,
-                    anda dapat mencari <b>Wedding Organizer</b> dan <b>Wedding Photographer</b>, membuat dan mengatur undangan, serta mengelola tamu undangan untuk pernikahan anda.
-                `);
-            }
-            else if (role === 'wedding-organizer') {
-                $('#keterangan').html(`
-                    Sebagai <b class="text-pink">Wedding Organizer</b>,
-                    anda dapat mengatur profil, menambahkan portofolio, dan menawarkan layanan untuk mengatur jalannya acara pernikahan kepada <b>Wedding Couple</b>.
-                `);
-            } else if (role === 'photographer') {
-                $('#keterangan').html(`
-                    Sebagai <b class="text-pink">Wedding Photographer</b>,
-                    anda dapat mengatur profil, menambahkan portofolio, dan menawarkan layanan fotografi pernikahan profesional kepada <b>Wedding Couple</b>.
-                `);
-            } else if (role === 'catering') {
-                $('#keterangan').html(`
-                    Sebagai <b class="text-pink">Caterer</b>,
-                    anda dapat mengatur profil, menambahkan portofolio, dan menawarkan paket menu makanan pernikahan kepada <b>Wedding Couple</b>.
-                `);
-            } else if (role === 'venue') {
-                $('#keterangan').html(`
-                    Sebagai <b class="text-pink">Venue Provider</b>,
-                    anda dapat mengatur profil, menambahkan portofolio, dan menawarkan venue pernikahan kepada <b>Wedding Couple</b>.
+                    Sebagai <b class="text-pink">Pasangan Pernikahan</b>,
+                    anda dapat mencari <b>Vendor Pernikahan</b>, membuat dan mengatur undangan, serta mengelola tamu undangan untuk pernikahan anda.
                 `);
             } else {
-                $('#keterangan').html(`Silahkan pilih berdasasrkan pilihan yang tersedia.`);
+                $('#keterangan').html(`
+                    Sebagai <b class="text-pink">Vendor Pernikahan</b>,
+                    anda dapat menambahkan portofolio dan menawarkan berbagai macam layanan yang ingin Anda tawarkan kepada <b>Pasangan Pernikahan</b>.
+                `);
             }
         }
     </script>

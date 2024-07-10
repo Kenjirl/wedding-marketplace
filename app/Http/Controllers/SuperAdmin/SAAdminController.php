@@ -16,11 +16,11 @@ class SAAdminController extends Controller
 {
     public function ke_daftar() {
         $admins = Admin::all();
-        return view('user.super-admin.daftar-admin.index', compact('admins'));
+        return view('super-admin.daftar-admin.index', compact('admins'));
     }
 
     public function ke_tambah() {
-        return view('user.super-admin.daftar-admin.tambah');
+        return view('super-admin.daftar-admin.tambah');
     }
 
     public function tambah(TambahAdminRequest $req) {
@@ -86,7 +86,7 @@ class SAAdminController extends Controller
         // Filter data Kelurahan berdasarkan ID Kecamatan
         $filteredKelurahanData = $kelurahanData->where('kecamatan_id', $kecamatanId)->sortBy('name');
 
-        return view('user.super-admin.daftar-admin.ubah',
+        return view('super-admin.daftar-admin.ubah',
             compact(
                 'admin',
                 'provinsi',

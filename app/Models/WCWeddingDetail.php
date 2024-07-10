@@ -23,6 +23,6 @@ class WCWeddingDetail extends Model
     }
 
     public function event(): BelongsTo {
-        return $this->belongsTo(WEvent::class, 'w_event_id');
+        return $this->belongsTo(MEvent::class, 'm_event_id')->withTrashed();
     }
 }

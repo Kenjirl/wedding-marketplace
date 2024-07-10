@@ -16,13 +16,10 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
     private $allowedRoles = [
-        'admin'             => 'admin.index',
-        'super-admin'       => 'super-admin.index',
-        'wedding-couple'    => 'wedding-couple.index',
-        'wedding-organizer' => 'wedding-organizer.index',
-        'photographer'      => 'wedding-photographer.index',
-        'catering'          => 'catering.index',
-        'venue'             => 'venue.index',
+        'admin'       => 'admin.index',
+        'user'        => 'user.index',
+        'vendor'      => 'vendor.index',
+        'super-admin' => 'super-admin.index',
     ];
 
     public function ke_masuk() {
@@ -234,10 +231,6 @@ class UserController extends Controller
             return redirect()->route($this->allowedRoles[$req->role])->with('sukses', 'Silahkan lengkapi profil anda');
         }
 
-        return view('user.pilih-peran');
-    }
-
-    public function undangan() {
-        return view('invitation.index');
+        return redirect()->back()->with('gagal', 'Peran tidak tercatat dalam sistem');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -43,5 +44,16 @@ class WCWedding extends Model
 
     public function guests(): HasMany {
         return $this->hasMany(WCGuest::class, 'w_c_wedding_id');
+    }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($wedding) {
+            $wedding->w_detail()->delete();
+            $wedding->w_v_booking()->delete();
+            $wedding->invitation()->delete();
+            $wedding->guests()->delete();
+        });
     }
 }

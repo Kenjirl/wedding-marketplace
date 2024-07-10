@@ -16,15 +16,18 @@ return new class extends Migration
         Schema::create('w_v_plans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('w_vendor_id');
+            $table->unsignedBigInteger('m_jenis_vendor_id');
             $table->string('nama');
             $table->text('detail');
             $table->unsignedBigInteger('harga');
             $table->string('satuan');
+            $table->string('jenis_layanan');
             $table->json('foto')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('w_vendor_id')->references('id')->on('w_vendors')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('m_jenis_vendor_id')->references('id')->on('m_jenis_vendors')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

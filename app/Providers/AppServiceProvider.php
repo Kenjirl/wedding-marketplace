@@ -31,24 +31,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::setLocale('id');
 
-        Gate::define('wedding-couple', function(User $user) {
-            return $user->role === 'wedding-couple';
+        Gate::define('user', function(User $user) {
+            return $user->role === 'user';
         });
 
-        Gate::define('wedding-organizer', function(User $user) {
-            return $user->role === 'wedding-organizer';
-        });
-
-        Gate::define('wedding-photographer', function(User $user) {
-            return $user->role === 'photographer';
-        });
-
-        Gate::define('catering', function(User $user) {
-            return $user->role === 'catering';
-        });
-
-        Gate::define('venue', function(User $user) {
-            return $user->role === 'venue';
+        Gate::define('vendor', function(User $user) {
+            return $user->role === 'vendor';
         });
 
         Gate::define('admin', function(User $user) {

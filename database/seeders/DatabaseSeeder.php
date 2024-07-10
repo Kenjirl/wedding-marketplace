@@ -18,10 +18,11 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             AdminsTableSeeder::class,
             AConfigTableSeeder::class,
-            WEventsTableSeeder::class,
+            MEventsTableSeeder::class,
+            MJenisVendorsTableSeeder::class,
             WVsTableSeeder::class,
-            WVPlansSeeder::class,
-            WCsTableSeeder::class,
+            // WVPlansSeeder::class,
+            // WCsTableSeeder::class,
         ]);
     }
 }

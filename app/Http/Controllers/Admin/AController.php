@@ -14,7 +14,7 @@ class AController extends Controller
         $currentYear = Carbon::now()->year;
 
         $users = User::whereYear('created_at', $currentYear)
-                    ->where('role', 'wedding-couple')
+                    ->where('role', 'user')
                     ->get();
 
         $monthlyUserRegistrations = $users->groupBy(function($date) {
@@ -29,7 +29,7 @@ class AController extends Controller
         }
 
         $vendors = User::whereYear('created_at', $currentYear)
-                    ->whereNotIn('role', ['admin', 'super-admin', 'wedding-couple'])
+                    ->where('role', 'vendor')
                     ->get();
 
         $monthlyVendorRegistrations = $vendors->groupBy(function($date) {
@@ -43,8 +43,8 @@ class AController extends Controller
             $vendorRegistrationsPerMonth[(int)$month] = $count;
         }
 
-        $totalUsers = User::where('role', 'wedding-couple')->count();
-        $totalVendors = User::whereNotIn('role', ['admin', 'super-admin', 'wedding-couple'])->count();
+        $totalUsers = User::where('role', 'user')->count();
+        $totalVendors = User::where('role', 'vendor')->count();
         $nullRoleUsers = User::whereNull('role')->count();
 
         $portofolios = WVPortofolio::where('status', 'menunggu konfirmasi')
@@ -52,7 +52,7 @@ class AController extends Controller
                         ->limit(5)
                         ->get();
 
-        return view('user.admin.index', compact(
+        return view('admin.index', compact(
             'userRegistrationsPerMonth',
             'vendorRegistrationsPerMonth',
             'totalUsers',

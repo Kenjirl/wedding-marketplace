@@ -33,7 +33,7 @@ class WeddingRequest extends FormRequest
             'w_ayah'    =>'required|string|regex:/^[a-zA-Z\s]*$/',
             'w_ibu'     =>'required|string|regex:/^[a-zA-Z\s]*$/',
 
-            'w_event_id'  => 'required|exists:w_events,id',
+            'w_event_id'  => 'required|exists:m_events,id',
             // 'waktu.*'     => 'required|date_format:Y-m-d H:i:s|after:' . date(DATE_ATOM),
             'waktu.*'     => 'required|after:' . date('Y-m-d'),
             'provinsi.*'  => 'required|string|regex:/^[a-zA-Z\s]*$/',

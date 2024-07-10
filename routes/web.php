@@ -2,59 +2,34 @@
 
 use App\Http\Controllers\Admin\AController;
 use App\Http\Controllers\Admin\AEventController;
+use App\Http\Controllers\Admin\AJenisVendorController;
 use App\Http\Controllers\Admin\APortofolioController;
 use App\Http\Controllers\Admin\AProfilController;
-use App\Http\Controllers\Catering\CtController;
-use App\Http\Controllers\Catering\CtJadwalController;
-use App\Http\Controllers\Catering\CtLayananController;
-use App\Http\Controllers\Catering\CtPesananController;
-use App\Http\Controllers\Catering\CtPortofolioController;
-use App\Http\Controllers\Catering\CtProfilController;
-use App\Http\Controllers\Catering\CtUlasanController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SuperAdmin\SAAdminController;
 use App\Http\Controllers\SuperAdmin\SAController;
+use App\Http\Controllers\User\TemplateController;
+use App\Http\Controllers\User\UBookingController;
+use App\Http\Controllers\User\UController;
+use App\Http\Controllers\User\UGuestController;
+use App\Http\Controllers\User\UInvitationController;
+use App\Http\Controllers\User\UProfileController;
+use App\Http\Controllers\User\UTransactionController;
+use App\Http\Controllers\User\UWeddingController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Venue\VController;
-use App\Http\Controllers\Venue\VJadwalController;
-use App\Http\Controllers\Venue\VLayananController;
-use App\Http\Controllers\Venue\VPesananController;
-use App\Http\Controllers\Venue\VPortofolioController;
-use App\Http\Controllers\Venue\VProfilController;
-use App\Http\Controllers\Venue\VUlasanController;
-use App\Http\Controllers\WeddingCouple\Booking\CtBookingController;
-use App\Http\Controllers\WeddingCouple\Booking\VBookingController;
-use App\Http\Controllers\WeddingCouple\WCController;
-use App\Http\Controllers\WeddingCouple\WCInvitationController;
-use App\Http\Controllers\WeddingCouple\WCGuestController;
-use App\Http\Controllers\WeddingCouple\WCProfilController;
-use App\Http\Controllers\WeddingCouple\WCWeddingController;
-use App\Http\Controllers\WeddingCouple\Booking\WOBookingController;
-use App\Http\Controllers\WeddingCouple\Booking\WPBookingController;
-use App\Http\Controllers\WeddingCouple\TemplateController;
-use App\Http\Controllers\WeddingCouple\WCTransactionController;
-use App\Http\Controllers\WeddingOrganizer\WOController;
-use App\Http\Controllers\WeddingOrganizer\WOJadwalController;
-use App\Http\Controllers\WeddingOrganizer\WOLayananController;
-use App\Http\Controllers\WeddingOrganizer\WOPesananController;
-use App\Http\Controllers\WeddingOrganizer\WOPortofolioController;
-use App\Http\Controllers\WeddingOrganizer\WOProfilController;
-use App\Http\Controllers\WeddingOrganizer\WOUlasanController;
-use App\Http\Controllers\WeddingPhotographer\WPController;
-use App\Http\Controllers\WeddingPhotographer\WPJadwalController;
-use App\Http\Controllers\WeddingPhotographer\WPLayananController;
-use App\Http\Controllers\WeddingPhotographer\WPPesananController;
-use App\Http\Controllers\WeddingPhotographer\WPPortofolioController;
-use App\Http\Controllers\WeddingPhotographer\WPProfilController;
-use App\Http\Controllers\WeddingPhotographer\WPUlasanController;
-use App\Models\WCGroupGuest;
+use App\Http\Controllers\Vendor\VBookingController;
+use App\Http\Controllers\Vendor\VController;
+use App\Http\Controllers\Vendor\VPortfolioController;
+use App\Http\Controllers\Vendor\VProfileController;
+use App\Http\Controllers\Vendor\VReviewController;
+use App\Http\Controllers\Vendor\VScheduleController;
+use App\Http\Controllers\Vendor\VServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(UserController::class)->group(function() {
 
     Route::middleware(['guest'])->group(function() {
         Route::get('/', function () {
-            return view('user.wedding-couple.index');
+            return view('user.index');
         });
         Route::get ('/masuk', 'ke_masuk')->name('ke_masuk');
         Route::post('/masuk', 'masuk')   ->name('masuk');
@@ -117,8 +92,18 @@ Route::name('admin.')
         Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
     });
 
-    Route::name('event-pernikahan.')->prefix('/event-pernikahan')
+    Route::name('event-pernikahan.')->prefix('/master/event-pernikahan')
         ->controller(AEventController::class)->group(function() {
+        Route::get ('/',          'index')    ->name('index');
+        Route::get ('/tambah',    'ke_tambah')->name('ke_tambah');
+        Route::post('/tambah',    'tambah')   ->name('tambah');
+        Route::get ('/ubah/{id}', 'ke_ubah')  ->name('ke_ubah');
+        Route::post('/ubah{id}',  'ubah')     ->name('ubah');
+        Route::post('/hapus{id}', 'hapus')    ->name('hapus');
+    });
+
+    Route::name('jenis-vendor.')->prefix('/master/jenis-vendor')
+        ->controller(AJenisVendorController::class)->group(function() {
         Route::get ('/',          'index')    ->name('index');
         Route::get ('/tambah',    'ke_tambah')->name('ke_tambah');
         Route::post('/tambah',    'tambah')   ->name('tambah');
@@ -129,24 +114,24 @@ Route::name('admin.')
 
     Route::name('portofolio.')->prefix('/portofolio')
         ->controller(APortofolioController::class)->group(function() {
-        Route::get ('/{vendor}/{tab}',         'index')      ->name('index');
-        Route::get ('/{vendor}/validasi/{id}', 'ke_validasi')->name('ke_validasi');
-        Route::post('/{vendor}/validasi/{id}', 'validasi')   ->name('validasi');
-        Route::post('/{vendor}/config',        'config')     ->name('config');
+        Route::get ('/{tab}',         'index')      ->name('index');
+        Route::get ('/validasi/{id}', 'ke_validasi')->name('ke_validasi');
+        Route::post('/validasi/{id}', 'validasi')   ->name('validasi');
+        Route::post('/config',        'config')     ->name('config');
     });
 
 });
 
-Route::name('wedding-couple.')
-    ->prefix('wedding-couple')
-    ->middleware('wedding-couple')->group(function() {
+Route::name('user.')
+    ->prefix('user')
+    ->middleware('user')->group(function() {
 
-    Route::controller(WCController::class)->group(function() {
+    Route::controller(UController::class)->group(function() {
         Route::get('/', 'index')->name('index');
     });
 
     Route::name('profil.')->prefix('/profil')
-        ->controller(WCProfilController::class)->group(function() {
+        ->controller(UProfileController::class)->group(function() {
         Route::get ('/',              'index')           ->name('index');
         Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
         Route::post('/ubah',          'ubah')            ->name('ubah');
@@ -157,25 +142,24 @@ Route::name('wedding-couple.')
     });
 
     // Hanya bisa diakses jika sudah melengkapi profil wedding couple
-    Route::middleware('wc-profil')->group(function() {
+    Route::middleware('hasUserProfile')->group(function() {
 
         Route::prefix('/pernikahan')->group(function() {
-            Route::name('pernikahan.')->controller(WCWeddingController::class)->group(function() {
-                Route::get ('/',              'index')     ->name('index');
-                Route::get ('/tambah',        'ke_tambah') ->name('ke_tambah');
-                Route::post('/tambah',        'tambah')    ->name('tambah');
-                Route::get ('/ubah/{id}',     'ke_ubah')   ->name('ke_ubah');
-                Route::post('/ubah/{id}',     'ubah')      ->name('ubah');
-                Route::get ('/detail/{id}',   'ke_detail') ->name('ke_detail');
-                Route::post('/hapus/{id}',    'hapus')     ->name('hapus');
-                Route::post('/hapus-wo/{id}', 'hapus_wo')  ->name('hapus_wo');
-                Route::post('/hapus-wp/{id}', 'hapus_wp')  ->name('hapus_wp');
-                Route::post('/selesai',       'selesai')   ->name('selesai');
-                Route::post('/ulasan/{id}',   'ulasan')    ->name('ulasan');
+            Route::name('pernikahan.')->controller(UWeddingController::class)->group(function() {
+                Route::get ('/',                  'index')     ->name('index');
+                Route::get ('/tambah',            'ke_tambah') ->name('ke_tambah');
+                Route::post('/tambah',            'tambah')    ->name('tambah');
+                Route::get ('/ubah/{id}',         'ke_ubah')   ->name('ke_ubah');
+                Route::post('/ubah/{id}',         'ubah')      ->name('ubah');
+                Route::get ('/detail/{id}',       'ke_detail') ->name('ke_detail');
+                Route::post('/hapus/{id}',        'hapus')     ->name('hapus');
+                Route::post('/hapus-vendor/{id}', 'hapus_vendor')  ->name('hapus-vendor');
+                Route::post('/selesai',           'selesai')   ->name('selesai');
+                Route::post('/ulasan/{id}',       'ulasan')    ->name('ulasan');
             });
 
             Route::prefix('/transaksi')->name('transaksi.')
-                ->controller(WCTransactionController::class)->group(function() {
+                ->controller(UTransactionController::class)->group(function() {
                 Route::get('/',                'transaksi') ->name('index');
                 Route::get('/notifikasi',      'notifikasi')->name('notifikasi');
                 Route::get('/cek-status/{id}', 'cek_status')->name('cek_status');
@@ -183,7 +167,7 @@ Route::name('wedding-couple.')
             });
 
             Route::name('undangan.')->prefix('/undangan')
-                ->controller(WCInvitationController::class)->group(function() {
+                ->controller(UInvitationController::class)->group(function() {
                 Route::get ('/ke-tambah',  'ke_tambah')->name('ke_tambah');
                 Route::post('/tambah',     'tambah')   ->name('tambah');
                 Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
@@ -191,7 +175,7 @@ Route::name('wedding-couple.')
             });
 
             Route::name('tamu.')->prefix('/tamu')
-                ->controller(WCGuestController::class)->group(function() {
+                ->controller(UGuestController::class)->group(function() {
                 Route::post('/tambah/{id}', 'tambah')->name('tambah');
                 Route::post('/kirim/{id}',  'kirim') ->name('kirim');
                 Route::post('/rsvp/{id}',   'rsvp')  ->name('rsvp');
@@ -200,42 +184,12 @@ Route::name('wedding-couple.')
             });
         });
 
-        Route::name('search.')->prefix('/search')->group(function() {
-            Route::get('/', function () {
-                return view('user.wedding-couple.search.index');
-            })->name('index');
-
-            // Route Search Wedding Organizer
-            Route::name('wo.')->prefix('/wedding-organizer')
-                ->controller(WOBookingController::class)->group(function() {
-                Route::get ('/',            'index')    ->name('index');
-                Route::get ('/{id}/detail', 'ke_detail')->name('ke_detail');
-                Route::post('/pesan',       'pesan')    ->name('pesan');
-            });
-
-            // Route Search Wedding Photographer
-            Route::name('wp.')->prefix('/wedding-photographer')
-                ->controller(WPBookingController::class)->group(function() {
-                Route::get ('/',            'index')    ->name('index');
-                Route::get ('/{id}/detail', 'ke_detail')->name('ke_detail');
-                Route::post('/pesan',       'pesan')    ->name('pesan');
-            });
-
-            // Route Search Catering
-            Route::name('ct.')->prefix('/catering')
-                ->controller(CtBookingController::class)->group(function() {
-                Route::get ('/',            'index')    ->name('index');
-                Route::get ('/{id}/detail', 'ke_detail')->name('ke_detail');
-                Route::post('/pesan',       'pesan')    ->name('pesan');
-            });
-
-            // Route Search Venue
-            Route::name('v.')->prefix('/venue')
-                ->controller(VBookingController::class)->group(function() {
-                Route::get ('/',            'index')    ->name('index');
-                Route::get ('/{id}/detail', 'ke_detail')->name('ke_detail');
-                Route::post('/pesan',       'pesan')    ->name('pesan');
-            });
+        Route::name('search.')->prefix('/search')
+            ->controller(UBookingController::class)->group(function() {
+            Route::get ('/paket-layanan', 'paket_layanan')->name('paket-layanan');
+            Route::get ('/vendor',        'vendor')       ->name('vendor');
+            Route::get ('/{id}/detail',   'ke_detail')    ->name('ke_detail');
+            Route::post('/pesan',         'pesan')        ->name('pesan');
 
         });
 
@@ -244,236 +198,32 @@ Route::name('wedding-couple.')
 });
 
 Route::get('/fetch-template/{type}/{value}', [TemplateController::class, 'fetchTemplate']);
-Route::get('undangan/{pengantin}/{link}', [WCInvitationController::class, 'undangan'])->name('undangan.tamu');
-// Route::get('/to_transaction', [PaymentController::class, 'to_transaction']);
-// Route::get('/payment', [PaymentController::class, 'createTransaction']);
+Route::get('undangan/{pengantin}/{link}', [UInvitationController::class, 'undangan'])->name('undangan.tamu');
 
-Route::name('wedding-organizer.')
-    ->prefix('wedding-organizer')
-    ->middleware('wedding-organizer')->group(function() {
-
-    Route::controller(WOController::class)->group(function() {
-        Route::get('/', 'index')->name('index');
-    });
-
-    Route::name('profil.')->prefix('/profil')
-        ->controller(WOProfilController::class)->group(function() {
-        Route::get ('/',                    'index')           ->name('index');
-        Route::get ('/ubah',                'ke_ubah')         ->name('ke_ubah');
-        Route::post('/ubah',                'ubah')            ->name('ubah');
-        Route::get ('/ubah-password',       'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password',       'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto',           'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto',           'ubah_foto')       ->name('ubah_foto');
-        Route::get ('/ubah-kategori',       'ke_ubah_kategori')->name('ke_ubah_kategori');
-        Route::post('/tambah-kategori',     'tambah_kategori') ->name('tambah_kategori');
-        Route::post('/hapus-kategori/{id}', 'hapus_kategori')  ->name('hapus_kategori');
-    });
-
-    // Hanya bisa diakses jika sudah melengkapi profil wedding organizer
-    Route::middleware('wo-profil')->group(function() {
-
-        Route::name('portofolio.')->prefix('/portofolio')
-            ->controller(WOPortofolioController::class)->group(function() {
-            Route::get ('/',                        'index')     ->name('index');
-            Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
-            Route::post('/tambah',                  'tambah')    ->name('tambah');
-            Route::get ('/ubah/{id}',               'ke_ubah')   ->name('ke_ubah');
-            Route::post('/ubah/{id}',               'ubah')      ->name('ubah');
-            Route::post('/hapus/{id}',              'hapus')     ->name('hapus');
-            Route::post('/hapus-foto/{id}/{index}', 'hapus_foto')->name('hapus-foto');
-        });
-
-        Route::name('layanan.')->prefix('/layanan')
-            ->controller(WOLayananController::class)->group(function() {
-            Route::get ('/',           'index')      ->name('index');
-            Route::get ('/tambah',     'ke_tambah')  ->name('ke_tambah');
-            Route::post('/tambah',     'tambah')     ->name('tambah');
-            Route::get ('/ubah/{id}',  'ke_ubah')    ->name('ke_ubah');
-            Route::post('/ubah/{id}',  'ubah')       ->name('ubah');
-            Route::post('/hapus/{id}', 'hapus')      ->name('hapus');
-        });
-
-        Route::name('pesanan.')->prefix('/pesanan')
-            ->controller(WOPesananController::class)->group(function() {
-            Route::get ('/',            'index')    ->name('index');
-            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
-            Route::post('/respon/{id}', 'respon')   ->name('respon');
-        });
-
-        Route::name('jadwal.')->prefix('/jadwal')
-            ->controller(WOJadwalController::class)->group(function() {
-            Route::get ('/',            'index')    ->name('index');
-            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
-            Route::post('/batal/{id}',  'batal')    ->name('batal');
-        });
-
-        Route::name('ulasan.')->prefix('/ulasan')
-            ->controller(WOUlasanController::class)->group(function() {
-            Route::get ('/', 'index')->name('index');
-        });
-
-    });
-
-});
-
-Route::name('wedding-photographer.')
-    ->prefix('wedding-photographer')
-    ->middleware('wedding-photographer')->group(function() {
-
-    Route::controller(WPController::class)->group(function() {
-        Route::get('/', 'index')->name('index');
-    });
-
-    Route::name('profil.')->prefix('/profil')
-        ->controller(WPProfilController::class)->group(function() {
-        Route::get ('/',              'index')           ->name('index');
-        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
-        Route::post('/ubah',          'ubah')            ->name('ubah');
-        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto',     'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto',     'ubah_foto')       ->name('ubah_foto');
-    });
-
-    // Hanya bisa diakses jika sudah melengkapi profil wedding photographer
-    Route::middleware('wp-profil')->group(function() {
-
-        Route::name('portofolio.')->prefix('/portofolio')
-            ->controller(WPPortofolioController::class)->group(function() {
-            Route::get ('/',                        'index')     ->name('index');
-            Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
-            Route::post('/tambah',                  'tambah')    ->name('tambah');
-            Route::get ('/ubah/{id}',               'ke_ubah')   ->name('ke_ubah');
-            Route::post('/ubah/{id}',               'ubah')      ->name('ubah');
-            Route::post('/hapus/{id}',              'hapus')     ->name('hapus');
-            Route::post('/hapus-foto/{id}/{index}', 'hapus_foto')->name('hapus-foto');
-        });
-
-        Route::name('layanan.')->prefix('/layanan')
-            ->controller(WPLayananController::class)->group(function() {
-            Route::get ('/',           'index')      ->name('index');
-            Route::get ('/tambah',     'ke_tambah')  ->name('ke_tambah');
-            Route::post('/tambah',     'tambah')     ->name('tambah');
-            Route::get ('/ubah/{id}',  'ke_ubah')    ->name('ke_ubah');
-            Route::post('/ubah/{id}',  'ubah')       ->name('ubah');
-            Route::post('/hapus/{id}', 'hapus')      ->name('hapus');
-        });
-
-        Route::name('pesanan.')->prefix('/pesanan')
-            ->controller(WPPesananController::class)->group(function() {
-            Route::get ('/',            'index')    ->name('index');
-            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
-            Route::post('/respon/{id}', 'respon')   ->name('respon');
-        });
-
-        Route::name('jadwal.')->prefix('/jadwal')
-            ->controller(WPJadwalController::class)->group(function() {
-            Route::get ('/',            'index')    ->name('index');
-            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
-            Route::post('/batal/{id}',  'batal')    ->name('batal');
-        });
-
-        Route::name('ulasan.')->prefix('/ulasan')
-            ->controller(WPUlasanController::class)->group(function() {
-            Route::get ('/', 'index')->name('index');
-        });
-
-    });
-
-});
-
-Route::name('catering.')
-    ->prefix('catering')
-    ->middleware('catering')->group(function() {
-
-    Route::controller(CtController::class)->group(function() {
-        Route::get('/', 'index')->name('index');
-    });
-
-    Route::name('profil.')->prefix('/profil')
-        ->controller(CtProfilController::class)->group(function() {
-        Route::get ('/',              'index')           ->name('index');
-        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
-        Route::post('/ubah',          'ubah')            ->name('ubah');
-        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto',     'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto',     'ubah_foto')       ->name('ubah_foto');
-    });
-
-    // Hanya bisa diakses jika sudah melengkapi profil catering
-    Route::middleware('ct-profil')->group(function() {
-
-        Route::name('portofolio.')->prefix('/portofolio')
-            ->controller(CtPortofolioController::class)->group(function() {
-            Route::get ('/',                        'index')     ->name('index');
-            Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
-            Route::post('/tambah',                  'tambah')    ->name('tambah');
-            Route::get ('/ubah/{id}',               'ke_ubah')   ->name('ke_ubah');
-            Route::post('/ubah/{id}',               'ubah')      ->name('ubah');
-            Route::post('/hapus/{id}',              'hapus')     ->name('hapus');
-            Route::post('/hapus-foto/{id}/{index}', 'hapus_foto')->name('hapus-foto');
-        });
-
-        Route::name('layanan.')->prefix('/layanan')
-            ->controller(CtLayananController::class)->group(function() {
-            Route::get ('/',                        'index')     ->name('index');
-            Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
-            Route::post('/tambah',                  'tambah')    ->name('tambah');
-            Route::get ('/ubah/{id}',               'ke_ubah')   ->name('ke_ubah');
-            Route::post('/ubah/{id}',               'ubah')      ->name('ubah');
-            Route::post('/hapus/{id}',              'hapus')     ->name('hapus');
-            Route::post('/hapus-foto/{id}/{index}', 'hapus_foto')->name('hapus-foto');
-        });
-
-        Route::name('pesanan.')->prefix('/pesanan')
-            ->controller(CtPesananController::class)->group(function() {
-            Route::get ('/',            'index')    ->name('index');
-            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
-            Route::post('/respon/{id}', 'respon')   ->name('respon');
-        });
-
-        Route::name('jadwal.')->prefix('/jadwal')
-            ->controller(CtJadwalController::class)->group(function() {
-            Route::get ('/',            'index')    ->name('index');
-            Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
-            Route::post('/batal/{id}',  'batal')    ->name('batal');
-        });
-
-        Route::name('ulasan.')->prefix('/ulasan')
-            ->controller(CtUlasanController::class)->group(function() {
-            Route::get ('/', 'index')->name('index');
-        });
-
-    });
-
-});
-
-Route::name('venue.')
-    ->prefix('venue')
-    ->middleware('venue')->group(function() {
+Route::name('vendor.')->prefix('/vendor')
+    ->middleware('vendor')->group(function() {
 
     Route::controller(VController::class)->group(function() {
         Route::get('/', 'index')->name('index');
     });
 
     Route::name('profil.')->prefix('/profil')
-        ->controller(VProfilController::class)->group(function() {
-        Route::get ('/',              'index')           ->name('index');
-        Route::get ('/ubah',          'ke_ubah')         ->name('ke_ubah');
-        Route::post('/ubah',          'ubah')            ->name('ubah');
-        Route::get ('/ubah-password', 'ke_ubah_password')->name('ke_ubah_password');
-        Route::post('/ubah-password', 'ubah_password')   ->name('ubah_password');
-        Route::get ('/ubah-foto',     'ke_ubah_foto')    ->name('ke_ubah_foto');
-        Route::post('/ubah-foto',     'ubah_foto')       ->name('ubah_foto');
+        ->controller(VProfileController::class)->group(function() {
+        Route::get ('/',                 'index')           ->name('index');
+        Route::get ('/ubah',             'ke_ubah')         ->name('ke_ubah');
+        Route::post('/ubah',             'ubah')            ->name('ubah');
+        Route::get ('/ubah-password',    'ke_ubah_password')->name('ke_ubah_password');
+        Route::post('/ubah-password',    'ubah_password')   ->name('ubah_password');
+        Route::get ('/ubah-foto',        'ke_ubah_foto')    ->name('ke_ubah_foto');
+        Route::post('/ubah-foto',        'ubah_foto')       ->name('ubah_foto');
+        Route::post('/tambah-jenis',     'tambah_jenis')    ->name('tambah-jenis');
+        Route::post('/hapus-jenis/{id}', 'hapus_jenis')     ->name('hapus-jenis');
     });
 
-    // Hanya bisa diakses jika sudah melengkapi profil catering
-    Route::middleware('v-profil')->group(function() {
+    Route::middleware('hasVendorProfile')->group(function() {
 
         Route::name('portofolio.')->prefix('/portofolio')
-            ->controller(VPortofolioController::class)->group(function() {
+            ->controller(VPortfolioController::class)->group(function() {
             Route::get ('/',                        'index')     ->name('index');
             Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
             Route::post('/tambah',                  'tambah')    ->name('tambah');
@@ -484,7 +234,7 @@ Route::name('venue.')
         });
 
         Route::name('layanan.')->prefix('/layanan')
-            ->controller(VLayananController::class)->group(function() {
+            ->controller(VServiceController::class)->group(function() {
             Route::get ('/',                        'index')     ->name('index');
             Route::get ('/tambah',                  'ke_tambah') ->name('ke_tambah');
             Route::post('/tambah',                  'tambah')    ->name('tambah');
@@ -495,24 +245,25 @@ Route::name('venue.')
         });
 
         Route::name('pesanan.')->prefix('/pesanan')
-            ->controller(VPesananController::class)->group(function() {
+            ->controller(VBookingController::class)->group(function() {
             Route::get ('/',            'index')    ->name('index');
             Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
             Route::post('/respon/{id}', 'respon')   ->name('respon');
         });
 
         Route::name('jadwal.')->prefix('/jadwal')
-            ->controller(VJadwalController::class)->group(function() {
+            ->controller(VScheduleController::class)->group(function() {
             Route::get ('/',            'index')    ->name('index');
             Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
             Route::post('/batal/{id}',  'batal')    ->name('batal');
         });
 
         Route::name('ulasan.')->prefix('/ulasan')
-            ->controller(VUlasanController::class)->group(function() {
-            Route::get ('/', 'index')->name('index');
+            ->controller(VReviewController::class)->group(function() {
+            Route::get('/', 'index')->name('index');
         });
 
     });
 
 });
+

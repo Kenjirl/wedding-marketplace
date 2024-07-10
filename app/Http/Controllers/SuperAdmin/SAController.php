@@ -13,7 +13,7 @@ class SAController extends Controller
         $currentYear = Carbon::now()->year;
 
         $users = User::whereYear('created_at', $currentYear)
-                    ->where('role', 'wedding-couple')
+                    ->where('role', 'user')
                     ->get();
 
         $monthlyUserRegistrations = $users->groupBy(function($date) {
@@ -28,7 +28,7 @@ class SAController extends Controller
         }
 
         $vendors = User::whereYear('created_at', $currentYear)
-                    ->whereNotIn('role', ['admin', 'super-admin', 'wedding-couple'])
+                    ->where('role', 'vendor')
                     ->get();
 
         $monthlyVendorRegistrations = $vendors->groupBy(function($date) {
@@ -42,12 +42,12 @@ class SAController extends Controller
             $vendorRegistrationsPerMonth[(int)$month] = $count;
         }
 
-        $totalUsers = User::where('role', 'wedding-couple')->count();
-        $totalVendors = User::whereNotIn('role', ['admin', 'super-admin', 'wedding-couple'])->count();
+        $totalUsers = User::where('role', 'user')->count();
+        $totalVendors = User::where('role', 'vendor')->count();
         $nullRoleUsers = User::whereNull('role')->count();
         $admins = User::where('role', 'admin')->get();
 
-        return view('user.super-admin.index', compact(
+        return view('super-admin.index', compact(
             'userRegistrationsPerMonth',
             'vendorRegistrationsPerMonth',
             'totalUsers',

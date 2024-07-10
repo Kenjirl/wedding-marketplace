@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\WEvent;
+use App\Models\MEvent;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class AEventController extends Controller
 {
     public function index() {
-        $events = WEvent::orderBy('jenis', 'asc')
+        $events = MEvent::orderBy('jenis', 'asc')
                     ->orderBy('nama', 'asc')
                     ->get();
 
-        return view('user.admin.master.event.index', compact('events'));
+        return view('admin.master.event.index', compact('events'));
     }
 
     public function ke_tambah() {
-        return view('user.admin.master.event.tambah');
+        return view('admin.master.event.tambah');
     }
 
     public function tambah(Request $req) {
         $req->validate([
             'nama'       => [
                             'required','string','regex:/^[a-zA-Z\s]*$/','max:20',
-                            Rule::unique('w_events')->where('id', 1),
+                            Rule::unique('m_events')->where('id', 1),
                         ],
             'jenis'      => 'required|in:Buddha,Hindu,Islam,Katolik,Khonghucu,Protestan,Umum',
             'keterangan' => 'required|string',
@@ -42,21 +42,20 @@ class AEventController extends Controller
             'keterangan.string'   => 'Keterangan harus berupa karakter',
         ]);
 
-        $event              = new WEvent();
-        $event->admin_id    = auth()->user()->admin->id;
+        $event              = new MEvent();
         $event->nama        = ucwords($req->nama);
         $event->jenis       = $req->jenis;
         $event->keterangan  = $req->keterangan;
         $data               = $event->save();
 
         if ($data) {
-            return redirect()->route('admin.event-pernikahan.index')->with('sukses', 'Menambah Event Pernikahan');
+            return redirect()->route('admin.event-pernikahan.ke_ubah', $event->id)->with('sukses', 'Menambah Event Pernikahan');
         }
-        return redirect()->route('admin.event-pernikahan.index')->with('gagal', 'Menambah Event Pernikahan');
+        return redirect()->back()->with('gagal', 'Menambah Event Pernikahan');
     }
 
     public function ke_ubah($id) {
-        $event = WEvent::find($id);
+        $event = MEvent::find($id);
 
         if (!$event) {
             return redirect()->route('admin.event-pernikahan.index')->with('gagal', 'ID Invalid');
@@ -66,14 +65,14 @@ class AEventController extends Controller
             return back()->with('gagal', 'Event ini tidak boleh diubah');
         }
 
-        return view('user.admin.master.event.ubah', compact('event'));
+        return view('admin.master.event.ubah', compact('event'));
     }
 
     public function ubah(Request $req, $id) {
         $req->validate([
             'nama'       => [
                             'required','string','regex:/^[a-zA-Z\s]*$/','max:20',
-                            Rule::unique('w_events')->where('id', 1),
+                            Rule::unique('m_events')->where('id', 1),
                         ],
             'jenis'      => 'required|in:Buddha,Hindu,Islam,Katolik,Khonghucu,Protestan,Umum',
             'keterangan' => 'required|string',
@@ -94,9 +93,8 @@ class AEventController extends Controller
             return back()->with('gagal', 'Event ini tidak boleh diubah');
         }
 
-        $data = WEvent::where('id', $id)
+        $data = MEvent::where('id', $id)
             ->update([
-                'admin_id'   => auth()->user()->admin->id,
                 'nama'       => ucwords($req->nama),
                 'jenis'      => $req->jenis,
                 'keterangan' => $req->keterangan,
@@ -109,7 +107,7 @@ class AEventController extends Controller
     }
 
     public function hapus($id) {
-        $event = WEvent::find($id);
+        $event = MEvent::find($id);
 
         if (!$event) {
             return back()->with('gagal', 'ID Invalid');
@@ -122,8 +120,8 @@ class AEventController extends Controller
         $data = $event->delete();
 
         if ($data) {
-            return redirect()->route('admin.event-pernikahan.index')->with('sukses', 'Menghapus Event Pernikahan');
+            return redirect()->back()->with('sukses', 'Menghapus Event Pernikahan');
         }
-        return redirect()->route('admin.event-pernikahan.index')->with('gagal', 'Menghapus Event Pernikahan');
+        return redirect()->back()->with('gagal', 'Menghapus Event Pernikahan');
     }
 }

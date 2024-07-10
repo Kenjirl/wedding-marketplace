@@ -16,8 +16,11 @@ return new class extends Migration
         Schema::create('a_configurations', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->json('value')->nullable();
+            $table->boolean('value')->default(false);
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

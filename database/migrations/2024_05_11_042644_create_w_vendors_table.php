@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('kota_operasi')->nullable();
             $table->string('foto_profil')->nullable();
             $table->json('rekening')->nullable();
-            $table->string('jenis');
             $table->softDeletes();
             $table->timestamps();
 

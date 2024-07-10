@@ -14,7 +14,7 @@ class AConfiguration extends Model
         'value' => 'array',
     ];
 
-    protected $fillable = [
-        'value'
+    protected $guarded = [
+        'id'
     ];
 }

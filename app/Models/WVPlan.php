@@ -19,14 +19,20 @@ class WVPlan extends Model
 
     protected $fillable = [
         'w_vendor_id',
+        'm_jenis_vendor_id',
         'nama',
         'detail',
         'harga',
+        'jenis_layanan',
         'satuan',
     ];
 
     public function w_vendor(): BelongsTo {
         return $this->belongsTo(WVendor::class, 'w_vendor_id');
+    }
+
+    public function jenis(): BelongsTo {
+        return $this->belongsTo(MJenisVendor::class, 'm_jenis_vendor_id');
     }
 
     public function bookings(): HasMany {
