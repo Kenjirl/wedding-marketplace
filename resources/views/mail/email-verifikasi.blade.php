@@ -10,7 +10,7 @@ Untuk melakukan verifikasi dan mengaktifkan akun Anda, Anda dapat mengeklik taut
 
 <br><br>
 
-<a href="http://127.0.0.1:8000/verifikasi?code={{ $email_data['verification_code'] }}">Verifikasi akun Saya</a>
+<a href="{{ config('app.url') }}?code={{ $email_data['verification_code'] }}">Verifikasi akun Saya</a>
 
 <br><br>
 

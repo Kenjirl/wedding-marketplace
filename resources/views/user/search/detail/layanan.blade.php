@@ -38,6 +38,28 @@
 
                                 <hr class="my-2">
 
+                                {{-- JENIS PAKET LAYANAN --}}
+                            <div class="w-full mb-2">
+                                <div class="w-fit px-2 py-1 text-xs border border-pink rounded">
+                                    <i class="fa-solid fa-hashtag text-pink"></i>
+                                    <span>
+                                        {{ $plan->jenis_layanan }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {{-- JENIS VENDOR --}}
+                            <div class="w-full mb-2">
+                                <div class="w-fit px-2 py-1 text-xs border border-pink rounded">
+                                    <i class="{{ $plan->jenis->icon }} text-pink"></i>
+                                    <span>
+                                        {{ $plan->jenis->nama }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <hr class="my-2">
+
                                 {{-- rate --}}
                                 <div class="w-full text-end text-sm">
                                     <p class="mb-2">

@@ -244,12 +244,11 @@ class UBookingController extends Controller
             $plan = $plans->where('id', $id_layanan)->first();
 
             if (!$plan) {
-                return redirect()->back()->with('gagal', 'ID Layanan tidak valid');
+                return back()->with('gagal', 'ID Layanan tidak valid');
             }
 
             $today = Carbon::today()->startOfDay();
             $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
-                // ->whereNotIn('id', $bookedWeddingIds)
                 ->whereHas('w_detail', function ($query) use ($today) {
                     $query->whereRaw('waktu = (SELECT MAX(wd.waktu) FROM w_c_wedding_details wd WHERE wd.w_c_wedding_id = w_c_weddings.id)')
                         ->whereDate('waktu', '>', $today);
@@ -295,8 +294,8 @@ class UBookingController extends Controller
         $data = $booking->save();
 
         if ($data) {
-            return redirect()->route('user.pernikahan.ke_detail', $req->wedding_id)->with('sukses', 'Memesan Vendor');
+            return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Memesan Vendor');
         }
-        return redirect()->route('user.pernikahan.ke_detail', $req->wedding_id)->with('gagal', 'Memesan Vendor');
+        return back()->with('gagal', 'Memesan Vendor');
     }
 }

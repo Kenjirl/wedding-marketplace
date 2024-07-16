@@ -175,19 +175,40 @@
                                         </div>
                                     </div>
 
-                                    <hr class="my-4">
-
-                                    <div class="w-fit px-4 py-2 text-sm border border-pink rounded">
+                                    <div class="w-fit px-2 py-1 text-xs border border-pink rounded">
                                         <i class="{{ $bv->plan->jenis->icon }} text-pink"></i>
                                         <span>
                                             {{ $bv->plan->jenis->nama }}
                                         </span>
                                     </div>
 
+                                    <hr class="my-4">
+
                                     {{-- tanggal --}}
-                                    <div class="w-full mt-4">
+                                    <div class="w-full mt-4 flex items-center justify-between border-b">
                                         <span>
-                                            Dipesan untuk tanggal {{ date('d/m/Y', strtotime($bv->untuk_tanggal)) }}
+                                            Dipesan untuk tanggal :
+                                        </span>
+                                        <span>
+                                            {{ \Carbon\Carbon::parse($bv->untuk_tanggal)->translatedFormat('l, d F Y') }}
+                                        </span>
+                                    </div>
+
+                                    {{-- jumlah pesanan --}}
+                                    <div class="w-full mt-2 flex items-center justify-between border-b">
+                                        <span>
+                                            Jumlah pesanan :
+                                        </span>
+                                        <span>
+                                            {{ $bv->qty }} {{ $bv->plan->satuan }}
+                                        </span>
+                                    </div>
+
+                                    {{-- total harga --}}
+                                    <div class="w-full mt-2 flex items-center justify-between text-end text-lg">
+                                        <span>Total Biaya : </span>
+                                        <span class="font-semibold">
+                                            Rp {{ number_format($bv->total_bayar, 0, ',', '.') }}
                                         </span>
                                     </div>
                                 </div>

@@ -361,7 +361,11 @@
 @endsection
 
 @push('child-js')
-    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+    @if(App::environment('local'))
+        <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+    @else
+        <script src="https://pro-malamute-vastly.ngrok-free.app/js/input-select-wilayah.js"></script>
+    @endif
 
     <script>
         let count = $('#imgCount').data('count');

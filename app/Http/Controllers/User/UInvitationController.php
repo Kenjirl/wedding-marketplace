@@ -143,7 +143,7 @@ class UInvitationController extends Controller
 
         $invitation = WCInvitation::findOrFail($id);
         if (!$invitation) {
-            return redirect()->back()->with('gagal', 'ID tidak valid');
+            return back()->with('gagal', 'ID tidak valid');
         }
 
         if ($invitation->t_quote != '0') {
@@ -156,7 +156,7 @@ class UInvitationController extends Controller
         if ($invitation->t_gallery != '0' && $req->hasFile('foto_galeri')) {
             $new_photos = [];
             foreach ($req->file('foto_galeri') as $file) {
-                $filename = 'WC/undangan/galeri/' . str()->uuid() . '.' . $file->extension();
+                $filename = 'u/undangan/galeri/' . str()->uuid() . '.' . $file->extension();
                 $url = Storage::disk('public')->putFileAs('/', $file, $filename);
                 $new_photos[] = $url;
             }
@@ -169,7 +169,7 @@ class UInvitationController extends Controller
         if ($req->hasFile('foto_profil')) {
             $new_profil_photos = [];
             foreach ($req->file('foto_profil') as $file) {
-                $filename = 'WC/undangan/profil/' . str()->uuid() . '.' . $file->extension();
+                $filename = 'u/undangan/profil/' . str()->uuid() . '.' . $file->extension();
                 $url = Storage::disk('public')->putFileAs('/', $file, $filename);
                 $new_profil_photos[] = $url;
             }
@@ -185,9 +185,9 @@ class UInvitationController extends Controller
         $data = $invitation->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menyelesaikan Undangan Digital');
+            return back()->with('sukses', 'Menyelesaikan Undangan Digital');
         }
-        return redirect()->back()->with('gagal', 'Menyelesaikan Undangan Digital');
+        return back()->with('gagal', 'Menyelesaikan Undangan Digital');
     }
 
     public function undangan($pengantin, $link) {

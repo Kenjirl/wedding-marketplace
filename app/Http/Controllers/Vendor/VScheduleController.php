@@ -7,16 +7,15 @@ use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
 use App\Models\WVBooking;
 use App\Models\WVPlan;
+use App\Models\WVTransaction;
 use Illuminate\Http\Request;
 
 class VScheduleController extends Controller
 {
     public function index() {
-        $bookings = WVBooking::join('w_v_plans', 'w_v_bookings.w_v_plan_id', '=', 'w_v_plans.id')
-                ->join('w_vendors', 'w_v_plans.w_vendor_id', '=', 'w_vendors.id')
-                ->where('w_vendors.id', auth()->user()->w_vendor->id)
-                ->whereIn('w_v_bookings.status', ['dibayar', 'selesai'])
-                ->select('w_v_bookings.*')
+        $bookings = WVBooking::where('w_vendor_id', auth()->user()->w_vendor->id)
+                ->with(['wedding', 'plan'])
+                ->whereIn('status', ['dibayar', 'selesai'])
                 ->get();
 
         $events = [];
@@ -30,14 +29,16 @@ class VScheduleController extends Controller
             ];
         }
 
-        return view('vendor.jadwal.index', compact('events'));
+        return view('vendor.jadwal.index', compact('bookings', 'events'));
     }
 
     public function ke_detail($id) {
-        $booking  = WVBooking::find($id);
+        $booking  = WVBooking::where('id', $id)
+                        ->whereIn('status', ['dibayar', 'selesai'])
+                        ->first();
 
         if (!$booking) {
-            return redirect()->route('vendor.jadwal.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID tidak valid');
         }
 
         $plan     = WVPlan::find($booking->w_v_plan_id);
@@ -48,12 +49,16 @@ class VScheduleController extends Controller
                         }])
                         ->orderBy('waktu', 'asc')
                         ->get();
+        $transaksi = WVTransaction::where('w_v_booking_id', $booking->id)
+                        ->whereIn('transaction_status', ['capture', 'settlement'])
+                        ->first();
 
         return view('vendor.jadwal.detail', compact(
             'booking',
             'plan',
             'wedding',
             'events',
+            'transaksi',
         ));
     }
 
@@ -72,6 +77,6 @@ class VScheduleController extends Controller
         if ($data) {
             return redirect()->route('vendor.jadwal.index')->with('sukses', 'Membatalkan Pesanan');
         }
-        return redirect()->route('vendor.jadwal.ke_detail', $id)->with('gagal', 'Terjadi kesalahan');
+        return redirect()->route('vendor.jadwal.index')->with('gagal', 'Terjadi kesalahan');
     }
 }

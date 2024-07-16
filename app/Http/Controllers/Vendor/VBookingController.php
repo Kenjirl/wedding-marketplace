@@ -24,10 +24,12 @@ class VBookingController extends Controller
     }
 
     public function ke_detail($id) {
-        $booking  = WVBooking::find($id);
+        $booking  = WVBooking::where('id', $id)
+                        ->whereIn('status', ['diterima', 'diproses'])
+                        ->first();
 
         if (!$booking) {
-            return redirect()->route('vendor.pesanan.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID tidak valid');
         }
 
         $plan     = WVPlan::find($booking->w_v_plan_id);
@@ -60,10 +62,10 @@ class VBookingController extends Controller
                 ]);
 
         if ($data && $req->status == 'diterima') {
-            return redirect()->route('vendor.pesanan.index')->with('sukses', 'Menerima Pesanan');
+            return back()->with('sukses', 'Menerima Pesanan');
         } else if ($data && $req->status == 'ditolak') {
             return redirect()->route('vendor.pesanan.index')->with('sukses', 'Menolak Pesanan');
         }
-        return redirect()->route('vendor.pesanan.ke_detail', $id)->with('gagal', 'Terjadi kesalahan');
+        return back()->with('gagal', 'Terjadi kesalahan');
     }
 }

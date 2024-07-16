@@ -7,6 +7,16 @@
 @section('h1', 'Jadwal > Detail Jadwal')
 
 @section('content')
+    <div class="w-full flex items-center justify-start">
+        <a class="block w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+            href="{{ url()->previous() }}">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Kembali</span>
+        </a>
+    </div>
+
+    <hr class="my-4">
+
     {{-- JUDUL --}}
     <div class="w-full p-2 flex items-center justify-start gap-4">
         <div class="w-fit aspect-square px-2 flex items-center bg-pink rounded text-2xl text-white">
@@ -25,16 +35,16 @@
         </div>
     </div>
 
-    <div class="w-full grid grid-cols-3 gap-4">
+    <div class="w-full grid grid-cols-2 gap-4">
         {{-- KIRI --}}
-        <div class="w-full h-fit col-span-2">
+        <div class="w-full h-fit">
             {{-- EVENTS --}}
-            <div class="w-full p-2 grid grid-cols-2 gap-8 border-t-2 border-slate-100">
+            <div class="w-full p-2 gap-8 border-t-2 border-slate-100">
                 @foreach ($events as $event)
                     {{-- EVENT --}}
                     <div class="w-full mb-4 flex items-center justify-center gap-4">
                         {{-- NUMBER --}}
-                        <div class="w-[50px] aspect-square flex items-center justify-center text-2xl italic bg-pink text-white font-semibold rounded">
+                        <div class="w-[40px] aspect-square flex items-center justify-center text-lg italic bg-pink text-white font-semibold rounded">
                             {{ $loop->iteration }}
                         </div>
 
@@ -57,8 +67,8 @@
                             {{-- BOTTOM --}}
                             <div class="w-full text-sm text-gray-400 italic">
                                 <div>
-                                    Pada {{ \Carbon\Carbon::parse($event->waktu)->format('d/m/Y') }}
-                                    pukul {{ \Carbon\Carbon::parse($event->waktu)->format('H:i') }}
+                                    Pada {{ \Carbon\Carbon::parse($event->waktu)->translatedFormat('l, d F Y') }} <br>
+                                    pukul {{ \Carbon\Carbon::parse($event->waktu)->translatedFormat('H:i') }}
                                 </div>
                                 <div>
                                     {{ $event->lokasi }}
@@ -68,23 +78,6 @@
                     </div>
                 @endforeach
             </div>
-
-            {{-- FORM SUBMIT --}}
-            <form action="{{ route('vendor.jadwal.batal', $booking->id) }}" method="post" id="pesananForm">
-                @csrf
-                {{-- STATUS --}}
-                <div class="hidden">
-                    <input type="text" name="status" id="status" value="">
-                </div>
-
-                <div class="w-full p-2 flex items-center justify-end gap-2">
-                    <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        href="{{ url()->previous() }}">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                        <span>Kembali</span>
-                    </a>
-                </div>
-            </form>
         </div>
 
         {{-- KANAN --}}
@@ -95,7 +88,7 @@
             </div>
 
             {{-- PEMESAN --}}
-            <div class="w-full p-2 text-sm border-2 border-slate-100">
+            <div class="w-full p-2 border-2 border-slate-100">
                 <table>
                     <tr>
                         <td class="pr-2"><i class="fa-solid fa-user text-pink"></i></td>
@@ -112,62 +105,96 @@
                 </table>
             </div>
 
-            {{-- DETAIL PAKET & ULASAN --}}
-            @if ($booking->status == 'dibayar')
-                {{-- DETAIL PAKET --}}
-                <div class="w-full p-2 border-2 border-t-0 border-slate-100">
-                    {{-- nama --}}
-                    <div class="w-full">
-                        <span class="text-2xl font-semibold">
+            {{-- DETAIL PESANAN --}}
+            <div class="w-full p-2 border-2 border-t-0 border-slate-100">
+                {{-- nama paket --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Nama Paket Layanan
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        <a class="font-semibold underline"
+                            href="{{ route('vendor.layanan.ke_ubah', $plan->id) }}">
                             {{ $plan->nama }}
-                        </span>
-                    </div>
-
-                    {{-- detail --}}
-                    <div class="w-full max-h-[100px] p-4 overflow-y-auto">
-                        <p>
-                            {!! $plan->detail !!}
-                        </p>
-                    </div>
-
-                    {{-- harga --}}
-                    <div class="w-full flex items-start justify-end gap-2">
-                        <i class="fa-solid fa-rupiah-sign text-xl"></i>
-                        <span class="text-xl">
-                            {{ number_format($plan->harga, 0, ',', '.') }}
-                        </span>
-                    </div>
+                        </a>
+                    </span>
                 </div>
-            @else
-                {{-- ULASAN --}}
-                <div class="w-full p-4 border-2 border-t-0 border-slate-100 text-sm">
-                    @if ($booking->rating)
-                        <div class="w-full flex items-center justify-start gap-2 mb-4">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <i class="fa-solid fa-star {{ $booking->rating->rating >= $i ? 'text-pink' : '' }}"></i>
-                            @endfor
-                        </div>
-                        <div class="w-full text-justify">
-                            Komentar : <br> {{ $booking->rating->komentar }}
-                        </div>
-                    @else
-                        <div class="w-full flex items-center justify-start gap-2 mb-4">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <i class="fa-solid fa-star"></i>
-                            @endfor
-                        </div>
-                        <div class="w-full text-justify">
-                            Belum ada ulasan
-                        </div>
-                    @endif
+
+                {{-- jumlah pesanan --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Jumlah Pesanan
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        {{ $booking->qty . ' ' . $plan->satuan }}
+                    </span>
+                </div>
+
+                {{-- harga --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Total Harga
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        Rp
+                        {{ number_format($plan->harga, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                {{-- tanggal pesan --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Dipesan untuk tanggal
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        {{ \Carbon\Carbon::parse($booking->untuk_tanggal)->translatedFormat('l, d F Y') }}
+                    </span>
+                </div>
+            </div>
+
+            {{-- DETAIL TRANSAKSI --}}
+            @if ($transaksi)
+                <div class="w-full p-2 border-2 border-t-0 border-slate-100">
+                    <div class="w-full flex items-center justify-start gap-2">
+                        <i class="fa-regular fa-circle-check text-green-400"></i>
+                        <span>Transaksi telah dilakukan</span>
+                    </div>
+
+                    {{-- TANGGAL --}}
+                    <div class="w-full flex items-center justify-between">
+                        <span>Pada</span>
+                        <span>{{ \Carbon\Carbon::parse($transaksi->updated_at)->translatedFormat('l, d F Y - H:m:s') }}</span>
+                    </div>
+
+                    {{-- NOMINAL --}}
+                    <div class="w-full flex items-center justify-between">
+                        <span>Nominal</span>
+                        <span>Rp {{ number_format($transaksi->gross_amount, 0, ',', '.') }}</span>
+                    </div>
                 </div>
             @endif
 
-            {{-- TANGGAL PESAN --}}
-            <div class="w-full p-2 border-2 border-t-0 rounded-b-lg border-slate-100">
-                <p>
-                    Dipesan untuk tanggal : {{ $booking->untuk_tanggal->format('d/m/Y') }}
-                </p>
+            {{-- ULASAN --}}
+            <div class="w-full p-4 border-2 border-t-0 rounded-b-lg border-slate-100 text-sm">
+                @if ($booking->rating)
+                    <div class="w-full flex items-center justify-start gap-2 mb-4">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa-solid fa-star {{ $booking->rating->rating >= $i ? 'text-pink' : '' }}"></i>
+                        @endfor
+                    </div>
+                    <div class="w-full text-justify">
+                        Komentar : <br> {{ $booking->rating->komentar }}
+                    </div>
+                @else
+                    <div class="w-full flex items-center justify-start gap-2 mb-4">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa-solid fa-star"></i>
+                        @endfor
+                    </div>
+                    <div class="w-full text-justify">
+                        Belum ada ulasan
+                    </div>
+                @endif
             </div>
         </div>
     </div>

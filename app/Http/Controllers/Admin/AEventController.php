@@ -51,14 +51,14 @@ class AEventController extends Controller
         if ($data) {
             return redirect()->route('admin.event-pernikahan.ke_ubah', $event->id)->with('sukses', 'Menambah Event Pernikahan');
         }
-        return redirect()->back()->with('gagal', 'Menambah Event Pernikahan');
+        return back()->with('gagal', 'Menambah Event Pernikahan');
     }
 
     public function ke_ubah($id) {
         $event = MEvent::find($id);
 
         if (!$event) {
-            return redirect()->route('admin.event-pernikahan.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID Invalid');
         }
 
         if ($event->id == 1 && $event->nama == 'Pernikahan') {
@@ -120,8 +120,8 @@ class AEventController extends Controller
         $data = $event->delete();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menghapus Event Pernikahan');
+            return back()->with('sukses', 'Menghapus Event Pernikahan');
         }
-        return redirect()->back()->with('gagal', 'Menghapus Event Pernikahan');
+        return back()->with('gagal', 'Menghapus Event Pernikahan');
     }
 }

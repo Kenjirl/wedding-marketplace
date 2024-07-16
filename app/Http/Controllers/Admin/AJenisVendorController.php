@@ -50,7 +50,7 @@ class AJenisVendorController extends Controller
         $j_vendor = MJenisVendor::find($id);
 
         if (!$j_vendor) {
-            return redirect()->route('admin.jenis-vendor.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID Invalid');
         }
 
         return view('admin.master.jenis-vendor.ubah', compact('j_vendor'));
@@ -94,8 +94,8 @@ class AJenisVendorController extends Controller
         $data = $j_vendor->delete();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menghapus Jenis Vendor');
+            return back()->with('sukses', 'Menghapus Jenis Vendor');
         }
-        return redirect()->back()->with('gagal', 'Menghapus Jenis Vendor');
+        return back()->with('gagal', 'Menghapus Jenis Vendor');
     }
 }

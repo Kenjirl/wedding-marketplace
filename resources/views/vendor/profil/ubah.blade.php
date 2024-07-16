@@ -31,7 +31,7 @@
                                 </span>
                             </div>
                             <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                type="text" name="nama" id="nama" placeholder="Nama PT/Penyedia Layanan"
+                                type="text" name="nama" id="nama" placeholder="nama pribadi atau perusahaan"
                                 required
                                 value="{{ old('nama', auth()->user()->w_vendor ? auth()->user()->w_vendor->nama : '') }}">
                         </div>
@@ -446,5 +446,9 @@
 
     </script>
 
-    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+    @if(App::environment('local'))
+        <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+    @else
+        <script src="https://pro-malamute-vastly.ngrok-free.app/js/input-select-wilayah.js"></script>
+    @endif
 @endpush

@@ -84,9 +84,9 @@ class APortofolioController extends Controller
         $data = $portofolio->save();
 
         if ($data) {
-            return redirect()->route('admin.portofolio.index', $req->status)->with('sukses', 'Mengubah Validasi Portofolio');
+            return back()->with('sukses', 'Mengubah Validasi Portofolio');
         }
-        return redirect()->route('admin.portofolio.index', $req->status)->with('gagal', 'Mengubah Validasi Portofolio');
+        return back()->with('gagal', 'Mengubah Validasi Portofolio');
     }
 
     public function config(Request $req) {
@@ -97,8 +97,8 @@ class APortofolioController extends Controller
         ]);
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengubah Konfigurasi Portofolio');
+            return back()->with('sukses', 'Mengubah Konfigurasi Portofolio');
         }
-        return redirect()->back()->with('gagal', 'Mengubah Konfigurasi Portofolio');
+        return back()->with('gagal', 'Mengubah Konfigurasi Portofolio');
     }
 }

@@ -13,12 +13,11 @@
             </h1>
         </div>
 
-        <div class="px-4 pb-4">
-            <ol class="list-decimal text-sm">
-                <li>Silahkan isi data diri Anda</li>
-                <li>Harap memilih data sesuai dengan pilihan yang sudah disediakan</li>
-                <li>Harap untuk tidak menggunakan tanda baca apapun kecuali pada Nama Pengguna</li>
-            </ol>
+        <div class="mb-4 flex items-center justify-end gap-2">
+            <button class="w-[40px] aspect-square p-2 bg-pink text-white text-center rounded"
+                type="button" id="infoBtn">
+                <i class="fa-solid fa-circle-info"></i>
+            </button>
         </div>
 
         <div class="w-full">
@@ -118,3 +117,31 @@
         </div>
     </div>
 @endsection
+
+@push('child-js')
+    <script>
+        $(document).ready(function() {
+            $('#infoBtn').on("click", function () {
+                Swal.fire({
+                    title: "Info",
+                    icon: "info",
+                    iconColor: "#F78CA2",
+                    html: `
+                        <div class="text-start text-sm">
+                            <p>
+                                1. Silahkan isi data diri Anda <br>
+                                2. Harap memilih data sesuai dengan pilihan yang sudah disediakan <br>
+                                3. Harap untuk tidak menggunakan tanda baca apapun kecuali pada Nama Pengguna
+                            </p>
+                        </div>
+                    `,
+                    showCloseButton: true,
+                    confirmButtonColor: "#F78CA2",
+                    confirmButtonText: "OK"
+                }).then((result) => {
+                    return;
+                });
+            });
+        });
+    </script>
+@endpush

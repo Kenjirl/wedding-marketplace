@@ -7,80 +7,61 @@
 @section('h1', 'Ulasan')
 
 @section('content')
+    @php
+        function renderStars($rating) {
+            $fullStars = floor($rating);
+            $halfStar = ($rating - $fullStars) >= 0.5 ? 1 : 0;
+            $emptyStars = 5 - $fullStars - $halfStar;
+
+            $stars = '';
+            for ($i = 0; $i < $fullStars; $i++) {
+                $stars .= '<i class="fa-solid fa-star"></i>';
+            }
+            for ($i = 0; $i < $halfStar; $i++) {
+                $stars .= '<i class="fa-solid fa-star-half-stroke"></i>';
+            }
+            for ($i = 0; $i < $emptyStars; $i++) {
+                $stars .= '<i class="fa-regular fa-star"></i>';
+            }
+
+            return $stars;
+        }
+    @endphp
     {{-- INFO ATAS --}}
-    @if (!$reviews->isEmpty())
-        <div class="w-full mb-16 grid grid-cols-4 gap-4">
-            {{-- JUMLAH ULASAN --}}
-            <div class="w-full rounded shadow-lg">
-                <div class="w-full p-2 rounded-t bg-pink text-white font-semibold">
-                    Jumlah Ulasan
-                </div>
-
-                <div class="w-1/2 aspect-video mx-auto flex items-center justify-center">
-                    <span class="p-2 text-3xl font-semibold">
-                        {{ $reviewsCount }}
-                    </span>
-                </div>
+    <div class="w-full flex items-start justify-center gap-8">
+        <div class="min-w-[100px] text-sm">
+            <div class="text-7xl font-semibold">
+                {{ number_format($total['average'], 1) }}
             </div>
-
-            {{-- TOTAL RATE --}}
-            <div class="w-full rounded shadow-lg">
-                <div class="w-full p-2 rounded-t bg-pink text-white font-semibold">
-                    Total Nilai
-                </div>
-
-                <div class="w-1/2 aspect-video mx-auto flex items-center justify-center">
-                    <span class="p-2 text-3xl font-semibold">
-                        {{ number_format($averageRating, 1) }}/5 <i class="fa-solid fa-star text-yellow-300"></i>
-                    </span>
-                </div>
+            <div class="text-yellow-400">
+                {!! renderStars($total['average']) !!}
             </div>
-
-            {{-- LOWEST RATE --}}
-            <div class="w-full rounded shadow-lg">
-                <div class="w-full p-2 flex items-center justify-between rounded-t bg-pink text-white font-semibold">
-                    <span>
-                        Nilai Terendah
-                    </span>
-
-                    <div>
-                        <a class="text-center text-sm font-semibold py-1 px-2 outline-none text-white bg-pink hover:bg-white hover:text-pink focus:bg-white focus:text-pink active:bg-pink-active transition-colors rounded"
-                            href="{{ route('vendor.jadwal.ke_detail', $lowestRate['id']) }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="w-1/2 aspect-video mx-auto flex items-center justify-center">
-                    <span class="p-2 text-3xl font-semibold">
-                        {{ number_format($lowestRate['rate'], 1) }}/5 <i class="fa-solid fa-star text-yellow-300"></i>
-                    </span>
-                </div>
-            </div>
-
-            {{-- HIGHEST RATE --}}
-            <div class="w-full rounded shadow-lg">
-                <div class="w-full p-2 flex items-center justify-between rounded-t bg-pink text-white font-semibold">
-                    <span>
-                        Nilai Tertinggi
-                    </span>
-
-                    <div>
-                        <a class="text-center text-sm font-semibold py-1 px-2 outline-none text-white bg-pink hover:bg-white hover:text-pink focus:bg-white focus:text-pink active:bg-pink-active transition-colors rounded"
-                            href="{{ route('vendor.jadwal.ke_detail', $lowestRate['id']) }}">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="w-1/2 aspect-video mx-auto flex items-center justify-center">
-                    <span class="p-2 text-3xl font-semibold">
-                        {{ number_format($highestRate['rate'], 1) }}/5 <i class="fa-solid fa-star text-yellow-300"></i>
-                    </span>
-                </div>
+            <div>
+                {{ number_format($total['count'], 0, ',', '.') }}
             </div>
         </div>
-    @endif
+
+        <div class="w-fit">
+            @foreach ($ratingDetails as $rating => $details)
+                <div class="w-full flex items-center justify-start gap-4">
+                    <div class="w-[20px] text-center">
+                        {{ $rating }}
+                    </div>
+
+                    @php
+                        $width = $details['count']/$total['count']*100;
+                    @endphp
+                    <div class="w-full">
+                        <div class="w-[200px] bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-pink h-2.5 rounded-full" style="width: {{ $width }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <hr class="my-4">
 
     {{-- TABEL --}}
     <div class="w-full">
@@ -102,15 +83,17 @@
                         <td class="text-center">
                             {{ $loop->iteration }}
                         </td>
-                        <td class="px-2"> {{-- Oleh --}}
-                            {{ $review->w_booking->wedding->w_couple->nama }}
+                        <td class="w-1/2 px-2"> {{-- Oleh --}}
+                            <div class="line-clamp-1">
+                                {{ $review->w_booking->wedding->w_couple->nama }}
+                            </div>
                         </td>
-                        <td class="w-full px-2">
+                        <td class="w-1/2 px-2">
                             <div class="line-clamp-1">
                                 {{ $review->komentar }}
                             </div>
                         </td>
-                        <td class="w-full px-2">
+                        <td class="w-1/2 px-2">
                             <div class="line-clamp-1">
                                 {{ $review->plan->nama }}
                             </div>
@@ -119,7 +102,7 @@
                             {{ $review->rating }}
                         </td>
                         <td class="px-2 text-center">
-                            {{ $review->updated_at->format('d/m/Y') }}
+                            {{ \Carbon\Carbon::parse($review->updated_at)->translatedFormat('d F Y') }}
                         </td>
                         <td class="p-2">
                             <a class="block text-center text-sm font-semibold p-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"

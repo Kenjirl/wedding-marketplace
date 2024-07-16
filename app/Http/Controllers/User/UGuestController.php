@@ -29,25 +29,25 @@ class UGuestController extends Controller
         $data = $guest->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menambah Tamu Undangan');
+            return back()->with('sukses', 'Menambah Tamu Undangan');
         }
-        return redirect()->back()->with('gagal', 'Menambah Tamu Undangan');
+        return back()->with('gagal', 'Menambah Tamu Undangan');
     }
 
     public function kirim($id) {
         $tamu = WCGuest::find($id);
 
         if (!$tamu) {
-            return redirect()->back()->with('gagal', 'ID tidak valid');
+            return back()->with('gagal', 'ID tidak valid');
         }
 
         $tamu->status = 'Sudah Terkirim';
         $data = $tamu->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengirim Undangan');
+            return back()->with('sukses', 'Mengirim Undangan');
         }
-        return redirect()->back()->with('gagal', 'Mengirim Undangan');
+        return back()->with('gagal', 'Mengirim Undangan');
     }
 
     public function rsvp(Request $req, $id) {
@@ -61,7 +61,7 @@ class UGuestController extends Controller
 
         $tamu = WCGuest::find($id);
         if (!$tamu) {
-            return redirect()->back()->with('gagal', 'ID tidak valid');
+            return back()->with('gagal', 'ID tidak valid');
         }
 
         $tamu->respon = $req->konfirmasi;
@@ -71,9 +71,9 @@ class UGuestController extends Controller
         $data = $tamu->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengkonfirmasi Kehadiran');
+            return back()->with('sukses', 'Mengkonfirmasi Kehadiran');
         }
-        return redirect()->back()->with('gagal', 'Mengkonfirmasi Kehadiran');
+        return back()->with('gagal', 'Mengkonfirmasi Kehadiran');
     }
 
     public function wish(Request $req, $id) {
@@ -85,29 +85,29 @@ class UGuestController extends Controller
 
         $tamu = WCGuest::find($id);
         if (!$tamu) {
-            return redirect()->back()->with('gagal', 'ID tidak valid');
+            return back()->with('gagal', 'ID tidak valid');
         }
         $tamu->pesan = $req->wish;
         $data = $tamu->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Memberi Ucapan Selamat');
+            return back()->with('sukses', 'Memberi Ucapan Selamat');
         }
-        return redirect()->back()->with('gagal', 'Memberi Ucapan Selamat');
+        return back()->with('gagal', 'Memberi Ucapan Selamat');
     }
 
     public function hapus($id) {
         $tamu = WCGuest::find($id);
 
         if (!$tamu) {
-            return redirect()->back()->with('gagal', 'ID tidak valid');
+            return back()->with('gagal', 'ID tidak valid');
         }
 
         $data = $tamu->delete();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menghapus Tamu Undangan');
+            return back()->with('sukses', 'Menghapus Tamu Undangan');
         }
-        return redirect()->back()->with('gagal', 'Menghapus Tamu Undangan');
+        return back()->with('gagal', 'Menghapus Tamu Undangan');
     }
 }

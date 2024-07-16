@@ -13,16 +13,16 @@
             {{-- KIRI --}}
             <div class="relative w-fit p-4">
                 @if (auth()->user()->w_vendor && auth()->user()->w_vendor->foto_profil)
-                    <img class="w-[400px] aspect-square mb-4 object-cover object-center rounded-full border-4 border-pink"
+                    <img class="w-[320px] aspect-square mb-4 object-cover object-center rounded-full border-4 border-pink"
                         src="{{ asset(auth()->user()->w_vendor->foto_profil) }}" alt="Foto Profil" id="fotoProfil">
                 @else
-                    <span class="w-[400px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
+                    <span class="w-[320px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
                         id="fotoProfilText">
                         {{ substr(auth()->user()->name, 0, 1) }}
                     </span>
                 @endif
 
-                <button class="absolute top-[50px] right-[50px] w-[50px] aspect-square outline-none bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors rounded-full"
+                <button class="absolute top-[40px] right-[40px] w-[50px] aspect-square outline-none bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors rounded-full"
                     type="button" id="editBtn">
                     <span class="text-3em text-white">
                         <i class="fa-solid fa-pen"></i>
@@ -41,7 +41,7 @@
             {{-- KANAN --}}
             <div class="w-fit hidden p-4"
                 id="kananContainer">
-                <img class="w-[400px] aspect-square mb-4 object-cover object-center rounded-full border-4 border-pink"
+                <img class="w-[320px] aspect-square object-cover object-center rounded-full border-4 border-pink"
                     src="" alt="Foto Profil Baru" id="fotoProfilBaru">
 
                 <input class="hidden" type="file" name="foto_profil" id="foto_profil" accept="image/*" required>

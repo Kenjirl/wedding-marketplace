@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="w-full h-[300px] overflow-y-auto">
-                    @foreach ($admins as $user)
+                    @forelse ($admins as $user)
                         <div class="w-full p-4 flex items-center justify-between">
                             <div class="line-clamp-1">
                                 {{ $user->admin->nama }}
@@ -74,7 +74,11 @@
                                 </a>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="p-4 text-sm">
+                            Belum ada admin yang ditambahkan
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>

@@ -67,14 +67,14 @@ class VPortfolioController extends Controller
         if ($data) {
             return redirect()->route('vendor.portofolio.ke_ubah', $portofolio->id)->with('sukses', 'Menambah Portofolio');
         }
-        return redirect()->back()->with('gagal', 'Menambah Portofolio');
+        return back()->with('gagal', 'Menambah Portofolio');
     }
 
     public function ke_ubah($id) {
         $portofolio = WVPortofolio::find($id);
 
         if (!$portofolio) {
-            return redirect()->back()->with('gagal', 'Portofolio tidak ditemukan');
+            return back()->with('gagal', 'Portofolio tidak ditemukan');
         }
 
         $provinsi       = '';
@@ -177,9 +177,9 @@ class VPortfolioController extends Controller
         $data = $portofolio->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengubah Portofolio');
+            return back()->with('sukses', 'Mengubah Portofolio');
         }
-        return redirect()->back()->with('gagal', 'Mengubah Portofolio');
+        return back()->with('gagal', 'Mengubah Portofolio');
     }
 
     public function hapus($id) {
@@ -234,8 +234,8 @@ class VPortfolioController extends Controller
             $portofolio->save();
 
             unlink(public_path($url));
-            return redirect()->back()->with('sukses', 'Menghapus Foto Portofolio');
+            return back()->with('sukses', 'Menghapus Foto Portofolio');
         }
-        return redirect()->back()->with('gagal', 'Menghapus Foto Portofolio');
+        return back()->with('gagal', 'Menghapus Foto Portofolio');
     }
 }

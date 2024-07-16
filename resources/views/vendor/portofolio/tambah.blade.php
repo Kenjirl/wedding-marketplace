@@ -275,7 +275,11 @@
 
 @push('child-js')
     {{-- SCRIPT LOKASI --}}
-    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+    @if(App::environment('local'))
+        <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
+    @else
+        <script src="https://pro-malamute-vastly.ngrok-free.app/js/input-select-wilayah.js"></script>
+    @endif
     <script>
         $(document).ready(function() {
             let provinsiData = {!! file_get_contents(public_path('json/provinsi.json')) !!};

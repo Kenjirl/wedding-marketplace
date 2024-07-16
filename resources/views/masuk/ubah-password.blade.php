@@ -83,7 +83,7 @@
     </div>
 @endsection
 
-@section('js')
+@push('child-js')
 <script>
     function togglePassword() {
         if ($('#password').attr('type') === 'password') {
@@ -105,4 +105,4 @@
         }
     }
 </script>
-@endsection
+@endpush

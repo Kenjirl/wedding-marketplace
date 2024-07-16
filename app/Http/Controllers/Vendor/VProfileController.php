@@ -136,10 +136,9 @@ class VProfileController extends Controller
         }
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengubah Data Diri');
+            return back()->with('sukses', 'Mengubah Data Diri');
         }
-
-        return redirect()->back()->with('gagal', 'Mengubah Data Diri');
+        return back()->with('gagal', 'Mengubah Data Diri');
     }
 
     public function ke_ubah_password() {
@@ -155,10 +154,9 @@ class VProfileController extends Controller
             ]);
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengubah Password');
+            return back()->with('sukses', 'Mengubah Password');
         }
-
-        return redirect()->back()->with('gagal', 'Mengubah Password');
+        return back()->with('gagal', 'Mengubah Password');
     }
 
     public function ke_ubah_foto() {
@@ -192,7 +190,6 @@ class VProfileController extends Controller
                 return redirect()->route('vendor.profil.index')->with('sukses', 'Mengubah Foto Profil');
             }
         }
-
         return redirect()->route('vendor.profil.index')->with('gagal', 'Mengubah Foto Profil');
     }
 
@@ -206,17 +203,17 @@ class VProfileController extends Controller
         ]);
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menambah Jenis Vendor')->withFragment('jenisVendor');
+            return back()->with('sukses', 'Menambah Jenis Vendor')->withFragment('jenisVendor');
         }
-        return redirect()->back()->with('gagal', 'Menambah Jenis Vendor')->withFragment('jenisVendor');
+        return back()->with('gagal', 'Menambah Jenis Vendor')->withFragment('jenisVendor');
     }
 
     public function hapus_jenis($id) {
         $data = WVJenis::find($id)->delete();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menghapus Jenis Vendor')->withFragment('jenisVendor');
+            return back()->with('sukses', 'Menghapus Jenis Vendor')->withFragment('jenisVendor');
         }
-        return redirect()->back()->with('gagal', 'Menghapus Jenis Vendor')->withFragment('jenisVendor');
+        return back()->with('gagal', 'Menghapus Jenis Vendor')->withFragment('jenisVendor');
     }
 }

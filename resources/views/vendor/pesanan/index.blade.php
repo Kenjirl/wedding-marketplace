@@ -31,10 +31,10 @@
                             </div>
                         </td>
                         <td class="px-2 text-end">
-                            {{ \Carbon\Carbon::parse($booking->created_at)->format('Y-m-d') }}
+                            {{ \Carbon\Carbon::parse($booking->created_at)->translatedFormat('d F Y') }}
                         </td>
                         <td class="px-2 text-end">
-                            {{ $booking->untuk_tanggal }}
+                            {{ \Carbon\Carbon::parse($booking->untuk_tanggal)->translatedFormat('d F Y') }}
                         </td>
                         <td class="px-2 text-end">
                             @if ($booking->status == 'diproses')

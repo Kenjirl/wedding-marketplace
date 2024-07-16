@@ -46,9 +46,9 @@ class UProfileController extends Controller
         }
 
         if ($data) {
-            return redirect()->route('user.profil.index')->with('sukses', 'Mengubah Data Diri');
+            return back()->with('sukses', 'Mengubah Data Diri');
         }
-        return redirect()->route('user.profil.index')->with('gagal', 'Mengubah Data Diri');
+        return back()->with('gagal', 'Mengubah Data Diri');
     }
 
     public function ke_ubah_password() {
@@ -64,10 +64,10 @@ class UProfileController extends Controller
             ]);
 
         if ($data) {
-            return redirect()->route('user.profil.index')->with('sukses', 'Mengubah Password');
+            return back()->with('sukses', 'Mengubah Password');
         }
 
-        return redirect()->route('user.profil.index')->with('gagal', 'Mengubah Password');
+        return back()->with('gagal', 'Mengubah Password');
     }
 
     public function ke_ubah_foto() {
@@ -98,10 +98,10 @@ class UProfileController extends Controller
                 ]);
 
             if ($data) {
-                return redirect()->route('user.profil.index')->with('sukses', 'Mengubah Foto Profil');
+                return back()->with('sukses', 'Mengubah Foto Profil');
             }
         }
 
-        return redirect()->route('user.profil.index')->with('gagal', 'Mengubah Foto Profil');
+        return back()->with('gagal', 'Mengubah Foto Profil');
     }
 }

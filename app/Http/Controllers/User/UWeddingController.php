@@ -179,9 +179,9 @@ class UWeddingController extends Controller
         $data = $booking->delete();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Membatalkan Pesanan Wedding Organizer');
+            return back()->with('sukses', 'Membatalkan Pesanan Wedding Organizer');
         }
-        return redirect()->back()->with('gagal', 'Membatalkan Pesanan Wedding Organizer');
+        return back()->with('gagal', 'Membatalkan Pesanan Wedding Organizer');
     }
 
     public function selesai(Request $req) {
@@ -190,9 +190,9 @@ class UWeddingController extends Controller
         $data = $booking->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Menyelesaikan Pesanan Wedding Organizer');
+            return back()->with('sukses', 'Menyelesaikan Pesanan Wedding Organizer');
         }
-        return redirect()->back()->with('gagal', 'Menyelesaikan Pesanan Wedding Organizer');
+        return back()->with('gagal', 'Menyelesaikan Pesanan Wedding Organizer');
     }
 
     public function ulasan(Request $req, $id) {
@@ -226,8 +226,8 @@ class UWeddingController extends Controller
         }
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Memberikan Ulasan pada Wedding Organizer');
+            return back()->with('sukses', 'Memberikan Ulasan pada Wedding Organizer');
         }
-        return redirect()->back()->with('gagal', 'Memberikan Ulasan pada Wedding Organizer');
+        return back()->with('gagal', 'Memberikan Ulasan pada Wedding Organizer');
     }
 }

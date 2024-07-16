@@ -7,6 +7,41 @@
 @section('h1', 'Detail Pesanan')
 
 @section('content')
+    <div class="w-full flex items-center justify-between">
+        <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+            href="{{ route('vendor.pesanan.index') }}">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>Kembali</span>
+        </a>
+
+        {{-- FORM SUBMIT --}}
+        <form action="{{ route('vendor.pesanan.respon', $booking->id) }}" method="post" id="pesananForm">
+            @csrf
+            {{-- STATUS --}}
+            <div class="hidden">
+                <input type="text" name="status" id="status" value="">
+            </div>
+
+            @if ($booking->status == 'diproses')
+                <div class="w-fit flex items-center justify-center gap-2">
+                    <button class="w-fit px-4 py-2 font-semibold outline-none border border-red-400 text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
+                        id="rejectBtn" type="button" onclick="respon('ditolak')">
+                        <i class="fa-solid fa-ban"></i>
+                        <span>Tolak</span>
+                    </button>
+
+                    <button class="w-fit px-4 py-2 font-semibold outline-none border border-blue-400 text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
+                        id="acceptBtn" type="button" onclick="respon('diterima')">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span>Terima</span>
+                    </button>
+                </div>
+            @endif
+        </form>
+    </div>
+
+    <hr class="my-4">
+
     {{-- JUDUL --}}
     <div class="w-full p-2 flex items-center justify-start gap-4">
         <div class="w-fit aspect-square px-2 flex items-center bg-pink rounded text-2xl text-white">
@@ -25,16 +60,16 @@
         </div>
     </div>
 
-    <div class="w-full grid grid-cols-3 gap-4">
+    <div class="w-full grid grid-cols-2 gap-4">
         {{-- KIRI --}}
-        <div class="w-full h-fit col-span-2">
+        <div class="w-full h-fit">
             {{-- EVENTS --}}
-            <div class="w-full p-2 grid grid-cols-2 gap-8 border-t-2 border-slate-100">
+            <div class="w-full p-2 border-t-2 border-slate-100">
                 @foreach ($events as $event)
                     {{-- EVENT --}}
                     <div class="w-full mb-4 flex items-center justify-center gap-4">
                         {{-- NUMBER --}}
-                        <div class="w-[50px] aspect-square flex items-center justify-center text-2xl italic bg-pink text-white font-semibold rounded">
+                        <div class="w-[40px] aspect-square flex items-center justify-center text-lg italic bg-pink text-white font-semibold rounded">
                             {{ $loop->iteration }}
                         </div>
 
@@ -57,8 +92,8 @@
                             {{-- BOTTOM --}}
                             <div class="w-full text-sm text-gray-400 italic">
                                 <div>
-                                    Pada {{ \Carbon\Carbon::parse($event->waktu)->format('d/m/Y') }}
-                                    pukul {{ \Carbon\Carbon::parse($event->waktu)->format('H:i') }}
+                                    Pada {{ \Carbon\Carbon::parse($event->waktu)->translatedFormat('l, d F Y') }} <br>
+                                    pukul {{ \Carbon\Carbon::parse($event->waktu)->translatedFormat('H:i') }}
                                 </div>
                                 <div>
                                     {{ $event->lokasi }}
@@ -68,50 +103,19 @@
                     </div>
                 @endforeach
             </div>
-
-            {{-- FORM SUBMIT --}}
-            <form action="{{ route('vendor.pesanan.respon', $booking->id) }}" method="post" id="pesananForm">
-                @csrf
-                {{-- STATUS --}}
-                <div class="hidden">
-                    <input type="text" name="status" id="status" value="">
-                </div>
-
-                <div class="w-full p-2 flex items-center justify-end gap-4">
-                    <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        href="{{ route('vendor.pesanan.index') }}">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                        <span>Kembali</span>
-                    </a>
-
-                    @if ($booking->status == 'diproses')
-                        <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
-                            id="rejectBtn" type="button" onclick="respon('ditolak')">
-                            <i class="fa-solid fa-ban"></i>
-                            <span>Tolak</span>
-                        </button>
-
-                        <button class="w-fit px-4 py-2 font-semibold outline-none text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
-                            id="acceptBtn" type="button" onclick="respon('diterima')">
-                            <i class="fa-regular fa-circle-check"></i>
-                            <span>Terima</span>
-                        </button>
-                    @endif
-                </div>
-            </form>
         </div>
 
         {{-- KANAN --}}
         <div class="w-full h-fit">
             {{-- STATUS --}}
             <div class="w-full px-4 py-2 text-white font-semibold rounded-tr-lg border-2 text-end
-                {{ $booking->status == 'diproses' ? 'bg-yellow-500 border-yellow-500' : 'bg-blue-500 border-blue-500' }}
+                {{ $booking->status == 'diproses' ? 'bg-yellow-400 border-yellow-400' : 'bg-blue-400 border-blue-400' }}
                 ">
                 {{ $booking->status }}
             </div>
 
             {{-- PEMESAN --}}
-            <div class="w-full p-2 text-sm border-2 border-slate-100">
+            <div class="w-full p-2 border-2 border-slate-100">
                 <table>
                     <tr>
                         <td class="pr-2"><i class="fa-solid fa-user text-pink"></i></td>
@@ -128,62 +132,51 @@
                 </table>
             </div>
 
-            {{-- DETAIL PAKET --}}
+            {{-- DETAIL PESANAN --}}
             <div class="w-full p-2 border-2 border-t-0 border-slate-100">
-                {{-- nama --}}
-                <div class="w-full">
-                    <span class="text-2xl font-semibold">
-                        {{ $plan->nama }}
+                {{-- nama paket --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Nama Paket Layanan
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        <a class="font-semibold underline"
+                            href="{{ route('vendor.layanan.ke_ubah', $plan->id) }}">
+                            {{ $plan->nama }}
+                        </a>
                     </span>
                 </div>
 
-                {{-- fitur --}}
-                <div class="w-full max-h-[200px] overflow-y-auto px-4 my-2"
-                    id="detailPlan">
-                    {!! $plan->detail !!}
+                {{-- jumlah pesanan --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Jumlah Pesanan
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        {{ $booking->qty . ' ' . $plan->satuan }}
+                    </span>
                 </div>
 
                 {{-- harga --}}
-                <div class="w-full flex items-start justify-end gap-2">
-                    <i class="fa-solid fa-rupiah-sign text-xl"></i>
-                    <span class="text-xl">
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Total Harga
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        Rp
                         {{ number_format($plan->harga, 0, ',', '.') }}
                     </span>
                 </div>
-            </div>
 
-            {{-- TANGGAL PESAN --}}
-            <div class="w-full p-2 border-2 border-t-0 border-slate-100">
-                <p>
-                    Dipesan untuk tanggal : {{ $booking->untuk_tanggal }}
-                </p>
-            </div>
-
-            {{-- BUKTI BAYAR --}}
-            <div class="w-full p-2 border-2 border-t-0 border-slate-100 rounded-b-lg">
-                @if ($booking->status == 'diterima')
-                    @if ($booking->bukti_bayar)
-                        <div class="w-full flex items-center justify-center overflow-hidden bg-slate-200 rounded-lg">
-                            <a class="cursor-zoom-in"
-                                id="bukti_bayar_img" href="{{ asset($booking->bukti_bayar) }}">
-                                <img class="max-h-[300px] object-contain object-center"
-                                    src="{{ asset($booking->bukti_bayar) }}" alt="Bukti Bayar">
-                            </a>
-                        </div>
-
-                        <div class="w-full mt-2">
-                            <a class="w-full block px-4 py-2 text-center font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                                href="{{ asset($booking->bukti_bayar) }}" download>
-                                <i class="fa-solid fa-download"></i>
-                                Unduh Gambar
-                            </a>
-                        </div>
-                    @else
-                        <div class="w-full p-2 bg-slate-200 rounded-lg text-center">
-                            Belum ada bukti bayar
-                        </div>
-                    @endif
-                @endif
+                {{-- tanggal pesan --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Dipesan untuk tanggal
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        {{ \Carbon\Carbon::parse($booking->untuk_tanggal)->translatedFormat('l, d F Y') }}
+                    </span>
+                </div>
             </div>
         </div>
     </div>

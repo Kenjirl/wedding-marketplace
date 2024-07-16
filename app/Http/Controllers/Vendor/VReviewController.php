@@ -17,22 +17,23 @@ class VReviewController extends Controller
                         ->get();
 
         $reviewsCount = $reviews->count();
-        $averageRating = $reviews->avg('rating');
+        $averageRating = $reviewsCount > 0 ? $reviews->avg('rating') : 0;
 
-        $lowestRateReview = $reviews->sortBy('rating')->first();
-        $lowestRate = $lowestRateReview ? ['id' => $lowestRateReview->w_booking->id, 'rate' => $lowestRateReview->rating] : null;
+        $ratings = [5,4,3,2,1];
+        $ratingDetails = [];
+        foreach ($ratings as $rating) {
+            $filteredReviews = $reviews->where('rating', $rating);
+            $count = $filteredReviews->count();
+            $ratingDetails[$rating] = [
+                'count' => $count
+            ];
+        }
 
-        $highestRateReview = $reviews->sortByDesc('rating')->first();
-        $highestRate = $highestRateReview ? ['id' => $highestRateReview->w_booking->id, 'rate' => $highestRateReview->rating] : null;
+        $total = [
+            'count' => $reviewsCount,
+            'average' => $averageRating
+        ];
 
-        return view('vendor.ulasan.index',
-                compact(
-                    'reviews',
-                    'reviewsCount',
-                    'averageRating',
-                    'lowestRate',
-                    'highestRate'
-                )
-        );
+        return view('vendor.ulasan.index', compact('reviews', 'total', 'ratingDetails'));
     }
 }

@@ -50,7 +50,7 @@
                             <button class="w-full p-2 flex items-center justify-start gap-2 text-pink font-semibold section-toggle-btn"
                                 type="button">
                                 <i class="fa-solid fa-caret-right"></i>
-                                {{ ucfirst($folder) }}<b class="text-red-500">*</b>
+                                {{ ucfirst($folder) }}
                             </button>
 
                             <span class="w-fit italic text-slate-500 text-sm" id="val-{{ $folder }}">(1)</span>
@@ -60,16 +60,10 @@
                         <div class="overflow-hidden transition-all section-content">
                             <div class="px-2 py-4 flex items-center justify-start gap-2 overflow-x-auto">
                                 @for ($i = 1; $i <= $count; $i++)
-                                    <button class="relative min-w-[80px] aspect-square border border-pink rounded shadow
-                                        hover:bg-pink focus:bg-pink transition-colors active:bg-pink-active group section-item"
+                                    <button class="relative min-w-[50px] aspect-square border border-pink rounded shadow font-semibold text-pink
+                                        hover:bg-pink hover:text-white focus:bg-pink focus:text-white transition-colors active:bg-pink-active section-item"
                                         type="button" data-value="t_{{ $folder }}-{{ $i }}">
-                                        <div class="absolute -top-[10px] left-0 w-full">
-                                            <div class="w-[20px] h-[20px] mx-auto flex items-center justify-center rounded border border-pink bg-white text-pink text-xs font-semibold">
-                                                {{ $i }}
-                                            </div>
-                                        </div>
-
-                                        <i class="fa-regular fa-face-flushed"></i>
+                                        {{ $i }}
                                     </button>
                                 @endfor
                             </div>
@@ -227,8 +221,8 @@
             $('.section-container .section-content .section-item').click(function() {
                 handleButtonClick($(this));
 
-                $(this).closest('.section-content').find('.section-item').removeClass('bg-pink').addClass('bg-white');
-                $(this).removeClass('bg-white').addClass('bg-pink');
+                $(this).closest('.section-content').find('.section-item').removeClass('bg-pink text-white').addClass('bg-white text-pink');
+                $(this).removeClass('bg-white text-pink').addClass('bg-pink text-white');
             });
 
             $('.section-container .section-content .section-item:first-child').each(function() {

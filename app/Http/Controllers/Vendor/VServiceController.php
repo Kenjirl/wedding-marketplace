@@ -112,7 +112,7 @@ class VServiceController extends Controller
         $plan = WVPlan::find($id);
 
         if (!$plan) {
-            return redirect()->route('vendor.layanan.index')->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID Invalid');
         }
 
         $satuans = $this->satuan;
@@ -176,9 +176,9 @@ class VServiceController extends Controller
         $data = $plan->save();
 
         if ($data) {
-            return redirect()->back()->with('sukses', 'Mengubah Paket Layanan');
+            return back()->with('sukses', 'Mengubah Paket Layanan');
         }
-        return redirect()->back()->with('gagal', 'Mengubah Paket Layanan');
+        return back()->with('gagal', 'Mengubah Paket Layanan');
     }
 
     public function hapus($id) {

@@ -10,7 +10,7 @@ Berikut merupakan tautan untuk mengganti password Anda.
 
 <br><br>
 
-<a href="http://127.0.0.1:8000/verifikasi-ubah-password?code={{ $email_data['verification_code'] }}">Ubah password Saya</a>
+<a href="{{ config('app.url') }}/verifikasi-ubah-password?code={{ $email_data['verification_code'] }}">Ubah password Saya</a>
 
 <br><br>
 
