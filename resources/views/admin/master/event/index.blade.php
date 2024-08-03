@@ -15,6 +15,8 @@
         </a>
     </div>
 
+    <hr class="my-4">
+
     <table class="w-full display table-auto cell-border compact hover" id="dataTable">
         <thead>
             <tr class="border-t">

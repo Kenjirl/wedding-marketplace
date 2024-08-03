@@ -7,7 +7,7 @@
 @section('h1', 'Daftar Admin')
 
 @section('content')
-    <div class="w-full mb-4 flex items-center justify-end">
+    <div class="w-full flex items-center justify-end">
         <a class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
             href="{{ route('super-admin.daftar-admin.ke_tambah') }}">
             <i class="fa-solid fa-plus"></i>
@@ -15,11 +15,14 @@
         </a>
     </div>
 
+    <hr class="my-4">
+
     <div class="w-full">
         <table class="w-full table-auto cell-border compact hover" id="dataTable">
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Waktu</th>
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Username</th>
@@ -28,9 +31,12 @@
             </thead>
             <tbody>
                 @forelse ($admins as $admin)
-                <tr>
+                <tr class="border-b">
                     <td class="text-center">
                         {{ $loop->iteration }}
+                    </td>
+                    <td class="px-2">
+                        {{ $admin->updated_at }}
                     </td>
                     <td class="px-2">
                         {{ $admin->nama }}

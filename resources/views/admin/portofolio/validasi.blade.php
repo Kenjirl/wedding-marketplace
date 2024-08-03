@@ -7,12 +7,39 @@
 @section('h1', 'Portofolio > Validasi Portofolio')
 
 @section('content')
-    <div class="mb-4 flex items-center justify-end gap-2">
-        <button class="w-[40px] aspect-square p-2 bg-pink text-white text-center rounded"
-            type="button" id="infoBtn">
-            <i class="fa-solid fa-circle-info"></i>
-        </button>
+    {{-- BUTTON --}}
+    <div class="w-full flex items-center justify-between">
+        <div class="w-1/3">
+            <a class="w-fit px-4 py-2 block font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                href="{{ route('admin.portofolio.index', $portofolio->status) }}">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span>Kembali</span>
+            </a>
+        </div>
+
+        <div class="w-1/3 flex items-center justify-center">
+            <button class="w-[40px] aspect-square p-2 bg-pink text-white text-center rounded"
+                type="button" id="infoBtn">
+                <i class="fa-solid fa-circle-info"></i>
+            </button>
+        </div>
+
+        <div class="w-1/3 flex items-center justify-end gap-4">
+            <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
+                id="rejectBtn" type="button" onclick="kirim('ditolak', 'Tolak')">
+                <i class="fa-solid fa-ban"></i>
+                <span>Tolak</span>
+            </button>
+
+            <button class="w-fit px-4 py-2 font-semibold outline-none text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
+                id="acceptBtn" type="button" onclick="kirim('diterima', 'Terima')">
+                <i class="fa-regular fa-circle-check"></i>
+                <span>Terima</span>
+            </button>
+        </div>
     </div>
+
+    <hr class="my-4">
 
     <form action="{{ route('admin.portofolio.validasi', $portofolio->id) }}" method="post" id="validasiForm">
         @csrf
@@ -98,27 +125,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        {{-- BUTTON --}}
-        <div class="w-full mt-4 flex items-center justify-end gap-4">
-            <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                href="{{ route('admin.portofolio.index', $portofolio->status) }}">
-                <i class="fa-solid fa-arrow-left-long"></i>
-                <span>Kembali</span>
-            </a>
-
-            <button class="w-fit px-4 py-2 font-semibold outline-none text-red-400 bg-white hover:bg-red-400 hover:text-white focus:bg-red-400 focus:text-white active:bg-red-200 transition-colors rounded"
-                id="rejectBtn" type="button" onclick="kirim('ditolak', 'Tolak')">
-                <i class="fa-solid fa-ban"></i>
-                <span>Tolak</span>
-            </button>
-
-            <button class="w-fit px-4 py-2 font-semibold outline-none text-blue-400 bg-white hover:bg-blue-400 hover:text-white focus:bg-blue-400 focus:text-white active:bg-blue-200 transition-colors rounded"
-                id="acceptBtn" type="button" onclick="kirim('diterima', 'Terima')">
-                <i class="fa-regular fa-circle-check"></i>
-                <span>Terima</span>
-            </button>
         </div>
     </form>
 @endsection

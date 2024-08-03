@@ -11,54 +11,56 @@ use Illuminate\Http\Request;
 class AController extends Controller
 {
     public function index() {
-        $currentYear = Carbon::now()->year;
+        $userRegistrations = User::where('role', 'user')
+            ->get()
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('Y-m');
+            })->map(function($row) {
+                return count($row);
+            });
 
-        $users = User::whereYear('created_at', $currentYear)
-                    ->where('role', 'user')
-                    ->get();
+        $vendorRegistrations = User::where('role', 'vendor')
+            ->get()
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('Y-m');
+            })->map(function($row) {
+                return count($row);
+            });
 
-        $monthlyUserRegistrations = $users->groupBy(function($date) {
-            return Carbon::parse($date->created_at)->format('m');
-        })->map(function($row) {
-            return count($row);
-        });
-
-        $userRegistrationsPerMonth = array_fill(1, 12, 0);
-        foreach ($monthlyUserRegistrations as $month => $count) {
-            $userRegistrationsPerMonth[(int)$month] = $count;
+        $userRegisChartData = [];
+        foreach ($userRegistrations as $monthYear => $count) {
+            $userRegisChartData[$monthYear]['Pengguna'] = $count;
+        }
+        foreach ($vendorRegistrations as $monthYear => $count) {
+            if (isset($userRegisChartData[$monthYear])) {
+                $userRegisChartData[$monthYear]['Vendor'] = $count;
+            } else {
+                $userRegisChartData[$monthYear] = ['Pengguna' => 0, 'Vendor' => $count];
+            }
         }
 
-        $vendors = User::whereYear('created_at', $currentYear)
-                    ->where('role', 'vendor')
-                    ->get();
-
-        $monthlyVendorRegistrations = $vendors->groupBy(function($date) {
-            return Carbon::parse($date->created_at)->format('m');
-        })->map(function($row) {
-            return count($row);
-        });
-
-        $vendorRegistrationsPerMonth = array_fill(1, 12, 0);
-        foreach ($monthlyVendorRegistrations as $month => $count) {
-            $vendorRegistrationsPerMonth[(int)$month] = $count;
+        foreach ($userRegisChartData as &$data) {
+            if (!isset($data['Pengguna'])) {
+                $data['Pengguna'] = 0;
+            }
+            if (!isset($data['Vendor'])) {
+                $data['Vendor'] = 0;
+            }
         }
 
         $totalUsers = User::where('role', 'user')->count();
         $totalVendors = User::where('role', 'vendor')->count();
-        $nullRoleUsers = User::whereNull('role')->count();
+        $totalAdmins = User::where('role', 'admin')->count();
 
-        $portofolios = WVPortofolio::where('status', 'menunggu konfirmasi')
-                        ->orderBy('created_at','asc')
-                        ->limit(5)
-                        ->get();
+        $userTotalChartData = [
+            'Pengguna' => $totalUsers,
+            'Vendor' => $totalVendors,
+            'Admin' => $totalAdmins,
+        ];
 
         return view('admin.index', compact(
-            'userRegistrationsPerMonth',
-            'vendorRegistrationsPerMonth',
-            'totalUsers',
-            'totalVendors',
-            'nullRoleUsers',
-            'portofolios',
+            'userRegisChartData',
+            'userTotalChartData'
         ));
     }
 }

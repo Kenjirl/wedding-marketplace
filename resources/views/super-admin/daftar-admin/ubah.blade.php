@@ -9,7 +9,24 @@
 @section('content')
     <form action="{{ route('super-admin.daftar-admin.ubah', $admin->id) }}" method="post">
         @csrf
-        <div class="w-full flex items-start justify-between gap-8">
+        {{-- BUTTON --}}
+        <div class="w-full flex items-center justify-between">
+            <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                href="{{ route('super-admin.daftar-admin.ke_daftar') }}">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span>Kembali</span>
+            </a>
+
+            <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                type="submit">
+                <i class="fa-regular fa-floppy-disk"></i>
+                <span>Simpan</span>
+            </button>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="w-1/2 mx-auto">
             {{-- KIRI --}}
             <div class="flex-1">
                 {{-- NAMA ADMIN --}}
@@ -77,157 +94,25 @@
                         @enderror
                     </div>
                 </div>
-            </div>
-
-            {{-- KANAN --}}
-            <div class="flex-1">
-                {{-- PROVINSI --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
-                            Provinsi
-                        </div>
-                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi') border-red-400 @enderror rounded-b focus:border-pink outline-none"
-                            name="provinsi" id="provinsi">
-                            <option value="" selected>Pilih Provinsi</option>
-                            @forelse ($provinsiData as $provinsiItem)
-                                <option value="{{ $provinsiItem->name }}" {{ $provinsiItem->name == $provinsi ? 'selected' : '' }}>
-                                    {{ $provinsiItem->name }}
-                                </option>
-                            @empty
-
-                            @endforelse
-                        </select>
-                    </div>
-
-                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
-                        @error('provinsi')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                {{-- KOTA --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('kota') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
-                            Kota/Kabupaten
-                        </div>
-                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota') border-red-400 @enderror rounded-b focus:border-pink outline-none"
-                            name="kota" id="kota">
-                            <option value="" selected>Pilih Kota/Kabupaten</option>
-                            @forelse ($filteredKotaData as $kotaItem)
-                                <option value="{{ $kotaItem->name }}" {{ $kotaItem->name == $kota ? 'selected' : '' }}>
-                                    {{ $kotaItem->name }}
-                                </option>
-                            @empty
-
-                            @endforelse
-                        </select>
-                    </div>
-
-                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
-                        @error('kota')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                {{-- KECAMATAN --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
-                            Kecamatan
-                        </div>
-                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan') border-red-400 @enderror rounded-b focus:border-pink outline-none"
-                            name="kecamatan" id="kecamatan">
-                            <option value="" selected>Pilih Kecamatan</option>
-                            @forelse ($filteredKecamatanData as $kecamatanItem)
-                                <option value="{{ $kecamatanItem->name }}" {{ $kecamatanItem->name == $kecamatan ? 'selected' : '' }}>
-                                    {{ $kecamatanItem->name }}
-                                </option>
-                            @empty
-
-                            @endforelse
-                        </select>
-                    </div>
-
-                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
-                        @error('kecamatan')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                {{-- KELURAHAN --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
-                            Kelurahan
-                        </div>
-                        <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan') border-red-400 @enderror rounded-b focus:border-pink outline-none"
-                            name="kelurahan" id="kelurahan">
-                            <option value="" selected>Pilih Kelurahan</option>
-                            @forelse ($filteredKelurahanData as $kelurahanItem)
-                                <option value="{{ $kelurahanItem->name }}" {{ $kelurahanItem->name == $kelurahan ? 'selected' : '' }}>
-                                    {{ $kelurahanItem->name }}
-                                </option>
-                            @empty
-
-                            @endforelse
-                        </select>
-                    </div>
-
-                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
-                        @error('kelurahan')
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
 
                 {{-- ALAMAT --}}
-                <div class="relative w-100 mb-4">
-                    <div class="w-100">
-                        <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat_detail') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
-                            Alamat Detail
+                <div class="relative w-full mb-4">
+                    <div class="w-full">
+                        <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
+                            Alamat
                         </div>
-                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat_detail') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
-                            type="text" name="alamat_detail" id="alamat_detail" placeholder="Jl. Besar no. 1"
-                            required
-                            value="{{ old('alamat_detail', $alamat_detail) }}">
+                        <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat') border-red-400 @enderror outline-pink rounded-b focus:border-pink focus:outline-none"
+                            name="alamat" id="alamat" rows="3" required minlength="10" maxlength="254" placeholder="alamat lengkap">{{ $admin->alamat }}</textarea>
                     </div>
 
                     <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
-                        @error('alamat_detail')
+                        @error('alamat')
                             <i class="fa-solid fa-circle-info"></i>
                             <span>{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
             </div>
-        </div>
-
-        {{-- BUTTON --}}
-        <div class="w-100 mt-4 flex items-center justify-end gap-4">
-            <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                href="{{ route('super-admin.daftar-admin.ke_daftar') }}">
-                <i class="fa-solid fa-arrow-left-long"></i>
-                <span>Kembali</span>
-            </a>
-
-            <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                type="submit">
-                <i class="fa-regular fa-floppy-disk"></i>
-                <span>Simpan</span>
-            </button>
         </div>
     </form>
 @endsection
-
-@push('child-js')
-    <script src="{{ asset('js/input-select-wilayah.js') }}"></script>
-@endpush

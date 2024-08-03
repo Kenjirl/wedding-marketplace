@@ -9,8 +9,25 @@
 @section('content')
     <form action="{{ route('admin.jenis-vendor.ubah', $j_vendor->id) }}" method="post">
         @csrf
+        {{-- BUTTON --}}
+        <div class="w-full flex items-center justify-between">
+            <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                href="{{ route('admin.jenis-vendor.index') }}">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span>Kembali</span>
+            </a>
+
+            <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                type="submit">
+                <i class="fa-regular fa-floppy-disk"></i>
+                <span>Simpan</span>
+            </button>
+        </div>
+
+        <hr class="my-4">
+
         {{-- INPUT --}}
-        <div class="w-1/2">
+        <div class="w-1/2 mx-auto">
             {{-- NAMA --}}
             <div class="w-full mb-4">
                 <div class="w-full">
@@ -56,23 +73,6 @@
                         gunakan icon dari link berikut :
                         <a class="underline" href="https://fontawesome.com/icons">https://fontawesome.com/icons</a>
                     </p>
-                </div>
-            </div>
-
-            {{-- BUTTON --}}
-            <div class="w-full flex items-center justify-end">
-                <div class="w-full flex items-center justify-end gap-4">
-                    <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                        href="{{ route('admin.jenis-vendor.index') }}">
-                        <i class="fa-solid fa-arrow-left-long"></i>
-                        <span>Kembali</span>
-                    </a>
-
-                    <button class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                        type="submit">
-                        <i class="fa-regular fa-floppy-disk"></i>
-                        <span>Simpan</span>
-                    </button>
                 </div>
             </div>
         </div>

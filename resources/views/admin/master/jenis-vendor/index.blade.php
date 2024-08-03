@@ -15,6 +15,8 @@
         </a>
     </div>
 
+    <hr class="my-4">
+
     <table class="w-full display table-auto cell-border compact hover" id="dataTable">
         <thead>
             <tr class="border-t">
@@ -41,14 +43,13 @@
                         <i class="{{ $j_vendor->icon }}"></i>
                     </td>
                     <td class="flex flex-nowrap items-center justify-center gap-2 p-2">
-                        <a class="flex-1 w-full text-center whitespace-nowrap text-sm font-semibold px-4 py-2 outline-none hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                        <a class="block w-fit text-center whitespace-nowrap text-sm font-semibold px-4 py-2 outline-none text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                             href="{{ route('admin.jenis-vendor.ke_ubah', $j_vendor->id) }}">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </a>
-                        <form class="flex-1 w-full"
-                            action="{{ route('admin.jenis-vendor.hapus', $j_vendor->id) }}" method="post" id="deleteForm-{{ $j_vendor->id }}">
+                        <form action="{{ route('admin.jenis-vendor.hapus', $j_vendor->id) }}" method="post" id="deleteForm-{{ $j_vendor->id }}">
                             @csrf
-                            <button class="w-full px-4 py-2 rounded text-sm whitespace-nowrap text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                            <button class="w-fit px-4 py-2 rounded text-sm whitespace-nowrap text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
                                 type="button" onclick="showDeleteConfirmation({{ $j_vendor->id }}, '{{ $j_vendor->nama }}')">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>

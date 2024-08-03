@@ -25,22 +25,18 @@ class TambahAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama'          => 'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
-            'email'         => [
+            'nama'     => 'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
+            'email'    => [
                 'required',
                 Rule::unique('users', 'email'),
             ],
-            'username'      => [
+            'username' => [
                 'required',
                 Rule::unique('users', 'name'),
             ],
-            'no_telp'       => 'required|string|min:8|max:15',
-            'gender'        => 'required|string|regex:/^[a-zA-Z\s]*$/|in:Pria,Wanita',
-            'provinsi'      => 'required|string|regex:/^[a-zA-Z\s()]*$/',
-            'kota'          => 'required|string|regex:/^[a-zA-Z\s()]*$/',
-            'kecamatan'     => 'required|string|regex:/^[a-zA-Z\s()]*$/',
-            'kelurahan'     => 'required|string|regex:/^[a-zA-Z\s()]*$/',
-            'alamat_detail' => 'required|string|regex:/^[a-zA-Z\s.0-9]*$/',
+            'no_telp'  => 'required|string|min:8|max:15',
+            'gender'   => 'required|string|regex:/^[a-zA-Z\s]*$/|in:Pria,Wanita',
+            'alamat'   => 'required|string',
         ];
     }
 
@@ -52,37 +48,24 @@ class TambahAdminRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nama.required'          => 'Nama tidak boleh kosong',
-            'nama.string'            => 'Nama harus berupa karakter',
-            'nama.regex'             => 'Nama tidak boleh memuat angka dan/atau tanda baca',
-            'nama.max'               => 'Nama tidak boleh lebih dari 50 karakter',
-            'email.required'         => 'Email tidak boleh kosong',
-            'email.unique'           => 'Email sudah digunakan',
-            'username.required'      => 'Username tidak boleh kosong',
-            'username.unique'        => 'Username sudah digunakan',
-            'no_telp.required'       => 'Nomor Telepon tidak boleh kosong',
-            'no_telp.string'         => 'Nomor Telepon harus berupa angka',
-            'no_telp.min'            => 'Nomor Telepon minimal 8 karakter',
-            'no_telp.max'            => 'Nomor Telepon maksimal 15 karakter',
-            'gender.required'        => 'Gender tidak boleh kosong',
-            'gender.string'          => 'Gender harus berupa karakter',
-            'gender.regex'           => 'Gender tidak boleh memuat angka dan/atau tanda baca',
-            'gender.in'              => 'Gender harus dipilih dari pilihan yang tersedia',
-            'provinsi.required'      => 'Provinsi tidak boleh kosong',
-            'provinsi.string'        => 'Provinsi harus berupa karakter',
-            'provinsi.regex'         => 'Provinsi harus dipilih dari pilihan yang tersedia',
-            'kota.required'          => 'Kota tidak boleh kosong',
-            'kota.string'            => 'Kota harus berupa karakter',
-            'kota.regex'             => 'Kota harus dipilih dari pilihan yang tersedia',
-            'kecamatan.required'     => 'Kecamatan tidak boleh kosong',
-            'kecamatan.string'       => 'Kecamatan harus berupa karakter',
-            'kecamatan.regex'        => 'Kecamatan harus dipilih dari pilihan yang tersedia',
-            'kelurahan.required'     => 'Kelurahan tidak boleh kosong',
-            'kelurahan.string'       => 'Kelurahan harus berupa karakter',
-            'kelurahan.regex'        => 'Kelurahan harus dipilih dari pilihan yang tersedia',
-            'alamat_detail.required' => 'Alamat Detail tidak boleh kosong',
-            'alamat_detail.string'   => 'Alamat Detail harus berupa karakter',
-            'alamat_detail.regex'    => 'Alamat Detail tidak boleh memuat tanda baca selain titik',
+            'nama.required'     => 'Nama tidak boleh kosong',
+            'nama.string'       => 'Nama harus berupa karakter',
+            'nama.regex'        => 'Nama tidak boleh memuat angka dan/atau tanda baca',
+            'nama.max'          => 'Nama tidak boleh lebih dari 50 karakter',
+            'email.required'    => 'Email tidak boleh kosong',
+            'email.unique'      => 'Email sudah digunakan',
+            'username.required' => 'Username tidak boleh kosong',
+            'username.unique'   => 'Username sudah digunakan',
+            'no_telp.required'  => 'Nomor Telepon tidak boleh kosong',
+            'no_telp.string'    => 'Nomor Telepon harus berupa angka',
+            'no_telp.min'       => 'Nomor Telepon minimal 8 karakter',
+            'no_telp.max'       => 'Nomor Telepon maksimal 15 karakter',
+            'gender.required'   => 'Jenis kelamin tidak boleh kosong',
+            'gender.string'     => 'Jenis kelamin harus berupa karakter',
+            'gender.regex'      => 'Jenis kelamin tidak boleh memuat angka dan/atau tanda baca',
+            'gender.in'         => 'Jenis kelamin harus dipilih dari pilihan yang tersedia',
+            'alamat.required'   => 'Alamat tidak boleh kosong',
+            'alamat.string'     => 'Alamat harus berupa karakter',
         ];
     }
 }
