@@ -21,7 +21,7 @@
                         type="password" name="password" id="password" placeholder="password" minlength="6" onkeyup="validatePassword()" value="{{ old('password') }}" required>
                     <div class="w-10 aspect-square p-2 bg-pink text-white flex items-center justify-center rounded-e"></div>
                 </div>
-                <div class="h-4 mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                <div class="h-4 mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                     @error('password')
                         <i class="fa-solid fa-circle-info"></i>
                         <span>{{ $message }}</span>
@@ -42,7 +42,7 @@
                         <i class="fa-regular fa-eye"></i>
                     </button>
                 </div>
-                <div class="h-4 mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                <div class="h-4 mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                     @error('vPassword')
                         <i class="fa-solid fa-circle-info"></i>
                         <span>{{ $message }}</span>

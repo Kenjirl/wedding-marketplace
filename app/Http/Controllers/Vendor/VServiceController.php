@@ -12,25 +12,41 @@ class VServiceController extends Controller
 {
     protected $satuan;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->satuan = [
-            'Makanan' => ['box', 'paket', 'pan', 'porsi', 'tray', 'tumpeng'],
-            'Minuman' => ['galon', 'liter'],
-            'Lain-lain' => ['item', 'set'],
-            'Waktu' => ['hari', 'jam', 'minggu'],
-            'Paket' => ['paket meeting', 'paket pernikahan', 'paket ulang tahun', 'paket'],
-            'Fasilitas' => ['dekorasi', 'gedung', 'kursi', 'meja', 'sound system'],
-            'Layanan' => ['acara', 'jam', 'sesi'],
             'Dekorasi dan Peralatan' => ['item'],
-            'Hasil Akhir' => ['album', 'foto'],
+            'Fasilitas' => ['dekorasi', 'gedung', 'kursi', 'meja', 'sound system'],
+            'Lain-lain' => ['item', 'set'],
+            'Layanan' => ['acara', 'sesi'],
+            'Makanan' => ['box', 'paket', 'pan', 'porsi', 'tray', 'tumpeng'],
+            'Paket' => ['paket layanan'],
+            'Waktu' => ['hari'],
         ];
     }
 
-    public function index() {
-        $plans = WVPlan::where('w_vendor_id', auth()->user()->w_vendor->id)
-                ->with(['ratings'])
-                ->get();
+    public function index(Request $req) {
+        $jenis_id = $req->query('jenis_id');
+        $vendorId = auth()->user()->w_vendor->id;
+
+        $j_vendor = WVJenis::where('w_vendor_id', $vendorId)
+                            ->with(['master'])
+                            ->withTrashed()
+                            ->get();
+
+        $validJenisIds = $j_vendor->pluck('m_jenis_vendor_id')->toArray();
+
+        if ($jenis_id && !in_array($jenis_id, $validJenisIds)) {
+            $jenis_id = null;
+        }
+
+        $planQuery = WVPlan::where('w_vendor_id', auth()->user()->w_vendor->id)
+                            ->with(['ratings']);
+
+        if ($jenis_id) {
+            $planQuery->where('m_jenis_vendor_id', $jenis_id);
+        }
+
+        $plans = $planQuery->get();
 
         foreach ($plans as $plan) {
             $totalRating = $plan->ratings->sum('rating');
@@ -38,7 +54,7 @@ class VServiceController extends Controller
             $plan->rate = $ratingCount > 0 ? $totalRating / $ratingCount : null;
         }
 
-        return view('vendor.layanan.index', compact('plans'));
+        return view('vendor.layanan.index', compact('jenis_id', 'j_vendor', 'plans'));
     }
 
     public function ke_tambah() {
@@ -112,7 +128,7 @@ class VServiceController extends Controller
         $plan = WVPlan::find($id);
 
         if (!$plan) {
-            return back()->with('gagal', 'ID Invalid');
+            return back()->with('gagal', 'ID tidak valid');
         }
 
         $satuans = $this->satuan;

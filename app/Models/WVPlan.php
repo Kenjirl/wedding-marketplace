@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WVPlan extends Model
@@ -39,7 +38,17 @@ class WVPlan extends Model
         return $this->hasMany(WVBooking::class, 'w_v_plan_id');
     }
 
-    public function ratings(): HasManyThrough {
-        return $this->hasManyThrough(WVRating::class, WVBooking::class, 'w_v_plan_id', 'w_v_booking_id');
+    public function ratings(): HasMany {
+        return $this->hasMany(WVRating::class, 'w_v_plan_id');
+    }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($plan) {
+            WVBooking::where('w_v_plan_id', $plan->id)
+                ->where('status', 'diproses')
+                ->update(['status' => 'ditolak']);
+        });
     }
 }

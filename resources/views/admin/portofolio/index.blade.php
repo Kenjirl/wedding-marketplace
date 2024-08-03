@@ -41,24 +41,23 @@
     </div>
 
     {{-- BAWAH --}}
-    <div class="w-full border-t-2 border-{{ $statuses[$tab]['color'] }}-400">
-        <div class="p-4">
-            <table class="w-full table-auto cell-border compact hover" id="dataTable">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Judul</th>
-                        <th>Pembuat</th>
-                        @if ($tab != 'pending')
-                            <th>Penanggung Jawab</th>
-                        @endif
-                        <th>Dibuat Pada</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($portofolio as $prt)
-                    <tr>
+    <div class="w-full p-4 border-t-2 border-{{ $statuses[$tab]['color'] }}-400">
+        <table class="w-full display table-auto cell-border compact hover" id="dataTable">
+            <thead>
+                <tr class="border-t">
+                    <th>No</th>
+                    <th>Judul</th>
+                    <th>Pembuat</th>
+                    @if ($tab != 'pending')
+                        <th>Penanggung Jawab</th>
+                    @endif
+                    <th>Dibuat Pada</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($portofolio as $prt)
+                    <tr class="border-b">
                         <td class="text-center">
                             {{ $loop->iteration }}
                         </td>
@@ -89,12 +88,20 @@
                             </a>
                         </td>
                     </tr>
-                    @empty
-                        {{-- NO DATA --}}
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                @empty
+                    <tr class="border-b text-center">
+                        <td class="p-2">Belum ada data</td>
+                        <td></td>
+                        <td></td>
+                        @if ($tab != 'pending')
+                            <td></td>
+                        @endif
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 
 @endsection

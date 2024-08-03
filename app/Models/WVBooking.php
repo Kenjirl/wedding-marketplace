@@ -26,6 +26,7 @@ class WVBooking extends Model
         'untuk_tanggal',
         'total_bayar',
         'bukti_bayar',
+        'catatan',
     ];
 
     public function wedding(): BelongsTo {
@@ -46,5 +47,17 @@ class WVBooking extends Model
 
     public function rating(): HasOne {
         return $this->hasOne(WVRating::class, 'w_v_booking_id');
+    }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($booking) {
+            $booking->rating()->delete();
+        });
+
+        static::restoring(function ($booking) {
+            $booking->rating()->withTrashed()->restore();
+        });
     }
 }

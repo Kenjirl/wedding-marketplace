@@ -12,13 +12,14 @@ class WCInvitation extends Model
     use HasFactory, SoftDeletes;
 
     protected $casts = [
-        'c_header'  => 'array',
-        'c_quote'   => 'array',
-        'c_profile' => 'array',
-        'c_event' => 'array',
-        'c_gallery' => 'array',
-        'c_wish'    => 'array',
-        'c_footer'  => 'array',
+        'header'  => 'array',
+        'quote'   => 'array',
+        'profile' => 'array',
+        'event'   => 'array',
+        'gallery' => 'array',
+        'wish'    => 'array',
+        'info'    => 'array',
+        'footer'  => 'array',
     ];
 
     protected $guarded = [

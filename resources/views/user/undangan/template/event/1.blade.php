@@ -1,8 +1,8 @@
 <div class="w-full py-20 font-varela">
     <div class="w-[90%] mx-auto shadow-lg" id="sdiv"
-        style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_event['sdiv'] : '#ffffff'}};">
+        style="background-color: {{ $wedding->invitation ? $wedding->invitation->event['sdiv'] : '#ffffff'}};">
         <div class="w-full p-4 text-center text-[2em] md:text-[3em] lg:text-[4em] font-semibold font-great-vibes"
-            style="color: {{ $wedding->invitation ? $wedding->invitation->c_event['stext'] : '#000000'}};"
+            style="color: {{ $wedding->invitation ? $wedding->invitation->event['stext'] : '#000000'}};"
             id="stext">
             The Wedding Day
         </div>

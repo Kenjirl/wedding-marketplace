@@ -51,7 +51,7 @@ class WCWedding extends Model
 
         static::deleting(function ($wedding) {
             $wedding->w_detail()->delete();
-            $wedding->w_v_booking()->delete();
+            // $wedding->w_v_booking()->delete();
             $wedding->invitation()->delete();
             $wedding->guests()->delete();
         });

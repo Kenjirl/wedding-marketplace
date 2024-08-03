@@ -6,16 +6,16 @@
     </div>
 
     <div class="self-center" id="sdiv"
-        style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_header['sdiv'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->c_header['text'] : '#000000'}};">
+        style="background-color: {{ $wedding->invitation ? $wedding->invitation->header['sdiv'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->header['text'] : '#000000'}};">
         <div class="w-full p-5">
             <div class="w-[200px] aspect-square mx-auto flex items-center justify-center rounded-full font-great-vibes text-[4em] shadow-lg"
                 id="div"
-                style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_header['div'] : '#ffffff'}};">
+                style="background-color: {{ $wedding->invitation ? $wedding->invitation->header['div'] : '#ffffff'}};">
                 <div class="pb-4">{{ substr($wedding->p_sapaan, 0, 1) }}</div>
                 <div class="pt-4 pr-4">{{ substr($wedding->w_sapaan, 0, 1) }}</div>
             </div>
             <div class="text-[5em] font-semibold font-great-vibes"
-                style="color: {{ $wedding->invitation ? $wedding->invitation->c_header['stext'] : '#000000'}};"
+                style="color: {{ $wedding->invitation ? $wedding->invitation->header['stext'] : '#000000'}};"
                 id="stext">
                 {{ $wedding->p_sapaan }} & {{ $wedding->w_sapaan }}
             </div>

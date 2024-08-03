@@ -15,20 +15,19 @@
         </a>
     </div>
 
-    <div class="w-full">
-        <table class="w-full table-auto cell-border compact hover" id="dataTable">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Kategori</th>
-                    <th>Jenis</th>
-                    <th>Keterangan</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($events as $event)
-                <tr>
+    <table class="w-full display table-auto cell-border compact hover" id="dataTable">
+        <thead>
+            <tr class="border-t">
+                <th>No</th>
+                <th>Kategori</th>
+                <th>Jenis</th>
+                <th>Keterangan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($events as $event)
+                <tr class="border-b">
                     <td class="text-center">
                         {{ $loop->iteration }}
                     </td>
@@ -39,7 +38,7 @@
                         {{ $event->jenis }}
                     </td>
                     <td class="px-2">
-                        <div class="line-clamp-1">
+                        <div class="max-w-[500px] line-clamp-1">
                             {!! $event->keterangan !!}
                         </div>
                     </td>
@@ -61,11 +60,18 @@
                         </form>
                     </td>
                 </tr>
-                @empty
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+            @empty
+                <tr class="border-b text-center">
+                    <td class="p-2">Belum ada data</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 @endsection
 
 @push('child-js')

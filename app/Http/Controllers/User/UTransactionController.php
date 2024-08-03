@@ -80,7 +80,7 @@ class UTransactionController extends Controller
             return redirect()->route('user.pernikahan.index')->with('gagal', 'Terjadi kesalahan dalam menyelesaikan transaksi');
         }
 
-        Log::info('Transaction details:', (array) $transactionDetails);
+        // Log::info('Transaction details:', (array) $transactionDetails);
 
         if (in_array($transactionDetails['transaction_status'], ['capture', 'settlement'])) {
             $booking->status = 'dibayar';
@@ -96,10 +96,37 @@ class UTransactionController extends Controller
         if ($transaction) {
             $transaction->update($data);
         } else {
-            $booking->transaction()->create($data);
+            $transaction = $booking->transaction()->create($data);
         }
 
-        return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Transaksi berhasil dilakukan');
+        if (in_array($transactionDetails['transaction_status'], ['capture', 'settlement'])) {
+            // SUKSES
+            $transaction->transaction_status = $transactionDetails['transaction_status'];
+            $transaction->save();
+
+            $booking->status = 'dibayar';
+            $booking->save();
+
+            return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Berhasil menyelesaikan transaksi');
+        } elseif ($transactionDetails['status_code'] == '412') {
+            // EXPIRE (FAILURE)
+            $transaction->status_code = $transactionDetails['status_code'];
+            $transaction->status_message = $transactionDetails['status_message'];
+            $transaction->transaction_status = 'failure';
+            $transaction->save();
+
+            return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('gagal', 'Transaksi Anda sudah melewati batas tenggat waktu');
+        } elseif ($transactionDetails['status_code'] == '407' || $transactionDetails['transaction_status'] == 'expire') {
+            // EXPIRE
+            $transaction->status_code = '407';
+            $transaction->transaction_status = 'expire';
+            $transaction->save();
+
+            return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('gagal', 'Transaksi Anda sudah melewati batas tenggat waktu');
+        } else {
+            // PENDING
+            return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Transaksi berhasil dilakukan');
+        }
     }
 
     protected function getTransactionStatus($order_id) {
@@ -175,8 +202,6 @@ class UTransactionController extends Controller
                 if (!$transaction) {
                     return redirect()->route('user.pernikahan.index')->with('gagal', 'Tidak ditemukan transaksi yang sesuai dalam membatalkan transaksi');
                 }
-                $transaction->transaction_status = $transactionDetails['transaction_status'];
-                $transaction->save();
 
                 list($order_id, $booking_id) = explode('_', $id);
                 $booking = WVBooking::find($booking_id);
@@ -185,13 +210,33 @@ class UTransactionController extends Controller
                 }
 
                 if (in_array($transactionDetails['transaction_status'], ['capture', 'settlement'])) {
+                    // SUKSES
+                    $transaction->transaction_status = $transactionDetails['transaction_status'];
+                    $transaction->save();
+
                     $booking->status = 'dibayar';
                     $booking->save();
 
                     return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Berhasil menyelesaikan transaksi');
-                }
+                } elseif ($transactionDetails['status_code'] == '412') {
+                    // EXPIRE (FAILURE)
+                    $transaction->status_code = $transactionDetails['status_code'];
+                    $transaction->status_message = $transactionDetails['status_message'];
+                    $transaction->transaction_status = 'failure';
+                    $transaction->save();
 
-                return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Transaksi masih belum diselesaikan');
+                    return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('gagal', 'Transaksi Anda sudah melewati batas tenggat waktu');
+                } elseif ($transactionDetails['status_code'] == '407' || $transactionDetails['transaction_status'] == 'expire') {
+                    // EXPIRE
+                    $transaction->status_code = '407';
+                    $transaction->transaction_status = 'expire';
+                    $transaction->save();
+
+                    return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('gagal', 'Transaksi Anda sudah melewati batas tenggat waktu');
+                } else {
+                    // STILL PENDING
+                    return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('gagal', 'Transaksi masih belum diselesaikan');
+                }
             }
         } catch (\Exception $e) {
             Log::error('Midtrans API request failed: ' . $e->getMessage());
@@ -226,8 +271,6 @@ class UTransactionController extends Controller
                 if (!$transaction) {
                     return redirect()->route('user.pernikahan.index')->with('gagal', 'Tidak ditemukan transaksi yang sesuai dalam membatalkan transaksi');
                 }
-                $transaction->transaction_status = $transactionDetails['transaction_status'];
-                $transaction->save();
 
                 list($order_id, $booking_id) = explode('_', $id);
                 $booking = WVBooking::find($booking_id);
@@ -235,7 +278,19 @@ class UTransactionController extends Controller
                     return redirect()->route('user.pernikahan.index')->with('gagal', 'Tidak ditemukan pemesanan yang sesuai dalam membatalkan transaksi');
                 }
 
-                return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Transaksi dibatalkan');
+                if ($transactionDetails['status_code'] == '412') {
+                    $transaction->status_code = $transactionDetails['status_code'];
+                    $transaction->status_message = $transactionDetails['status_message'];
+                    $transaction->transaction_status = 'failure';
+                    $transaction->save();
+
+                    return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('gagal', 'Transaksi Anda sudah melewati batas tenggat waktu');
+                } else {
+                    $transaction->transaction_status = $transactionDetails['transaction_status'];
+                    $transaction->save();
+
+                    return redirect()->route('user.pernikahan.ke_detail', $booking->w_c_wedding_id)->with('sukses', 'Transaksi dibatalkan');
+                }
             }
         } catch (\Exception $e) {
             Log::error('Midtrans API request failed: ' . $e->getMessage());

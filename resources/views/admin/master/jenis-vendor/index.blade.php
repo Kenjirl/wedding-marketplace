@@ -15,20 +15,19 @@
         </a>
     </div>
 
-    <div class="w-full">
-        <table class="w-full table-auto cell-border compact hover" id="dataTable">
-            <thead>
-                <tr>
-                    <th class="w-fit">No</th>
-                    <th>Kategori</th>
-                    <th>Icon (Teks)</th>
-                    <th>Icon (Model)</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($j_vendors as $j_vendor)
-                <tr>
+    <table class="w-full display table-auto cell-border compact hover" id="dataTable">
+        <thead>
+            <tr class="border-t">
+                <th class="w-fit">No</th>
+                <th>Kategori</th>
+                <th>Icon (Teks)</th>
+                <th>Icon (Model)</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($j_vendors as $j_vendor)
+                <tr class="border-b">
                     <td class="text-center">
                         {{ $loop->iteration }}
                     </td>
@@ -56,11 +55,17 @@
                         </form>
                     </td>
                 </tr>
-                @empty
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+            @empty
+                <tr class="border-b text-center">
+                    <td class="p-2">Belum ada data</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 @endsection
 
 @push('child-js')

@@ -3,7 +3,7 @@
         @foreach ($wedding->w_detail as $detail)
             <div class="w-full">
                 <div class="text-[4em] text-center font-great-vibes"
-                    style="color: {{ $wedding->invitation ? $wedding->invitation->c_event['stext'] : '#000000'}};"
+                    style="color: {{ $wedding->invitation ? $wedding->invitation->event['stext'] : '#000000'}};"
                     id="stext">
                     {{ \Carbon\Carbon::parse($detail->waktu)->format('d/m/Y') }}
                 </div>

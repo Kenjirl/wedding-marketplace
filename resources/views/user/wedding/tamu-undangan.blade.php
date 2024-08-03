@@ -67,20 +67,22 @@
     <div class="relative w-full flex items-start justify-center gap-4">
         {{-- TABEL --}}
         <div class="flex-1 w-full">
-            <table class="w-full table-auto cell-border compact hover" id="dataTable">
+            <table class="w-full display table-auto cell-border compact hover" id="dataTable">
                 <thead>
-                    <td>No</td>
-                    <td>Nama</td>
-                    <td>Telp</td>
-                    <td>Status</td>
-                    <td>Respon</td>
-                    <td>Jumlah</td>
-                    <td>Kirim</td>
-                    <td>Lainnya</td>
+                    <tr class="border-t">
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Telp</th>
+                        <th>Status</th>
+                        <th>Respon</th>
+                        <th>Jumlah</th>
+                        <th>Kirim</th>
+                        <th>Lainnya</th>
+                    </tr>
                 </thead>
                 <tbody class="text-sm">
                     @forelse ($guests as $tamu)
-                        <tr>
+                        <tr class="border-b">
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>
                                 <div class="line-clamp-1">
@@ -104,7 +106,7 @@
                             </td>
                             <td class="text-center">{{ $tamu->jumlah }}</td>
                             <td>
-                                <div class="flex items-center justify-center gap-1 text-xs">
+                                <div class="p-1 flex items-center justify-center gap-1 text-xs">
                                     {{-- KIRIM WHATSAPP --}}
                                     <a class="w-[30px] aspect-square flex items-center justify-center outline-green-400 outline-offset-4 shadow-sm text-green-400 border border-green-400 hover:bg-green-400 hover:text-white focus:bg-green-400 focus:text-white active:bg-green-300 transition-colors rounded"
                                         href="javascript:void(0);" title="kirim ke Whatsapp" data-tippy-content="kirim ke Whatsapp"
@@ -126,13 +128,13 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="flex items-center justify-center gap-1 text-xs">
+                                <div class="p-1 flex items-center justify-center gap-1 text-xs">
                                     {{-- CEK UNDANGAN --}}
                                     @php
                                         $pengantin = $wedding->p_sapaan.'-'.$wedding->w_sapaan;
                                     @endphp
                                     <a class="w-[30px] aspect-square flex items-center justify-center outline-pink outline-offset-4 shadow-sm text-pink border border-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-hover transition-colors rounded"
-                                        href="{{ route('undangan.tamu', ['pengantin' => $pengantin, 'link' => $tamu->link]) }}"
+                                        href="{{ $base_url }}/undangan/{{ $pengantin }}/{{ $tamu->link }}"
                                         target="_blank" title="cek undangan" data-tippy-content="cek undangan">
                                         <i class="fa-regular fa-envelope"></i>
                                     </a>
@@ -169,6 +171,16 @@
                             </td>
                         </tr>
                     @empty
+                        <tr class="border-b text-center">
+                            <td class="p-2">Belum ada data</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -266,11 +278,11 @@
                             for="nama">
                             Nama Penerima
                         </label>
-                        <input class="w-full p-2 flex-1 border text-sm @error('nama') border-red-500 @enderror rounded outline-pink"
+                        <input class="w-full p-2 flex-1 border text-sm @error('nama') border-red-400 @enderror rounded outline-pink"
                             type="text" name="nama" id="nama" placeholder="nama yang tampil pada undangan" maxlength="255"
                             required
                             value="{{ old('nama', '') }}">
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                             @error('nama')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>
@@ -284,14 +296,14 @@
                             for="no_telp">
                             Nomor Kontak
                         </label>
-                        <input class="w-full p-2 flex-1 border text-sm @error('no_telp') border-red-500 @enderror rounded outline-pink"
+                        <input class="w-full p-2 flex-1 border text-sm @error('no_telp') border-red-400 @enderror rounded outline-pink"
                             type="number" inputmode="" name="no_telp" id="no_telp" placeholder="62xxxxxxx" min="0"
                             required
                             value="{{ old('no_telp', '') }}">
                         <div class="mt-1 text-sm text-slate-300 italic">
                             gunakan kode negara di awal nomor
                         </div>
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                             @error('no_telp')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>

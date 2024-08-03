@@ -30,16 +30,16 @@
                                 {{-- GROOM --}}
                                 <div class="w-full mb-4">
                                     <div class="w-100">
-                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('p_lengkap') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('p_lengkap') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                             Nama Lengkap
                                         </div>
-                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_lengkap') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_lengkap') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                             type="text" name="p_lengkap" id="p_lengkap" placeholder="Nama Lengkap (tanpa gelar)"
                                             required
                                             value="{{ old('p_lengkap', '') }}">
                                     </div>
 
-                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                         @error('p_lengkap')
                                             <i class="fa-solid fa-circle-info"></i>
                                             <span>{{ $message }}</span>
@@ -48,16 +48,16 @@
                                 </div>
                                 <div class="w-full mb-4">
                                     <div class="w-100">
-                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('p_sapaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('p_sapaan') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                             Nama Sapaan
                                         </div>
-                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_sapaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_sapaan') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                             type="text" name="p_sapaan" id="p_sapaan" placeholder="Nama Sapaan"
                                             required
                                             value="{{ old('p_sapaan', '') }}">
                                     </div>
 
-                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                         @error('p_sapaan')
                                             <i class="fa-solid fa-circle-info"></i>
                                             <span>{{ $message }}</span>
@@ -68,16 +68,16 @@
                                 <div class="w-full flex items-center justify-center gap-4">
                                     <div class="w-full mb-4">
                                         <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('p_ayah') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('p_ayah') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                 Nama Ayah
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_ayah') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_ayah') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                 type="text" name="p_ayah" id="p_ayah" placeholder="Nama Ayah (tanpa gelar)"
                                                 required
                                                 value="{{ old('p_ayah', '') }}">
                                         </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                             @error('p_ayah')
                                                 <i class="fa-solid fa-circle-info"></i>
                                                 <span>{{ $message }}</span>
@@ -86,16 +86,16 @@
                                     </div>
                                     <div class="w-full mb-4">
                                         <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('p_ibu') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('p_ibu') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                 Nama Ibu
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_ibu') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('p_ibu') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                 type="text" name="p_ibu" id="p_ibu" placeholder="Nama Ibu (tanpa gelar)"
                                                 required
                                                 value="{{ old('p_ibu', '') }}">
                                         </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                             @error('p_ibu')
                                                 <i class="fa-solid fa-circle-info"></i>
                                                 <span>{{ $message }}</span>
@@ -116,16 +116,16 @@
                                 {{-- BRIDE --}}
                                 <div class="w-full mb-4">
                                     <div class="w-100">
-                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('w_lengkap') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('w_lengkap') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                             Nama Lengkap
                                         </div>
-                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_lengkap') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_lengkap') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                             type="text" name="w_lengkap" id="w_lengkap" placeholder="Nama Lengkap (tanpa gelar)"
                                             required
                                             value="{{ old('w_lengkap', '') }}">
                                     </div>
 
-                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                         @error('w_lengkap')
                                             <i class="fa-solid fa-circle-info"></i>
                                             <span>{{ $message }}</span>
@@ -134,16 +134,16 @@
                                 </div>
                                 <div class="w-full mb-4">
                                     <div class="w-100">
-                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('w_sapaan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                        <div class="w-full p-2 text-xs font-bold bg-pink @error('w_sapaan') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                             Nama Sapaan
                                         </div>
-                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_sapaan') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                        <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_sapaan') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                             type="text" name="w_sapaan" id="w_sapaan" placeholder="Nama Sapaan"
                                             required
                                             value="{{ old('w_sapaan', '') }}">
                                     </div>
 
-                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                         @error('w_sapaan')
                                             <i class="fa-solid fa-circle-info"></i>
                                             <span>{{ $message }}</span>
@@ -154,16 +154,16 @@
                                 <div class="w-full flex items-center justify-center gap-4">
                                     <div class="w-full mb-4">
                                         <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('w_ayah') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('w_ayah') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                 Nama Ayah
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_ayah') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_ayah') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                 type="text" name="w_ayah" id="w_ayah" placeholder="Nama Ayah (tanpa gelar)"
                                                 required
                                                 value="{{ old('w_ayah', '') }}">
                                         </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                             @error('w_ayah')
                                                 <i class="fa-solid fa-circle-info"></i>
                                                 <span>{{ $message }}</span>
@@ -172,16 +172,16 @@
                                     </div>
                                     <div class="w-full mb-4">
                                         <div class="w-100">
-                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('w_ibu') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                            <div class="w-full p-2 text-xs font-bold bg-pink @error('w_ibu') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                 Nama Ibu
                                             </div>
-                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_ibu') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('w_ibu') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                 type="text" name="w_ibu" id="w_ibu" placeholder="Nama Ibu (tanpa gelar)"
                                                 required
                                                 value="{{ old('w_ibu', '') }}">
                                         </div>
 
-                                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                             @error('w_ibu')
                                                 <i class="fa-solid fa-circle-info"></i>
                                                 <span>{{ $message }}</span>
@@ -311,13 +311,13 @@
                                         @endphp
                                         <div class="w-100 mb-4">
                                             <div class="w-100">
-                                                <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('waktu[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('waktu[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                     <i class="fa-regular fa-calendar"></i>
                                                     <span class="ml-2">
                                                         Waktu
                                                     </span>
                                                 </div>
-                                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-400 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
                                                     type="datetime-local" name="waktu[]" id="waktu" min="{{ $tomDate->format('Y-m-d H:i:s') }}"
                                                     disabled
                                                     value="{{ old('waktu[]') }}">
@@ -328,13 +328,13 @@
                                             {{-- PROVINSI --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('provinsi[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('provinsi[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Provinsi
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi[]') border-red-400 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
                                                         type="text" name="provinsi[]" id="provinsi" placeholder="Bali"
                                                         disabled
                                                         value="{{ old('provinsi[]') }}">
@@ -344,13 +344,13 @@
                                             {{-- KOTA --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kota[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kota[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Kota/Kabupaten
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota[]') border-red-400 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
                                                         type="text" name="kota[]" id="kota" placeholder="Badung"
                                                         disabled
                                                         value="{{ old('kota[]') }}">
@@ -360,13 +360,13 @@
                                             {{-- KECAMATAN --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kecamatan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kecamatan[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Kecamatan
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan[]') border-red-400 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
                                                         type="text" name="kecamatan[]" id="kecamatan" placeholder="Kuta Selatan"
                                                         disabled
                                                         value="{{ old('kecamatan[]') }}">
@@ -376,13 +376,13 @@
                                             {{-- KELURAHAN --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kelurahan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('kelurahan[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Kelurahan
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan[]') border-red-400 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
                                                         type="text" name="kelurahan[]" id="kelurahan" placeholder="Jimbaran"
                                                         disabled
                                                         value="{{ old('kelurahan[]') }}">
@@ -392,13 +392,13 @@
                                             {{-- ALAMAT --}}
                                             <div class="relative w-100 col-span-2">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('alamat[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-slate-300 @error('alamat[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Alamat Detail
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat[]') border-red-500 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat[]') border-red-400 @enderror rounded-b disabled:cursor-not-allowed focus:border-pink focus:outline-none"
                                                         type="text" name="alamat[]" id="alamat" placeholder="Jl. Besar no. 1"
                                                         disabled
                                                         value="{{ old('alamat[]') }}">
@@ -432,13 +432,13 @@
                                         {{-- TANGGAL --}}
                                         <div class="w-100 mb-4">
                                             <div class="w-100">
-                                                <div class="w-full p-2 text-xs font-bold bg-pink @error('waktu[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                <div class="w-full p-2 text-xs font-bold bg-pink @error('waktu[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                     <i class="fa-regular fa-calendar"></i>
                                                     <span class="ml-2">
                                                         Waktu
                                                     </span>
                                                 </div>
-                                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('waktu[]') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                     type="datetime-local" name="waktu[]" id="waktu" min="{{ $tomDate->format('Y-m-d H:i:s') }}"
                                                     required
                                                     value="{{ old('waktu[]', '') }}">
@@ -449,13 +449,13 @@
                                             {{-- PROVINSI --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('provinsi[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Provinsi
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('provinsi[]') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                         type="text" name="provinsi[]" id="provinsi" placeholder="Bali"
                                                         required
                                                         value="{{ old('provinsi[]', '') }}">
@@ -465,13 +465,13 @@
                                             {{-- KOTA --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kota[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kota[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Kota/Kabupaten
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kota[]') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                         type="text" name="kota[]" id="kota" placeholder="Badung"
                                                         required
                                                         value="{{ old('kota[]', '') }}">
@@ -481,13 +481,13 @@
                                             {{-- KECAMATAN --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kecamatan[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Kecamatan
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kecamatan[]') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                         type="text" name="kecamatan[]" id="kecamatan" placeholder="Kuta Selatan"
                                                         required
                                                         value="{{ old('kecamatan[]', '') }}">
@@ -497,13 +497,13 @@
                                             {{-- KELURAHAN --}}
                                             <div class="relative w-100">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('kelurahan[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Kelurahan
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('kelurahan[]') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                         type="text" name="kelurahan[]" id="kelurahan" placeholder="Jimbaran"
                                                         required
                                                         value="{{ old('kelurahan[]', '') }}">
@@ -513,13 +513,13 @@
                                             {{-- ALAMAT --}}
                                             <div class="relative w-100 col-span-2">
                                                 <div class="w-100">
-                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat[]') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                                    <div class="w-full p-2 text-xs font-bold bg-pink @error('alamat[]') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                                         <i class="fa-solid fa-location-dot"></i>
                                                         <span class="ml-2">
                                                             Alamat Detail
                                                         </span>
                                                     </div>
-                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat[]') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat[]') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                                         type="text" name="alamat[]" id="alamat" placeholder="Jl. Besar no. 1"
                                                         required
                                                         value="{{ old('alamat[]', '') }}">
@@ -536,10 +536,10 @@
                 <div class="w-full mt-4 flex items-start justify-center gap-4">
                     <div class="flex-1 w-full">
                         @if($errors->any())
-                            <div class="w-fit px-4 py-2 bg-red-500 rounded-t text-white">
+                            <div class="w-fit px-4 py-2 bg-red-400 rounded-t text-white">
                                 Terdapat Kesalahan!
                             </div>
-                            <div class="w-full px-6 py-2 border-2 border-red-500">
+                            <div class="w-full px-6 py-2 border-2 border-red-400">
                                 <ol class="list-disc text-sm">
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>

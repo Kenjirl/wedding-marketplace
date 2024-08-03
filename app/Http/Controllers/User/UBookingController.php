@@ -7,8 +7,10 @@ use App\Helpers\NumberFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\MJenisVendor;
 use App\Models\WCWedding;
+use App\Models\WCWeddingDetail;
 use App\Models\WVBooking;
 use App\Models\WVendor;
+use App\Models\WVJenis;
 use App\Models\WVPlan;
 use App\Models\WVPortofolio;
 use App\Models\WVRating;
@@ -18,7 +20,49 @@ use Illuminate\Http\Request;
 class UBookingController extends Controller
 {
     public function paket_layanan(Request $req) {
-        $plans = WVPlan::all();
+        $nama_layanan         = $req->input('nama_layanan');
+        $jenis_layanan        = $req->input('jenis_layanan');
+        $nama_vendor          = $req->input('nama_vendor');
+        $search_harga         = $req->input('harga');
+        $search_basis_operasi = $req->input('basis_operasi');
+        $search_kota_operasi  = $req->input('kota_operasi');
+        $search_jenis_vendor  = $req->input('search_jenis_vendor');
+        $sort_by              = $req->input('sort_by', '');
+        $sort_as              = $req->input('sort_as', 'asc');
+
+        $plansQuery = WVPlan::with('w_vendor');
+
+        if ($nama_layanan) {
+            $plansQuery->where('nama', 'like', "%$nama_layanan%");
+        }
+
+        if ($jenis_layanan) {
+            $plansQuery->where('jenis_layanan', 'like', "%$jenis_layanan%");
+        }
+
+        if ($search_basis_operasi) {
+            $plansQuery->whereHas('w_vendor', function($query) use ($search_basis_operasi) {
+                $query->where('basis_operasi', 'like', "%$search_basis_operasi%");
+            });
+        }
+
+        if ($search_kota_operasi) {
+            $plansQuery->whereHas('w_vendor', function($query) use ($search_kota_operasi) {
+                $query->where('kota_operasi', 'like', "%$search_kota_operasi%");
+            });
+        }
+
+        if ($nama_vendor) {
+            $plansQuery->whereHas('w_vendor', function($query) use ($nama_vendor) {
+                $query->where('nama', 'like', "%$nama_vendor%");
+            });
+        }
+
+        if ($search_jenis_vendor) {
+            $plansQuery->where('m_jenis_vendor_id', 'like', "%$search_jenis_vendor%");
+        }
+
+        $plans = $plansQuery->get();
 
         foreach ($plans as $plan) {
             $bookings = WVBooking::where('w_v_plan_id', $plan->id)
@@ -28,74 +72,132 @@ class UBookingController extends Controller
             if ($bookings->isNotEmpty()) {
                 $plan->rate = WVRating::whereIn('w_v_booking_id', $bookings->pluck('id'))->avg('rating');
                 $plan->bookedCount = BookingFormatter::format($bookings->count());
+            } else {
+                $plan->rate = 0;
+                $plan->bookedCount = 0;
             }
 
             $plan->basis_operasi = $plan->w_vendor->basis_operasi;
             $plan->kota_operasi = $plan->w_vendor->kota_operasi;
         }
 
-        $nama_layanan         = $req->input('nama_layanan');
-        $nama_vendor          = $req->input('nama_vendor');
-        $search_harga         = $req->input('harga');
-        $search_basis_operasi = $req->input('basis_operasi');
-        $search_kota_operasi  = $req->input('kota_operasi');
-        $search_jenis_vendor  = $req->input('search_jenis_vendor');
-
-        $filteredPlans = $plans->filter(function($plan) use ($nama_layanan, $nama_vendor, $search_harga, $search_basis_operasi, $search_kota_operasi, $search_jenis_vendor) {
+        $filteredPlans = $plans->filter(function($plan) use ($search_harga) {
             if ($search_harga !== null && $plan->harga > $search_harga) {
-                return false;
-            }
-
-            if ($search_basis_operasi !== null && stripos($plan->basis_operasi, $search_basis_operasi) === false) {
-                return false;
-            }
-
-            if ($search_kota_operasi !== null && stripos($plan->kota_operasi, $search_kota_operasi) === false) {
-                return false;
-            }
-
-            if ($search_jenis_vendor !== null && stripos($plan->m_jenis_vendor_id, $search_jenis_vendor) === false) {
-                return false;
-            }
-
-            if ($nama_layanan !== null && stripos($plan->nama, $nama_layanan) === false) {
-                return false;
-            }
-
-            if ($nama_vendor !== null && stripos($plan->w_vendor->nama, $nama_vendor) === false) {
                 return false;
             }
 
             return true;
         });
 
+        if ($sort_by) {
+            if ($sort_as == 'asc') {
+                $filteredPlans = $filteredPlans->sortBy($sort_by);
+            } else {
+                $filteredPlans = $filteredPlans->sortByDesc($sort_by);
+            }
+        }
+
         $m_j_vendor = MJenisVendor::all();
 
         return view('user.search.paket-layanan', compact(
             'filteredPlans',
             'nama_layanan',
+            'jenis_layanan',
             'nama_vendor',
             'search_harga',
             'search_basis_operasi',
             'search_kota_operasi',
             'search_jenis_vendor',
-            'm_j_vendor',
+            'sort_by',
+            'sort_as',
+            'm_j_vendor'
+        ));
+    }
+
+    public function portofolio(Request $req) {
+        $nama_portofolio      = $req->input('nama_portofolio');
+        $nama_vendor          = $req->input('nama_vendor');
+        $search_lokasi        = $req->input('search_lokasi');
+        $search_jenis_vendor  = $req->input('search_jenis_vendor');
+        $sort_by              = $req->input('sort_by', '');
+        $sort_as              = $req->input('sort_as', 'asc');
+
+        $portfolQuery = WVPortofolio::with('w_vendor')->where('status', 'diterima');
+
+        if ($nama_portofolio) {
+            $portfolQuery->where('judul', 'like', "%$nama_portofolio%");
+        }
+
+        if ($search_lokasi) {
+            $portfolQuery->where('lokasi', 'like', "%$search_lokasi%");
+        }
+
+        if ($nama_vendor) {
+            $portfolQuery->whereHas('w_vendor', function($query) use ($nama_vendor) {
+                $query->where('nama', 'like', "%$nama_vendor%");
+            });
+        }
+
+        if ($search_jenis_vendor) {
+            $portfolQuery->where('m_jenis_vendor_id', 'like', "%$search_jenis_vendor%");
+        }
+
+        $portofolios = $portfolQuery->get();
+
+        if ($sort_by) {
+            if ($sort_as == 'asc') {
+                $portofolios = $portofolios->sortBy($sort_by);
+            } else {
+                $portofolios = $portofolios->sortByDesc($sort_by);
+            }
+        }
+
+        $m_j_vendor = MJenisVendor::all();
+
+        return view('user.search.portofolio', compact(
+            'portofolios',
+            'nama_portofolio',
+            'nama_vendor',
+            'search_lokasi',
+            'search_jenis_vendor',
+            'sort_by',
+            'sort_as',
+            'm_j_vendor'
         ));
     }
 
     public function vendor(Request $req) {
-        $vendors = WVendor::whereHas('plan')
-                    ->orderBy('nama', 'asc')
-                    ->with('plan')
-                    ->get();
+        $nama_vendor          = $req->input('nama_vendor');
+        $search_harga         = $req->input('harga');
+        $search_basis_operasi = $req->input('basis_operasi');
+        $search_kota_operasi  = $req->input('kota_operasi');
+        $search_jenis_vendor  = $req->input('search_jenis_vendor');
+        $sort_by              = $req->input('sort_by', '');
+        $sort_as              = $req->input('sort_as', 'asc');
+
+        $vendorsQuery = WVendor::whereHas('jenis')
+                        ->orderBy('nama', 'asc')
+                        ->with(['plan' => function ($query) {
+                            $query->select('id', 'w_vendor_id', 'harga');
+                        }]);
+
+        if ($nama_vendor) {
+            $vendorsQuery->where('nama', 'like', "%$nama_vendor%");
+        }
+        if ($search_basis_operasi) {
+            $vendorsQuery->where('basis_operasi', 'like', "%$search_basis_operasi%");
+        }
+        if ($search_kota_operasi) {
+            $vendorsQuery->where('kota_operasi', 'like', "%$search_kota_operasi%");
+        }
+
+        $vendors = $vendorsQuery->get();
 
         foreach ($vendors as $vendor) {
             $plans = $vendor->plan;
 
-            $vendor->harga_terendah = $plans->min('harga');
-            $vendor->harga_tertinggi = $plans->max('harga');
-            $vendor->rate = 0;
-            $vendor->bookedCount = 0;
+            $vendor->harga_terendah = $plans->isNotEmpty() ? NumberFormatter::format($plans->min('harga')) : 0;
+            $vendor->harga_tertinggi = $plans->isNotEmpty() ? NumberFormatter::format($plans->max('harga')) : 0;
 
             $bookings = WVBooking::whereIn('w_v_plan_id', $plans->pluck('id'))
                                 ->where('status', 'selesai')
@@ -104,29 +206,17 @@ class UBookingController extends Controller
             if ($bookings->isNotEmpty()) {
                 $vendor->rate = WVRating::whereIn('w_v_booking_id', $bookings->pluck('id'))->avg('rating');
                 $vendor->bookedCount = BookingFormatter::format($bookings->count());
+            } else {
+                $vendor->rate = 0;
+                $vendor->bookedCount = 0;
             }
-
-            $vendor->harga_terendah = NumberFormatter::format($vendor->harga_terendah);
-            $vendor->harga_tertinggi = NumberFormatter::format($vendor->harga_tertinggi);
         }
 
-        $nama_vendor          = $req->input('nama_vendor');
-        $search_harga         = $req->input('harga');
-        $search_basis_operasi = $req->input('basis_operasi');
-        $search_kota_operasi  = $req->input('kota_operasi');
-        $search_jenis_vendor  = $req->input('search_jenis_vendor');
-
-        $filteredVendors = $vendors->filter(function($vendor) use ($search_harga, $search_basis_operasi, $search_kota_operasi, $search_jenis_vendor, $nama_vendor) {
-            if ($search_harga !== null && $vendor->harga_terendah > $search_harga) {
-                return false;
-            }
-
-            if ($search_basis_operasi !== null && strpos(strtolower($vendor->basis_operasi), strtolower($search_basis_operasi)) === false) {
-                return false;
-            }
-
-            if ($search_kota_operasi !== null && strpos(strtolower($vendor->kota_operasi), strtolower($search_kota_operasi)) === false) {
-                return false;
+        $filteredVendors = $vendors->filter(function($vendor) use ($search_harga, $search_jenis_vendor) {
+            if ($search_harga !== null) {
+                if ($vendor->harga_terendah <= 0 || $vendor->harga_terendah > $search_harga) {
+                    return false;
+                }
             }
 
             if ($search_jenis_vendor !== null) {
@@ -136,12 +226,16 @@ class UBookingController extends Controller
                 }
             }
 
-            if ($nama_vendor !== null && stripos($vendor->nama, $nama_vendor) === false) {
-                return false;
-            }
-
             return true;
         });
+
+        if ($sort_by) {
+            if ($sort_as == 'asc') {
+                $filteredVendors = $filteredVendors->sortBy($sort_by);
+            } else {
+                $filteredVendors = $filteredVendors->sortByDesc($sort_by);
+            }
+        }
 
         $m_j_vendor = MJenisVendor::all();
 
@@ -152,7 +246,9 @@ class UBookingController extends Controller
             'search_basis_operasi',
             'search_kota_operasi',
             'search_jenis_vendor',
-            'm_j_vendor',
+            'sort_by',
+            'sort_as',
+            'm_j_vendor'
         ));
     }
 
@@ -204,12 +300,21 @@ class UBookingController extends Controller
 
         $vendor->rate = $totalReviewCountAllPlans ? $totalRatingAllPlans / $totalReviewCountAllPlans : null;
 
+        $j_vendor = WVJenis::where('w_vendor_id', $vendor->id)->get();
+
+        $filterJenisVendor = $req->jenis_vendor;
+
         if ($tab == 'portofolio') {
-            $portofolios = WVPortofolio::where('w_vendor_id', $vendor->id)
+            $portofoliosQuery = WVPortofolio::where('w_vendor_id', $vendor->id)
                             ->where('status', 'diterima')
                             ->orderBy('tanggal', 'asc')
-                            ->orderBy('judul', 'asc')
-                            ->get();
+                            ->orderBy('judul', 'asc');
+
+            if ($filterJenisVendor) {
+                $portofoliosQuery->where('m_jenis_vendor_id', $filterJenisVendor);
+            }
+
+            $portofolios = $portofoliosQuery->get();
 
             $portofolio_detail = null;
             if ($req->has('portofolio_id')) {
@@ -228,13 +333,23 @@ class UBookingController extends Controller
 
             return view('user.search.detail.' . $tab, compact(
                 'vendor',
+                'j_vendor',
+                'filterJenisVendor',
                 'portofolios',
                 'portofolio_detail',
                 'tab',
             ));
         } elseif ($tab == 'layanan') {
+            if ($filterJenisVendor) {
+                $plans = $plans->filter(function ($plan) use ($filterJenisVendor) {
+                    return $plan->m_jenis_vendor_id == $filterJenisVendor;
+                });
+            }
+
             return view('user.search.detail.' . $tab, compact(
                 'vendor',
+                'j_vendor',
+                'filterJenisVendor',
                 'plans',
                 'tab',
             ));
@@ -247,20 +362,30 @@ class UBookingController extends Controller
                 return back()->with('gagal', 'ID Layanan tidak valid');
             }
 
-            $today = Carbon::today()->startOfDay();
+            $today = Carbon::tomorrow()->startOfDay();
             $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
+                ->with(['w_detail' => function($query) use ($today) {
+                    $query->whereDate('waktu', '>', $today);
+                }])
                 ->whereHas('w_detail', function ($query) use ($today) {
-                    $query->whereRaw('waktu = (SELECT MAX(wd.waktu) FROM w_c_wedding_details wd WHERE wd.w_c_wedding_id = w_c_weddings.id)')
+                    $query->whereRaw('waktu = (
+                            SELECT MIN(wd.waktu)
+                            FROM w_c_wedding_details wd
+                            WHERE wd.w_c_wedding_id = w_c_weddings.id
+                        )')
                         ->whereDate('waktu', '>', $today);
                 })
                 ->orderBy('p_lengkap', 'asc')
                 ->get();
+
+            $filterJenisVendor = $plan->m_jenis_vendor_id;
 
             return view('user.search.detail.' . $tab, compact(
                 'vendor',
                 'plan',
                 'weddings',
                 'tab',
+                'filterJenisVendor',
             ));
         }
     }
@@ -271,6 +396,7 @@ class UBookingController extends Controller
             'wedding_id' => 'required',
             'tanggal'    => 'required|date|after:' . date('Y-m-d'),
             'qty'        => 'required|numeric|min:1',
+            'catatan'    => 'nullable|string',
         ],[
             'plan_id.required'    => 'Paket Layanan tidak boleh kosong',
             'wedding_id.required' => 'Pernikahan tidak boleh kosong',
@@ -291,6 +417,7 @@ class UBookingController extends Controller
         $booking->untuk_tanggal  = $req->tanggal;
         $booking->qty            = $req->qty;
         $booking->total_bayar    = $plan->harga * $req->qty;
+        $booking->catatan        = $req->catatan;
         $data = $booking->save();
 
         if ($data) {

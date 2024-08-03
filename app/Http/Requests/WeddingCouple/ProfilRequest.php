@@ -30,7 +30,7 @@ class ProfilRequest extends FormRequest
                 'required',
                 Rule::unique('users', 'name')->ignore(auth()->id()),
             ],
-            'no_telp' =>'required|string|min:8|max:12',
+            'no_telp' =>'required|string|min:8|max:15',
         ];
     }
 
@@ -51,7 +51,7 @@ class ProfilRequest extends FormRequest
             'no_telp.required'       => 'Nomor Telepon tidak boleh kosong',
             'no_telp.string'         => 'Nomor Telepon harus berupa angka',
             'no_telp.min'            => 'Nomor Telepon minimal 8 karakter',
-            'no_telp.max'            => 'Nomor Telepon maksimal 12 karakter',
+            'no_telp.max'            => 'Nomor Telepon maksimal 15 karakter',
         ];
     }
 }

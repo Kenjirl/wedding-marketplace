@@ -16,11 +16,15 @@ return new class extends Migration
         Schema::create('w_v_ratings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('w_v_booking_id');
+            $table->unsignedBigInteger('w_vendor_id');
+            $table->unsignedBigInteger('w_v_plan_id');
             $table->unsignedInteger('rating');
             $table->string('komentar');
             $table->timestamps();
 
             $table->foreign('w_v_booking_id')->references('id')->on('w_v_bookings')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_vendor_id')->references('id')->on('w_vendors')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('w_v_plan_id')->references('id')->on('w_v_plans')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

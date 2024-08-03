@@ -62,16 +62,28 @@
                                 </div>
                             </div>
 
-                            <div class="w-full h-[2px] my-1 bg-pink"></div>
+                            <div class="w-full h-1 my-1 bg-pink rounded-full"></div>
 
                             {{-- BOTTOM --}}
                             <div class="w-full text-sm text-gray-400 italic">
-                                <div>
+                                <div class="mb-2">
                                     Pada {{ \Carbon\Carbon::parse($event->waktu)->translatedFormat('l, d F Y') }} <br>
                                     pukul {{ \Carbon\Carbon::parse($event->waktu)->translatedFormat('H:i') }}
                                 </div>
                                 <div>
-                                    {{ $event->lokasi }}
+                                    @if ($event->lokasi)
+                                        @php
+                                            $encodedAddress = urlencode($event->lokasi);
+                                        @endphp
+                                        <a class="w-full underline" href="https://www.google.com/maps?q={{ $encodedAddress }}">
+                                            {{ $event->lokasi }}
+                                        </a>
+                                        <a class="w-full underline" href="https://www.google.com/maps?q={{ $event->koordinat['lat'] }},{{ $event->koordinat['lng'] }}">
+                                            Cek titik lokasi di map
+                                        </a>
+                                    @else
+                                        belum menentukan lokasi
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -114,9 +126,19 @@
                     </span>
                     <span class="w-1/2 text-end line-clamp-1">
                         <a class="font-semibold underline"
-                            href="{{ route('vendor.layanan.ke_ubah', $plan->id) }}">
+                            target="_blank" href="{{ route('vendor.layanan.ke_ubah', $plan->id) }}">
                             {{ $plan->nama }}
                         </a>
+                    </span>
+                </div>
+
+                {{-- tanggal pesan --}}
+                <div class="w-full flex items-start justify-between gap-2">
+                    <span class="w-1/2">
+                        Dipesan untuk tanggal
+                    </span>
+                    <span class="w-1/2 text-end line-clamp-1">
+                        {{ \Carbon\Carbon::parse($booking->untuk_tanggal)->translatedFormat('l, d F Y') }}
                     </span>
                 </div>
 
@@ -137,17 +159,17 @@
                     </span>
                     <span class="w-1/2 text-end line-clamp-1">
                         Rp
-                        {{ number_format($plan->harga, 0, ',', '.') }}
+                        {{ number_format($booking->total_bayar, 0, ',', '.') }}
                     </span>
                 </div>
 
-                {{-- tanggal pesan --}}
-                <div class="w-full flex items-start justify-between gap-2">
+                {{-- catatan --}}
+                <div class="w-full flex items-start justify-between gap-2 text-slate-400 italic text-sm">
                     <span class="w-1/2">
-                        Dipesan untuk tanggal
+                        Catatan
                     </span>
                     <span class="w-1/2 text-end line-clamp-1">
-                        {{ \Carbon\Carbon::parse($booking->untuk_tanggal)->translatedFormat('l, d F Y') }}
+                        {{ $booking->catatan?: '' }}
                     </span>
                 </div>
             </div>
@@ -199,28 +221,3 @@
         </div>
     </div>
 @endsection
-
-@push('child-js')
-    <script>
-        function respon(status) {
-            Swal.fire({
-                title: `Ingin membatalkan pesanan ini?`,
-                text: 'Anda tidak akan dapat menerima pesanan ini jika sudah ditolak',
-                icon: "warning",
-                iconColor: "#F78CA2",
-                showCloseButton: true,
-                confirmButtonColor: "#F78CA2",
-                confirmButtonText: "Konfirmasi"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $("#status").val(status);
-                    $('#pesananForm').submit();
-                }
-            });
-        }
-
-        $('#bukti_bayar_img').magnificPopup({
-            type: 'image'
-        });
-    </script>
-@endpush

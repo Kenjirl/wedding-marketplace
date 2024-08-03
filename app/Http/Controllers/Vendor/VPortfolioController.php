@@ -5,26 +5,49 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PortofolioRequest;
 use App\Models\AConfiguration;
+use App\Models\WVJenis;
 use App\Models\WVPortofolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class VPortfolioController extends Controller
 {
-    public function index() {
+    public function index(Request $req) {
+        $jenis_id = $req->query('jenis_id');
+        $vendorId = auth()->user()->w_vendor->id;
+
+        $j_vendor = WVJenis::where('w_vendor_id', $vendorId)
+                            ->with(['master'])
+                            ->withTrashed()
+                            ->get();
+
+        $validJenisIds = $j_vendor->pluck('m_jenis_vendor_id')->toArray();
+
+        if ($jenis_id && !in_array($jenis_id, $validJenisIds)) {
+            $jenis_id = null;
+        }
+
         $latest_portofolio = WVPortofolio::where('w_vendor_id', auth()->user()->w_vendor->id)
                         ->orderBy('updated_at', 'desc')
                         ->take(4)
                         ->get();
-        $portofolio = WVPortofolio::where('w_vendor_id', auth()->user()->w_vendor->id)
-                        ->orderBy('judul', 'asc')
-                        ->get();
 
-        return view('vendor.portofolio.index', compact('latest_portofolio', 'portofolio'));
+        $portofolioQuery = WVPortofolio::where('w_vendor_id', $vendorId)
+                    ->orderBy('judul', 'asc');
+
+        if ($jenis_id) {
+            $portofolioQuery->where('m_jenis_vendor_id', $jenis_id);
+        }
+
+        $portofolio = $portofolioQuery->get();
+
+        return view('vendor.portofolio.index', compact('jenis_id', 'j_vendor', 'latest_portofolio', 'portofolio'));
     }
 
     public function ke_tambah() {
-        return view('vendor.portofolio.tambah');
+        $j_vendors = WVJenis::where('w_vendor_id', auth()->user()->w_vendor->id)->get();
+
+        return view('vendor.portofolio.tambah', compact('j_vendors'));
     }
 
     public function tambah(PortofolioRequest $req) {
@@ -32,14 +55,19 @@ class VPortfolioController extends Controller
 
         $config = AConfiguration::where('nama', 'portofolio-automation')->first();
 
-        $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
+        $koordinat = [
+            'lat' => $req->lat,
+            'lng' => $req->lng,
+        ];
 
         $portofolio = new WVPortofolio();
-        $portofolio->w_vendor_id = auth()->user()->w_vendor->id;
-        $portofolio->judul = $req->judul;
-        $portofolio->tanggal = $req->tanggal;
-        $portofolio->detail = $req->detail;
-        $portofolio->lokasi = $lokasi;
+        $portofolio->w_vendor_id        = auth()->user()->w_vendor->id;
+        $portofolio->m_jenis_vendor_id  = $req->j_vendor;
+        $portofolio->judul              = $req->judul;
+        $portofolio->tanggal            = $req->tanggal;
+        $portofolio->detail             = $req->detail;
+        $portofolio->lokasi             = $req->lokasi;
+        $portofolio->koordinat          = $koordinat;
 
         if ($config->value == true) {
             $portofolio->admin_id = $config->admin_id;
@@ -77,41 +105,7 @@ class VPortfolioController extends Controller
             return back()->with('gagal', 'Portofolio tidak ditemukan');
         }
 
-        $provinsi       = '';
-        $kota           = '';
-        $kecamatan      = '';
-        $kelurahan      = '';
-        $alamat_detail  = '';
-
-        $alamatArray = explode(', ', $portofolio->lokasi);
-        list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
-
-        // Load data JSON untuk dropdown
-        $provinsiData = collect(json_decode(file_get_contents(public_path('json/provinsi.json'))))->sortBy('name');
-        $kotaData = collect(json_decode(file_get_contents(public_path('json/kabupaten.json'))));
-        $kecamatanData = collect(json_decode(file_get_contents(public_path('json/kecamatan.json'))));
-        $kelurahanData = collect(json_decode(file_get_contents(public_path('json/kelurahan.json'))));
-
-        // Cari ID Provinsi berdasarkan nama Provinsi
-        $selectedProvinsi = $provinsiData->firstWhere('name', $provinsi);
-        $provinsiId = $selectedProvinsi ? $selectedProvinsi->id : null;
-
-        // Filter data Kabupaten berdasarkan ID Provinsi
-        $filteredKotaData = $kotaData->where('provinsi_id', $provinsiId)->sortBy('name');
-
-        // Cari ID Kabupaten berdasarkan nama Kabupaten
-        $selectedKota = $filteredKotaData->firstWhere('name', $kota);
-        $kotaId = $selectedKota ? $selectedKota->id : null;
-
-        // Filter data Kecamatan berdasarkan ID Kabupaten
-        $filteredKecamatanData = $kecamatanData->where('kabupaten_id', $kotaId)->sortBy('name');
-
-        // Cari ID Kecamatan berdasarkan nama Kecamatan
-        $selectedKecamatan = $filteredKecamatanData->firstWhere('name', $kecamatan);
-        $kecamatanId = $selectedKecamatan ? $selectedKecamatan->id : null;
-
-        // Filter data Kelurahan berdasarkan ID Kecamatan
-        $filteredKelurahanData = $kelurahanData->where('kecamatan_id', $kecamatanId)->sortBy('name');
+        $j_vendors = WVJenis::where('w_vendor_id', auth()->user()->w_vendor->id)->get();
 
         $currentPhotos = $portofolio->foto ?? [];
         $count = count($currentPhotos);
@@ -119,15 +113,7 @@ class VPortfolioController extends Controller
         return view('vendor.portofolio.ubah',
             compact(
                 'portofolio',
-                'provinsi',
-                'kota',
-                'kecamatan',
-                'kelurahan',
-                'alamat_detail',
-                'provinsiData',
-                'filteredKotaData',
-                'filteredKecamatanData',
-                'filteredKelurahanData',
+                'j_vendors',
                 'count'
             ));
     }
@@ -141,15 +127,21 @@ class VPortfolioController extends Controller
 
         $currentPhotos = $portofolio->foto ?? [];
         $count = count($currentPhotos);
-        if ($count >= 5) {
+        if ($count > 5) {
             return redirect()->route('vendor.portofolio.ke_ubah', $id)->with('gagal', 'Maksimal 5 Gambar Saja');
         }
 
-        $lokasi = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
+        $koordinat = [
+            'lat' => $req->lat,
+            'lng' => $req->lng,
+        ];
 
-        $portofolio->judul = $req->judul;
-        $portofolio->detail = $req->detail;
-        $portofolio->lokasi = $lokasi;
+        $portofolio->m_jenis_vendor_id  = $req->j_vendor;
+        $portofolio->judul              = $req->judul;
+        $portofolio->tanggal            = $req->tanggal;
+        $portofolio->detail             = $req->detail;
+        $portofolio->lokasi             = $req->lokasi;
+        $portofolio->koordinat          = $koordinat;
 
         if ($config->value == true) {
             $portofolio->admin_id = $config->admin_id;

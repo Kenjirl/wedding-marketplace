@@ -2,6 +2,23 @@
 
 @section('item')
     @if (!$plans->isEmpty())
+        {{-- FILTER --}}
+        <div class="w-full mt-2 pb-1 flex items-center justify-start gap-2 overflow-x-auto">
+            <a class="w-[40px] aspect-square flex items-center justify-center text-sm font-semibold border border-pink {{ $filterJenisVendor == '' ? 'bg-pink text-white' : 'bg-white text-pink' }} rounded"
+            href="{{ route('user.search.ke_detail', $vendor->id) }}?tab=layanan">
+                All
+            </a>
+            @foreach ($j_vendor as $jenis)
+                <a class="w-[40px] aspect-square flex items-center justify-center gap-2 flex-nowrap text-sm border border-pink
+                    {{ $filterJenisVendor == $jenis->master->id ? 'bg-pink text-white' : 'bg-white text-pink' }} rounded"
+                    href="{{ route('user.search.ke_detail', $vendor->id) }}??tab=layanan&jenis_vendor={{ $jenis->master->id }}">
+                    <i class="{{ $jenis->master->icon }}"></i>
+                </a>
+            @endforeach
+        </div>
+
+        <hr class="mt-1 mb-2">
+
         <div class="w-full">
             {{-- list paket layanan bawah --}}
             <div class="w-full mt-2 py-4 px-2 grid grid-cols-4 gap-4 overflow-x-auto">

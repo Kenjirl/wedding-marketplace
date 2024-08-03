@@ -12,13 +12,17 @@ $currentUrl = Request::url();
         href="{{ route('user.pernikahan.index') }}">
         Pernikahan
     </a>
+    <a class="w-fit py-1 border-b-2 {{ Str::contains($currentUrl, '/vendor') ? 'border-pink text-pink' : 'border-transparent' }} hover:border-pink outline-pink focus:border-pink active:border-pink-active transition-colors"
+        href="{{ route('user.search.vendor') }}">
+        Vendor
+    </a>
     <a class="w-fit py-1 border-b-2 {{ Str::contains($currentUrl, '/paket-layanan') ? 'border-pink text-pink' : 'border-transparent' }} hover:border-pink outline-pink focus:border-pink active:border-pink-active transition-colors"
         href="{{ route('user.search.paket-layanan') }}">
         Layanan
     </a>
-    <a class="w-fit py-1 border-b-2 {{ Str::contains($currentUrl, '/vendor') ? 'border-pink text-pink' : 'border-transparent' }} hover:border-pink outline-pink focus:border-pink active:border-pink-active transition-colors"
-        href="{{ route('user.search.vendor') }}">
-        Vendor
+    <a class="w-fit py-1 border-b-2 {{ Str::contains($currentUrl, '/portofolio') ? 'border-pink text-pink' : 'border-transparent' }} hover:border-pink outline-pink focus:border-pink active:border-pink-active transition-colors"
+        href="{{ route('user.search.portofolio') }}">
+        Portofolio
     </a>
 @else
     <a class="w-[30px] aspect-square flex items-center justify-center border border-pink rounded bg-pink text-white hover:bg-pink hover:text-white outline-pink focus:bg-pink focus:text-white active:bg-pink-active transition-colors"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DaftarRequest;
 use App\Http\Requests\MasukRequest;
 use App\Http\Requests\UbahPasswordRequest;
+use App\Models\MJenisVendor;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,6 +22,12 @@ class UserController extends Controller
         'vendor'      => 'vendor.index',
         'super-admin' => 'super-admin.index',
     ];
+
+    public function index() {
+        $j_vendor = MJenisVendor::all();
+
+        return view('user.index', compact('j_vendor'));
+    }
 
     public function ke_masuk() {
         return view('masuk.index');

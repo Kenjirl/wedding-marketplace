@@ -20,6 +20,13 @@
                     {!! $plan->detail !!}
                 </div>
 
+                <div class="w-fit px-2 py-1 text-sm border border-pink rounded">
+                    <i class="{{ $plan->jenis->icon }} text-pink"></i>
+                    <span>
+                        {{ $plan->jenis->nama }}
+                    </span>
+                </div>
+
                 @if ($plan->jenis_layanan == 'produk')
                     <hr class="my-4">
 
@@ -76,7 +83,7 @@
 
                             {{-- TOMBOL CLOSE MODAL --}}
                             <div>
-                                <button class="closeUlasanBtn w-fit px-4 aspect-square rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                <button class="closeUlasanBtn w-fit px-2 aspect-square rounded outline-none bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
                                     type="button" tabindex="-1" data-id="{{ $plan->id }}">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
@@ -87,14 +94,22 @@
                         <div id="ratings-container" class="w-full h-[70vh] overflow-y-auto p-4 grid grid-cols-4 gap-4 auto-rows-min items-start border-y-2">
                             @forelse ($plan->bookings as $booking)
                                 @if ($booking->rating)
-                                    <div class="w-full p-2 rounded-lg shadow-lg text-sm booking-item" data-rating="{{ $booking->rating->rating }}">
-                                        <div class="w-full flex items-center justify-center gap-2 mb-2">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                <i class="fa-solid fa-star {{ $booking->rating->rating >= $i ? 'text-pink' : '' }}"></i>
-                                            @endfor
+                                    <div class="w-full p-2 rounded-lg shadow-lg booking-item" data-rating="{{ $booking->rating->rating }}">
+                                        <div class="w-full mb-2 font-semibold text-sm">
+                                            {{ $booking->wedding->w_couple->nama }}
                                         </div>
-                                        <div class="w-full min-h-[100px] p-2 rounded bg-gray-100 text-justify">
-                                            {{ $booking->rating->komentar }}
+                                        <div class="w-full min-h-[100px] p-2 mb-2 rounded bg-gray-100 text-center text-sm">
+                                            <div class="w-full flex items-center justify-center gap-2 mb-2">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <i class="fa-solid fa-star {{ $booking->rating->rating >= $i ? 'text-pink' : '' }}"></i>
+                                                @endfor
+                                            </div>
+                                            <p>
+                                                {{ $booking->rating->komentar }}
+                                            </p>
+                                        </div>
+                                        <div class="w-full text-slate-400 text-xs text-end italic">
+                                            {{ \Carbon\Carbon::parse($booking->updated_at)->translatedFormat('l, d F Y') }}
                                         </div>
                                     </div>
                                 @endif
@@ -103,7 +118,7 @@
                         </div>
 
                         {{-- BAWAH --}}
-                        <div class="w-full p-4 flex items-center justify-end gap-2">
+                        <div class="w-full p-2 flex items-center justify-end gap-2">
                             <div>
                                 <span>Urutkan berdasarkan : Rating</span>
                                 <span id="sort-order">terbesar</span>
@@ -151,7 +166,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                     @error('wedding_id')
                                         <i class="fa-solid fa-circle-info"></i>
                                         <span>{{ $message }}</span>
@@ -173,7 +188,7 @@
                                         required
                                         value="{{ old('tanggal') }}">
                                 </div>
-                                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                     @error('tanggal')
                                         <i class="fa-solid fa-circle-info"></i>
                                         <span>{{ $message }}</span>
@@ -193,12 +208,26 @@
                                         hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors qty-increase"
                                         type="button">+</button>
                                 </div>
-                                <div class="mt-1 text-sm text-red-500 flex items-center justify-end gap-2">
+                                <div class="mt-1 text-sm text-red-400 flex items-center justify-end gap-2">
                                     @error('qty')
                                         <i class="fa-solid fa-circle-info"></i>
                                         <span>{{ $message }}</span>
                                     @enderror
                                 </div>
+                            </div>
+
+                            <div class="w-full">
+                                <textarea class="w-full p-2 outline-pink rounded text-sm resize-none"
+                                    name="catatan" id="catatan" rows="3" placeholder="tambahkan catatan" maxlength="254"></textarea>
+                            </div>
+
+                            <div class="w-full p-2 flex items-center justify-between border-y-2 border-pink">
+                                <span>
+                                    Total Bayar
+                                </span>
+                                <span class="font-semibold" id="totalBayar">
+                                    Rp {{ number_format($plan->harga, 0, ',', '.') }}
+                                </span>
                             </div>
 
                             {{-- Button Submit --}}
@@ -224,6 +253,24 @@
 
 @push('child-js')
     <script>
+        let harga  = @json($plan->harga);
+        let satuan = @json($plan->satuan);
+
+        function formatRupiah(angka) {
+            let numberString = angka.toString().replace(/[^,\d]/g, ''),
+                split = numberString.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            return rupiah;
+        }
+
         $(document).ready(function() {
             // SET QTY
             $('.qty-decrease').on('click', function() {
@@ -231,20 +278,29 @@
                 let currentVal = parseInt($qty.val());
                 if (currentVal > 1) {
                     $qty.val(currentVal - 1);
+                    let totalBayar = +$qty.val() * harga;
+                    $('#totalBayar').text('Rp ' + formatRupiah(totalBayar));
                 }
             });
             $('.qty-increase').on('click', function() {
                 let $qty = $('#qty');
                 let currentVal = parseInt($qty.val());
                 $qty.val(currentVal + 1);
+                let totalBayar = +$qty.val() * harga;
+                $('#totalBayar').text('Rp ' + formatRupiah(totalBayar));
+            });
+            $('#qty').on('input', function() {
+                let totalBayar = +$(this).val() * harga;
+                $('#totalBayar').text('Rp ' + formatRupiah(totalBayar));
             });
 
             $('#bookingBtn').on('click', function() {
-                let organizer = $('#namaOrganizer').text();
-                let plan      = @json($plan->nama);
-                let wedding   = "Anda belum memilih pernikahan!";
-                let tanggal   = "Anda belum memilih tanggal!";
-                let qty       = $(`#qty`).val();
+                let vendor     = $('#namaOrganizer').text();
+                let plan       = @json($plan->nama);
+                let wedding    = "Anda belum memilih pernikahan!";
+                let tanggal    = "Anda belum memilih tanggal!";
+                let qty        = $(`#qty`).val();
+                let totalBayar = $(`#totalBayar`).text();
 
                 if ($('#wedding_id').val() != '') {
                     wedding = `Pernikahan ${$(`#wedding_id option[value='${$('#wedding_id').val()}']`).text()}`;
@@ -261,51 +317,12 @@
                     html: `
                         <table>
                             <tbody>
-                                <tr>
-                                    <td class="text-start align-top whitespace-nowrap">
-                                        Nama
-                                    </td>
-                                    <td class="align-top"> : </td>
-                                    <td class="text-start align-top">
-                                        ${organizer}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start align-top whitespace-nowrap">
-                                        Paket
-                                    </td>
-                                    <td class="align-top"> : </td>
-                                    <td class="text-start align-top">
-                                        ${plan}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start align-top whitespace-nowrap">
-                                        Untuk
-                                    </td>
-                                    <td class="align-top"> : </td>
-                                    <td class="text-start align-top">
-                                        ${wedding}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start align-top whitespace-nowrap">
-                                        Pada
-                                    </td>
-                                    <td class="align-top"> : </td>
-                                    <td class="text-start align-top">
-                                        ${tanggal}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-start align-top whitespace-nowrap">
-                                        Jumlah
-                                    </td>
-                                    <td class="align-top"> : </td>
-                                    <td class="text-start align-top">
-                                        ${qty}
-                                    </td>
-                                </tr>
+                                <tr> <td class="text-start align-top whitespace-nowrap">Vendor</td> <td class="align-top"> : </td> <td class="text-start align-top">${vendor}</td>     </tr>
+                                <tr> <td class="text-start align-top whitespace-nowrap">Paket</td>  <td class="align-top"> : </td> <td class="text-start align-top">${plan}</td>       </tr>
+                                <tr> <td class="text-start align-top whitespace-nowrap">Untuk</td>  <td class="align-top"> : </td> <td class="text-start align-top">${wedding}</td>    </tr>
+                                <tr> <td class="text-start align-top whitespace-nowrap">Pada</td>   <td class="align-top"> : </td> <td class="text-start align-top">${tanggal}</td>    </tr>
+                                <tr> <td class="text-start align-top whitespace-nowrap">Jumlah</td> <td class="align-top"> : </td> <td class="text-start align-top">${qty}</td>        </tr>
+                                <tr> <td class="text-start align-top whitespace-nowrap">Total</td>  <td class="align-top"> : </td> <td class="text-start align-top">${totalBayar}</td> </tr>
                             </tbody>
                         </table>
                     `,

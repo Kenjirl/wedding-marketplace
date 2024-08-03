@@ -68,7 +68,7 @@
                                 {{ $user->admin->nama }}
                             </div>
                             <div>
-                                <a class="text-sm font-semibold text-slate-500"
+                                <a class="text-sm font-semibold text-slate-400"
                                     href="{{ route('super-admin.daftar-admin.ke_ubah', $user->admin->id) }}">
                                     detail
                                 </a>

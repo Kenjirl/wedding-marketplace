@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('w_sapaan');
             $table->string('w_ayah');
             $table->string('w_ibu');
+
+            $table->enum('status', ['belum selesai', 'selesai'])->default('belum selesai');
             $table->softDeletes();
             $table->timestamps();
 

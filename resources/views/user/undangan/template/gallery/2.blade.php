@@ -1,10 +1,10 @@
 @php
-    $photos = $wedding->invitation ? $wedding->invitation->c_gallery['photos'] : [];
+    $photos = $wedding->invitation ? $wedding->invitation->gallery['photos'] : [];
 @endphp
 
 <div class="max-w-[1000px] py-20">
     <div class="mb-2 text-[4em] text-center font-semibold font-great-vibes"
-        style="color: {{ $wedding->invitation ? $wedding->invitation->c_gallery['stext'] : '#000000'}};"
+        style="color: {{ $wedding->invitation ? $wedding->invitation->gallery['stext'] : '#000000'}};"
         id="stext">
         Our Gallery
     </div>
@@ -13,7 +13,7 @@
         @for ($i = 0; $i < 10; $i++)
             @if ($i == 3)
                 <div class="w-full h-full flex items-center justify-center text-[5em] font-great-vibes font-semibold rounded-xl shadow-sm"
-                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_gallery['sdiv'] : '#ffffff'}}"
+                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->gallery['sdiv'] : '#ffffff'}}"
                     id="sdiv">
                     <p>
                         {{ substr($wedding->p_sapaan, 0, 1) }}
@@ -23,7 +23,7 @@
                 <div></div>
             @elseif ($i == 6)
                 <div class="w-full h-full flex items-center justify-center text-[5em] font-great-vibes font-semibold rounded-xl shadow-sm"
-                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_gallery['sdiv'] : '#ffffff'}}"
+                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->gallery['sdiv'] : '#ffffff'}}"
                     id="sdiv">
                     <p>
                         {{ substr($wedding->w_sapaan, 0, 1) }}

@@ -24,3 +24,12 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #F78CA2;
 }
+
+.scroll-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+}

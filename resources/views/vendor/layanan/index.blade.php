@@ -9,16 +9,35 @@
 @section('content')
     {{-- TOMBOL --}}
     <div class="w-full flex items-center justify-between">
-        <button class="w-[40px] aspect-square p-2 bg-pink text-white text-center rounded"
-            type="button" id="infoBtn">
-            <i class="fa-solid fa-circle-info"></i>
-        </button>
+        <div class="w-1/3">
+            <a class="block w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                href="{{ route('vendor.layanan.ke_tambah') }}">
+                <i class="fa-solid fa-plus"></i>
+                Tambah
+            </a>
+        </div>
 
-        <a class="w-fit px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-            href="{{ route('vendor.layanan.ke_tambah') }}">
-            <i class="fa-solid fa-plus"></i>
-            Tambah
-        </a>
+        <div class="w-1/3 flex items-center justify-center">
+            <button class="w-[40px] aspect-square mx-auto p-2 bg-pink text-white text-center rounded"
+                type="button" id="infoBtn">
+                <i class="fa-solid fa-circle-info"></i>
+            </button>
+        </div>
+
+        {{-- FILTER --}}
+        <div class="w-1/3 flex flex-wrap items-start justify-end gap-2">
+            <a class="block w-fit px-2 py-1 border border-pink outline-pink {{ $jenis_id == null ? 'bg-pink text-white' : 'bg-white text-pink' }} text-sm font-semibold rounded active:bg-pink-active active:text-white transition-colors"
+                href="{{ route('vendor.layanan.index') }}">
+                All
+            </a>
+            @forelse ($j_vendor as $jenis)
+                <a class="block w-fit px-2 py-1 border border-pink outline-pink {{ $jenis_id == $jenis->m_jenis_vendor_id ? 'bg-pink text-white' : 'bg-white text-pink' }} text-sm font-semibold rounded active:bg-pink-active active:text-white transition-colors"
+                    href="{{ route('vendor.layanan.index', ['jenis_id' => $jenis->m_jenis_vendor_id]) }}">
+                    {{ $jenis->master->nama }}
+                </a>
+            @empty
+            @endforelse
+        </div>
     </div>
 
     <hr class="my-4">

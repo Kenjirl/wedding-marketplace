@@ -88,7 +88,7 @@
                 <div class="w-full mt-4">
                     <a class="w-full block text-center p-2 text-gray-700 font-semibold bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-400 outline-gray-300 outline-offset-4 transition-colors rounded"
                         href="{{ route('google_login') }}">
-                        <i class="fa-brands fa-google text-red-500"></i>
+                        <i class="fa-brands fa-google text-red-400"></i>
                         Daftar dengan Akun Google
                     </a>
                 </div>

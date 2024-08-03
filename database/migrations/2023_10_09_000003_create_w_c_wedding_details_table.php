@@ -18,7 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('w_c_wedding_id');
             $table->unsignedBigInteger('m_event_id');
             $table->dateTime('waktu');
-            $table->string('lokasi');
+            $table->string('lokasi')->nullable();
+            $table->json('koordinat')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

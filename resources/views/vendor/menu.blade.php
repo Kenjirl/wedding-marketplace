@@ -34,6 +34,12 @@ $currentUrl = Request::url();
         Jadwal
     </a>
     <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
+        {{ Str::contains($currentUrl, '/pendapatan') ? 'bg-pink text-white' : '' }}"
+        href="{{ route('vendor.pendapatan.index') }}">
+        <i class="w-[30px] text-center fa-solid fa-dollar-sign"></i>
+        Pendapatan
+    </a>
+    <a class="w-full p-2 rounded hover:bg-pink hover:text-white focus:outline-none focus:bg-pink focus:text-white active:bg-pink-active transition-colors
         {{ Str::contains($currentUrl, '/ulasan') ? 'bg-pink text-white' : '' }}"
         href="{{ route('vendor.ulasan.index') }}">
         <i class="w-[30px] text-center fa-regular fa-comment"></i>

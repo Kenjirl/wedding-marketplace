@@ -110,46 +110,21 @@
     {{-- ITEM 4 --}}
     <div class="w-full min-h-[95vh] p-8 flex flex-col items-center justify-center bg-[url('/public/img/bg/wave-top.svg')] bg-top bg-no-repeat bg-cover"
         id="penyedia-layanan">
-        <div class="w-full max-w-[1200px] mt-[5em] grid grid-cols-4 gap-8">
-            {{-- @php
-                $services = [
-                    [
-                        'title' => 'Organizer',
-                        'icon' => 'fa-building-user',
-                        'route' => 'user.search.wo.index'
-                    ],
-                    [
-                        'title' => 'Fotografer',
-                        'icon' => 'fa-camera-retro',
-                        'route' => 'user.search.wp.index'
-                    ],
-                    [
-                        'title' => 'Caterer',
-                        'icon' => 'fa-utensils',
-                        'route' => 'user.search.ct.index'
-                    ],
-                    [
-                        'title' => 'Venue',
-                        'icon' => 'fa-place-of-worship',
-                        'route' => 'user.search.v.index'
-                    ]
-                ];
-            @endphp
-
-            @foreach ($services as $service)
+        <div class="w-full max-w-[1200px] grid grid-cols-4 gap-8">
+            @foreach ($j_vendor as $vendor)
                 @php
-                    $route = (auth()->user() && auth()->user()->w_couple) ? $service['route'] : 'ke_masuk';
+                    $route = (auth()->user() && auth()->user()->w_couple) ? 'user.search.vendor' : 'ke_masuk';
                 @endphp
                 <a class="w-full mx-auto p-4 flex flex-col items-center justify-between gap-8 rounded-md border outline-pink shadow hover:shadow-lg transition-shadow"
                     href="{{ route($route) }}">
                     <div class="w-full flex flex-col items-center justify-start gap-4">
-                        <i class="fa-solid {{ $service['icon'] }} text-[5em] text-pink"></i>
-                        <p class="text-xl font-semibold text-center">
-                            {{ $service['title'] }}
+                        <i class="fa-solid {{ $vendor['icon'] }} text-[4em] text-pink"></i>
+                        <p class="text-lg font-semibold text-center">
+                            {{ $vendor['nama'] }}
                         </p>
                     </div>
                 </a>
-            @endforeach --}}
+            @endforeach
         </div>
     </div>
 @endsection

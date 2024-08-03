@@ -25,7 +25,7 @@ class UbahAdminRequest extends FormRequest
     {
         return [
             'nama'          =>'required|string|regex:/^[a-zA-Z\s]*$/|max:50',
-            'no_telp'       =>'required|string|min:8|max:12',
+            'no_telp'       =>'required|string|min:8|max:15',
             'gender'        =>'required|string|regex:/^[a-zA-Z\s]*$/|in:Pria,Wanita',
             'provinsi'      =>'required|string|regex:/^[a-zA-Z\s()]*$/',
             'kota'          =>'required|string|regex:/^[a-zA-Z\s()]*$/',
@@ -50,7 +50,7 @@ class UbahAdminRequest extends FormRequest
             'no_telp.required'       => 'Nomor Telepon tidak boleh kosong',
             'no_telp.string'         => 'Nomor Telepon harus berupa angka',
             'no_telp.min'            => 'Nomor Telepon minimal 8 karakter',
-            'no_telp.max'            => 'Nomor Telepon maksimal 12 karakter',
+            'no_telp.max'            => 'Nomor Telepon maksimal 15 karakter',
             'gender.required'        => 'Gender tidak boleh kosong',
             'gender.string'          => 'Gender harus berupa karakter',
             'gender.regex'           => 'Gender tidak boleh memuat angka dan/atau tanda baca',

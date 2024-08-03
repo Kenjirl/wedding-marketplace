@@ -3,19 +3,19 @@
         @foreach ($wedding->w_detail as $detail)
             <div class="w-full flex items-center justify-center">
                 <div class="min-w-[120px] h-full flex flex-col items-center justify-center rounded-lg border"
-                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_event['sdiv'] : '#ffffff'}};"
+                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->event['sdiv'] : '#ffffff'}};"
                     id="sdiv">
                     @php
                         $tanggal = \Carbon\Carbon::parse($detail->waktu)->format('d');
                         $bt = \Carbon\Carbon::parse($detail->waktu)->translatedFormat('F Y');
                     @endphp
                     <div class="text-[5em] text-center font-great-vibes"
-                        style="color: {{ $wedding->invitation ? $wedding->invitation->c_event['stext'] : '#000000'}};"
+                        style="color: {{ $wedding->invitation ? $wedding->invitation->event['stext'] : '#000000'}};"
                         id="stext">
                         {{ $tanggal }}
                     </div>
                     <div class="font-semibold"
-                        style="color: {{ $wedding->invitation ? $wedding->invitation->c_event['stext'] : '#000000'}};"
+                        style="color: {{ $wedding->invitation ? $wedding->invitation->event['stext'] : '#000000'}};"
                         id="stext">
                         {{ $bt }}
                     </div>

@@ -41,50 +41,63 @@
                     </div>
 
                     <div class="w-full p-2 border-y-2 border-slate-100 text-sm">
-                        <div class="w-full flex items-center justify-start gap-2">
-                            <i class="fa-regular fa-calendar text-pink"></i>
-                            <p class="italic text-gray-300">
-                                {{ $wedding->duration }}
-                            </p>
-                        </div>
+                        @if ($wedding->w_detail->isNotEmpty())
+                            <div class="w-full flex items-center justify-start gap-2">
+                                <i class="fa-regular fa-calendar text-pink"></i>
+                                <p class="italic text-gray-400">
+                                    {{ $wedding->duration }}
+                                </p>
+                            </div>
 
-                        <div class="w-full p-2">
-                            @forelse ($wedding->w_detail as $detail)
-                                <div class="w-full mb-2 last-of-type:mb-0 flex items-center justify-start gap-2">
-                                    <div class="w-[25px] aspect-square flex items-center justify-center rounded-sm bg-pink text-white">
-                                        {{ $loop->iteration }}
+                            <div class="w-full p-2">
+                                @forelse ($wedding->w_detail as $detail)
+                                    <div class="w-full mb-2 last-of-type:mb-0 flex items-center justify-start gap-2">
+                                        <div class="w-[25px] aspect-square flex items-center justify-center rounded-sm bg-pink text-white">
+                                            {{ $loop->iteration }}
+                                        </div>
+
+                                        <div class="line-clamp-1">
+                                            {{ $detail->event->nama }}
+                                        </div>
                                     </div>
+                                    @if ($loop->iteration == 2)
+                                        @break
+                                    @endif
+                                @empty
 
-                                    <div class="line-clamp-1">
-                                        {{ $detail->event->nama }}
-                                    </div>
-                                </div>
-                                @if ($loop->iteration == 2)
-                                    @break
-                                @endif
-                            @empty
-
-                            @endforelse
-                        </div>
+                                @endforelse
+                            </div>
+                        @else
+                            <div class="w-full h-[100px] italic text-gray-400">
+                                Belum ada acara
+                            </div>
+                        @endif
                     </div>
 
                     <div class="w-full p-2 grid grid-cols-2 gap-2">
-                        <a class="w-full px-4 py-2 col-span-2 rounded outline-none text-sm text-center bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
-                            href="{{ route('user.pernikahan.ke_detail', $wedding->id) }}">
-                            Detail
-                        </a>
+                        @if ($wedding->status == 'selesai' || $wedding->w_detail->isNotEmpty())
+                            <a class="w-full px-4 py-2 col-span-2 rounded outline-none text-sm text-center bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                href="{{ route('user.pernikahan.ke_detail', $wedding->id) }}">
+                                Detail
+                            </a>
+                        @else
+                            <a class="w-full px-4 py-2 col-span-2 rounded outline-none text-sm text-center bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                href="{{ route('user.pernikahan.ke_acara', $wedding->id) }}">
+                                Lengkapi Pernikahan
+                            </a>
+                        @endif
 
                         @if (!$wedding->invitation)
                             <a class="w-full px-4 py-2 rounded outline-none text-sm text-center hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors
-                                {{ $today->gte($wedding->limit) ? 'text-white bg-slate-300 pointer-events-none hover:cursor-not-allowed' : 'text-pink' }}
+                                {{ $today->gte($wedding->limit) || $wedding->status == 'belum selesai' ? 'text-white bg-slate-300 pointer-events-none hover:cursor-not-allowed' : 'text-pink' }}
                                 "
                                 href="{{ route('user.undangan.ke_tambah', ['id'=>$wedding->id]) }}">
                                 Buat Undangan
                             </a>
                         @else
                             <a class="w-full px-4 py-2 rounded outline-none text-sm text-center text-pink hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors"
-                                href="{{ route('user.pernikahan.ke_detail', ['id'=>$wedding->id, 'tab' => 'ubah-undangan']) }}">
-                                Edit Undangan
+                                href="{{ route('user.undangan.cek', ['id'=>$wedding->id]) }}" target="_blank">
+                                Lihat Undangan
                             </a>
                         @endif
 

@@ -112,7 +112,7 @@
             </div>
 
             {{-- ALAMAT --}}
-            <div class="w-full mb-4">
+            <div class="w-full">
                 <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
                     <i class="fa-solid fa-location-dot"></i>
                     <span class="ml-2">
@@ -121,34 +121,6 @@
                 </div>
                 <div class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm rounded-b">
                     {{ auth()->user()->w_vendor ? auth()->user()->w_vendor->alamat : 'Belum Terdata'  }}
-                </div>
-            </div>
-
-            {{-- REKENING --}}
-            <div class="w-full mb-4">
-                <div class="w-full p-2 text-xs font-bold bg-pink text-white flex items-center justify-start rounded-t">
-                    <i class="fa-solid fa-credit-card"></i>
-                    <span class="ml-2">
-                        Rekening
-                    </span>
-                </div>
-                <div class="w-full p-2 flex items-stretch justify-start gap-2 border-x-2 border-b-2 text-sm rounded-b">
-                    @if (auth()->user()->w_vendor)
-                        @forelse (auth()->user()->w_vendor->rekening as $rekening)
-                            <div class="w-fit flex rounded-sm shadow">
-                                <div class="w-fit py-1 px-2 bg-slate-300 rounded-s-sm font-semibold">
-                                    {{ $rekening['jenis'] }}
-                                </div>
-                                <div class="w-fit py-1 px-2">
-                                    {{ $rekening['nomor'] }}
-                                </div>
-                            </div>
-                        @empty
-                            Belum ada rekening terdaftar
-                        @endforelse
-                    @else
-                        Belum Terdata
-                    @endif
                 </div>
             </div>
 
@@ -170,13 +142,20 @@
     </div>
 
     @if (auth()->user()->w_vendor)
-        <hr class="my-8">
+        <hr class="my-4">
 
-        <div class="w-full flex items-start justify-center gap-8"
+        <div class="w-full flex items-start justify-center gap-4"
             id="jenisVendor">
             <div class="w-full rounded-lg border shadow">
-                <div class="w-full p-2 font-semibold text-xl border-b">
-                    Daftar Jenis Vendor
+                <div class="w-full py-2 px-4 flex items-center justify-between border-b">
+                    <div class="font-semibold">
+                        Jenis Vendor Anda
+                    </div>
+
+                    <button class="w-[30px] aspect-square bg-pink text-white text-center rounded"
+                        type="button" id="infoBtn">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
                 </div>
 
                 <div class="w-full min-h-[300px] p-4">
@@ -208,27 +187,35 @@
                 </div>
             </div>
 
-            <div class="w-full h-[400px]">
-                @if ($m_j_vendors->isNotEmpty())
-                    <form action="{{ route('vendor.profil.tambah-jenis') }}" method="post">
-                        @csrf
-                        <div class="w-full mb-8">
-                            <select class="w-full p-2 rounded outline-pink border border-pink"
-                                name="j_vendor" id="j_vendor">
-                                @foreach ($m_j_vendors as $m_jenis)
-                                    <option value="{{ $m_jenis->id }}">{{ $m_jenis->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+            <div class="w-full rounded-lg border shadow">
+                <div class="w-full py-2 px-4 font-semibold border-b">
+                    <div class="min-h-[30px] flex items-center justify-start">
+                        Daftar Jenis Vendor
+                    </div>
+                </div>
 
-                        <div class="w-full text-center">
-                            <button class="w-fit mx-auto px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                                type="submit">
-                                Tambahkan Jenis Vendor
-                            </button>
-                        </div>
-                    </form>
-                @endif
+                <div class="w-full min-h-[300px] p-4 flex flex-col items-center justify-center">
+                    @if ($m_j_vendors->isNotEmpty())
+                        <form class="w-full" action="{{ route('vendor.profil.tambah-jenis') }}" method="post">
+                            @csrf
+                            <div class="w-full mb-8">
+                                <select class="w-full p-2 rounded outline-pink border border-pink"
+                                    name="j_vendor" id="j_vendor">
+                                    @foreach ($m_j_vendors as $m_jenis)
+                                        <option value="{{ $m_jenis->id }}">{{ $m_jenis->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="w-full text-center">
+                                <button class="w-fit mx-auto px-4 py-2 rounded text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
+                                    type="submit">
+                                    Tambahkan Jenis Vendor
+                                </button>
+                            </div>
+                        </form>
+                    @endif
+                </div>
             </div>
         </div>
     @endif
@@ -248,7 +235,7 @@
                     html: `
                         <p class="text-justify text-sm">
                             1. Semua data terkait jenis vendor Anda ini akan ikut dihapus <br>
-                            2. Paket layanan yang Anda buat dengan jenis vendor ini akan dihapus dan tidak dapat digunakan lagi <br>
+                            2. Portofolio dan paket layanan yang Anda buat dengan jenis vendor ini akan dihapus dan tidak dapat digunakan lagi <br>
                             3. Anda masih bisa mengecek rekaman informasi mengenai jenis vendor ini, namun tidak dapat menggunakannya kembali <br>
                         </p>
                     `,
@@ -260,6 +247,25 @@
                         form.submit();
                     }
                 });
+            });
+        });
+
+        $('#infoBtn').on("click", function () {
+            Swal.fire({
+                title: "Info",
+                icon: "info",
+                iconColor: "#F78CA2",
+                html: `
+                    <p class="text-justify text-sm">
+                        1. Silahkan tambahkan jenis vendor yang Anda inginkan <br>
+                        2. Portofolio dan paket layanan yang akan Anda buat berkaitan dengan jenis vendor ini <br>
+                        3. Jika Anda menghapus jenis vendor, portofolio dan paket layanan dengan jenis vendor yang dihapus akan ikut terhapus <br>
+                        4. Jika Anda mengembalikan jenis vendor yang dihapus, maka akan mengembalikan juga portofolio dan paket layanan yang telah dihapus <br>
+                    </p>
+                `,
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "OK"
             });
         });
     </script>

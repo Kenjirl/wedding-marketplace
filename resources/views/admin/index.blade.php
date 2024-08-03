@@ -80,7 +80,7 @@
                                 <i class="{{ $statusIcon }}"></i>
                             </div>
                             <div>
-                                <a class="text-sm font-semibold text-slate-500"
+                                <a class="text-sm font-semibold text-slate-400"
                                     href="{{ route('admin.portofolio.ke_validasi', ['id' => $portofolio->id, 'vendor' => $portofolio->w_vendor->jenis]) }}">
                                     detail
                                 </a>

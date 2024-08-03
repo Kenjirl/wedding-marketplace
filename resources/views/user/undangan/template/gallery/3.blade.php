@@ -1,10 +1,10 @@
 @php
-    $photos = $wedding->invitation ? $wedding->invitation->c_gallery['photos'] : [];
+    $photos = $wedding->invitation ? $wedding->invitation->gallery['photos'] : [];
 @endphp
 
 <div class="max-w-[1200px] py-10">
     <div class="text-[5em] text-center font-semibold font-great-vibes"
-        style="color: {{ $wedding->invitation ? $wedding->invitation->c_gallery['stext'] : '#000000'}};"
+        style="color: {{ $wedding->invitation ? $wedding->invitation->gallery['stext'] : '#000000'}};"
         id="stext">
         Our Gallery
     </div>

@@ -7,10 +7,28 @@
 @section('h1', 'Pesanan')
 
 @section('content')
+    {{-- FILTER JENIS VENDOR --}}
+    <div class="w-full mb-2 flex flex-wrap items-start justify-end gap-2">
+        <a class="block w-fit px-2 py-1 border border-pink outline-pink {{ $jenis_id == null ? 'bg-pink text-white' : 'bg-white text-pink' }} text-sm font-semibold rounded active:bg-pink-active active:text-white transition-colors"
+            href="{{ route('vendor.pesanan.index') }}">
+            All
+        </a>
+        @forelse ($j_vendor as $jenis)
+            <a class="block w-fit px-2 py-1 border border-pink outline-pink {{ $jenis_id == $jenis->m_jenis_vendor_id ? 'bg-pink text-white' : 'bg-white text-pink' }} text-sm font-semibold rounded active:bg-pink-active active:text-white transition-colors"
+                href="{{ route('vendor.pesanan.index', ['jenis_id' => $jenis->m_jenis_vendor_id]) }}">
+                {{ $jenis->master->nama }}
+            </a>
+        @empty
+        @endforelse
+    </div>
+
+    <hr class="my-4">
+
+    {{-- TABLE --}}
     <div class="w-full">
-        <table class="w-full table-auto cell-border compact hover" id="dataTable">
+        <table class="w-full display table-auto cell-border compact hover" id="dataTable">
             <thead>
-                <tr>
+                <tr class="border-t">
                     <th>No</th>
                     <th>Pernikahan</th>
                     <th>Dipesan Tanggal</th>
@@ -21,7 +39,7 @@
             </thead>
             <tbody>
                 @forelse ($bookings as $booking)
-                    <tr>
+                    <tr class="border-b">
                         <td class="text-center">
                             {{ $loop->iteration }}
                         </td>
@@ -55,7 +73,14 @@
                         </td>
                     </tr>
                 @empty
-                    {{-- NO DATA --}}
+                    <tr class="border-b text-center">
+                        <td class="p-2">Belum ada data</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>

@@ -11,9 +11,13 @@ class WCWeddingDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $casts = [
+        'koordinat' => 'array',
+    ];
+
     protected $fillable = [
         'w_c_wedding_id',
-        'w_event_id',
+        'm_event_id',
         'waktu',
         'lokasi',
     ];

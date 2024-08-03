@@ -48,16 +48,36 @@
                             <p>Telepon</p>
                         </div>
                         <div class="w-full px-6">
-                            {{ $vendor->no_telp }}
+                            <span id="phoneNumber">
+                                {{ $vendor->no_telp }}
+                            </span>
+                            <button class="w-fit ml-2 text-pink" id="copyPhoneNumberBtn">
+                                <i class="fa-regular fa-clone"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="w-full mb-2"> {{-- Alamat --}}
+                        @php
+                            $urlAddress = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($vendor->alamat);
+                            if (!is_null($vendor->koordinat['lat']) && !is_null($vendor->koordinat['lng'])) {
+                                $urlCoordinate = 'https://www.google.com/maps?q=' . $vendor->koordinat['lat'] . ',' . $vendor->koordinat['lng'];
+                            } else {
+                                $urlCoordinate = $urlAddress;
+                            }
+                        @endphp
                         <div class="w-full flex items-center justify-start gap-2">
                             <i class="fa-solid fa-location-dot text-pink"></i>
                             <p>Alamat</p>
                         </div>
                         <div class="w-full px-6">
-                            {{ $vendor->alamat }}
+                            <a class="hover:underline"
+                                href="{{ $urlAddress }}" target="_blank">
+                                {{ $vendor->alamat }}
+                            </a>
+                            <a class="w-fit ml-2 text-pink"
+                                href="{{ $urlCoordinate }}" target="_blank">
+                                <i class="fa-solid fa-square-arrow-up-right"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="w-full mb-2"> {{-- Basis Operasi --}}
@@ -87,12 +107,14 @@
                         </div>
                         <div class="w-full px-5 flex items-start justify-start flex-wrap gap-1">
                             @forelse ($vendor->jenis as $j_vendor)
-                                <div class="w-fit px-2 py-1 text-xs border border-pink rounded">
-                                    <i class="{{ $j_vendor->master->icon }} text-pink"></i>
+                                <a class="w-fit px-2 py-1 flex items-center justify-center gap-2 text-xs border border-pink rounded font-semibold
+                                    {{ $filterJenisVendor == $j_vendor->master->id ? 'bg-pink text-white' : 'bg-white text-pink' }}"
+                                    href="{{ route('user.search.ke_detail', $vendor->id) }}?tab=layanan&jenis_vendor={{ $j_vendor->master->id }}">
+                                    <i class="{{ $j_vendor->master->icon }}"></i>
                                     <span>
                                         {{ $j_vendor->master->nama }}
                                     </span>
-                                </div>
+                                </a>
                             @empty
 
                             @endforelse
@@ -138,16 +160,20 @@
 
 @push('child-js')
     <script>
-        // Ganti Portofolio
-        function setPortofolioId(portofolioId) {
-            $('#portofolio_id').val(portofolioId);
-            $('#portofolioForm').submit();
-        }
-
         $(document).ready(function() {
             Fancybox.bind("[data-fancybox]");
 
             $('ul').addClass('list-disc pl-8');
+
+            $('#copyPhoneNumberBtn').on('click', function() {
+                const noTelp = $('#phoneNumber').text().trim();
+                const tempInput = $('<textarea>');
+                $('body').append(tempInput);
+                tempInput.val(noTelp).select();
+                document.execCommand('copy');
+                tempInput.remove();
+                toastr.success("Menyalin Nomor Telepon Vendor", "Sukses");
+            });
 
             // Ganti Foto Portofolio
             $('.foto-kecil').on('click', function() {

@@ -64,6 +64,8 @@ class UGuestController extends Controller
             return back()->with('gagal', 'ID tidak valid');
         }
 
+        $tamu->status = 'Sudah Terkirim';
+
         $tamu->respon = $req->konfirmasi;
         if ($req->konfirmasi == 'hadir') {
             $tamu->jumlah = $req->jumlah_tamu;

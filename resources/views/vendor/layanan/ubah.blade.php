@@ -19,7 +19,7 @@
                 </a>
 
                 <div class="w-fit flex items-center justify-end gap-4">
-                    <button class="w-fit px-4 py-2 font-semibold outline-none border border-pink text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                    <button class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
                         id="deleteBtn" type="button" data-layanan="{{ $plan->nama }}">
                         <i class="fa-solid fa-trash-can"></i>
                         <span>Hapus</span>
@@ -41,19 +41,19 @@
                     {{-- NAMA --}}
                     <div class="w-full mb-4">
                         <div class="w-full">
-                            <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-gift"></i>
                                 <span class="ml-2">
                                     Nama Paket
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="text" name="nama" id="nama" placeholder="nama"
                                 value="{{ old('nama', $plan->nama) }}"
                                 required>
                         </div>
 
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                             @error('nama')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>
@@ -78,19 +78,19 @@
                     {{-- HARGA --}}
                     <div class="w-full mb-4">
                         <div class="w-full">
-                            <div class="w-full p-2 text-xs font-bold bg-pink @error('harga') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('harga') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-rupiah-sign"></i>
                                 <span class="ml-2">
                                     Harga Paket
                                 </span>
                             </div>
-                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('harga') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('harga') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                 type="number" name="harga" id="harga" placeholder="tanpa Rp" min="0"
                                 value="{{ old('harga', $plan->harga) }}"
                                 required>
                         </div>
 
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                             @error('harga')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>
@@ -101,13 +101,13 @@
                     {{-- SATUAN --}}
                     <div class="w-full mb-4">
                         <div class="w-full">
-                            <div class="w-full p-2 text-xs font-bold bg-pink @error('satuan') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('satuan') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-regular fa-circle-dot"></i>
                                 <span class="ml-2">
                                     Satuan Harga
                                 </span>
                             </div>
-                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('satuan') border-red-500 @enderror rounded-b focus:border-pink outline-none"
+                            <select class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('satuan') border-red-400 @enderror rounded-b focus:border-pink outline-none"
                                 name="satuan" id="satuan" required>
                                 <option value="" selected>Pilih Satuan Harga</option>
                                 @foreach ($satuans as $category => $options)
@@ -122,7 +122,7 @@
                             </select>
                         </div>
 
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                             @error('satuan')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>
@@ -149,18 +149,18 @@
                     {{-- DETAIL --}}
                     <div class="w-full mb-4">
                         <div class="w-full">
-                            <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                            <div class="w-full p-2 text-xs font-bold bg-pink @error('detail') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span class="ml-2">
                                     Detail
                                 </span>
                             </div>
-                            <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                            <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                 name="detail" id="input" rows="3" placeholder="masukan detail acara ini"
                                 >{{ old('detail', $plan->detail) }}</textarea>
                         </div>
 
-                        <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                        <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                             @error('detail')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>
@@ -223,7 +223,7 @@
 
                     {{-- BAWAH --}}
                     <div class="w-full px-4 py-2 flex items-center justify-between text-sm rounded-b border-2 border-slate-100">
-                        <div class="text-red-500 flex items-center justify-start gap-2">
+                        <div class="text-red-400 flex items-center justify-start gap-2">
                             @error('foto')
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>{{ $message }}</span>

@@ -30,86 +30,21 @@ class VProfileController extends Controller
     }
 
     public function ke_ubah() {
-        $provinsi       = '';
-        $kota           = '';
-        $kecamatan      = '';
-        $kelurahan      = '';
-        $alamat_detail  = '';
-
-        if (auth()->user()->w_vendor) {
-            if (auth()->user()->w_vendor->alamat) {
-                $alamatArray = explode(', ', auth()->user()->w_vendor->alamat);
-                list($alamat_detail, $kelurahan, $kecamatan, $kota, $provinsi) = $alamatArray;
-            }
-        }
-
-        // Load data JSON untuk dropdown
-        $provinsiData = collect(json_decode(file_get_contents(public_path('json/provinsi.json'))))->sortBy('name');
-        $kotaData = collect(json_decode(file_get_contents(public_path('json/kabupaten.json'))));
-        $kecamatanData = collect(json_decode(file_get_contents(public_path('json/kecamatan.json'))));
-        $kelurahanData = collect(json_decode(file_get_contents(public_path('json/kelurahan.json'))));
-
-        // Cari ID Provinsi berdasarkan nama Provinsi
-        $selectedProvinsi = $provinsiData->firstWhere('name', $provinsi);
-        $provinsiId = $selectedProvinsi ? $selectedProvinsi->id : null;
-
-        // Filter data Kabupaten berdasarkan ID Provinsi
-        $filteredKotaData = $kotaData->where('provinsi_id', $provinsiId)->sortBy('name');
-
-        // Cari ID Kabupaten berdasarkan nama Kabupaten
-        $selectedKota = $filteredKotaData->firstWhere('name', $kota);
-        $kotaId = $selectedKota ? $selectedKota->id : null;
-
-        // Filter data Kecamatan berdasarkan ID Kabupaten
-        $filteredKecamatanData = $kecamatanData->where('kabupaten_id', $kotaId)->sortBy('name');
-
-        // Cari ID Kecamatan berdasarkan nama Kecamatan
-        $selectedKecamatan = $filteredKecamatanData->firstWhere('name', $kecamatan);
-        $kecamatanId = $selectedKecamatan ? $selectedKecamatan->id : null;
-
-        // Filter data Kelurahan berdasarkan ID Kecamatan
-        $filteredKelurahanData = $kelurahanData->where('kecamatan_id', $kecamatanId)->sortBy('name');
-
-        return view('vendor.profil.ubah',
-            compact(
-                'provinsi',
-                'kota',
-                'kecamatan',
-                'kelurahan',
-                'alamat_detail',
-                'provinsiData',
-                'filteredKotaData',
-                'filteredKecamatanData',
-                'filteredKelurahanData',
-            ));
+        return view('vendor.profil.ubah');
     }
 
     public function ubah(ProfilRequest $req) {
         $req->validated();
 
-        $kota_operasi = null;
-        $alamat = $req->alamat_detail . ', ' . $req->kelurahan . ', ' . $req->kecamatan . ', ' . $req->kota . ', ' . $req->provinsi;
-
-        if ($req->basis_operasi == 'Hanya di Dalam Kota') {
-            $kota_operasi = $req->kota;
-        }
-
-        $filteredRekening = array_filter($req->rekening, function ($value) {
-            return !is_null($value);
-        });
-
-        $arrRekening = [];
-        foreach ($filteredRekening as $bank => $nomorRekening) {
-            $arrRekening[] = [
-                'jenis' => $bank,
-                'nomor' => $nomorRekening
-            ];
-        }
-
         User::where('id', auth()->user()->id)
             ->update([
                 'name' => $req->username,
             ]);
+
+        $koordinat = [
+            'lat' => $req->lat,
+            'lng' => $req->lng,
+        ];
 
         if (auth()->user()->w_vendor) {
             # Update
@@ -117,22 +52,22 @@ class VProfileController extends Controller
                 ->update([
                     'nama'          => $req->nama,
                     'no_telp'       => $req->no_telp,
+                    'alamat'        => $req->alamat,
+                    'koordinat'     => $koordinat,
                     'basis_operasi' => $req->basis_operasi,
-                    'kota_operasi'  => $kota_operasi,
-                    'alamat'        => $alamat,
-                    'rekening'      => $arrRekening,
+                    'kota_operasi'  => $req->kota_operasi,
                 ]);
         } else {
             # Make New
-            $organizer = new WVendor();
-            $organizer->user_id         = auth()->user()->id;
-            $organizer->nama            = $req->nama;
-            $organizer->no_telp         = $req->no_telp;
-            $organizer->basis_operasi   = $req->basis_operasi;
-            $organizer->kota_operasi    = $kota_operasi;
-            $organizer->alamat          = $alamat;
-            $organizer->rekening        = $arrRekening;
-            $data = $organizer->save();
+            $vendor = new WVendor();
+            $vendor->user_id         = auth()->user()->id;
+            $vendor->nama            = $req->nama;
+            $vendor->no_telp         = $req->no_telp;
+            $vendor->alamat          = $req->alamat;
+            $vendor->koordinat       = $koordinat;
+            $vendor->basis_operasi   = $req->basis_operasi;
+            $vendor->kota_operasi    = $req->kota_operasi;
+            $data = $vendor->save();
         }
 
         if ($data) {
@@ -198,10 +133,20 @@ class VProfileController extends Controller
             'j_vendor' => 'required',
         ]);
 
-        $data = auth()->user()->w_vendor->jenis()->create([
-            'm_jenis_vendor_id' => $req->j_vendor,
-        ]);
+        $vendor = auth()->user()->w_vendor;
 
+        $jenis = WVJenis::where('w_vendor_id', $vendor->id)
+            ->where('m_jenis_vendor_id', $req->j_vendor)
+            ->withTrashed()
+            ->first();
+
+        if ($jenis) {
+            $data = $jenis->restore();
+        } else {
+            $data = auth()->user()->w_vendor->jenis()->create([
+                'm_jenis_vendor_id' => $req->j_vendor,
+            ]);
+        }
         if ($data) {
             return back()->with('sukses', 'Menambah Jenis Vendor')->withFragment('jenisVendor');
         }

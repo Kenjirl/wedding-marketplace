@@ -14,12 +14,12 @@
             </div>
         </div>
 
-        <img class="w-full max-h-[50vh] object-cover brightness-50"
+        <img class="w-full h-[50vh] object-cover"
             src="{{ asset('template/undangan/profile/groom.jpg') }}" alt="Groom">
     </div>
 
     <div class="w-full max-h-[50vh] grid grid-cols-3">
-        <img class="w-full max-h-[50vh] object-cover brightness-50"
+        <img class="w-full h-[50vh] object-cover"
             src="{{ asset('template/undangan/profile/bride.jpg') }}" alt="Bride">
 
         <div class="col-span-2 w-full flex flex-col items-center justify-center text-center">

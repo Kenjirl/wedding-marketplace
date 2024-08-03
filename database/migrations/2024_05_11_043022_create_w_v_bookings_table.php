@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('status', ['batal', 'diproses', 'diterima', 'ditolak', 'dibayar', 'selesai'])->default('diproses');
             $table->date('untuk_tanggal');
             $table->unsignedBigInteger('total_bayar');
+            $table->string('catatan')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

@@ -9,7 +9,23 @@
 @section('content')
     <form action="{{ route('vendor.profil.ubah_foto') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <div class="w-full p-4 flex item-center justify-evenly">
+        <div class="w-full flex items-center justify-between">
+            <a class="block w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                href="{{ route('vendor.profil.index') }}">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span>Kembali</span>
+            </a>
+
+            <button class="w-fit px-4 py-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors rounded"
+                type="submit" id="btnSubmit">
+                <i class="fa-solid fa-upload"></i>
+                <span>Unggah Foto Profil</span>
+            </button>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="w-full flex item-center justify-evenly">
             {{-- KIRI --}}
             <div class="relative w-fit p-4">
                 @if (auth()->user()->w_vendor && auth()->user()->w_vendor->foto_profil)
@@ -46,20 +62,6 @@
 
                 <input class="hidden" type="file" name="foto_profil" id="foto_profil" accept="image/*" required>
             </div>
-        </div>
-
-        <div class="w-100 mt-8 flex items-center justify-end gap-4">
-            <a class="w-fit px-4 py-2 font-semibold outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                href="{{ route('vendor.profil.index') }}">
-                <i class="fa-solid fa-arrow-left-long"></i>
-                <span>Kembali</span>
-            </a>
-
-            <button class="w-fit px-4 py-2 text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors rounded"
-                type="submit" id="btnSubmit">
-                <i class="fa-solid fa-upload"></i>
-                <span>Unggah Foto Profil</span>
-            </button>
         </div>
     </form>
 @endsection

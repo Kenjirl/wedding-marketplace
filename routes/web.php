@@ -20,6 +20,7 @@ use App\Http\Controllers\Vendor\VBookingController;
 use App\Http\Controllers\Vendor\VController;
 use App\Http\Controllers\Vendor\VPortfolioController;
 use App\Http\Controllers\Vendor\VProfileController;
+use App\Http\Controllers\Vendor\VRevenueController;
 use App\Http\Controllers\Vendor\VReviewController;
 use App\Http\Controllers\Vendor\VScheduleController;
 use App\Http\Controllers\Vendor\VServiceController;
@@ -28,9 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(UserController::class)->group(function() {
 
     Route::middleware(['guest'])->group(function() {
-        Route::get('/', function () {
-            return view('user.index');
-        });
+        Route::get ('/',      'index')   ->name('index');
         Route::get ('/masuk', 'ke_masuk')->name('ke_masuk');
         Route::post('/masuk', 'masuk')   ->name('masuk');
 
@@ -146,16 +145,18 @@ Route::name('user.')
 
         Route::prefix('/pernikahan')->group(function() {
             Route::name('pernikahan.')->controller(UWeddingController::class)->group(function() {
-                Route::get ('/',                  'index')     ->name('index');
-                Route::get ('/tambah',            'ke_tambah') ->name('ke_tambah');
-                Route::post('/tambah',            'tambah')    ->name('tambah');
-                Route::get ('/ubah/{id}',         'ke_ubah')   ->name('ke_ubah');
-                Route::post('/ubah/{id}',         'ubah')      ->name('ubah');
-                Route::get ('/detail/{id}',       'ke_detail') ->name('ke_detail');
-                Route::post('/hapus/{id}',        'hapus')     ->name('hapus');
-                Route::post('/hapus-vendor/{id}', 'hapus_vendor')  ->name('hapus-vendor');
-                Route::post('/selesai',           'selesai')   ->name('selesai');
-                Route::post('/ulasan/{id}',       'ulasan')    ->name('ulasan');
+                Route::get ('/',                  'index')       ->name('index');
+                Route::get ('/tambah',            'ke_tambah')   ->name('ke_tambah');
+                Route::post('/tambah',            'tambah')      ->name('tambah');
+                Route::get ('/acara/{id}',        'ke_acara')    ->name('ke_acara');
+                Route::post('/acara/{id}',        'acara')       ->name('acara');
+                Route::get ('/ubah/{id}',         'ke_ubah')     ->name('ke_ubah');
+                Route::post('/ubah/{id}',         'ubah')        ->name('ubah');
+                Route::get ('/detail/{id}',       'ke_detail')   ->name('ke_detail');
+                Route::post('/hapus/{id}',        'hapus')       ->name('hapus');
+                Route::post('/hapus-vendor/{id}', 'hapus_vendor')->name('hapus-vendor');
+                Route::post('/selesai',           'selesai')     ->name('selesai');
+                Route::post('/ulasan/{id}',       'ulasan')      ->name('ulasan');
             });
 
             Route::prefix('/transaksi')->name('transaksi.')
@@ -170,8 +171,7 @@ Route::name('user.')
                 ->controller(UInvitationController::class)->group(function() {
                 Route::get ('/ke-tambah',  'ke_tambah')->name('ke_tambah');
                 Route::post('/tambah',     'tambah')   ->name('tambah');
-                Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
-                Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
+                Route::get ('/cek/{id}',   'cek')      ->name('cek');
             });
 
             Route::name('tamu.')->prefix('/tamu')
@@ -188,6 +188,7 @@ Route::name('user.')
             ->controller(UBookingController::class)->group(function() {
             Route::get ('/paket-layanan', 'paket_layanan')->name('paket-layanan');
             Route::get ('/vendor',        'vendor')       ->name('vendor');
+            Route::get ('/portofolio',    'portofolio')   ->name('portofolio');
             Route::get ('/{id}/detail',   'ke_detail')    ->name('ke_detail');
             Route::post('/pesan',         'pesan')        ->name('pesan');
 
@@ -197,7 +198,7 @@ Route::name('user.')
 
 });
 
-Route::get('/fetch-template/{type}/{value}', [TemplateController::class, 'fetchTemplate']);
+Route::get('/fetch-template/{type}/{value}', [TemplateController::class, 'fetchTemplate'])->name('ambil-template');
 Route::get('undangan/{pengantin}/{link}', [UInvitationController::class, 'undangan'])->name('undangan.tamu');
 
 Route::name('vendor.')->prefix('/vendor')
@@ -251,11 +252,15 @@ Route::name('vendor.')->prefix('/vendor')
             Route::post('/respon/{id}', 'respon')   ->name('respon');
         });
 
+        Route::name('pendapatan.')->prefix('/pendapatan')
+            ->controller(VRevenueController::class)->group(function() {
+            Route::get ('/', 'index')    ->name('index');
+        });
+
         Route::name('jadwal.')->prefix('/jadwal')
             ->controller(VScheduleController::class)->group(function() {
             Route::get ('/',            'index')    ->name('index');
             Route::get ('/detail/{id}', 'ke_detail')->name('ke_detail');
-            Route::post('/batal/{id}',  'batal')    ->name('batal');
         });
 
         Route::name('ulasan.')->prefix('/ulasan')

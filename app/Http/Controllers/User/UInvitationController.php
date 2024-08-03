@@ -8,6 +8,7 @@ use App\Models\WCInvitation;
 use App\Models\WCWedding;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,6 +17,11 @@ class UInvitationController extends Controller
     public function ke_tambah(Request $req) {
         $wedding = WCWedding::with('w_detail')->find($req->id);
 
+        $invitation = $wedding->invitation;
+        if ($invitation) {
+            return back()->with('gagal', 'Pernikahan ini sudah memiliki undangan digital');
+        }
+
         $folders = [
             'header',
             'quote',
@@ -23,6 +29,7 @@ class UInvitationController extends Controller
             'event',
             'gallery',
             'wish',
+            'info',
             'footer',
         ];
         $f_counts = [];
@@ -41,72 +48,96 @@ class UInvitationController extends Controller
     }
 
     public function tambah(Request $req) {
-        $req->validate([
-            't_header'  => 'required',
-            't_quote'   => 'required',
-            't_profile' => 'required',
-            't_event'   => 'required',
-            't_gallery' => 'required',
-            't_wish'    => 'required',
-            't_footer'  => 'required',
-        ]);
-
         $wedding = WCWedding::find($req->wedding_id);
         if (!$wedding) {
             return redirect()->route('user.pernikahan.index')->with('gagal', 'ID tidak valid');
         }
 
         $data = [
-            't_header'  => $req->t_header,
-            't_quote'   => $req->t_quote,
-            't_profile' => $req->t_profile,
-            't_event'   => $req->t_event,
-            't_gallery' => $req->t_gallery,
-            't_wish'    => $req->t_wish,
-            't_footer'  => $req->t_footer,
-            'c_header'  => [
+            'header'  => [
+                'template' => $req->t_header,
                 'div'   => $req->header_div_col,
                 'sdiv'  => $req->header_sdiv_col,
                 'stext' => $req->header_stext_col,
                 'text'  => $req->header_text_col,
             ],
-            'c_quote'   => [
+            'quote'   => [
+                'template' => $req->t_quote,
                 'div'   => $req->quote_div_col,
                 'sdiv'  => $req->quote_sdiv_col,
                 'stext' => $req->quote_stext_col,
                 'text'  => $req->quote_text_col,
             ],
-            'c_profile' => [
+            'profile' => [
+                'template' => $req->t_profile,
                 'div'   => $req->profile_div_col,
                 'sdiv'  => $req->profile_sdiv_col,
                 'stext' => $req->profile_stext_col,
                 'text'  => $req->profile_text_col,
             ],
-            'c_event'   => [
+            'event'   => [
+                'template' => $req->t_event,
                 'div'   => $req->event_div_col,
                 'sdiv'  => $req->event_sdiv_col,
                 'stext' => $req->event_stext_col,
                 'text'  => $req->event_text_col,
             ],
-            'c_gallery' => [
+            'gallery' => [
+                'template' => $req->t_gallery,
                 'div'   => $req->gallery_div_col,
                 'sdiv'  => $req->gallery_sdiv_col,
                 'stext' => $req->gallery_stext_col,
                 'text'  => $req->gallery_text_col,
             ],
-            'c_wish'    => [
+            'wish'    => [
+                'template' => $req->t_wish,
                 'div'   => $req->wish_div_col,
                 'sdiv'  => $req->wish_sdiv_col,
                 'stext' => $req->wish_stext_col,
                 'text'  => $req->wish_text_col,
             ],
-            'c_footer'  => [
+            'info'    => [
+                'template' => $req->t_info,
+                'div'   => $req->info_div_col,
+                'sdiv'  => $req->info_sdiv_col,
+                'stext' => $req->info_stext_col,
+                'text'  => $req->info_text_col,
+            ],
+            'footer'  => [
+                'template' => $req->t_footer,
                 'div'   => $req->footer_div_col,
                 'sdiv'  => $req->footer_sdiv_col,
                 'stext' => $req->footer_stext_col,
                 'text'  => $req->footer_text_col,
             ],
+            'status' => 'selesai',
         ];
+
+        if ($req->t_quote != '0') {
+            $data['quote']['quote'] = $req->quote_content;
+            $data['quote']['author'] = $req->quote_author;
+        }
+
+        if ($req->t_gallery != '0' && $req->hasFile('foto_galeri')) {
+            $new_photos = [];
+            foreach ($req->file('foto_galeri') as $file) {
+                $filename = 'u/undangan/galeri/' . str()->uuid() . '.' . $file->extension();
+                $url = Storage::disk('public')->putFileAs('/', $file, $filename);
+                $new_photos[] = $url;
+            }
+            $data['gallery']['photos'] = $new_photos;
+        }
+
+        if ($req->hasFile('foto_profil')) {
+            $new_profil_photos = [];
+            foreach ($req->file('foto_profil') as $file) {
+                $filename = 'u/undangan/profil/' . str()->uuid() . '.' . $file->extension();
+                $url = Storage::disk('public')->putFileAs('/', $file, $filename);
+                $new_profil_photos[] = $url;
+            }
+            $data['profile']['foto_pria'] = $new_profil_photos[0];
+            $data['profile']['foto_wanita'] = $new_profil_photos[1];
+        }
 
         $invitation = $wedding->invitation()->create($data);
 
@@ -117,77 +148,40 @@ class UInvitationController extends Controller
         return redirect()->route('user.pernikahan.ke_detail', $wedding->id)->with('gagal', 'Membuat Undangan Digital');
     }
 
-    public function ubah(Request $req, $id) {
-        $req->validate([
-            'quote'         => 'nullable|string|max:255',
-            'author'        => 'nullable|string|max:50',
-            'foto_galeri'   => 'nullable|array|min:6|max:6',
-            'foto_galeri.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_profil'   => 'required|array|min:2|max:2',
-            'foto_profil.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ], [
-            'quote.max'            => 'Kutipan maksimal 255 karakter.',
-            'author.max'           => 'Asal kutipan maksimal 50 karakter.',
-            'foto_galeri.min'      => 'Harus menyertakan minimal 6 foto.',
-            'foto_galeri.max'      => 'Hanya boleh menyertakan maksimal 6 foto.',
-            'foto_galeri.*.image'  => 'Semua file harus berupa gambar.',
-            'foto_galeri.*.mimes'  => 'Gambar harus berupa file berformat: jpeg, png, jpg, gif.',
-            'foto_galeri.*.max'    => 'Gambar maksimal berukuran 2MB.',
-            'foto_profil.required' => 'Harus menyertakan 2 foto profil.',
-            'foto_profil.min'      => 'Harus menyertakan minimal 2 foto profil.',
-            'foto_profil.max'      => 'Hanya boleh menyertakan maksimal 2 foto profil.',
-            'foto_profil.*.image'  => 'Semua file harus berupa gambar.',
-            'foto_profil.*.mimes'  => 'Gambar harus berupa file berformat: jpeg, png, jpg, gif.',
-            'foto_profil.*.max'    => 'Gambar maksimal berukuran 2MB.',
-        ]);
+    public function cek($id) {
+        $wedding = WCWedding::find($id)->with(['w_detail', 'invitation'])->first();
 
-        $invitation = WCInvitation::findOrFail($id);
-        if (!$invitation) {
+        if (!$wedding) {
             return back()->with('gagal', 'ID tidak valid');
         }
 
-        if ($invitation->t_quote != '0') {
-            $c_quote = $invitation->c_quote;
-            $c_quote['quote'] = $req->quote;
-            $c_quote['author'] = $req->author;
-            $invitation->c_quote = $c_quote;
+        if (is_null($wedding->invitation)) {
+            return back()->with('gagal', 'Pernikahan belum memiliki undangan digital');
         }
 
-        if ($invitation->t_gallery != '0' && $req->hasFile('foto_galeri')) {
-            $new_photos = [];
-            foreach ($req->file('foto_galeri') as $file) {
-                $filename = 'u/undangan/galeri/' . str()->uuid() . '.' . $file->extension();
-                $url = Storage::disk('public')->putFileAs('/', $file, $filename);
-                $new_photos[] = $url;
-            }
+        $buatTamu = collect([
+            new WCGuest([
+                'id' => 0,
+                'w_c_wedding_id' => 0,
+                'nama' => 'Cek Undangan',
+                'no_telp' => '123123123123',
+                'link' => null,
+                'status' => 'Belum Terkirim',
+                'respon' => 'Belum Menjawab',
+                'jumlah' => 0,
+                'pesan' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'deleted_at' => null,
+            ]),
+        ]);
+        $tamu = $buatTamu->first();
+        $tamu->id = 0;
 
-            $c_gallery = $invitation->c_gallery;
-            $c_gallery['photos'] = $new_photos;
-            $invitation->c_gallery = $c_gallery;
-        }
-
-        if ($req->hasFile('foto_profil')) {
-            $new_profil_photos = [];
-            foreach ($req->file('foto_profil') as $file) {
-                $filename = 'u/undangan/profil/' . str()->uuid() . '.' . $file->extension();
-                $url = Storage::disk('public')->putFileAs('/', $file, $filename);
-                $new_profil_photos[] = $url;
-            }
-
-            $c_profile = $invitation->c_profile;
-            $c_profile['foto_pria'] = $new_profil_photos[0];
-            $c_profile['foto_wanita'] = $new_profil_photos[1];
-            $invitation->c_profile = $c_profile;
-        }
-
-        $invitation->status = 'selesai';
-
-        $data = $invitation->save();
-
-        if ($data) {
-            return back()->with('sukses', 'Menyelesaikan Undangan Digital');
-        }
-        return back()->with('gagal', 'Menyelesaikan Undangan Digital');
+        return view('user.undangan.cek', compact(
+            'wedding',
+            'tamu'
+        ));
     }
 
     public function undangan($pengantin, $link) {

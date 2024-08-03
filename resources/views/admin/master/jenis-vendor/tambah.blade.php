@@ -14,16 +14,16 @@
             {{-- NAMA --}}
             <div class="w-full mb-4">
                 <div class="w-full">
-                    <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                    <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                         Jenis Vendor
                     </div>
-                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                         type="text" name="nama" id="nama" placeholder="fotografer" autofocus
                         value="{{ old('nama', '') }}"
                         required>
                 </div>
 
-                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                     @error('nama')
                         <i class="fa-solid fa-circle-info"></i>
                         <span>{{ $message }}</span>
@@ -34,23 +34,23 @@
             {{-- ICON --}}
             <div class="w-full mb-4">
                 <div class="w-full">
-                    <div class="w-full p-2 text-xs font-bold bg-pink @error('icon') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                    <div class="w-full p-2 text-xs font-bold bg-pink @error('icon') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                         Icon
                     </div>
-                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('icon') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                    <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('icon') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                         type="text" name="icon" id="icon" placeholder="fa-solid fa-house"
                         value="{{ old('icon', '') }}"
                         required>
                 </div>
 
-                <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                     @error('icon')
                         <i class="fa-solid fa-circle-info"></i>
                         <span>{{ $message }}</span>
                     @enderror
                 </div>
 
-                <div class="mt-1 text-sm text-slate-500 italic flex items-center justify-start gap-2">
+                <div class="mt-1 text-sm text-slate-400 italic flex items-center justify-start gap-2">
                     <i class="fa-solid fa-circle-info"></i>
                     <p>
                         gunakan icon dari link berikut :

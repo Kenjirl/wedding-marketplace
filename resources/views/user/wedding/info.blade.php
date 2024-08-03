@@ -4,9 +4,9 @@
         <div class="w-full max-h-[600px] p-4 overflow-y-auto">
             @foreach ($weddingEvents as $w_event)
                 {{-- EVENT --}}
-                <div class="w-full mb-4 flex items-center justify-center gap-4">
+                <div class="w-full mb-4 flex items-start justify-center gap-4">
                     {{-- NUMBER --}}
-                    <div class="w-[50px] aspect-square flex items-center justify-center text-2xl italic bg-pink text-white font-semibold rounded">
+                    <div class="w-[40px] aspect-square flex items-center justify-center text-lg italic bg-pink text-white font-semibold rounded">
                         {{ $loop->iteration }}
                     </div>
 
@@ -24,16 +24,22 @@
                             </div>
                         </div>
 
-                        <div class="w-full h-[2px] my-1 bg-pink"></div>
+                        <div class="w-full h-1 my-1 bg-pink rounded-full"></div>
 
                         {{-- BOTTOM --}}
                         <div class="w-full text-sm text-gray-400 italic">
                             <div>
-                                Pada {{ \Carbon\Carbon::parse($w_event->waktu)->format('d/m/Y') }}
+                                Pada {{ \Carbon\Carbon::parse($w_event->waktu)->translatedFormat('l, d F Y') }}
                                 pukul {{ \Carbon\Carbon::parse($w_event->waktu)->format('H:i') }}
                             </div>
                             <div>
-                                {{ $w_event->lokasi }}
+                                @if ($w_event->lokasi)
+                                    <a class="w-full underline" target="_blank" href="https://www.google.com/maps?q={{ $w_event->koordinat['lat'] }},{{ $w_event->koordinat['lng'] }}">
+                                        {{ $w_event->lokasi }}
+                                    </a>
+                                @else
+                                    belum menentukan lokasi
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -75,7 +81,7 @@
                     $classes = $statusClasses[$bv->status] ?? $defaultClasses;
                 @endphp
 
-                {{-- BOOKED Catering CARD --}}
+                {{-- BOOKED VENDOR CARD --}}
                 <div class="w-full flex items-center justify-between gap-4 rounded-md border-l-8 border-{{ $classes[0] }}"
                     id="targetDiv-{{ $bv->plan->m_jenis_vendor_id }}">
                     {{-- NAMA --}}
@@ -109,7 +115,7 @@
                     </div>
                 </div>
 
-                {{-- FOTOGRAFER BOOKING DETAIL MODAL --}}
+                {{-- VENDOR BOOKING DETAIL MODAL --}}
                 <div class="fixed top-full left-0 w-full h-screen flex items-center justify-center bg-slate-500/50 z-10 transition-all duration-500"
                     id="bookingFtgModal-{{ $bv->id }}">
                     <div class="w-[80%] max-w-[1200px] bg-white rounded-md">
@@ -131,7 +137,7 @@
                         </div>
 
                         {{-- konten --}}
-                        <div class="w-full max-h-[70vh] overflow-y-auto p-4 border-y-2">
+                        <div class="w-full h-[75vh] overflow-y-auto p-4 border-y-2">
                             {{-- grid --}}
                             <div class="w-full grid grid-cols-2 gap-4 text-start">
                                 {{-- kiri --}}
@@ -164,23 +170,25 @@
                                                 <i class="fa-solid fa-gift"></i>
                                             </span>
 
-                                            <span class="text-lg font-semibold">
+                                            <a target="_blank" href="{{ route('user.search.ke_detail', $bv->plan->w_vendor->id) }}?tab=booking&id_layanan={{ $bv->plan->id }}"
+                                                class="block text-lg font-semibold hover:underline focus:underline">
                                                 {{ $bv->plan->nama }}
-                                            </span>
+                                            </a>
                                         </div>
 
-                                        {{-- fitur --}}
+                                        {{-- detail --}}
                                         <div class="w-full max-h-[200px] overflow-y-auto px-4 my-2 detail-plan">
                                             {!! $bv->plan->detail !!}
                                         </div>
                                     </div>
 
-                                    <div class="w-fit px-2 py-1 text-xs border border-pink rounded">
-                                        <i class="{{ $bv->plan->jenis->icon }} text-pink"></i>
+                                    <a class="w-fit px-2 py-1 text-xs border border-pink rounded outline-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white transition-colors"
+                                        target="_blank" href="{{ route('user.search.ke_detail', $bv->vendor->id) }}?tab=layanan&jenis_vendor={{ $bv->plan->m_jenis_vendor_id }}">
+                                        <i class="{{ $bv->plan->jenis->icon }}"></i>
                                         <span>
                                             {{ $bv->plan->jenis->nama }}
                                         </span>
-                                    </div>
+                                    </a>
 
                                     <hr class="my-4">
 
@@ -205,11 +213,18 @@
                                     </div>
 
                                     {{-- total harga --}}
-                                    <div class="w-full mt-2 flex items-center justify-between text-end text-lg">
+                                    <div class="w-full mt-2 flex items-center justify-between text-end text-lg border-b">
                                         <span>Total Biaya : </span>
                                         <span class="font-semibold">
                                             Rp {{ number_format($bv->total_bayar, 0, ',', '.') }}
                                         </span>
+                                    </div>
+
+                                    {{-- catatan --}}
+                                    <div class="w-full mt-4 flex items-center justify-between">
+                                        <p class="w-full text-end italic text-slate-400 text-sm">
+                                            catatan : {{ $bv->catatan }}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -220,14 +235,22 @@
                                             $transaction = $bv->transaction()->latest()->first();
                                         @endphp
                                         @if (!$transaction || ($transaction && !in_array($transaction->transaction_status, ['pending', 'capture', 'settlement'])))
+                                            @if ($today->lt($bv->untuk_tanggal))
                                             <button class="pay-button w-full p-2 bg-white rounded border border-pink text-pink
                                                 hover:bg-pink hover:text-white
                                                 focus:bg-pink focus:text-white
                                                 transition-colors"
-                                                data-id_booking="{{ $bv->id }}">
+                                                data-id_booking="{{ $bv->id }}" id="pay-button-{{ $bv->id }}">
                                                 Buat Transaksi
                                             </button>
                                             <div id="snap-container-{{ $bv->id }}" class="snap-container w-full"></div>
+                                            @else
+                                                <p>
+                                                    Telah memasuki hari <b>{{ $today->translatedFormat('l, d F Y') }}</b>. <br>
+                                                    Tidak dapat mengajukan transaksi lagi. <br>
+                                                    Silahkan batalkan pemesanan
+                                                </p>
+                                            @endif
                                         @elseif ($transaction)
                                             <div class="w-full">
                                                 <div class="w-full mb-4 flex items-center justify-start gap-4">
@@ -250,11 +273,11 @@
                                                             src="https://api.sandbox.midtrans.com/v2/qris/{{ $transaction->transaction_id }}/qr-code" alt="Qris">
                                                         @if ($transaction->transaction_status == 'pending')
                                                             <div>
-                                                                Waktu Expired : {{ \Carbon\Carbon::parse($transaction->expiry_time)->translatedFormat('l, d F Y - H : m : s') }}
+                                                                Waktu Expired : {{ \Carbon\Carbon::parse($transaction->expiry_time)->translatedFormat('l, d F Y - H : i : s') }}
                                                             </div>
                                                         @else
                                                             <div>
-                                                                Diselesaikan pada : {{ \Carbon\Carbon::parse($transaction->updated_at)->translatedFormat('l, d F Y - H : m : s') }}
+                                                                Diselesaikan pada : {{ \Carbon\Carbon::parse($transaction->updated_at)->translatedFormat('l, d F Y - H : i : s') }}
                                                             </div>
                                                         @endif
 
@@ -299,11 +322,11 @@
                                                         {{-- WAKTU --}}
                                                         @if ($transaction->transaction_status == 'pending')
                                                             <div>
-                                                                Waktu Expired : {{ \Carbon\Carbon::parse($transaction->expiry_time)->translatedFormat('l, d F Y - H : m : s') }}
+                                                                Waktu Expired : {{ \Carbon\Carbon::parse($transaction->expiry_time)->translatedFormat('l, d F Y - H : i : s') }}
                                                             </div>
                                                         @else
                                                             <div>
-                                                                Diselesaikan pada : {{ \Carbon\Carbon::parse($transaction->updated_at)->translatedFormat('l, d F Y - H : m : s') }}
+                                                                Diselesaikan pada : {{ \Carbon\Carbon::parse($transaction->updated_at)->translatedFormat('l, d F Y - H : i : s') }}
                                                             </div>
                                                         @endif
                                                     @endif
@@ -349,7 +372,7 @@
                                                     <input hidden type="number" name="rating" class="ratingInput"
                                                         value="{{ old('rating', $bv->rating ? $bv->rating->rating : 1) }}" min="1" max="5" required>
 
-                                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                                         @error('rating')
                                                             <i class="fa-solid fa-circle-info"></i>
                                                             <span>{{ $message }}</span>
@@ -362,7 +385,7 @@
                                                     <textarea class="block w-full p-2 bg-gray-50 rounded-lg border border-gray-300 outline-pink ring-pink focus:border-pink"
                                                         name="komentar" rows="5" required placeholder="tulis ulasan anda ..." minlength="10" maxlength="250">{{ old('komentar', $bv->rating ? $bv->rating->komentar : '') }}</textarea>
 
-                                                    <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                                                    <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                                         @error('komentar')
                                                             <i class="fa-solid fa-circle-info"></i>
                                                             <span>{{ $message }}</span>
@@ -384,7 +407,15 @@
                                     @elseif ($bv->status == 'ditolak')
                                         <p>Pesanan telah ditolak pihak vendor. Silahkan batalkan pesanan dan pilih vendor lainnya. </p>
                                     @else
-                                        <p>Menunggu pesanan diterima pihak vendor.</p>
+                                        @if ($today->lt($bv->untuk_tanggal))
+                                            <p>Menunggu pesanan diterima pihak vendor.</p>
+                                        @else
+                                            <p>
+                                                Telah memasuki hari <b>{{ $today->translatedFormat('l, d F Y') }}</b>. <br>
+                                                Tidak dapat melanjutkan pemesanan lagi. <br>
+                                                Silahkan batalkan pemesanan
+                                            </p>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -404,7 +435,7 @@
 
                             {{-- buttons --}}
                             <div class="w-fit">
-                                @if ($bv->status == 'diproses' || $bv->status == 'ditolak')
+                                @if ($bv->status == 'diproses' || $bv->status == 'ditolak' || $bv->status == 'diterima')
                                     <form action="{{ route('user.pernikahan.hapus-vendor', $bv->id) }}" method="post" id="hapusWPForm-{{ $bv->id }}">
                                         @csrf
                                         <button class="hapusWPBtn w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
@@ -412,6 +443,10 @@
                                             Batalkan Pesanan
                                         </button>
                                     </form>
+                                    <button class="close-transaction hidden w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"
+                                        type="button" id="close-transaction-{{ $bv->id }}" data-id="{{ $bv->id }}">
+                                        Batalkan Transaksi
+                                    </button>
                                 @endif
                                 @if ($today->gte(($bv->untuk_tanggal)) && $bv->status == 'dibayar')
                                     <button class="w-fit px-4 py-2 rounded outline-pink outline-offset-4 bg-pink text-white hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active transition-colors"

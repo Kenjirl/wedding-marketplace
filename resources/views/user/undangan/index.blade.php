@@ -5,57 +5,57 @@
 @endsection
 
 @section('body')
-    <div class="w-full max-w-[1200px] max-h-screen mx-auto overflow-y-auto bg-white">
+    <div class="w-full max-w-[1400px] max-h-screen mx-auto overflow-y-auto bg-white">
         <div class="min-h-screen flex items-center justify-center"
-            style="background-color: {{ $wedding->invitation->c_header['div'] }}; color: {{ $wedding->invitation->c_header['text'] }};"
+            style="background-color: {{ $wedding->invitation->header['div'] }}; color: {{ $wedding->invitation->header['text'] }};"
             id="header">
-            @include('user.undangan.template.header.'.$wedding->invitation->t_header)
+            @include('user.undangan.template.header.'.$wedding->invitation->header['template'])
         </div>
 
-        @if ($wedding->invitation->t_quote != 0)
+        @if ($wedding->invitation->quote['template'] != 0)
             <div class="w-full flex items-center justify-center"
-                style="background-color: {{ $wedding->invitation->c_quote['div'] }}; color: {{ $wedding->invitation->c_quote['text'] }};"
+                style="background-color: {{ $wedding->invitation->quote['div'] }}; color: {{ $wedding->invitation->quote['text'] }};"
                 id="quote">
-                @include('user.undangan.template.quote.'.$wedding->invitation->t_quote)
+                @include('user.undangan.template.quote.'.$wedding->invitation->quote['template'])
             </div>
         @endif
 
         <div class="flex items-center justify-center"
-            style="background-color: {{ $wedding->invitation->c_profile['div'] }}; color: {{ $wedding->invitation->c_profile['text'] }};"
+            style="background-color: {{ $wedding->invitation->profile['div'] }}; color: {{ $wedding->invitation->profile['text'] }};"
             id="profile">
-            @include('user.undangan.template.profile.'.$wedding->invitation->t_profile)
+            @include('user.undangan.template.profile.'.$wedding->invitation->profile['template'])
         </div>
 
         <div class="min-h-[50vh] flex items-center justify-center"
-            style="background-color: {{ $wedding->invitation->c_event['div'] }}; color: {{ $wedding->invitation->c_event['text'] }};"
+            style="background-color: {{ $wedding->invitation->event['div'] }}; color: {{ $wedding->invitation->event['text'] }};"
             id="event">
-            @include('user.undangan.template.event.'.$wedding->invitation->t_event)
+            @include('user.undangan.template.event.'.$wedding->invitation->event['template'])
         </div>
 
-        @if ($wedding->invitation->t_gallery != 0)
+        @if ($wedding->invitation->gallery['template'] != 0)
             <div class="min-h-[50vh] flex items-center justify-center"
-                style="background-color: {{ $wedding->invitation->c_gallery['div'] }}; color: {{ $wedding->invitation->c_gallery['text'] }};"
+                style="background-color: {{ $wedding->invitation->gallery['div'] }}; color: {{ $wedding->invitation->gallery['text'] }};"
                 id="gallery">
-                @include('user.undangan.template.gallery.'.$wedding->invitation->t_gallery)
+                @include('user.undangan.template.gallery.'.$wedding->invitation->gallery['template'])
             </div>
         @endif
 
         <div class="min-h-screen flex items-center justify-center"
-            style="background-color: {{ $wedding->invitation->c_wish['div'] }}; color: {{ $wedding->invitation->c_wish['text'] }};"
+            style="background-color: {{ $wedding->invitation->wish['div'] }}; color: {{ $wedding->invitation->wish['text'] }};"
             id="wish">
-            @include('user.undangan.template.wish.'.$wedding->invitation->t_wish)
+            @include('user.undangan.template.wish.'.$wedding->invitation->wish['template'])
         </div>
 
         <div class="min-h-screen flex items-center justify-center"
-            style="background-color: {{ $wedding->invitation->c_footer['div'] }}; color: {{ $wedding->invitation->c_footer['text'] }};"
+            style="background-color: {{ $wedding->invitation->footer['div'] }}; color: {{ $wedding->invitation->footer['text'] }};"
             id="footer">
-            @include('user.undangan.template.footer.'.$wedding->invitation->t_footer)
+            @include('user.undangan.template.footer.'.$wedding->invitation->footer['template'])
         </div>
     </div>
 @endsection
 
 @push('child-js')
-    @if ($wedding->invitation->t_gallery != 0)
+    @if ($wedding->invitation->gallery['template'] != 0)
         <script>
             $(document).ready(function() {
                 Fancybox.bind("[data-fancybox]");

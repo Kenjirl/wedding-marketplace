@@ -6,21 +6,42 @@ use App\Http\Controllers\Controller;
 use App\Models\WCWedding;
 use App\Models\WCWeddingDetail;
 use App\Models\WVBooking;
+use App\Models\WVJenis;
 use App\Models\WVPlan;
 use Illuminate\Http\Request;
 
 class VBookingController extends Controller
 {
-    public function index() {
-        $bookings = WVBooking::join('w_v_plans', 'w_v_bookings.w_v_plan_id', '=', 'w_v_plans.id')
-                ->join('w_vendors', 'w_v_plans.w_vendor_id', '=', 'w_vendors.id')
-                ->where('w_vendors.id', auth()->user()->w_vendor->id)
-                ->whereIn('w_v_bookings.status', ['diterima', 'diproses'])
-                ->select('w_v_bookings.*')
-                ->orderBy('w_v_bookings.created_at', 'desc')
-                ->get();
+    public function index(Request $req) {
+        $jenis_id = $req->query('jenis_id');
 
-        return view('vendor.pesanan.index', compact('bookings'));
+        $vendorId = auth()->user()->w_vendor->id;
+
+        $j_vendor = WVJenis::where('w_vendor_id', $vendorId)
+                            ->with(['master'])
+                            ->withTrashed()
+                            ->get();
+
+        $validJenisIds = $j_vendor->pluck('m_jenis_vendor_id')->toArray();
+
+        if ($jenis_id && !in_array($jenis_id, $validJenisIds)) {
+            $jenis_id = null;
+        }
+
+        $bookingsQuery = WVBooking::where('w_vendor_id', $vendorId)
+                    ->with(['plan'])
+                    ->whereIn('status', ['diterima', 'diproses'])
+                    ->orderBy('created_at');
+
+        if ($jenis_id) {
+            $bookingsQuery->whereHas('plan', function ($query) use ($jenis_id) {
+                $query->where('m_jenis_vendor_id', $jenis_id);
+            });
+        }
+
+        $bookings = $bookingsQuery->get();
+
+        return view('vendor.pesanan.index', compact('jenis_id', 'j_vendor', 'bookings'));
     }
 
     public function ke_detail($id) {
@@ -32,7 +53,7 @@ class VBookingController extends Controller
             return back()->with('gagal', 'ID tidak valid');
         }
 
-        $plan     = WVPlan::find($booking->w_v_plan_id);
+        $plan     = WVPlan::withTrashed()->find($booking->w_v_plan_id);
         $wedding  = WCWedding::find($booking->w_c_wedding_id);
         $events   = WCWeddingDetail::where('w_c_wedding_id', $booking->w_c_wedding_id)
                         ->with(['event' => function ($query) {

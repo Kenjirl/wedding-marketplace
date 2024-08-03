@@ -13,7 +13,7 @@ class WVendor extends Model
     use HasFactory, SoftDeletes;
 
     protected $casts = [
-        'rekening' => 'array',
+        'koordinat' => 'array',
     ];
 
     protected $fillable = [

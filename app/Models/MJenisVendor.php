@@ -20,6 +20,10 @@ class MJenisVendor extends Model
         return $this->hasMany(WVJenis::class, 'm_jenis_vendor_id');
     }
 
+    public function portofolio(): HasMany {
+        return $this->hasMany(WVPortofolio::class, 'm_jenis_vendor_id');
+    }
+
     public function plan(): HasMany {
         return $this->hasMany(WVPlan::class, 'm_jenis_vendor_id');
     }
@@ -29,7 +33,14 @@ class MJenisVendor extends Model
 
         static::deleting(function ($jenisVendor) {
             $jenisVendor->jenis()->delete();
+            $jenisVendor->portofolio()->delete();
             $jenisVendor->plan()->delete();
+        });
+
+        static::restoring(function ($jenisVendor) {
+            $jenisVendor->jenis()->withTrashed()->restore();
+            $jenisVendor->portofolio()->withTrashed()->restore();
+            $jenisVendor->plan()->withTrashed()->restore();
         });
     }
 }

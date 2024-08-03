@@ -61,6 +61,14 @@
         src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="{{ config('midtrans.client_key') }}"></script>
 
+    {{-- LEAFLET CDN --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
     {{-- FONT AWESOME ICON --}}
     <script src="https://kit.fontawesome.com/5b8fa639bb.js" crossorigin="anonymous"></script>
 
@@ -71,7 +79,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 
     {{-- DATATABLES CSS --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.tailwindcss.css">
 
     {{-- SWEETALERT CSS CDN --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
@@ -96,7 +105,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     {{-- DATATABLES CDN JS --}}
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> --}}
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.tailwindcss.js"></script>
 
     {{-- SWEETALERT JS CDN --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
@@ -123,27 +134,30 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
     />
+
+    {{-- APEXCHART JS CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body>
     @yield('body')
 
     {{-- TO GET CLASS FOR TAILWIND --}}
-    <div class="
+    <div class=" justify-self-start
         bg-red-400 text-red-400 border-red-400
         hover:bg-red-400 hover:text-red-400 hover:border-red-400
         focus:bg-red-400 focus:text-red-400 focus:border-red-400
     "></div>
-    <div class="
+    <div class="justify-self-end translate-y-[78x]
         bg-blue-400 text-blue-400 border-blue-400
         hover:bg-blue-400 hover:text-blue-400 hover:border-blue-400
         focus:bg-blue-400 focus:text-blue-400 focus:border-blue-400
     "></div>
-    <div class="
+    <div class=" translate-y-0
         bg-green-400 text-green-400 border-green-400
         hover:bg-green-400 hover:text-green-400 hover:border-green-400
         focus:bg-green-400 focus:text-green-400 focus:border-green-400
     "></div>
-    <div class="
+    <div class=" -translate-y-20
         bg-yellow-400 text-yellow-400 border-yellow-400
         hover:bg-yellow-400 hover:text-yellow-400 hover:border-yellow-400
         focus:bg-yellow-400 focus:text-yellow-400 focus:border-yellow-400

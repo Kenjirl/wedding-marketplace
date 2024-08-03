@@ -24,16 +24,16 @@
     <div class="w-full">
         <div class="w-full py-8 px-4 md:px-10 lg:px-20 max-w-[90%] lg:max-w-[75%] mx-auto shadow-lg sdiv
             {{ ($wedding->invitation && $tamu->respon != 'Belum Menjawab') ? 'hidden' : ''}}"
-            style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_wish['sdiv'] : '#ffffff'}}"
+            style="background-color: {{ $wedding->invitation ? $wedding->invitation->wish['sdiv'] : '#ffffff'}}"
             id="wishConfirm">
             <div class="w-full mb-8 text-center">
                 <span class="text-[2em] md:text-[4em] font-great-vibes font-semibold"
-                    style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                    style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                     id="stext">
                     RSVP
                 </span>
                 <p class="italic text-[.8em] md:text-base"
-                    style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                    style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                     id="stext">
                     Silahkan konfirmasi kehadiran Anda, dan berapa jumlah tamu yang akan datang <br> (terhitung termasuk Anda)
                 </p>
@@ -43,7 +43,7 @@
                 <div class="w-full mb-4 text-[.8em] md:text-base">
                     <label class="w-full"
                         for="konfirmasi"
-                        style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                        style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                         id="stext">Konfirmasi Kehadiran</label>
                     <select class="w-full p-2 rounded border text-black"
                         name="konfirmasi" id="konfirmasi">
@@ -55,7 +55,7 @@
                 <div class="w-full mb-4 text-[.8em] md:text-base hidden" id="jumlahTamuContainer">
                     <label class="w-full"
                         for="jumlah_tamu"
-                        style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                        style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                         id="stext">Jumlah Tamu</label>
                     <select class="w-full p-2 rounded border text-black"
                         name="jumlah_tamu" id="jumlah_tamu" hidden>
@@ -68,7 +68,7 @@
 
                 <button class="block w-fit px-4 py-2 mx-auto text-[.8em] md:text-base rounded font-semibold border shadow-sm"
                     type="{{ $wedding->invitation ? 'submit' : 'button' }}"
-                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_wish['div'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->c_wish['text'] : '#000000'}}"
+                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->wish['div'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->wish['text'] : '#000000'}}"
                     id="div"
                     {{ !$wedding->invitation ? 'disabled' : '' }}>
                     Konfirmasi
@@ -78,16 +78,16 @@
 
         <div class="w-full py-8 px-4 md:px-10 lg:px-20 max-w-[90%] lg:max-w-[75%] mx-auto shadow-lg sdiv
             {{ ($wedding->invitation && $tamu->respon != 'Belum Menjawab' && $tamu->pesan == null) ? '' : 'hidden'}}"
-            style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_wish['sdiv'] : '#ffffff'}}"
+            style="background-color: {{ $wedding->invitation ? $wedding->invitation->wish['sdiv'] : '#ffffff'}}"
             id="wishForm">
             <div class="w-full mb-8 text-center">
                 <span class="text-[2em] md:text-[4em] font-great-vibes font-semibold"
-                    style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                    style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                     id="stext">
                     Beri Ucapan Selamat
                 </span>
                 <p class="italic text-[.8em] md:text-base"
-                    style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                    style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                     id="stext">
                     Merupakan kehormatan dan kebahagiaan bagi kami, jika Anda berkenan hadir dan memberikan restu kepada kami
                 </p>
@@ -98,7 +98,7 @@
                     name="wish" id="wish" rows="3" placeholder="tulis pesan dan doa untuk pasangan pengantin"></textarea>
 
                 <button class="block w-fit px-4 py-2 mx-auto text-[.8em] md:text-base rounded font-semibold border shadow-sm"
-                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_wish['div'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->c_wish['text'] : '#000000'}}"
+                    style="background-color: {{ $wedding->invitation ? $wedding->invitation->wish['div'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->wish['text'] : '#000000'}}"
                     type="{{ $wedding->invitation ? 'submit' : 'button' }}" id="div"
                     {{ !$wedding->invitation ? 'disabled' : '' }}>
                     Kirim Pesan
@@ -108,16 +108,16 @@
 
         <div class="w-full py-8 px-2 md:p-8 lg:px-20 max-w-[90%] lg:max-w-[75%] mx-auto shadow-lg sdiv
             {{ ($wedding->invitation && $tamu->pesan != null) ? '' : 'hidden'}}"
-            style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_wish['sdiv'] : '#ffffff'}}"
+            style="background-color: {{ $wedding->invitation ? $wedding->invitation->wish['sdiv'] : '#ffffff'}}"
             id="wishList">
             <div class="w-full mb-8 text-center">
                 <span class="text-[1.5em] md:text-[3em] lg:text-[4em] font-great-vibes font-semibold"
-                    style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                    style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                     id="stext">
                     Kumpulan Ucapan & Doa
                 </span>
                 <p class="italic text-[.8em] md:text-base"
-                    style="color: {{ $wedding->invitation ? $wedding->invitation->c_wish['stext'] : '#000000'}};"
+                    style="color: {{ $wedding->invitation ? $wedding->invitation->wish['stext'] : '#000000'}};"
                     id="stext">
                     Terima kasih telah bergabung dan memberikan restu kepada kami
                 </p>
@@ -127,7 +127,7 @@
                     @forelse ($wedding->guests as $tamu)
                         @if ($tamu->pesan != null)
                             <div class="w-full p-2 mb-4 last-of-type:mb-0 flex items-center justify-center rounded-xl shadow-md"
-                                style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_wish['div'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->c_wish['text'] : '#000000'}}"
+                                style="background-color: {{ $wedding->invitation ? $wedding->invitation->wish['div'] : '#ffffff'}}; color: {{ $wedding->invitation ? $wedding->invitation->wish['text'] : '#000000'}}"
                                 id="div">
                                 <div class="hidden w-1/5 md:flex flex-col items-center justify-center">
                                     <div class="text-xl font-bold font-great-vibes">

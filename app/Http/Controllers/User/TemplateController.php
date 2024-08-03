@@ -17,6 +17,7 @@ class TemplateController extends Controller
             'event',
             'gallery',
             'wish',
+            'info',
             'footer'
             ]) && preg_match('/^\d+$/', $value)
         ){

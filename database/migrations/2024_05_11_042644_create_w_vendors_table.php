@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('no_telp');
             $table->string('alamat');
+            $table->json('koordinat');
             $table->enum('basis_operasi', ['Hanya di Dalam Kota', 'Bisa ke Luar Kota']);
             $table->string('kota_operasi')->nullable();
             $table->string('foto_profil')->nullable();
-            $table->json('rekening')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

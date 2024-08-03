@@ -5,9 +5,9 @@
         </div>
     </div>
     <div class="self-center px-10" id="sdiv"
-        style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_header['sdiv'] : '#ffffff'}};">
+        style="background-color: {{ $wedding->invitation ? $wedding->invitation->header['sdiv'] : '#ffffff'}};">
         <div class="text-md lg:text-[5em] font-great-vibes font-extrabold"
-            style="color: {{ $wedding->invitation ? $wedding->invitation->c_header['stext'] : '#000000'}};"
+            style="color: {{ $wedding->invitation ? $wedding->invitation->header['stext'] : '#000000'}};"
             id="stext">
             {{ $wedding->p_sapaan }} & {{ $wedding->w_sapaan }}
         </div>
@@ -18,7 +18,7 @@
                 Kepada Yth. <br> Bapak/Ibu/Saudara/i :
             </div>
             <div class="text-2xl font-semibold">
-                Tamu Undangan
+                {{ $wedding->invitation ? $tamu->nama : 'Tamu Undangan'}}
             </div>
         </div>
         <div>

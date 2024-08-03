@@ -30,7 +30,7 @@ class ProfilRequest extends FormRequest
                 'required',
                 Rule::unique('users', 'name')->ignore(auth()->id()),
             ],
-            'no_telp'        => 'required|string|min:8|max:12',
+            'no_telp'        => 'required|string|min:8|max:15',
             'basis_operasi'  => 'required|string|regex:/^[a-zA-Z\s]*$/|in:Hanya di Dalam Kota,Bisa ke Luar Kota',
             'kota_operasi'   => 'required_if:basis_operasi,Hanya di Dalam Kota|string|regex:/^[a-zA-Z\s]*$/',
             'rekening' => ['required', 'array', function ($attribute, $value, $fail) {
@@ -67,7 +67,7 @@ class ProfilRequest extends FormRequest
             'no_telp.required'        => 'Nomor Telepon tidak boleh kosong',
             'no_telp.string'          => 'Nomor Telepon harus berupa angka',
             'no_telp.min'             => 'Nomor Telepon minimal 8 karakter',
-            'no_telp.max'             => 'Nomor Telepon maksimal 12 karakter',
+            'no_telp.max'             => 'Nomor Telepon maksimal 15 karakter',
             'basis_operasi.required'  => 'Basis Operasi tidak boleh kosong',
             'basis_operasi.string'    => 'Basis Operasi harus berupa karakter',
             'basis_operasi.regex'     => 'Basis Operasi harus dipilih dari pilihan yang tersedia',

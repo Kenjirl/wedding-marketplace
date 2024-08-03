@@ -2,8 +2,25 @@
 
 @section('item')
     @if ($portofolio_detail)
+        {{-- FILTER --}}
+        <div class="w-full mt-2 pb-1 flex items-center justify-start gap-2 overflow-x-auto">
+            <a class="w-[40px] aspect-square flex items-center justify-center text-sm font-semibold border border-pink {{ $filterJenisVendor == '' ? 'bg-pink text-white' : 'bg-white text-pink' }} rounded"
+            href="{{ route('user.search.ke_detail', $vendor->id) }}">
+                All
+            </a>
+            @foreach ($j_vendor as $jenis)
+                <a class="w-[40px] aspect-square flex items-center justify-center gap-2 flex-nowrap text-sm border border-pink
+                    {{ $filterJenisVendor == $jenis->master->id ? 'bg-pink text-white' : 'bg-white text-pink' }} rounded"
+                    href="{{ route('user.search.ke_detail', $vendor->id) }}?jenis_vendor={{ $jenis->master->id }}">
+                    <i class="{{ $jenis->master->icon }}"></i>
+                </a>
+            @endforeach
+        </div>
+
+        <hr class="mt-1 mb-2">
+
         {{-- portofolio --}}
-        <div class="w-full my-2">
+        <div class="w-full">
             {{-- detail portofolio --}}
             <div class="w-full mb-4 flex items-start justify-between">
                 {{-- detail foto portofolio --}}
@@ -35,28 +52,38 @@
                     <h2 class="text-2xl font-semibold">
                         {{ $portofolio_detail->judul }}
                     </h2>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td class="text-center align-top"><i class="fa-regular fa-calendar"></i></td>
-                                <td class="align-top">Tanggal</td>
-                                <td class="align-top px-2">:</td>
-                                <td class="align-top">{{ $portofolio_detail->tanggal }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center align-top"><i class="fa-solid fa-info"></i></td>
-                                <td class="align-top">Detail</td>
-                                <td class="align-top px-2">:</td>
-                                <td class="align-top">{!! $portofolio_detail->detail !!}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center align-top"><i class="fa-solid fa-location-dot"></i></td>
-                                <td class="align-top">Lokasi</td>
-                                <td class="align-top px-2">:</td>
-                                <td class="align-top">{{ $portofolio_detail->lokasi }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div class="w-fit my-2 px-2 py-1 text-xs border border-pink rounded">
+                        <i class="{{ $portofolio_detail->jenis->icon }} text-pink"></i>
+                        <span>
+                            {{ $portofolio_detail->jenis->nama }}
+                        </span>
+                    </div>
+
+                    <div class="w-full mb-1 text-sm italic text-slate-400">
+                        {{ \Carbon\Carbon::parse($portofolio_detail->tanggal)->translatedFormat('l, d F Y') }}
+                    </div>
+
+                    <div class="w-full mb-1 text-sm italic text-slate-400">
+                        @php
+                            $portfolAddr = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($portofolio_detail->lokasi);
+                            if (!is_null($portofolio_detail->koordinat['lat']) && !is_null($portofolio_detail->koordinat['lng'])) {
+                                $portfolCoor = 'https://www.google.com/maps?q=' . $portofolio_detail->koordinat['lat'] . ',' . $portofolio_detail->koordinat['lng'];
+                            } else {
+                                $portfolCoor = $portfolAddr;
+                            }
+                        @endphp
+                        <a href="{{ $portfolAddr }}" target="_blank">
+                            {{ $portofolio_detail->lokasi }}
+                        </a>
+                        <a class="ml-2" href="{{ $portfolCoor }}" target="_blank">
+                            <i class="fa-solid fa-square-arrow-up-right"></i>
+                        </a>
+                    </div>
+
+                    <div>
+                        {!! $portofolio_detail->detail !!}
+                    </div>
                 </div>
             </div>
 
@@ -72,8 +99,8 @@
                 <div class="w-full py-2 flex flex-nowrap items-start justify-start gap-4 overflow-x-auto">
                     {{-- item portofolio --}}
                     @forelse ($portofolios as $portofolio)
-                        <button class="min-w-[200px] max-w-[200px] rounded-lg outline-none bg-white shadow text-start hover:shadow-lg focus:shadow-lg active:shadow transition-all"
-                            type="button" onclick="setPortofolioId({{ $portofolio->id }})">
+                        <a class="block min-w-[200px] max-w-[200px] rounded-lg outline-none bg-white shadow text-start hover:shadow-lg focus:shadow-lg active:shadow transition-all"
+                            href="{{ route('user.search.ke_detail', $portofolio->w_vendor->id) }}?portofolio_id={{ $portofolio->id }}&jenis_vendor={{ $filterJenisVendor }}">
                             <div class="w-full">
                                 <div class="relative w-full">
                                     <img class="w-full rounded-lg aspect-video object-cover object-center"
@@ -82,6 +109,10 @@
                                     <div class="absolute top-2 right-2 w-fit px-2 py-1 bg-pink text-white text-xs font-bold rounded">
                                         <i class="fa-regular fa-images"></i>
                                         {{ count($portofolio->foto) }}
+                                    </div>
+
+                                    <div class="absolute bottom-2 right-2 w-fit px-2 py-1 text-xs bg-pink text-white font-semibold rounded">
+                                        <i class="{{ $portofolio->jenis->icon }}"></i>
                                     </div>
                                 </div>
 
@@ -95,7 +126,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </button>
+                        </a>
                     @empty
                         <div class="w-full my-2">
                             Tidak ada portofolio lainnya
@@ -103,14 +134,6 @@
                     @endforelse
                 </div>
             </div>
-        </div>
-
-        {{-- form ganti portofolio --}}
-        <div class="hidden">
-            <form action="{{ route('user.search.ke_detail', $vendor->id) }}" method="get" id="portofolioForm">
-                @csrf
-                <input type="text" name="portofolio_id" id="portofolio_id">
-            </form>
         </div>
     @else
         <div class="w-full my-8 text-xl text-center">

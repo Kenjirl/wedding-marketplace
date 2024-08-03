@@ -5,9 +5,9 @@
         </div>
     </div>
     <div id="sdiv" class="flex items-center justify-center"
-        style="background-color: {{ $wedding->invitation ? $wedding->invitation->c_header['sdiv'] : '#ffffff'}};">
+        style="background-color: {{ $wedding->invitation ? $wedding->invitation->header['sdiv'] : '#ffffff'}};">
         <div class="text-md text-[2em] md:text-[5em] lg:text-[7em] font-great-vibes font-extrabold"
-            style="color: {{ $wedding->invitation ? $wedding->invitation->c_header['stext'] : '#000000'}};"
+            style="color: {{ $wedding->invitation ? $wedding->invitation->header['stext'] : '#000000'}};"
             id="stext">
             {{ $wedding->p_sapaan }} & {{ $wedding->w_sapaan }}
         </div>

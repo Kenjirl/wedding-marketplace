@@ -29,19 +29,19 @@
                         {{-- NAMA --}}
                         <div class="w-100 mb-4">
                             <div class="w-100">
-                                <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('nama') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                     <i class="fa-solid fa-user"></i>
                                     <span class="ml-2">
                                         Nama
                                     </span>
                                 </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('nama') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                     type="text" name="nama" id="nama" placeholder="Budi Pekerti"
                                     required
                                     value="{{ old('nama', auth()->user()->w_couple ? auth()->user()->w_couple->nama : '') }}">
                             </div>
 
-                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                 @error('nama')
                                     <i class="fa-solid fa-circle-info"></i>
                                     <span>{{ $message }}</span>
@@ -52,19 +52,19 @@
                         {{-- NAMA PENGGUNA --}}
                         <div class="w-100 mb-4">
                             <div class="w-100">
-                                <div class="w-full p-2 text-xs font-bold bg-pink @error('username') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('username') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                     <i class="fa-solid fa-user-tag"></i>
                                     <span class="ml-2">
                                         Nama Pengguna
                                     </span>
                                 </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('username') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
+                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('username') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
                                     type="text" name="username" id="username" placeholder="Budi123"
                                     required
                                     value="{{ old('username', auth()->user()->name) }}">
                             </div>
 
-                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                 @error('username')
                                     <i class="fa-solid fa-circle-info"></i>
                                     <span>{{ $message }}</span>
@@ -75,19 +75,19 @@
                         {{-- TELEPON --}}
                         <div class="w-100 mb-4">
                             <div class="w-100">
-                                <div class="w-full p-2 text-xs font-bold bg-pink @error('no_telp') bg-red-500 @enderror text-white flex items-center justify-start rounded-t">
+                                <div class="w-full p-2 text-xs font-bold bg-pink @error('no_telp') bg-red-400 @enderror text-white flex items-center justify-start rounded-t">
                                     <i class="fa-solid fa-phone"></i>
                                     <span class="ml-2">
                                         Telepon
                                     </span>
                                 </div>
-                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_telp') border-red-500 @enderror rounded-b focus:border-pink focus:outline-none"
-                                    type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0"
+                                <input class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('no_telp') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
+                                    type="number" name="no_telp" id="no_telp" placeholder="081234567890" min="0" max="999999999999999"
                                     required
                                     value="{{ old('no_telp', auth()->user()->w_couple ? auth()->user()->w_couple->no_telp : '') }}">
                             </div>
 
-                            <div class="mt-1 text-sm text-red-500 flex items-center justify-start gap-2">
+                            <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">
                                 @error('no_telp')
                                     <i class="fa-solid fa-circle-info"></i>
                                     <span>{{ $message }}</span>
