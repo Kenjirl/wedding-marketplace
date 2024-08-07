@@ -1,7 +1,7 @@
 @extends('user.layout')
 
 @section('title')
-    <title>Cari Vendor | Wedding Marketplace</title>
+    <title>Vendor | Wedding Marketplace</title>
 @endsection
 
 @section('content')

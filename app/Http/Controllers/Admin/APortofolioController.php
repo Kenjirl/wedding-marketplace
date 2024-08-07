@@ -31,6 +31,9 @@ class APortofolioController extends Controller
         $status = $statusMap[$tab];
 
         $portofolio = WVPortofolio::where('status', $status)
+            ->with('admin', function ($query) {
+                $query->withTrashed();
+            })
             ->orderBy('updated_at', 'asc')
             ->get();
 

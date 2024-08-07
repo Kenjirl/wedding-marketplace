@@ -1,7 +1,7 @@
 @extends('user.layout')
 
 @section('title')
-    <title>Cari Paket Layanan | Wedding Marketplace</title>
+    <title>Portofolio | Wedding Marketplace</title>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
                 <div class="w-full flex flex-col items-end justify-center gap-4">
                     {{-- Judul --}}
                     <div class="w-full text-center text-xl">
-                        <span>Filter Layanan</span>
+                        <span>Filter Portofolio</span>
                     </div>
 
                     {{-- CARI NAMA PAKET LAYANAN --}}

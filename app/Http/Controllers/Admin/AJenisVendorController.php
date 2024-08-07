@@ -21,7 +21,13 @@ class AJenisVendorController extends Controller
 
     public function tambah(Request $req) {
         $req->validate([
-            'nama' => 'required|string|regex:/^[a-zA-Z\s]*$/|max:20|unique:m_jenis_vendors,nama',
+            'nama' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z\s]*$/',
+                'max:20',
+                Rule::unique('m_jenis_vendors', 'nama')->whereNull('deleted_at'),
+            ],
             'icon' => 'required|string|regex:/^[a-zA-Z\s\-]*$/',
         ],
         [
@@ -35,10 +41,24 @@ class AJenisVendorController extends Controller
             'nama.regex'    => 'Icon hanya boleh memuat huruf dan tanda dash (-)',
         ]);
 
-        $j_vendor       = new MJenisVendor();
-        $j_vendor->nama = ucwords($req->nama);
-        $j_vendor->icon = $req->icon;
-        $data           = $j_vendor->save();
+        $m_j_vendor = MJenisVendor::withTrashed()
+                        ->where('nama', ucwords($req->nama))
+                        ->first();
+
+        $j_vendor = null;
+        if ($m_j_vendor) {
+            if ($m_j_vendor->trashed()) {
+                $m_j_vendor->restore();
+            }
+
+            $m_j_vendor->icon = $req->icon;
+            $data = $m_j_vendor->save();
+        } else {
+            $j_vendor = new MJenisVendor();
+            $j_vendor->nama = ucwords($req->nama);
+            $j_vendor->icon = $req->icon;
+            $data = $j_vendor->save();
+        }
 
         if ($data) {
             return redirect()->route('admin.jenis-vendor.ke_ubah', $j_vendor->id)->with('sukses', 'Menambah Jenis Vendor');

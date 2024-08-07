@@ -28,6 +28,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $is_allowed = count($j_vendors) > 1 ? true : false;
+            @endphp
             @forelse ($j_vendors as $j_vendor)
                 <tr class="border-b">
                     <td class="text-center">
@@ -43,14 +46,14 @@
                         <i class="{{ $j_vendor->icon }}"></i>
                     </td>
                     <td class="flex flex-nowrap items-center justify-center gap-2 p-2">
-                        <a class="block w-fit text-center whitespace-nowrap text-sm font-semibold px-4 py-2 outline-none text-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                            href="{{ route('admin.jenis-vendor.ke_ubah', $j_vendor->id) }}">
+                        <a class="block w-fit text-center whitespace-nowrap text-sm font-semibold px-4 py-2 outline-none {{ $is_allowed? 'text-pink' : 'bg-slate-400 text-white pointer-events-none' }} hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                            href="{{ $is_allowed ? route('admin.jenis-vendor.ke_ubah', $j_vendor->id) : '#' }}">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </a>
-                        <form action="{{ route('admin.jenis-vendor.hapus', $j_vendor->id) }}" method="post" id="deleteForm-{{ $j_vendor->id }}">
+                        <form action="{{ $is_allowed ? route('admin.jenis-vendor.hapus', $j_vendor->id) : '#' }}" method="post" id="deleteForm-{{ $j_vendor->id }}">
                             @csrf
-                            <button class="w-fit px-4 py-2 rounded text-sm whitespace-nowrap text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                                type="button" onclick="showDeleteConfirmation({{ $j_vendor->id }}, '{{ $j_vendor->nama }}')">
+                            <button class="w-fit px-4 py-2 rounded text-sm whitespace-nowrap text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 disabled:bg-slate-400 transition-colors"
+                                type="button" onclick="showDeleteConfirmation({{ $j_vendor->id }}, '{{ $j_vendor->nama }}')" {{ $is_allowed?: 'disabled' }}>
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </form>

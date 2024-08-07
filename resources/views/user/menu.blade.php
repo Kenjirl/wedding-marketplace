@@ -24,6 +24,14 @@ $currentUrl = Request::url();
         href="{{ route('user.search.portofolio') }}">
         Portofolio
     </a>
+    <a class="w-fit py-1 border-b-2 {{ Str::contains($currentUrl, '/pesanan') ? 'border-pink text-pink' : 'border-transparent' }} hover:border-pink outline-pink focus:border-pink active:border-pink-active transition-colors"
+        href="{{ route('user.pesanan.daftar') }}">
+        Pesanan
+    </a>
+    <a class="w-fit py-1 border-b-2 {{ Str::contains($currentUrl, '/transaksi') ? 'border-pink text-pink' : 'border-transparent' }} hover:border-pink outline-pink focus:border-pink active:border-pink-active transition-colors"
+        href="{{ route('user.transaksi.daftar') }}">
+        Transaksi
+    </a>
 @else
     <a class="w-[30px] aspect-square flex items-center justify-center border border-pink rounded bg-pink text-white hover:bg-pink hover:text-white outline-pink focus:bg-pink focus:text-white active:bg-pink-active transition-colors"
         href="/">

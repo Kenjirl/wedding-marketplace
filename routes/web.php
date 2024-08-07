@@ -191,7 +191,16 @@ Route::name('user.')
             Route::get ('/portofolio',    'portofolio')   ->name('portofolio');
             Route::get ('/{id}/detail',   'ke_detail')    ->name('ke_detail');
             Route::post('/pesan',         'pesan')        ->name('pesan');
+        });
 
+        Route::name('pesanan.')->prefix('/pesanan')
+            ->controller(UBookingController::class)->group(function() {
+            Route::get ('/daftar', 'daftar')->name('daftar');
+        });
+
+        Route::name('transaksi.')->prefix('/transaksi')
+            ->controller(UTransactionController::class)->group(function() {
+            Route::get ('/daftar', 'daftar')->name('daftar');
         });
 
     });

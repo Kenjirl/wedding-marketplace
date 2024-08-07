@@ -23,7 +23,6 @@ class VRevenueController extends Controller
 
         $j_vendor = WVJenis::where('w_vendor_id', $vendorId)
                             ->with(['master'])
-                            ->withTrashed()
                             ->get();
 
         $validJenisIds = $j_vendor->pluck('m_jenis_vendor_id')->toArray();
@@ -34,7 +33,9 @@ class VRevenueController extends Controller
 
         $bookingsQuery = WVBooking::where('w_vendor_id', $vendorId)
                     ->with(['wedding', 'plan' => function ($query) {
-                        $query->withTrashed();
+                        $query->with(['jenis' => function ($query) {
+                            $query->withTrashed();
+                        }])->withTrashed();
                     }])
                     ->whereIn('status', ['selesai'])
                     ->orderBy('untuk_tanggal');

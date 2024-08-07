@@ -18,7 +18,6 @@ class VPortfolioController extends Controller
 
         $j_vendor = WVJenis::where('w_vendor_id', $vendorId)
                             ->with(['master'])
-                            ->withTrashed()
                             ->get();
 
         $validJenisIds = $j_vendor->pluck('m_jenis_vendor_id')->toArray();

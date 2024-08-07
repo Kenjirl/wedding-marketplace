@@ -50,12 +50,10 @@ class AController extends Controller
 
         $totalUsers = User::where('role', 'user')->count();
         $totalVendors = User::where('role', 'vendor')->count();
-        $totalAdmins = User::where('role', 'admin')->count();
 
         $userTotalChartData = [
             'Pengguna' => $totalUsers,
             'Vendor' => $totalVendors,
-            'Admin' => $totalAdmins,
         ];
 
         return view('admin.index', compact(

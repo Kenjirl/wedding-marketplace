@@ -287,8 +287,10 @@ class UWeddingController extends Controller
 
         if ($tab == 'detail') {
             $bookedVendor = WVBooking::with(['plan' => function ($query) {
-                                $query->withTrashed();
-                            }, 'plan.w_vendor'])
+                                $query->withTrashed()->with(['jenis' => function ($query) {
+                                    $query->withTrashed();
+                                }]);
+                            }])
                             ->where('w_c_wedding_id', $id)
                             ->where('status', '!=', 'batal')
                             ->get();

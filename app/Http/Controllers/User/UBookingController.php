@@ -425,4 +425,19 @@ class UBookingController extends Controller
         }
         return back()->with('gagal', 'Memesan Vendor');
     }
+
+    public function daftar() {
+        $user = auth()->user();
+        $w_couple = $user->w_couple;
+
+        $idWeddings = WCWedding::where('w_couple_id', $w_couple->id)->withTrashed()->pluck('id');
+        $bookings = WVBooking::with(['plan' => function ($query) {
+                $query->withTrashed();
+            }, 'wedding' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->whereIn('w_c_wedding_id', $idWeddings)->get();
+
+        return view('user.pesanan.index', compact('bookings'));
+    }
 }

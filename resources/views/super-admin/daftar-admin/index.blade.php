@@ -30,6 +30,9 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $is_allowed = count($admins) > 1 ? true : false;
+                @endphp
                 @forelse ($admins as $admin)
                 <tr class="border-b">
                     <td class="text-center">
@@ -48,15 +51,15 @@
                         {{ $admin->user->name }}
                     </td>
                     <td class="flex items-center justify-center gap-2 p-2">
-                        <a class="text-center text-sm font-semibold px-4 py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                            href="{{ route('super-admin.daftar-admin.ke_ubah', $admin->id) }}">
+                        <a class="text-center text-sm font-semibold px-4 py-2 outline-none {{ $is_allowed? 'text-pink bg-white' : 'bg-slate-400 text-white pointer-events-none' }} hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                            href="{{ $is_allowed ? route('super-admin.daftar-admin.ke_ubah', $admin->id) : '#' }}">
                             <i class="fa-regular fa-pen-to-square"></i>
                             {{-- Ubah --}}
                         </a>
-                        <form action="{{ route('super-admin.daftar-admin.hapus', $admin->id) }}" method="post" id="deleteForm-{{ $admin->id }}">
+                        <form action="{{ $is_allowed ? route('super-admin.daftar-admin.hapus', $admin->id) : '#' }}" method="post" id="deleteForm-{{ $admin->id }}">
                             @csrf
-                            <button class="w-fit px-4 py-2 rounded text-sm text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 transition-colors"
-                                type="button" onclick="showDeleteConfirmation({{ $admin->id }}, '{{ $admin->nama }}')">
+                            <button class="w-fit px-4 py-2 rounded text-sm text-white font-semibold bg-pink hover:bg-pink-hover focus:bg-pink-hover active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 disabled:bg-slate-400 transition-colors"
+                                type="button" onclick="showDeleteConfirmation({{ $admin->id }}, '{{ $admin->nama }}')" {{ $is_allowed?: 'disabled' }}>
                                 <i class="fa-solid fa-trash-can"></i>
                                 {{-- Hapus --}}
                             </button>

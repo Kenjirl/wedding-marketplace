@@ -1,7 +1,7 @@
 @extends('user.layout')
 
 @section('title')
-    <title>Cari Paket Layanan | Wedding Marketplace</title>
+    <title>Paket Layanan | Wedding Marketplace</title>
 @endsection
 
 @section('content')
