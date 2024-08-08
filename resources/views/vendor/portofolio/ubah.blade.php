@@ -227,7 +227,11 @@
                             </span>
                         </div>
                         <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 resize-none text-sm @error('detail') border-red-400 @enderror rounded-b focus:border-pink focus:outline-none"
-                            name="detail" id="input" rows="3" placeholder="masukkan detail portofolio ini"
+                            name="detail"
+                            @if(App::environment('local'))
+                            id="input"
+                            @endif
+                            rows="3" placeholder="masukkan detail portofolio ini"
                             >{{ old('detail', $portofolio->detail) }}</textarea>
                     </div>
 

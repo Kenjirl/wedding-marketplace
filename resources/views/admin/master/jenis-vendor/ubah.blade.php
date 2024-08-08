@@ -71,7 +71,7 @@
                     <i class="fa-solid fa-circle-info"></i>
                     <p>
                         gunakan icon dari link berikut :
-                        <a class="underline" href="https://fontawesome.com/icons">https://fontawesome.com/icons</a>
+                        <a class="underline" href="https://fontawesome.com/icons" target="_blank">https://fontawesome.com/icons</a>
                     </p>
                 </div>
             </div>

@@ -64,6 +64,14 @@
                             id="btnSubmit" type="submit" disabled>Konfirmasi</button>
                     </div>
                 </form>
+
+                <form class="w-full mx-auto" action="{{ route('keluar') }}" method="post" id="logoutForm">
+                    @csrf
+                    <div class="w-full mt-2 flex items-center justify-center">
+                        <button class="w-[400px] mx-auto p-2 text-pink font-semibold border border-pink outline-pink hover:bg-pink hover:text-white focus:bg-pink focus-within:text-white active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all rounded"
+                            id="logoutBtn" type="button">Logout</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -90,5 +98,18 @@
                 `);
             }
         }
+
+        $('#logoutBtn').on("click", function () {
+            Swal.fire({
+                title: "Yakin ingin keluar?",
+                showCloseButton: true,
+                confirmButtonColor: "#F78CA2",
+                confirmButtonText: "Konfirmasi"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#logoutForm").submit();
+                }
+            });
+        });
     </script>
 @endpush

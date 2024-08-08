@@ -57,7 +57,16 @@
                         href="{{ route('ke_masuk') }}">
                         Masuk
                     </a>
-                @endguest
+                    @endguest
+                    @auth
+                        <form action="{{ route('keluar') }}" method="post" id="logoutForm">
+                            @csrf
+                            <div class="w-fit flex items-center justify-center">
+                                <button class="w-fit mx-auto px-2 py-1 text-pink font-semibold border border-pink outline-pink hover:bg-pink hover:text-white focus:bg-pink focus-within:text-white active:bg-pink-active focus:outline-pink-hover focus:outline-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all rounded"
+                                    id="logoutBtn" type="button">Logout</button>
+                            </div>
+                        </form>
+                    @endauth
                 @endif
             </div>
         </div>

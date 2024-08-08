@@ -1,7 +1,11 @@
 <div class="w-full md:max-h-screen grid grid-cols-1 md:grid-cols-2 font-varela">
     <div class="relative w-full h-screen md:h-full">
         <img class="w-full h-screen md:max-h-screen object-cover brightness-50"
-            src="{{ asset('template/undangan/profile/groom.jpg') }}" alt="Groom">
+            src="{{
+                $wedding->invitation ? asset($wedding->invitation->profile['foto_pria']) :
+                asset('template/undangan/profile/groom.jpg')
+                }}"
+            alt="Groom">
 
         <div class="absolute bottom-0 left-0 w-full h-1/2 px-4 flex flex-col items-center justify-center text-center">
             <div class="text-[1.2em]">
@@ -20,7 +24,11 @@
 
     <div class="relative w-full h-screen md:h-full">
         <img class="w-full h-screen md:max-h-screen object-cover brightness-50"
-            src="{{ asset('template/undangan/profile/bride.jpg') }}" alt="Groom">
+            src="{{
+                $wedding->invitation ? asset($wedding->invitation->profile['foto_wanita']) :
+                asset('template/undangan/profile/bride.jpg')
+                }}"
+            alt="Bride">
 
         <div class="absolute bottom-0 left-0 w-full h-1/2 px-4 flex flex-col items-center justify-center text-center">
             <div class="text-[1.2em]">

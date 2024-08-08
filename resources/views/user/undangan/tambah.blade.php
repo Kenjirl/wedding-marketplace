@@ -113,11 +113,11 @@
                 </div>
 
                 <div class="w-1/3 flex items-center justify-end gap-4">
-                    <button class="w-[45px] aspect-square flex items-center justify-center rounded-full outline-pink outline-offset-4 text-pink bg-white border
+                    {{-- <button class="w-[45px] aspect-square flex items-center justify-center rounded-full outline-pink outline-offset-4 text-pink bg-white border
                         hover:bg-pink hover:text-white focus:bg-pink focus:text-white transition-colors"
                         type="button" id="changeViewWidthBtn">
                         <i class="fa-solid fa-desktop"></i>
-                    </button>
+                    </button> --}}
 
                     <button class="w-[45px] aspect-square flex items-center justify-center rounded-full outline-pink outline-offset-4 text-pink bg-white border
                         hover:bg-pink hover:text-white focus:bg-pink focus:text-white transition-colors"
@@ -135,7 +135,7 @@
         </div>
 
         {{-- DEVICE BUTTON --}}
-        <div class="fixed bottom-4 right-4 w-fit p-2 flex items-center justify-center gap-4 rounded-full bg-white shadow border z-10 translate-y-0 transition-all"
+        {{-- <div class="fixed bottom-4 right-4 w-fit p-2 flex items-center justify-center gap-4 rounded-full bg-white shadow border z-10 translate-y-0 transition-all"
             id="deviceBtnContainer">
             <button tabindex="-1" class="change-width-item w-[45px] aspect-square flex items-center justify-center rounded-full outline-pink text-pink bg-white border
                 hover:bg-pink hover:text-white focus:bg-pink focus:text-white transition-colors"
@@ -154,7 +154,7 @@
                 type="button" data-width="desktop">
                 <i class="fa-solid fa-desktop"></i>
             </button>
-        </div>
+        </div> --}}
 
         {{-- SETTING UNDANGAN --}}
         <div class="fixed top-full left-0 w-full h-screen flex items-center justify-center bg-slate-500/50 z-50 transition-all duration-500"

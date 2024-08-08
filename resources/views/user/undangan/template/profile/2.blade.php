@@ -15,12 +15,18 @@
         </div>
 
         <img class="w-full h-[50vh] object-cover"
-            src="{{ asset('template/undangan/profile/groom.jpg') }}" alt="Groom">
+            src="{{
+                $wedding->invitation ? asset($wedding->invitation->profile['foto_pria']) :
+                asset('template/undangan/profile/groom.jpg')
+                }}" alt="Groom">
     </div>
 
     <div class="w-full max-h-[50vh] grid grid-cols-3">
         <img class="w-full h-[50vh] object-cover"
-            src="{{ asset('template/undangan/profile/bride.jpg') }}" alt="Bride">
+            src="{{
+                $wedding->invitation ? asset($wedding->invitation->profile['foto_wanita']) :
+                asset('template/undangan/profile/bride.jpg')
+                }}" alt="Bride">
 
         <div class="col-span-2 w-full flex flex-col items-center justify-center text-center">
             <div class="text-[1.2em]">

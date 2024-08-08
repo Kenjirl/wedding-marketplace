@@ -20,9 +20,6 @@ class DatabaseSeeder extends Seeder
             AConfigTableSeeder::class,
             MEventsTableSeeder::class,
             MJenisVendorsTableSeeder::class,
-            // WVsTableSeeder::class,
-            // WVPlansSeeder::class,
-            // WCsTableSeeder::class,
         ]);
     }
 }

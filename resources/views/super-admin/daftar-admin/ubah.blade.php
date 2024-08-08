@@ -102,7 +102,7 @@
                             Alamat
                         </div>
                         <textarea class="w-full p-2 flex-1 border-x-2 border-b-2 text-sm @error('alamat') border-red-400 @enderror outline-pink rounded-b focus:border-pink focus:outline-none"
-                            name="alamat" id="alamat" rows="3" required minlength="10" maxlength="254" placeholder="alamat lengkap">{{ $admin->alamat }}</textarea>
+                            name="alamat" id="alamat" rows="3" required minlength="10" maxlength="254" placeholder="alamat lengkap">{{ old('alamat', $admin->alamat) }}</textarea>
                     </div>
 
                     <div class="mt-1 text-sm text-red-400 flex items-center justify-start gap-2">

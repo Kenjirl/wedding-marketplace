@@ -25,15 +25,6 @@ class AdminsTableSeeder extends Seeder
                 'alamat'     => 'Jl. Besar no. 1, Jimbaran, Kuta Selatan, Badung, Bali',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'user_id'    => 3,
-                'nama'       => 'Ani',
-                'gender'     => 'Wanita',
-                'no_telp'    => '081212341234',
-                'alamat'     => 'Jl. Besar no. 1, Jimbaran, Kuta Selatan, Badung, Bali',
-                'created_at' => now(),
-                'updated_at' => now(),
             ]
         ]);
     }
