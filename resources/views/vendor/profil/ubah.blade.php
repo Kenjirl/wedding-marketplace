@@ -429,8 +429,8 @@
             map.on('click', onMapClick);
 
             $('#cariKoordinatBtn').on('click', function() {
-                let alamat = $('#cari_koordinat').val();
-                let url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + alamat;
+                let alamatSearch = $('#cari_koordinat').val();
+                let url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + alamatSearch;
 
                 fetch(url)
                     .then(response => response.json())

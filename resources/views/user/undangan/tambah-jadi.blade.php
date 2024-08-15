@@ -10,38 +10,14 @@
         <div class="w-full mx-auto bg-slate-300">
             <div class="w-full max-w-[1400px] max-h-screen mx-auto overflow-y-auto bg-white"
                 id="digitalInvitationView">
-                <div class="min-h-screen flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="header">
-                    @include('user.undangan.template.header.1')
-                </div>
-                <div class="w-full flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="quote">
-                    @include('user.undangan.template.quote.1')
-                </div>
-                <div class="flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="profile">
-                    @include('user.undangan.template.profile.1')
-                </div>
-                <div class="min-h-[50vh] flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="event">
-                    @include('user.undangan.template.event.1')
-                </div>
-                <div class="min-h-[50vh] flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="gallery">
-                    @include('user.undangan.template.gallery.1')
-                </div>
-                <div class="min-h-screen flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="wish">
-                    @include('user.undangan.template.wish.1')
-                </div>
-                <div class="flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="info">
-                    @include('user.undangan.template.info.1')
-                </div>
-                <div class="min-h-screen flex items-center justify-center" style="background-color: #ffffff; color: #000000;"
-                    id="footer">
-                    @include('user.undangan.template.footer.1')
-                </div>
+                @include('user.undangan.template-jadi.header.'.$template)
+                @include('user.undangan.template-jadi.quote.'.$template)
+                @include('user.undangan.template-jadi.profile.'.$template)
+                @include('user.undangan.template-jadi.event.'.$template)
+                @include('user.undangan.template-jadi.gallery.'.$template)
+                @include('user.undangan.template-jadi.wish.'.$template)
+                @include('user.undangan.template-jadi.info.'.$template)
+                @include('user.undangan.template-jadi.footer.'.$template)
             </div>
         </div>
 
@@ -189,74 +165,13 @@
                                         <i class="fa-solid fa-caret-right"></i>
                                         {{ ucfirst($folder) }}
                                     </button>
-                                    <span class="w-fit italic text-slate-500 text-sm" id="val-{{ $folder }}">(1)</span>
+                                    <span class="w-fit italic text-slate-500 text-sm" id="val-{{ $folder }}">({{ $template }})</span>
                                 </div>
                                 <div class="overflow-hidden transition-all section-content" data-section="{{ $folder }}">
                                     <div class="input-color-container w-full" data-section="{{ $folder }}">
-                                        <div class="p-2 flex items-center justify-start gap-2 overflow-x-auto">
-                                            @for ($i = 1; $i <= $count; $i++)
-                                                <button class="section-item relative min-w-[40px] aspect-square border border-pink rounded shadow font-semibold text-pink outline-pink outline-offset-4
-                                                    hover:bg-pink hover:text-white focus:bg-pink focus:text-white transition-colors active:bg-pink-active"
-                                                    type="button" data-value="t_{{ $folder }}-{{ $i }}">
-                                                    {{ $i }}
-                                                </button>
-                                            @endfor
-                                        </div>
-
-                                        {{-- COLOR SELECTION --}}
-                                        <div class="w-full p-2 grid grid-cols-2 gap-2 text-sm">
-                                            {{-- COLOR BACKGROUND --}}
-                                            <div class="w-full">
-                                                {{-- COLOR BACKGROUND MAIN --}}
-                                                <div class="w-full mb-2 flex items-center justify-start gap-2">
-                                                    <label class="w-[30px] h-[30px] flex items-center justify-center bg-pink text-white rounded shadow"
-                                                        for="{{ $folder }}_div" title="pilih warna latar utama">
-                                                        <i class="fa-solid fa-palette"></i>
-                                                    </label>
-                                                    <input class="w-[30px] h-[30px] cursor-pointer"
-                                                        value="#ffffff" type="color" name="{{ $folder }}_div" id="{{ $folder }}_div">
-                                                    <input class="text-color w-fit px-4 py-2 bg-slate-200 rounded-full text-xs"
-                                                        type="text" value="#FFFFFF" maxlength="7">
-                                                </div>
-                                                {{-- COLOR BACKGROUND SUB --}}
-                                                <div class="w-full flex items-center justify-start gap-2">
-                                                    <label class="w-[30px] h-[30px] flex items-center justify-center bg-white text-pink rounded shadow"
-                                                        for="{{ $folder }}_sdiv" title="pilih warna latar kedua">
-                                                        <i class="fa-solid fa-palette"></i>
-                                                    </label>
-                                                    <input class="w-[30px] h-[30px] cursor-pointer"
-                                                        value="#ffffff" type="color" name="{{ $folder }}_sdiv" id="{{ $folder }}_sdiv">
-                                                    <input class="text-color w-fit px-4 py-2 bg-slate-200 rounded-full text-xs"
-                                                        type="text" value="#FFFFFF" maxlength="7">
-                                                </div>
-                                            </div>
-
-                                            {{-- COLOR TEXT --}}
-                                            <div class="w-full">
-                                                {{-- COLOR TEXT BASE --}}
-                                                <div class="w-full mb-2 flex items-center justify-start gap-2">
-                                                    <label class="w-[30px] h-[30px] flex items-center justify-center bg-pink text-white rounded shadow"
-                                                        for="{{ $folder }}_text" title="pilih warna font biasa">
-                                                        <i class="fa-solid fa-font"></i>
-                                                    </label>
-                                                    <input class="w-[30px] h-[30px] cursor-pointer"
-                                                        value="#000000" type="color" name="{{ $folder }}_text" id="{{ $folder }}_text">
-                                                    <input class="text-color w-fit px-4 py-2 bg-slate-200 rounded-full text-xs"
-                                                        type="text" value="#000000" maxlength="7">
-                                                </div>
-                                                {{-- COLOR TEXT HEADING --}}
-                                                <div class="w-full flex items-center justify-start gap-2">
-                                                    <label class="w-[30px] h-[30px] flex items-center justify-center bg-white text-pink rounded shadow"
-                                                        for="{{ $folder }}_stext" title="pilih warna font utama">
-                                                        <i class="fa-solid fa-heading"></i>
-                                                    </label>
-                                                    <input class="w-[30px] h-[30px] cursor-pointer"
-                                                        value="#000000" type="color" name="{{ $folder }}_stext" id="{{ $folder }}_stext">
-                                                    <input class="text-color w-fit px-4 py-2 bg-slate-200 rounded-full text-xs"
-                                                        type="text" value="#000000" maxlength="7">
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <p class="italic text-slate-400 text-sm">
+                                            Tidak dapat mengubah template undangan jadi
+                                        </p>
                                     </div>
 
                                     @if ($folder == 'quote' || $folder == 'gallery' || $folder == 'info')
@@ -374,18 +289,14 @@
 
         {{-- FORM SUBMIT --}}
         <div class="w-full">
-            <form action="{{ route('user.undangan.tambah') }}" method="POST" id="undanganTemplateForm"  enctype="multipart/form-data">
+            <form action="{{ route('user.undangan.tambah_jadi') }}" method="POST" id="undanganTemplateForm"  enctype="multipart/form-data">
                 @csrf
                 <input class="hidden" type="number" name="wedding_id" id="wedding_id" value="{{ $wedding->id }}" hidden tabindex="-1">
 
-                <input class="hidden" type="hidden" name="type" id="type" value="part" hidden tabindex="-1">
+                <input class="hidden" type="hidden" name="type" id="type" value="template" hidden tabindex="-1">
 
                 @foreach ($f_counts as $folder => $count)
-                    <input class="hidden" type="text" name="t_{{ $folder }}"         id="t_{{ $folder }}"                         hidden tabindex="-1">
-                    <input class="hidden" type="text" name="{{ $folder }}_div_col"   id="{{ $folder }}_div_col"   value="#ffffff" hidden tabindex="-1">
-                    <input class="hidden" type="text" name="{{ $folder }}_sdiv_col"  id="{{ $folder }}_sdiv_col"  value="#ffffff" hidden tabindex="-1">
-                    <input class="hidden" type="text" name="{{ $folder }}_stext_col" id="{{ $folder }}_stext_col" value="#000000" hidden tabindex="-1">
-                    <input class="hidden" type="text" name="{{ $folder }}_text_col"  id="{{ $folder }}_text_col"  value="#000000" hidden tabindex="-1">
+                    <input class="hidden" type="text" name="t_{{ $folder }}" id="t_{{ $folder }}" value="{{ $template }}" hidden tabindex="-1">
                 @endforeach
 
                 <input class="hidden" type="text" name="quote_content" id="quote_content" hidden tabindex="-1">
@@ -402,6 +313,7 @@
 @push('child-js')
     <script>
         let weddingData = @json($wedding->id);
+        let template = @json($template);
         let values = {
             quote: {
                 is_deleted: false,
@@ -492,48 +404,12 @@
 
             $('.section-toggle-btn:first').trigger('click');
 
-            let countChange = 0;
-            function fetchTemplate(type, value) {
-                let data = weddingData;
-                $.ajax({
-                    url: `/fetch-template/${type}/${value}`,
-                    method: 'GET',
-                    data: { wedding: data },
-                    success: function(res) {
-                        $(`#${type}`).html(res);
-
-                        setTimeout(function() {
-                            $(`#${type} #sdiv`).css('background-color', $(`#${type}_sdiv_col`).val());
-                            $(`#${type} #stext`).css('color', $(`#${type}_stext_col`).val());
-
-                            if ($(`#${type} #div`).length) {
-                                $(`#${type} #div`).css({
-                                    'background-color': $(`#${type}_div_col`).val(),
-                                    'color': $(`#${type}_text_col`).val()
-                                });
-                            }
-                        }, 0);
-                        if (countChange < 8) {
-                            countChange++;
-                        } else {
-                            toastr.success(`Mengganti ${type} - ${value}`, "Sukses");
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('Error fetching the template:', errorThrown);
-                        toastr.error(`Mengganti ${type} - ${value}`, "Gagal");
-                    }
-                });
-            }
-
             function handleButtonClick(button) {
                 let data = button.data('value');
                 let section = data.split('-')[0];
                 let value = data.split('-')[1];
                 $('#' + section).val(value);
                 $('#val-' + section.split('_')[1]).text(`(${value})`);
-
-                fetchTemplate(section.split('_')[1], value);
             }
 
             $('.section-container .section-content .section-item').click(function() {
@@ -547,80 +423,22 @@
                 $(this).click();
             });
 
-            // COLOR CONTROL
-            $('input[type="color"]').on('input', function() {
-                let colorInputId = $(this).attr('id');
-                let textInputId = colorInputId + '_col';
-                $('#' + textInputId).val($(this).val());
-
-                $(this).next('input[type="text"]').val($(this).val().toUpperCase());
-
-                let div = colorInputId.split('_')[0];
-                let type = colorInputId.split('_')[1];
-
-                if (type == 'div') {
-                    $('#' + div).css('background-color', $(this).val());
-
-                    if ($('#'+div).has('#div')) {
-                        $('#' + div + ' #div').css('background-color', $(this).val());
-                    }
-                }
-                else if (type == 'sdiv') {
-                    $('#' + div + ' #sdiv').css('background-color', $(this).val());
-                    $('#' + div + ' .sdiv').css('background-color', $(this).val());
-                }
-                else if (type == 'text') {
-                    $('#' + div).css('color', $(this).val());
-
-                    if ($('#'+div).has('#div')) {
-                        $('#' + div + ' #div').css('color', $(this).val());
-                    }
-                }
-                else {
-                    $('#' + div + ' #stext').css('color', $(this).val());
-                }
-            });
-
-            function hexToRgb(hex) {
-                hex = hex.replace(/^#/, '');
-
-                let bigint = parseInt(hex, 16);
-                let r = (bigint >> 16) & 255;
-                let g = (bigint >> 8) & 255;
-                let b = bigint & 255;
-
-                return `rgb(${r}, ${g}, ${b})`;
-            }
-
-            $('.text-color').on('input', function() {
-                if (!$(this).val().startsWith('#')) {
-                    $(this).val('#' + $(this).val());
-                }
-
-                if ($(this).val().length === 7) {
-                    if (/^#[0-9A-F]{6}$/i.test($(this).val())) {
-                        let rgbValue = hexToRgb($(this).val());
-                        let colorInput = $(this).prev('input[type="color"]');
-                        colorInput.val($(this).val());
-                        colorInput.trigger('input');
-                    }
-                }
-            });
-
             $('input[type="checkbox"]').on('change', function() {
                 let folder = $(this).attr('id').split('_')[0];
                 $('#'+folder).toggleClass('hidden');
 
                 let container = $(`.input-color-container[data-section="${folder}"]`)
                 if(this.checked) {
-                    $('#val-'+folder).text('(0)');
-                    $('#t_'  +folder).val('0');
+                    $('#val-'+folder).text('(t0)');
+                    $('#t_'  +folder).val('t0');
                     container.addClass('hidden');
                     container.find('button').attr('tabindex', -1);
                     container.find('input').attr('tabindex', -1);
                     $(`.tambah-container[data-section="${folder}"]`).addClass('hidden');
                     $(`.island-section-anchor[data-section="${folder}"]`).addClass('hidden');
                 } else {
+                    $('#val-'+folder).text(`(${template})`);
+                    $('#t_'  +folder).val(template);
                     container.removeClass('hidden');
                     container.find('button').attr('tabindex',0);
                     container.find('input').attr('tabindex', 0);
@@ -919,8 +737,8 @@
                     iconColor: "#F78CA2",
                     html: `
                         <p class="text-justify text-sm">
-                            1. Silahkan mendesain undangan digital Anda <br>
-                            2. Anda dapat mengubah warna untuk tiap bagian dari undangan digital <br>
+                            1. Silahkan menambahkan informasi untuk undangan digital Anda <br>
+                            2. Anda tidak dapat mengubah undangan ini karena ini merupakan template utuh <br>
                             3. Anda dapat menghapus beberapa bagian yang opsional, seperti <i>quote</i>, <i>gallery</i>, dan <i>info</i> <br>
                             4. Anda perlu melengkapi beberapa informasi, seperti <i>quote</i>, <i>profile</i>, dan <i>gallery</i> <br>
                         </p>

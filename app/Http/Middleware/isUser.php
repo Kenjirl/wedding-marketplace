@@ -17,7 +17,7 @@ class isUser
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check() || auth()->user()->role !== 'user') {
-            abort(403);
+            return redirect()->route('ke_masuk')->with('gagal', 'Anda perlu login dengan akun user terlebih dahulu');
         }
         return $next($request);
     }

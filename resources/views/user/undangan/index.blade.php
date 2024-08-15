@@ -46,6 +46,14 @@
             @include('user.undangan.template.wish.'.$wedding->invitation->wish['template'])
         </div>
 
+        @if ($wedding->invitation->info['template'] != 0)
+            <div class="min-h-[50vh] flex items-center justify-center"
+                style="background-color: {{ $wedding->invitation->info['div'] }}; color: {{ $wedding->invitation->info['text'] }};"
+                id="info">
+                @include('user.undangan.template.info.'.$wedding->invitation->info['template'])
+            </div>
+        @endif
+
         <div class="min-h-screen flex items-center justify-center"
             style="background-color: {{ $wedding->invitation->footer['div'] }}; color: {{ $wedding->invitation->footer['text'] }};"
             id="footer">

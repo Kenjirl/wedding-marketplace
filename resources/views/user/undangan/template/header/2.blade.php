@@ -6,7 +6,7 @@
     </div>
     <div class="self-center px-10" id="sdiv"
         style="background-color: {{ $wedding->invitation ? $wedding->invitation->header['sdiv'] : '#ffffff'}};">
-        <div class="text-md lg:text-[5em] font-great-vibes font-extrabold"
+        <div class="text-[2em] md:text-[3em] lg:text-[5em] font-great-vibes font-extrabold"
             style="color: {{ $wedding->invitation ? $wedding->invitation->header['stext'] : '#000000'}};"
             id="stext">
             {{ $wedding->p_sapaan }} & {{ $wedding->w_sapaan }}

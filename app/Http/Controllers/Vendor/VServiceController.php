@@ -179,7 +179,7 @@ class VServiceController extends Controller
             $arrFoto = $plan->foto ?? [];
 
             foreach ($fotos as $foto) {
-                $filename = 'Ct/plan/' . str()->uuid() . '.' . $foto->extension();
+                $filename = 'v/plan/' . str()->uuid() . '.' . $foto->extension();
                 $url = Storage::disk('public')->putFileAs('/', $foto, $filename);
 
                 $arrFoto[] = [
@@ -200,8 +200,10 @@ class VServiceController extends Controller
         $plan = WVPlan::where('id', $id)->first();
 
         $photos = $plan->foto;
-        foreach ($photos as $photo) {
-            unlink(public_path($photo['url']));
+        if ($photos) {
+            foreach ($photos as $photo) {
+                unlink(public_path($photo['url']));
+            }
         }
 
         $data = $plan->delete();

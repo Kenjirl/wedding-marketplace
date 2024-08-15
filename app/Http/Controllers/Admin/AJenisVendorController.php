@@ -38,7 +38,7 @@ class AJenisVendorController extends Controller
             'nama.unique'   => 'Tidak boleh menggunakan nama jenis vendor lagi',
             'icon.required' => 'Icon tidak boleh kosong',
             'icon.string'   => 'Icon harus berupa karakter',
-            'nama.regex'    => 'Icon hanya boleh memuat huruf dan tanda dash (-)',
+            'icon.regex'    => 'Icon hanya boleh memuat huruf dan tanda dash (-)',
         ]);
 
         $m_j_vendor = MJenisVendor::withTrashed()
@@ -89,7 +89,7 @@ class AJenisVendorController extends Controller
             'nama.unique'   => 'Tidak boleh menggunakan nama jenis vendor lagi',
             'icon.required' => 'Icon tidak boleh kosong',
             'icon.string'   => 'Icon harus berupa karakter',
-            'nama.regex'    => 'Icon hanya boleh memuat huruf dan tanda dash (-)',
+            'icon.regex'    => 'Icon hanya boleh memuat huruf dan tanda dash (-)',
         ]);
 
         $data = MJenisVendor::find($id)

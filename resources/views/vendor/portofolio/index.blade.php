@@ -36,7 +36,7 @@
 
                     {{-- DETAIL --}}
                     <div class="w-full p-2">
-                        <span class="font-semibold text-lg line-clamp-1">
+                        <span class="max-w-[190px] font-semibold text-lg line-clamp-1">
                             {{ $l_portofolio->judul }}
                         </span>
 

@@ -49,8 +49,8 @@
     <meta name="msapplication-TileImage" content="https://pro-malamute-vastly.ngrok-free.app/img/icons/ms-icon-144x144.png">
     <meta name="theme-color" content="#F78CA2">
 
-    <link rel="preload" as="style" href="https://pro-malamute-vastly.ngrok-free.app/build/assets/app-e2a70075.css" />
-            <link rel="stylesheet" href="https://pro-malamute-vastly.ngrok-free.app/build/assets/app-e2a70075.css" />
+    <link rel="preload" as="style" href="https://pro-malamute-vastly.ngrok-free.app/build/assets/app-d88702ab.css" />
+            <link rel="stylesheet" href="https://pro-malamute-vastly.ngrok-free.app/build/assets/app-d88702ab.css" />
 
     {{-- MAGNIFIC POPUP CSS --}}
     <link rel="stylesheet" href="https://pro-malamute-vastly.ngrok-free.app/css/magnific-popup.css">

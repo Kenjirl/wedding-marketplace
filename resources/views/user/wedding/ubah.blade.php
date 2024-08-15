@@ -291,7 +291,9 @@
             }
         });
         renderMarkers();
-        mapResult.flyTo([koordinatArr[0]['lat'], koordinatArr[0]['lng']], 13);
+        if (koordinatArr.length) {
+            mapResult.flyTo([koordinatArr[0]['lat'], koordinatArr[0]['lng']], 13);
+        }
 
         function updateTakeMapInfoBtn(lat, lng, lokasi) {
             if (lat !== '' && lng !== '' && lokasi !== '') {

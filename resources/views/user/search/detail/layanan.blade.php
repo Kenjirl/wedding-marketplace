@@ -32,9 +32,11 @@
                                     <img class="w-full aspect-video object-cover object-center rounded-lg"
                                         src="{{ asset($plan->foto[0]['url']) }}" alt="">
                                 @else
-                                    <span class="w-full aspect-video bg-slate-300 flex items-center justify-center text-[2em] font-bold text-white rounded-lg">
+                                    <img class="w-full aspect-video object-cover object-center rounded-lg"
+                                        src="{{ asset('template/layanan/1.jpg') }}" alt="">
+                                    {{-- <span class="w-full aspect-video bg-slate-300 flex items-center justify-center text-[2em] font-bold text-white rounded-lg">
                                         <i class="fa-regular fa-image"></i>
-                                    </span>
+                                    </span> --}}
                                 @endif
                             </div>
 

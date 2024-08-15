@@ -362,7 +362,7 @@ class UBookingController extends Controller
                 return back()->with('gagal', 'ID Layanan tidak valid');
             }
 
-            $today = Carbon::tomorrow()->startOfDay();
+            $today = Carbon::today()->startOfDay();
             $weddings = WCWedding::where('w_couple_id', auth()->user()->w_couple->id)
                 ->with(['w_detail' => function($query) use ($today) {
                     $query->whereDate('waktu', '>', $today);

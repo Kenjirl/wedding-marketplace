@@ -14,6 +14,39 @@ use Illuminate\Support\Facades\Storage;
 
 class UInvitationController extends Controller
 {
+    public function ke_pilih(Request $req) {
+        $wedding = WCWedding::with('w_detail')->find($req->id);
+
+        $invitation = $wedding->invitation;
+        if ($invitation) {
+            return back()->with('gagal', 'Pernikahan ini sudah memiliki undangan digital');
+        }
+
+        $folders = [
+            'header',
+            'quote',
+            'profile',
+            'event',
+            'gallery',
+            'wish',
+            'info',
+            'footer',
+        ];
+        $f_counts = [];
+
+        foreach ($folders as $folder) {
+            $path = resource_path("views/user/undangan/template-jadi/$folder");
+            if (File::exists($path)) {
+                $files = File::files($path);
+                $f_counts[$folder] = count($files);
+            } else {
+                $f_counts[$folder] = 0;
+            }
+        }
+
+        return view('user.undangan.pilih', compact('wedding', 'f_counts'));
+    }
+
     public function ke_tambah(Request $req) {
         $wedding = WCWedding::with('w_detail')->find($req->id);
 
@@ -45,6 +78,40 @@ class UInvitationController extends Controller
         }
 
         return view('user.undangan.tambah', compact('wedding', 'f_counts'));
+    }
+
+    public function ke_tambah_jadi(Request $req) {
+        $wedding = WCWedding::with('w_detail')->find($req->id);
+        $template = $req->template;
+
+        $invitation = $wedding->invitation;
+        if ($invitation) {
+            return back()->with('gagal', 'Pernikahan ini sudah memiliki undangan digital');
+        }
+
+        $folders = [
+            'header',
+            'quote',
+            'profile',
+            'event',
+            'gallery',
+            'wish',
+            'info',
+            'footer',
+        ];
+        $f_counts = [];
+
+        foreach ($folders as $folder) {
+            $path = resource_path("views/user/undangan/template-jadi/$folder");
+            if (File::exists($path)) {
+                $files = File::files($path);
+                $f_counts[$folder] = count($files);
+            } else {
+                $f_counts[$folder] = 0;
+            }
+        }
+
+        return view('user.undangan.tambah-jadi', compact('wedding', 'f_counts', 'template'));
     }
 
     public function tambah(Request $req) {
@@ -148,8 +215,81 @@ class UInvitationController extends Controller
         return redirect()->route('user.pernikahan.ke_detail', $wedding->id)->with('gagal', 'Membuat Undangan Digital');
     }
 
+    public function tambah_jadi(Request $req) {
+        $wedding = WCWedding::find($req->wedding_id);
+        if (!$wedding) {
+            return redirect()->route('user.pernikahan.index')->with('gagal', 'ID tidak valid');
+        }
+
+        $data = [
+            'header'  => [
+                'template' => $req->t_header,
+            ],
+            'quote'   => [
+                'template' => $req->t_quote,
+            ],
+            'profile' => [
+                'template' => $req->t_profile,
+            ],
+            'event'   => [
+                'template' => $req->t_event,
+            ],
+            'gallery' => [
+                'template' => $req->t_gallery,
+            ],
+            'wish'    => [
+                'template' => $req->t_wish,
+            ],
+            'info'    => [
+                'template' => $req->t_info,
+            ],
+            'footer'  => [
+                'template' => $req->t_footer,
+            ],
+            'status' => 'selesai',
+        ];
+
+        if ($req->t_quote != '0') {
+            $data['quote']['quote'] = $req->quote_content;
+            $data['quote']['author'] = $req->quote_author;
+        }
+
+        if ($req->t_gallery != '0' && $req->hasFile('foto_galeri')) {
+            $new_photos = [];
+            foreach ($req->file('foto_galeri') as $file) {
+                $filename = 'u/undangan/galeri/' . str()->uuid() . '.' . $file->extension();
+                $url = Storage::disk('public')->putFileAs('/', $file, $filename);
+                $new_photos[] = $url;
+            }
+            $data['gallery']['photos'] = $new_photos;
+        }
+
+        if ($req->hasFile('foto_profil')) {
+            $new_profil_photos = [];
+            foreach ($req->file('foto_profil') as $file) {
+                $filename = 'u/undangan/profil/' . str()->uuid() . '.' . $file->extension();
+                $url = Storage::disk('public')->putFileAs('/', $file, $filename);
+                $new_profil_photos[] = $url;
+            }
+            $data['profile']['foto_pria'] = $new_profil_photos[0];
+            $data['profile']['foto_wanita'] = $new_profil_photos[1];
+        }
+
+        $invitation = $wedding->invitation()->create($data);
+
+        if ($invitation) {
+            return redirect()->route('user.pernikahan.ke_detail', $wedding->id)->with('sukses', 'Membuat Undangan Digital');
+        }
+
+        return redirect()->route('user.pernikahan.ke_detail', $wedding->id)->with('gagal', 'Membuat Undangan Digital');
+    }
+
     public function cek($id) {
-        $wedding = WCWedding::find($id)->with(['w_detail', 'invitation'])->first();
+        $vendorId = auth()->user()->w_couple->id;
+        $wedding = WCWedding::with(['w_detail', 'invitation'])
+            ->where('id', $id)
+            // ->where('w_couple_id', $vendorId)
+            ->first();
 
         if (!$wedding) {
             return back()->with('gagal', 'ID tidak valid');
@@ -177,6 +317,13 @@ class UInvitationController extends Controller
         ]);
         $tamu = $buatTamu->first();
         $tamu->id = 0;
+
+        if (str_contains($wedding->invitation->header['template'], 't') ){
+            return view('user.undangan.cek-jadi', compact(
+                'wedding',
+                'tamu'
+            ));
+        }
 
         return view('user.undangan.cek', compact(
             'wedding',
@@ -218,6 +365,13 @@ class UInvitationController extends Controller
 
         if (!$wedding) {
             return redirect('/')->with('gagal', 'Undangan tidak valid');
+        }
+
+        if (str_contains($wedding->invitation->header['template'], 't') ){
+            return view('user.undangan.index-jadi', compact(
+                'wedding',
+                'tamu'
+            ));
         }
 
         return view('user.undangan.index', compact(

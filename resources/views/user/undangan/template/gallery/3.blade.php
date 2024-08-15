@@ -3,7 +3,7 @@
 @endphp
 
 <div class="max-w-[1200px] py-10">
-    <div class="text-[5em] text-center font-semibold font-great-vibes"
+    <div class="text-[2em] md:text-[3em] lg:text-[4em] text-center font-semibold font-great-vibes"
         style="color: {{ $wedding->invitation ? $wedding->invitation->gallery['stext'] : '#000000'}};"
         id="stext">
         Our Gallery
@@ -15,7 +15,7 @@
                 $photo = array_shift($photos);
             @endphp
             <div>
-                @if ($photos)
+                @if ($photo)
                     <a class="cursor-zoom-in" data-fancybox="gal"
                         href="{{ asset($photo) }}">
                         <img class="w-full aspect-video rounded-xl object-center object-cover shadow"

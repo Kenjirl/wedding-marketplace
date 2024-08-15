@@ -20,6 +20,6 @@ class hasUserProfile
             return $next($request);
         }
 
-        return redirect()->route('wedding-couple.index')->with('gagal', 'Harap lengkapi profil terlebih dahulu');
+        return redirect()->route('user.index')->with('gagal', 'Harap lengkapi profil terlebih dahulu');
     }
 }

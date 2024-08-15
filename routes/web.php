@@ -97,8 +97,8 @@ Route::name('admin.')
         Route::get ('/tambah',    'ke_tambah')->name('ke_tambah');
         Route::post('/tambah',    'tambah')   ->name('tambah');
         Route::get ('/ubah/{id}', 'ke_ubah')  ->name('ke_ubah');
-        Route::post('/ubah{id}',  'ubah')     ->name('ubah');
-        Route::post('/hapus{id}', 'hapus')    ->name('hapus');
+        Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
+        Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
     });
 
     Route::name('jenis-vendor.')->prefix('/master/jenis-vendor')
@@ -107,8 +107,8 @@ Route::name('admin.')
         Route::get ('/tambah',    'ke_tambah')->name('ke_tambah');
         Route::post('/tambah',    'tambah')   ->name('tambah');
         Route::get ('/ubah/{id}', 'ke_ubah')  ->name('ke_ubah');
-        Route::post('/ubah{id}',  'ubah')     ->name('ubah');
-        Route::post('/hapus{id}', 'hapus')    ->name('hapus');
+        Route::post('/ubah/{id}',  'ubah')     ->name('ubah');
+        Route::post('/hapus/{id}', 'hapus')    ->name('hapus');
     });
 
     Route::name('portofolio.')->prefix('/portofolio')
@@ -169,9 +169,12 @@ Route::name('user.')
 
             Route::name('undangan.')->prefix('/undangan')
                 ->controller(UInvitationController::class)->group(function() {
-                Route::get ('/ke-tambah',  'ke_tambah')->name('ke_tambah');
-                Route::post('/tambah',     'tambah')   ->name('tambah');
-                Route::get ('/cek/{id}',   'cek')      ->name('cek');
+                Route::get ('/ke-pilih',       'ke_pilih')      ->name('ke_pilih');
+                Route::get ('/ke-tambah',      'ke_tambah')     ->name('ke_tambah');
+                Route::get ('/ke-tambah-jadi', 'ke_tambah_jadi')->name('ke_tambah_jadi');
+                Route::post('/tambah',         'tambah')        ->name('tambah');
+                Route::post('/tambah-jadi',    'tambah_jadi')   ->name('tambah_jadi');
+                Route::get ('/cek/{id}',       'cek')           ->name('cek');
             });
 
             Route::name('tamu.')->prefix('/tamu')

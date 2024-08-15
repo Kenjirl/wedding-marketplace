@@ -59,14 +59,13 @@
                     {{-- TOMBOL BUAT UNDANGAN --}}
                     <a class="w-[40px] aspect-square flex items-center justify-center outline-pink outline-offset-4 shadow-sm border hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded
                         {{ $today->lt($eventDate) && $wedding->status == 'selesai' ? 'border-pink text-pink bg-white' : 'bg-slate-300 text-white pointer-events-none' }}"
-                        href="{{ route('user.undangan.ke_tambah', ['id'=>$wedding->id]) }}" title="buat undangan" data-tippy-content="buat undangan">
+                        href="{{ route('user.undangan.ke_pilih', ['id'=>$wedding->id]) }}" title="buat undangan" data-tippy-content="buat undangan">
                         <i class="fa-regular fa-envelope"></i>
                     </a>
                 @else
                     {{-- TOMBOL EDIT UNDANGAN --}}
-                    <a class="w-[40px] aspect-square flex items-center justify-center outline-pink outline-offset-4 shadow-sm border border-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded
-                        {{ $tab == 'ubah-undangan' ? 'bg-pink text-white' : 'text-pink bg-white' }}" target="_blank"
-                        href="{{ route('user.undangan.cek', ['id'=>$wedding->id]) }}" title="lihat undangan" data-tippy-content="lihat undangan">
+                    <a class="w-[40px] aspect-square flex items-center justify-center outline-pink text-pink bg-white outline-offset-4 shadow-sm border border-pink hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
+                        target="_blank" href="{{ route('user.undangan.cek', $wedding->id) }}" title="lihat undangan" data-tippy-content="lihat undangan">
                         <i class="fa-regular fa-envelope"></i>
                     </a>
                 @endif

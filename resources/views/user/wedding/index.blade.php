@@ -40,7 +40,7 @@
                         </p>
                     </div>
 
-                    <div class="w-full p-2 border-y-2 border-slate-100 text-sm">
+                    <div class="w-full min-h-[125px] p-2 border-y-2 border-slate-100 text-sm">
                         @if ($wedding->w_detail->isNotEmpty())
                             <div class="w-full flex items-center justify-start gap-2">
                                 <i class="fa-regular fa-calendar text-pink"></i>
@@ -91,7 +91,7 @@
                             <a class="w-full px-4 py-2 rounded outline-none text-sm text-center hover:bg-pink-hover hover:text-white focus:bg-pink-hover focus:text-white active:bg-pink-active transition-colors
                                 {{ $today->gte($wedding->limit) || $wedding->status == 'belum selesai' ? 'text-white bg-slate-300 pointer-events-none hover:cursor-not-allowed' : 'text-pink' }}
                                 "
-                                href="{{ route('user.undangan.ke_tambah', ['id'=>$wedding->id]) }}">
+                                href="{{ route('user.undangan.ke_pilih', ['id'=>$wedding->id]) }}">
                                 Buat Undangan
                             </a>
                         @else

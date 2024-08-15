@@ -9,39 +9,26 @@
         Our Gallery
     </div>
 
-    <div class="w-full p-4 grid grid-cols-4">
-        @php
-            $pattern = [
-                [1, 0, 1, 0],
-                [0, 1, 0, 1],
-                [1, 0, 1, 0],
-            ];
-        @endphp
-        @foreach ($pattern as $row)
-            @foreach ($row as $cell)
-                @if ($cell === 1)
-                    @php
-                        $photo = array_shift($photos);
-                    @endphp
-                    <div>
-                        @if ($photos)
-                            <a class="cursor-zoom-in" data-fancybox="gal"
-                                href="{{ asset($photo) }}">
-                                <img class="w-full aspect-square rounded-xl object-center object-cover shadow"
-                                    src="{{ asset($photo) }}" alt="">
-                            </a>
-                        @else
-                            <a class="cursor-zoom-in" data-fancybox="gal"
-                                href="{{ asset('template/undangan/gallery/p_light.jpg') }}">
-                                <img class="w-full aspect-square rounded-xl object-center object-cover shadow"
-                                    src="{{ asset('template/undangan/gallery/p_light.jpg') }}" alt="Template">
-                            </a>
-                        @endif
-                    </div>
+    <div class="w-full p-4 grid grid-cols-3 gap-4">
+        @for ($i = 0; $i < 6; $i++)
+            @php
+                $photo = array_shift($photos);
+            @endphp
+            <div>
+                @if ($photo)
+                    <a class="cursor-zoom-in" data-fancybox="gal"
+                        href="{{ asset($photo) }}">
+                        <img class="w-full aspect-square rounded-xl object-center object-cover shadow"
+                            src="{{ asset($photo) }}" alt="">
+                    </a>
                 @else
-                    <div></div>
+                    <a class="cursor-zoom-in" data-fancybox="gal"
+                        href="{{ asset('template/undangan/gallery/p_light.jpg') }}">
+                        <img class="w-full aspect-square rounded-xl object-center object-cover shadow"
+                            src="{{ asset('template/undangan/gallery/p_light.jpg') }}" alt="Template">
+                    </a>
                 @endif
-            @endforeach
-        @endforeach
+            </div>
+        @endfor
     </div>
 </div>

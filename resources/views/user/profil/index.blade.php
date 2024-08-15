@@ -22,7 +22,7 @@
                 @else
                     <span class="w-[200px] aspect-square bg-pink rounded-full flex items-center justify-center text-[5em] font-bold text-white border-4 border-pink"
                         id="fotoProfilText">
-                        {{ substr(auth()->user()->name, 0, 1) }}
+                        {{ ucwords(substr(auth()->user()->name, 0, 1)) }}
                     </span>
                 @endif
 

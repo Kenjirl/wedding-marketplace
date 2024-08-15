@@ -129,7 +129,7 @@
                             <option value="w_vendor.nama" {{ $sort_by == 'w_vendor.nama' ? 'selected' : '' }}>
                                 Urut Berdasarkan Vendor
                             </option>
-                            <option value="harga_terendah" {{ $sort_by == 'harga_terendah' ? 'selected' : '' }}>
+                            <option value="harga" {{ $sort_by == 'harga' ? 'selected' : '' }}>
                                 Urut Berdasarkan Harga
                             </option>
                             <option value="rate" {{ $sort_by == 'rate' ? 'selected' : '' }}>
@@ -196,9 +196,11 @@
                             <img class="w-full aspect-video object-cover object-center rounded-lg"
                                 src="{{ asset($plan->foto[0]['url']) }}" alt="">
                         @else
-                            <span class="w-full aspect-video bg-slate-300 flex items-center justify-center text-[2em] font-bold text-white rounded-lg">
+                            <img class="w-full aspect-video object-cover object-center rounded-lg"
+                                src="{{ asset('template/layanan/1.jpg') }}" alt="">
+                            {{-- <span class="w-full aspect-video bg-slate-300 flex items-center justify-center text-[2em] font-bold text-white rounded-lg">
                                 <i class="fa-regular fa-image"></i>
-                            </span>
+                            </span> --}}
                         @endif
                     </div>
 

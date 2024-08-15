@@ -27,7 +27,7 @@
                                 src="{{ asset(auth()->user()->w_couple->foto_profil) }}" alt="Foto Profil">
                         @else
                             <span class="w-[30px] aspect-square bg-pink rounded-full flex items-center justify-center font-bold text-white">
-                                {{ substr(auth()->user()->name, 0, 1) }}
+                                {{ ucwords(substr(auth()->user()->name, 0, 1)) }}
                             </span>
                         @endif
                     </button>

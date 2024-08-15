@@ -2,7 +2,7 @@
     <div class="w-full p-8 max-w-[400px] mx-auto grid grid-cols-1 gap-10">
         @foreach ($wedding->w_detail as $detail)
             <div class="w-full">
-                <div class="text-[4em] text-center font-great-vibes"
+                <div class="text-[3em] md:text-[4em] text-center font-great-vibes"
                     style="color: {{ $wedding->invitation ? $wedding->invitation->event['stext'] : '#000000'}};"
                     id="stext">
                     {{ \Carbon\Carbon::parse($detail->waktu)->format('d/m/Y') }}
@@ -31,7 +31,7 @@
                         $text  = $detail->event->nama . ' ' . $wedding->p_sapaan . ' dan ' . $wedding->w_sapaan;
                         $dets  = 'Acara ' . $detail->event->nama . ' ' . $wedding->p_lengkap . ' dan ' . $wedding->w_lengkap;
                         $dates = Carbon\Carbon::parse($detail->waktu)->format('Ymd\THis');
-                        $loc   = $detail->lokasi;
+                        $loc   = $detail->lokasi . ' (' . $detail->koordinat['lat'] . ', ' . $detail->koordinat['lng'] . ')';
                     @endphp
                     <a class="w-[40px] aspect-square flex items-center justify-center border rounded"
                         target="_blank" title="Google Calendar"

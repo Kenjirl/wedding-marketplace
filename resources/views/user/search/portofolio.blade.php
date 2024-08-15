@@ -152,9 +152,12 @@
 
                         <hr class="my-2">
 
-                        <div>
-                            <p class="w-full text-sm">
-                                {{ $portofolio->lokasi }} <br>
+                        <div class="w-full text-sm">
+                            <p class="w-full line-clamp-2">
+                                {{ $portofolio->lokasi }}
+                            </p>
+                            <br>
+                            <p>
                                 {{ \Carbon\Carbon::parse($portofolio->tanggal)->translatedFormat('l, d F Y') }}
                             </p>
                         </div>

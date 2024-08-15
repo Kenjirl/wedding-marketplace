@@ -40,7 +40,7 @@
                         <div class="w-full mt-2 grid grid-cols-1 gap-2 md:gap-4 text-[.9em] lg:text-base">
                             <a class="w-fit block px-2 py-1 md:px-4 md:py-2 mx-auto rounded border"
                                 target="_blank"
-                                href="https://www.google.com/maps/search/?api=1&query={{ $detail->lokasi }}">
+                                href="https://www.google.com/maps/search/?api=1&query={{ $detail->koordinat['lat'] }},{{ $detail->koordinat['lng'] }}">
                                 <i class="fa-solid fa-map-location"></i>
                                 Buka di Map
                             </a>
@@ -49,7 +49,7 @@
                                 $text  = $detail->event->nama . ' ' . $wedding->p_sapaan . ' dan ' . $wedding->w_sapaan;
                                 $dets  = 'Acara ' . $detail->event->nama . ' ' . $wedding->p_lengkap . ' dan ' . $wedding->w_lengkap;
                                 $dates = Carbon\Carbon::parse($detail->waktu)->format('Ymd\THis');
-                                $loc   = $detail->lokasi;
+                                $loc   = $detail->lokasi . ' (' . $detail->koordinat['lat'] . ', ' . $detail->koordinat['lng'] . ')';
                             @endphp
                             <a class="w-fit block px-2 py-1 md:px-4 md:py-2 mx-auto rounded border"
                                 target="_blank"
