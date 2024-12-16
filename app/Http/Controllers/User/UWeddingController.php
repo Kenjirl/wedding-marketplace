@@ -262,7 +262,10 @@ class UWeddingController extends Controller
     }
 
     public function ke_detail(Request $req, $id) {
-        $wedding = WCWedding::find($id);
+        $w_couple = auth()->user()->w_couple;
+        $wedding = WCWedding::where('id', $id)
+            ->where('w_couple_id', $w_couple->id)
+            ->first();
 
         if (!$wedding) {
             return redirect()->route('user.pernikahan.index')->with('gagal', 'ID Invalid');
@@ -272,6 +275,7 @@ class UWeddingController extends Controller
             return redirect()->route('user.pernikahan.ke_acara', $wedding->id)->with('gagal', 'Pernikahan belum memiliki acara');
         }
 
+        $infoId = $req->id_info ?: null;
         $tab = $req->query('tab', 'detail');
         $allowedTabs = ['detail', 'tamu-undangan'];
         if (!in_array($tab, $allowedTabs)) {
@@ -298,6 +302,7 @@ class UWeddingController extends Controller
             $m_j_vendors = MJenisVendor::orderBy('nama')->get();
 
             return view('user.wedding.detail', compact(
+                'infoId',
                 'tab',
                 'wedding',
                 'weddingEvents',

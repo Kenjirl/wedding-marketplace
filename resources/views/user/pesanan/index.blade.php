@@ -71,7 +71,7 @@
                             </td>
                             <td class="flex items-center justify-center gap-2 p-2">
                                 <a class="text-center text-sm font-semibold px-4 py-2 outline-none text-pink bg-white hover:bg-pink hover:text-white focus:bg-pink focus:text-white active:bg-pink-active transition-colors rounded"
-                                    href="{{ route('user.pernikahan.ke_detail', $booking->w_c_wedding_id) }}">
+                                    href="{{ route('user.pernikahan.ke_detail', $booking->w_c_wedding_id) }}?id_info={{ $booking->id }}">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </a>
                             </td>

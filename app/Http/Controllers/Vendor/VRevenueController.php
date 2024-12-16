@@ -37,7 +37,7 @@ class VRevenueController extends Controller
                             $query->withTrashed();
                         }])->withTrashed();
                     }])
-                    ->whereIn('status', ['selesai'])
+                    ->whereIn('status', ['dibayar', 'selesai'])
                     ->orderBy('untuk_tanggal');
 
         if ($jenis_id) {

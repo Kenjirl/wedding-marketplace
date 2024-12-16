@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <a class="cursor-zoom-in" data-fancybox="profile"
+        <a class="cursor-zoom-in" data-fancybox="pfile"
             href="{{
                     $wedding->invitation ? asset($wedding->invitation->profile['foto_pria']) :
                     asset('template/undangan/profile/groom.jpg')
@@ -28,7 +28,7 @@
     </div>
 
     <div class="w-full max-h-[50vh] grid grid-cols-2">
-        <a class="cursor-zoom-in" data-fancybox="profile"
+        <a class="cursor-zoom-in" data-fancybox="pfile"
             href="{{
                     $wedding->invitation ? asset($wedding->invitation->profile['foto_wanita']) :
                     asset('template/undangan/profile/bride.jpg')

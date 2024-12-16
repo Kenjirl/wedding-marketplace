@@ -368,11 +368,12 @@ class UBookingController extends Controller
                     $query->whereDate('waktu', '>', $today);
                 }])
                 ->whereHas('w_detail', function ($query) use ($today) {
-                    $query->whereRaw('waktu = (
-                            SELECT MIN(wd.waktu)
-                            FROM w_c_wedding_details wd
-                            WHERE wd.w_c_wedding_id = w_c_weddings.id
-                        )')
+                    $query
+                        // ->whereRaw('waktu = (
+                        //     SELECT MIN(wd.waktu)
+                        //     FROM w_c_wedding_details wd
+                        //     WHERE wd.w_c_wedding_id = w_c_weddings.id
+                        // )')
                         ->whereDate('waktu', '>', $today);
                 })
                 ->orderBy('p_lengkap', 'asc')

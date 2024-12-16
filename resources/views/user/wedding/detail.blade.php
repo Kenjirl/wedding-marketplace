@@ -380,6 +380,11 @@
                 });
 
                 $('.detail-plan ul').addClass('list-disc px-4');
+
+                const idInfo = @json($infoId);
+                if (idInfo != null) {
+                    $(`.openFtgModalBtn[data-ftg-modal="${idInfo}"]`).click();
+                }
             });
         </script>
     @endif

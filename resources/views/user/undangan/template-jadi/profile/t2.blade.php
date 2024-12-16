@@ -2,7 +2,7 @@
     id="profile">
     <div class="w-full md:max-h-screen grid grid-cols-1 lg:grid-cols-2 font-varela gap-4">
         <div class="relative w-full px-2 lg:px-0 md:h-full flex flex-row-reverse items-center justify-center gap-4">
-            <a class="cursor-zoom-in" data-fancybox="profile"
+            <a class="cursor-zoom-in" data-fancybox="pfile"
                 href="{{
                         $wedding->invitation ? asset($wedding->invitation->profile['foto_pria']) :
                         asset('template/undangan/profile/groom.jpg')
@@ -27,7 +27,7 @@
         </div>
 
         <div class="relative w-full px-2 lg:px-0 md:h-full flex items-center justify-center gap-4">
-            <a class="cursor-zoom-in" data-fancybox="profile"
+            <a class="cursor-zoom-in" data-fancybox="pfile"
                 href="{{
                         $wedding->invitation ? asset($wedding->invitation->profile['foto_wanita']) :
                         asset('template/undangan/profile/bride.jpg')
