@@ -7,11 +7,11 @@
 
 ---
 
-## Short Description
+## 🗒️ Short Description
 
 As the name suggests, this application is a specialized marketplace for wedding-related needs. Users can take on the role of either a couple planning their wedding or a service provider offering wedding-related services.
 
-## Technologies
+## ⚙️ Technologies
 
 **The technologies used in this application are:**  
 - **Frontend:** HTML, CSS, Tailwindcss, JavaScript.  
@@ -20,7 +20,7 @@ As the name suggests, this application is a specialized marketplace for wedding-
 - **Framework:** Laravel.  
 - **Payment Integration:** Midtrans Payment Gateway.
 
-## Features
+## 🔧 Features
 
 **As a fully functional marketplace application, users can:**  
 
@@ -35,7 +35,7 @@ As the name suggests, this application is a specialized marketplace for wedding-
   - Set prices for their offered services.  
   - Receive orders from wedding couples.
 
-## Screenshots
+## 📸 Screenshots
 
 <p align="center">
     <img style="width: 80%" 
@@ -80,7 +80,7 @@ As the name suggests, this application is a specialized marketplace for wedding-
     <span>Make Digital Invitation Page</span>
 </p>
 
-## Footnote
+## 🦶🏻 Footnote
 
 I don't bother host it anywhere since I don't have to, but it's a fully working marketplace system and wedding invitation maker. 
 If you're interested, you could check out the articel below : 
